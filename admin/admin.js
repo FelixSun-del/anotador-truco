@@ -32,7 +32,10 @@ const elementos = {
         document.getElementById("listaPaises"),
 
     listaDispositivos:
-        document.getElementById("listaDispositivos")
+        document.getElementById("listaDispositivos"),
+
+    fuentes:
+    document.getElementById("listaFuentes")
 
 };
 
@@ -95,7 +98,8 @@ async function cargarDatos(dias) {
     respuestaGrafico,
     respuestaPaises,
     respuestaDispositivos,
-    respuestaActivos
+    respuestaActivos,
+    respuestaFuentes
 ] = await Promise.all([
 
     fetch(
@@ -124,6 +128,10 @@ async function cargarDatos(dias) {
 
     fetch(
         `${API_URL}/api/activos`
+    ),
+
+    fetch(
+    `${API_URL}/api/fuentes?dias=${dias}`
     )
 
 ]);
@@ -173,7 +181,10 @@ async function cargarDatos(dias) {
             await respuestaDispositivos.json();
 
         const activos =
-            await respuestaActivos.json();
+            await respuestaActivos.json()
+            
+        const datosFuentes =
+            await respuestaFuentes.json();
 
 
         // =================================================
@@ -242,6 +253,10 @@ async function cargarDatos(dias) {
 
         crearDispositivos(
             datosDispositivos.dispositivos || []
+        );
+
+        crearFuentes(
+            datosFuentes.fuentes || []
         );
 
 
