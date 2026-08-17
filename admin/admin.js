@@ -142,14 +142,15 @@ async function cargarDatos(dias) {
         // =================================================
 
         if (
-            !respuestaUsuarios.ok ||
-            !respuestaVisitas.ok ||
-            !respuestaInstalaciones.ok ||
-            !respuestaGrafico.ok ||
-            !respuestaPaises.ok ||
-            !respuestaDispositivos.ok ||
-            !respuestaActivos.ok
-        ) {
+    !respuestaUsuarios.ok ||
+    !respuestaVisitas.ok ||
+    !respuestaInstalaciones.ok ||
+    !respuestaGrafico.ok ||
+    !respuestaPaises.ok ||
+    !respuestaDispositivos.ok ||
+    !respuestaActivos.ok ||
+    !respuestaFuentes.ok
+) {
 
             throw new Error(
                 "El backend no respondió correctamente."
