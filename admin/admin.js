@@ -601,6 +601,138 @@ function crearDispositivos(dispositivos) {
 
 }
 
+// =====================================================
+// CREAR FUENTES
+// =====================================================
+
+function crearFuentes(fuentes) {
+
+    elementos.fuentes.innerHTML = "";
+
+    if (!fuentes.length) {
+
+        elementos.fuentes.innerHTML = `
+            <div class="fuente">
+                <span>🔗 Sin datos</span>
+                <strong>0%</strong>
+            </div>
+        `;
+
+        return;
+    }
+
+    // Agrupar fuentes con el mismo nombre
+    const fuentesAgrupadas = {};
+
+    fuentes.forEach(fuente => {
+
+        const fuenteOriginal =
+            String(fuente.fuente || "(not set)")
+                .toLowerCase();
+
+        let nombre;
+        let icono;
+
+        if (fuenteOriginal === "(direct)") {
+
+            nombre = "Enlace directo";
+            icono = "🔗";
+
+        } else if (fuenteOriginal === "(not set)") {
+
+            nombre = "Desconocido";
+            icono = "❓";
+
+        } else if (
+            fuenteOriginal.includes("chatgpt")
+        ) {
+
+            nombre = "ChatGPT";
+            icono = "🤖";
+
+        } else if (
+            fuenteOriginal.includes("github")
+        ) {
+
+            nombre = "GitHub";
+            icono = "💻";
+
+        } else if (
+            fuenteOriginal.includes("google")
+        ) {
+
+            nombre = "Google";
+            icono = "🔎";
+
+        } else {
+
+            nombre = fuente.fuente;
+            icono = "🔗";
+
+        }
+
+        if (!fuentesAgrupadas[nombre]) {
+
+            fuentesAgrupadas[nombre] = {
+                nombre,
+                icono,
+                usuarios: 0
+            };
+
+        }
+
+        fuentesAgrupadas[nombre].usuarios +=
+            Number(fuente.usuarios) || 0;
+
+    });
+
+    const fuentesFinales =
+        Object.values(fuentesAgrupadas);
+
+    const total =
+        fuentesFinales.reduce(
+            (suma, fuente) =>
+                suma + fuente.usuarios,
+            0
+        );
+
+    // Ordenar de mayor a menor
+    fuentesFinales.sort(
+        (a, b) =>
+            b.usuarios - a.usuarios
+    );
+
+    fuentesFinales.forEach(fuente => {
+
+        const porcentaje =
+            total > 0
+                ? Math.round(
+                    (fuente.usuarios / total) * 100
+                )
+                : 0;
+
+        const elemento =
+            document.createElement("div");
+
+        elemento.className = "fuente";
+
+        elemento.innerHTML = `
+            <span>
+                ${fuente.icono} ${fuente.nombre}
+            </span>
+
+            <strong>
+                ${porcentaje}%
+            </strong>
+        `;
+
+        elementos.fuentes.appendChild(
+            elemento
+        );
+
+    });
+
+}
 
 // =====================================================
 // INICIO
