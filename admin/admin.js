@@ -1,5 +1,8 @@
 "use strict";
-const API_URL = "https://anotador-truco-backend.onrender.com";
+
+const API_URL =
+    "https://anotador-truco-backend.onrender.com";
+
 
 // =====================================================
 // ELEMENTOS
@@ -35,7 +38,7 @@ const elementos = {
         document.getElementById("listaDispositivos"),
 
     fuentes:
-    document.getElementById("listaFuentes")
+        document.getElementById("listaFuentes")
 
 };
 
@@ -53,13 +56,18 @@ filtros.forEach(filtro => {
     filtro.addEventListener("click", () => {
 
         filtros.forEach(otro => {
+
             otro.classList.remove("activo");
+
         });
+
 
         filtro.classList.add("activo");
 
+
         const dias =
             Number(filtro.dataset.dias);
+
 
         cargarDatos(dias);
 
@@ -81,9 +89,13 @@ async function cargarDatos(dias) {
         // =================================================
 
         elementos.visitas.textContent = "…";
+
         elementos.usuarios.textContent = "…";
+
         elementos.instalaciones.textContent = "…";
+
         elementos.instalacionesPwa.textContent = "…";
+
         elementos.activos.textContent = "…";
 
 
@@ -92,49 +104,50 @@ async function cargarDatos(dias) {
         // =================================================
 
         const [
-    respuestaUsuarios,
-    respuestaVisitas,
-    respuestaInstalaciones,
-    respuestaGrafico,
-    respuestaPaises,
-    respuestaDispositivos,
-    respuestaActivos,
-    respuestaFuentes
-] = await Promise.all([
+            respuestaUsuarios,
+            respuestaVisitas,
+            respuestaInstalaciones,
+            respuestaGrafico,
+            respuestaPaises,
+            respuestaDispositivos,
+            respuestaActivos,
+            respuestaFuentes
 
-    fetch(
-        `${API_URL}/api/usuarios?dias=${dias}`
-    ),
+        ] = await Promise.all([
 
-    fetch(
-        `${API_URL}/api/visitas?dias=${dias}`
-    ),
+            fetch(
+                `${API_URL}/api/usuarios?dias=${dias}`
+            ),
 
-    fetch(
-        `${API_URL}/api/instalaciones?dias=${dias}`
-    ),
+            fetch(
+                `${API_URL}/api/visitas?dias=${dias}`
+            ),
 
-    fetch(
-        `${API_URL}/api/grafico?dias=${dias}`
-    ),
+            fetch(
+                `${API_URL}/api/instalaciones?dias=${dias}`
+            ),
 
-    fetch(
-        `${API_URL}/api/paises?dias=${dias}`
-    ),
+            fetch(
+                `${API_URL}/api/grafico?dias=${dias}`
+            ),
 
-    fetch(
-        `${API_URL}/api/dispositivos?dias=${dias}`
-    ),
+            fetch(
+                `${API_URL}/api/paises?dias=${dias}`
+            ),
 
-    fetch(
-        `${API_URL}/api/activos`
-    ),
+            fetch(
+                `${API_URL}/api/dispositivos?dias=${dias}`
+            ),
 
-    fetch(
-    `${API_URL}/api/fuentes?dias=${dias}`
-    )
+            fetch(
+                `${API_URL}/api/activos`
+            ),
 
-]);
+            fetch(
+                `${API_URL}/api/fuentes?dias=${dias}`
+            )
+
+        ]);
 
 
         // =================================================
@@ -142,15 +155,15 @@ async function cargarDatos(dias) {
         // =================================================
 
         if (
-    !respuestaUsuarios.ok ||
-    !respuestaVisitas.ok ||
-    !respuestaInstalaciones.ok ||
-    !respuestaGrafico.ok ||
-    !respuestaPaises.ok ||
-    !respuestaDispositivos.ok ||
-    !respuestaActivos.ok ||
-    !respuestaFuentes.ok
-) {
+            !respuestaUsuarios.ok ||
+            !respuestaVisitas.ok ||
+            !respuestaInstalaciones.ok ||
+            !respuestaGrafico.ok ||
+            !respuestaPaises.ok ||
+            !respuestaDispositivos.ok ||
+            !respuestaActivos.ok ||
+            !respuestaFuentes.ok
+        ) {
 
             throw new Error(
                 "El backend no respondió correctamente."
@@ -166,24 +179,31 @@ async function cargarDatos(dias) {
         const usuarios =
             await respuestaUsuarios.json();
 
+
         const visitas =
             await respuestaVisitas.json();
+
 
         const instalaciones =
             await respuestaInstalaciones.json();
 
+
         const datosGrafico =
             await respuestaGrafico.json();
+
 
         const datosPaises =
             await respuestaPaises.json();
 
+
         const datosDispositivos =
             await respuestaDispositivos.json();
 
+
         const activos =
-            await respuestaActivos.json()
-            
+            await respuestaActivos.json();
+
+
         const datosFuentes =
             await respuestaFuentes.json();
 
@@ -256,6 +276,11 @@ async function cargarDatos(dias) {
             datosDispositivos.dispositivos || []
         );
 
+
+        // =================================================
+        // CREAR FUENTES
+        // =================================================
+
         crearFuentes(
             datosFuentes.fuentes || []
         );
@@ -303,15 +328,19 @@ function crearGrafico(datosGrafico) {
         const mensaje =
             document.createElement("div");
 
+
         mensaje.textContent =
             "No hay datos para este período.";
+
 
         mensaje.className =
             "grafico-vacio";
 
+
         elementos.grafico.appendChild(
             mensaje
         );
+
 
         return;
 
@@ -332,6 +361,7 @@ function crearGrafico(datosGrafico) {
         const barra =
             document.createElement("div");
 
+
         barra.className =
             "barra";
 
@@ -346,6 +376,13 @@ function crearGrafico(datosGrafico) {
                 : 0;
 
 
+        /*
+         * El gráfico tiene un máximo visual
+         * de 205px en PC y 185px en celular.
+         *
+         * El CSS limita la altura máxima.
+         */
+
         barra.style.height =
             `${porcentaje}%`;
 
@@ -353,8 +390,9 @@ function crearGrafico(datosGrafico) {
         const numero =
             document.createElement("span");
 
+
         numero.textContent =
-            visitas;
+            visitas.toLocaleString("es-AR");
 
 
         const etiqueta =
@@ -381,6 +419,7 @@ function crearGrafico(datosGrafico) {
         barra.appendChild(
             numero
         );
+
 
         barra.appendChild(
             etiqueta
@@ -444,12 +483,14 @@ function crearPaises(paises) {
         const fila =
             document.createElement("div");
 
+
         fila.className =
             "fila";
 
 
         const nombre =
             document.createElement("span");
+
 
         nombre.textContent =
             pais.pais === "(not set)"
@@ -460,6 +501,7 @@ function crearPaises(paises) {
         const porcentajeElemento =
             document.createElement("strong");
 
+
         porcentajeElemento.textContent =
             `${porcentaje}%`;
 
@@ -467,6 +509,7 @@ function crearPaises(paises) {
         fila.appendChild(
             nombre
         );
+
 
         fila.appendChild(
             porcentajeElemento
@@ -528,20 +571,22 @@ function crearDispositivos(dispositivos) {
                 : 0;
 
 
-        // =================================================
-        // INFORMACIÓN DEL DISPOSITIVO
-        // =================================================
+        let icono =
+            "❓";
 
-        let icono = "❓";
-        let nombre = "Desconocido";
+        let nombre =
+            "Desconocido";
 
 
         if (
             dispositivo.dispositivo === "mobile"
         ) {
 
-            icono = "📱";
-            nombre = "Celular";
+            icono =
+                "📱";
+
+            nombre =
+                "Celular";
 
         }
 
@@ -550,8 +595,11 @@ function crearDispositivos(dispositivos) {
             dispositivo.dispositivo === "desktop"
         ) {
 
-            icono = "💻";
-            nombre = "PC";
+            icono =
+                "💻";
+
+            nombre =
+                "PC";
 
         }
 
@@ -560,8 +608,11 @@ function crearDispositivos(dispositivos) {
             dispositivo.dispositivo === "tablet"
         ) {
 
-            icono = "📟";
-            nombre = "Tablet";
+            icono =
+                "📟";
+
+            nombre =
+                "Tablet";
 
         }
 
@@ -570,18 +621,18 @@ function crearDispositivos(dispositivos) {
             dispositivo.dispositivo === "(not set)"
         ) {
 
-            icono = "❓";
-            nombre = "Desconocido";
+            icono =
+                "❓";
+
+            nombre =
+                "Desconocido";
 
         }
 
 
-        // =================================================
-        // CREAR ELEMENTO
-        // =================================================
-
         const elemento =
             document.createElement("div");
+
 
         elemento.className =
             "dispositivo";
@@ -602,6 +653,7 @@ function crearDispositivos(dispositivos) {
 
 }
 
+
 // =====================================================
 // CREAR FUENTES
 // =====================================================
@@ -609,6 +661,7 @@ function crearDispositivos(dispositivos) {
 function crearFuentes(fuentes) {
 
     elementos.fuentes.innerHTML = "";
+
 
     if (!fuentes.length) {
 
@@ -620,75 +673,121 @@ function crearFuentes(fuentes) {
         `;
 
         return;
+
     }
 
-    // Agrupar fuentes con el mismo nombre
+
+    // =================================================
+    // AGRUPAR FUENTES
+    // =================================================
+
     const fuentesAgrupadas = {};
+
 
     fuentes.forEach(fuente => {
 
         const fuenteOriginal =
-            String(fuente.fuente || "(not set)")
-                .toLowerCase();
+            String(
+                fuente.fuente || "(not set)"
+            ).toLowerCase();
+
 
         let nombre;
+
         let icono;
 
-        if (fuenteOriginal === "(direct)") {
 
-            nombre = "Enlace directo";
-            icono = "🔗";
+        if (
+            fuenteOriginal === "(direct)"
+        ) {
 
-        } else if (fuenteOriginal === "(not set)") {
+            nombre =
+                "Enlace directo";
 
-            nombre = "Desconocido";
-            icono = "❓";
+            icono =
+                "🔗";
+
+        } else if (
+            fuenteOriginal === "(not set)"
+        ) {
+
+            nombre =
+                "Desconocido";
+
+            icono =
+                "❓";
 
         } else if (
             fuenteOriginal.includes("chatgpt")
         ) {
 
-            nombre = "ChatGPT";
-            icono = "🤖";
+            nombre =
+                "ChatGPT";
+
+            icono =
+                "🤖";
 
         } else if (
             fuenteOriginal.includes("github")
         ) {
 
-            nombre = "GitHub";
-            icono = "💻";
+            nombre =
+                "GitHub";
+
+            icono =
+                "💻";
 
         } else if (
             fuenteOriginal.includes("google")
         ) {
 
-            nombre = "Google";
-            icono = "🔎";
+            nombre =
+                "Google";
+
+            icono =
+                "🔎";
 
         } else {
 
-            nombre = fuente.fuente;
-            icono = "🔗";
+            nombre =
+                fuente.fuente;
+
+            icono =
+                "🔗";
 
         }
 
-        if (!fuentesAgrupadas[nombre]) {
+
+        if (
+            !fuentesAgrupadas[nombre]
+        ) {
 
             fuentesAgrupadas[nombre] = {
+
                 nombre,
+
                 icono,
+
                 usuarios: 0
+
             };
 
         }
 
+
         fuentesAgrupadas[nombre].usuarios +=
-            Number(fuente.usuarios) || 0;
+            Number(
+                fuente.usuarios
+            ) || 0;
 
     });
 
+
     const fuentesFinales =
-        Object.values(fuentesAgrupadas);
+        Object.values(
+            fuentesAgrupadas
+        );
+
 
     const total =
         fuentesFinales.reduce(
@@ -697,35 +796,53 @@ function crearFuentes(fuentes) {
             0
         );
 
-    // Ordenar de mayor a menor
+
+    // =================================================
+    // ORDENAR
+    // =================================================
+
     fuentesFinales.sort(
         (a, b) =>
             b.usuarios - a.usuarios
     );
+
+
+    // =================================================
+    // MOSTRAR
+    // =================================================
 
     fuentesFinales.forEach(fuente => {
 
         const porcentaje =
             total > 0
                 ? Math.round(
-                    (fuente.usuarios / total) * 100
+                    (
+                        fuente.usuarios /
+                        total
+                    ) * 100
                 )
                 : 0;
+
 
         const elemento =
             document.createElement("div");
 
-        elemento.className = "fuente";
+
+        elemento.className =
+            "fuente";
+
 
         elemento.innerHTML = `
             <span>
-                ${fuente.icono} ${fuente.nombre}
+                ${fuente.icono}
+                ${fuente.nombre}
             </span>
 
             <strong>
                 ${porcentaje}%
             </strong>
         `;
+
 
         elementos.fuentes.appendChild(
             elemento
@@ -734,6 +851,7 @@ function crearFuentes(fuentes) {
     });
 
 }
+
 
 // =====================================================
 // INICIO

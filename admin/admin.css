@@ -383,28 +383,34 @@ button {
 
 .grafico {
 
-    height: 250px;
+    height: 280px;
 
     display: flex;
 
     align-items: flex-end;
 
-    justify-content:
-        space-around;
+    justify-content: space-between;
 
-    gap: 10px;
+    gap: 8px;
 
-    padding:
-        25px 10px 0;
+    padding: 35px 10px 45px;
 
-    border-bottom:
-        2px solid #c9b99d;
+    border-bottom: 2px solid #c9b99d;
+
+    overflow: visible;
 }
 
 
+
+/* =====================================================
+   BARRAS
+===================================================== */
+
 .barra {
 
-    width: 100%;
+    flex: 1 1 0;
+
+    min-width: 0;
 
     max-width: 70px;
 
@@ -412,8 +418,7 @@ button {
 
     background: #2f5d50;
 
-    border-radius:
-        7px 7px 0 0;
+    border-radius: 7px 7px 0 0;
 
     position: relative;
 
@@ -426,21 +431,43 @@ button {
 }
 
 
-.barra:hover {
+/* ==========================================
+   CUANDO HAY MUCHOS DÍAS
+========================================== */
 
-    filter:
-        brightness(1.12);
+.grafico:has(.barra:nth-child(15)) {
 
-    transform:
-        translateY(-3px);
+    justify-content: flex-start;
+
+    overflow-x: auto;
+
+    overflow-y: visible;
+
+    gap: 8px;
 }
 
+
+.grafico:has(.barra:nth-child(15)) .barra {
+
+    flex: 0 0 42px;
+
+    min-width: 42px;
+
+    max-width: 42px;
+}
+
+
+/* =====================================================
+   NÚMERO DE VISITAS
+===================================================== */
 
 .barra span {
 
     position: absolute;
 
-    top: -23px;
+    top: -27px;
+
+    left: 0;
 
     width: 100%;
 
@@ -451,20 +478,52 @@ button {
     font-weight: bold;
 
     color: #4a3928;
+
+    white-space: nowrap;
 }
 
+
+/* =====================================================
+   FECHA
+===================================================== */
 
 .barra small {
 
     position: absolute;
 
-    bottom: -22px;
+    bottom: -32px;
 
     width: 100%;
 
     text-align: center;
 
     color: #6d5b48;
+
+    font-size: .75rem;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   GRÁFICO VACÍO
+===================================================== */
+
+.grafico-vacio {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #6d5b48;
+
+    font-size: .9rem;
 }
 
 
@@ -581,100 +640,6 @@ button {
 
 
 /* =====================================================
-   PC VS CELULAR
-===================================================== */
-
-.comparacion {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 17px;
-}
-
-
-.comparacion-fila {
-
-    display: grid;
-
-    grid-template-columns:
-        150px 1fr 55px;
-
-    align-items: center;
-
-    gap: 15px;
-}
-
-
-.comparacion-nombre {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    color: #4a3928;
-}
-
-
-.comparacion-nombre span {
-
-    font-size: 1.3rem;
-}
-
-
-.barra-fondo {
-
-    height: 15px;
-
-    overflow: hidden;
-
-    background: #d8ccb7;
-
-    border-radius: 20px;
-}
-
-
-.barra-progreso {
-
-    height: 100%;
-
-    border-radius: 20px;
-
-    transition:
-        width .5s ease;
-}
-
-
-.barra-progreso.celular {
-
-    background: #2f5d50;
-}
-
-
-.barra-progreso.pc {
-
-    background: #8c6b48;
-}
-
-
-.barra-progreso.tablet {
-
-    background: #b5a488;
-}
-
-
-.porcentaje {
-
-    color: #2f5d50;
-
-    text-align: right;
-}
-
-
-/* =====================================================
    FUENTES
 ===================================================== */
 
@@ -695,6 +660,8 @@ button {
 
     justify-content:
         space-between;
+
+    align-items: center;
 
     padding: 13px;
 
@@ -894,18 +861,36 @@ footer {
     }
 
 
-    .comparacion-fila {
-
-        grid-template-columns:
-            100px 1fr 40px;
-
-        gap: 8px;
-    }
-
-
     .bloque {
 
         padding: 14px 10px;
+    }
+
+
+    .grafico {
+    gap: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+
+    .barra {
+
+        flex-basis: 42px;
+
+        max-height: 185px;
+    }
+
+
+    .barra span {
+
+        font-size: .7rem;
+    }
+
+
+    .barra small {
+
+        font-size: .65rem;
     }
 
 }
@@ -929,6 +914,18 @@ footer {
         padding: 8px 5px;
 
         font-size: .75rem;
+    }
+
+
+    .grafico {
+
+        gap: 8px;
+    }
+
+
+    .barra {
+
+        flex-basis: 38px;
     }
 
 }
