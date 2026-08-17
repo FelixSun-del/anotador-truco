@@ -1,8 +1,9 @@
 "use strict";
+const API_URL = "https://anotador-truco-backend.onrender.com";
 
-/* =====================================================
-   ELEMENTOS
-===================================================== */
+// =====================================================
+// ELEMENTOS
+// =====================================================
 
 const elementos = {
 
@@ -36,9 +37,9 @@ const elementos = {
 };
 
 
-/* =====================================================
-   FILTROS
-===================================================== */
+// =====================================================
+// FILTROS
+// =====================================================
 
 const filtros =
     document.querySelectorAll(".filtro");
@@ -64,17 +65,17 @@ filtros.forEach(filtro => {
 });
 
 
-/* =====================================================
-   CARGAR DATOS
-===================================================== */
+// =====================================================
+// CARGAR DATOS
+// =====================================================
 
 async function cargarDatos(dias) {
 
     try {
 
-        /* ---------------------------------------------
-           MOSTRAR CARGANDO
-        --------------------------------------------- */
+        // =================================================
+        // MOSTRAR CARGANDO
+        // =================================================
 
         elementos.visitas.textContent = "…";
         elementos.usuarios.textContent = "…";
@@ -83,49 +84,54 @@ async function cargarDatos(dias) {
         elementos.activos.textContent = "…";
 
 
-        /* ---------------------------------------------
-           CONSULTAS AL BACKEND
-        --------------------------------------------- */
+        // =================================================
+        // CONSULTAS AL BACKEND
+        // =================================================
 
         const [
-            respuestaUsuarios,
-            respuestaVisitas,
-            respuestaInstalaciones,
-            respuestaGrafico,
-            respuestaPaises,
-            respuestaDispositivos
-        ] = await Promise.all([
+    respuestaUsuarios,
+    respuestaVisitas,
+    respuestaInstalaciones,
+    respuestaGrafico,
+    respuestaPaises,
+    respuestaDispositivos,
+    respuestaActivos
+] = await Promise.all([
 
-            fetch(
-                `http://localhost:3000/api/usuarios?dias=${dias}`
-            ),
+    fetch(
+        `${API_URL}/api/usuarios?dias=${dias}`
+    ),
 
-            fetch(
-                `http://localhost:3000/api/visitas?dias=${dias}`
-            ),
+    fetch(
+        `${API_URL}/api/visitas?dias=${dias}`
+    ),
 
-            fetch(
-                `http://localhost:3000/api/instalaciones?dias=${dias}`
-            ),
+    fetch(
+        `${API_URL}/api/instalaciones?dias=${dias}`
+    ),
 
-            fetch(
-                `http://localhost:3000/api/grafico?dias=${dias}`
-            ),
+    fetch(
+        `${API_URL}/api/grafico?dias=${dias}`
+    ),
 
-            fetch(
-                `http://localhost:3000/api/paises?dias=${dias}`
-            ),
+    fetch(
+        `${API_URL}/api/paises?dias=${dias}`
+    ),
 
-            fetch(
-                `http://localhost:3000/api/dispositivos?dias=${dias}`
-            )
+    fetch(
+        `${API_URL}/api/dispositivos?dias=${dias}`
+    ),
 
-        ]);
+    fetch(
+        `${API_URL}/api/activos`
+    )
+
+]);
 
 
-        /* ---------------------------------------------
-           COMPROBAR RESPUESTAS
-        --------------------------------------------- */
+        // =================================================
+        // COMPROBAR RESPUESTAS
+        // =================================================
 
         if (
             !respuestaUsuarios.ok ||
@@ -133,7 +139,8 @@ async function cargarDatos(dias) {
             !respuestaInstalaciones.ok ||
             !respuestaGrafico.ok ||
             !respuestaPaises.ok ||
-            !respuestaDispositivos.ok
+            !respuestaDispositivos.ok ||
+            !respuestaActivos.ok
         ) {
 
             throw new Error(
@@ -143,9 +150,9 @@ async function cargarDatos(dias) {
         }
 
 
-        /* ---------------------------------------------
-           CONVERTIR RESPUESTAS
-        --------------------------------------------- */
+        // =================================================
+        // CONVERTIR RESPUESTAS
+        // =================================================
 
         const usuarios =
             await respuestaUsuarios.json();
@@ -165,10 +172,13 @@ async function cargarDatos(dias) {
         const datosDispositivos =
             await respuestaDispositivos.json();
 
+        const activos =
+            await respuestaActivos.json();
 
-        /* ---------------------------------------------
-           MOSTRAR TARJETAS
-        --------------------------------------------- */
+
+        // =================================================
+        // MOSTRAR TARJETAS
+        // =================================================
 
         elementos.usuarios.textContent =
             Number(
@@ -194,16 +204,13 @@ async function cargarDatos(dias) {
             ).toLocaleString("es-AR");
 
 
-        /* ---------------------------------------------
-           USUARIOS ACTIVOS
-
-           Por ahora usamos el mismo activeUsers
-           obtenido por /api/usuarios.
-        --------------------------------------------- */
+        // =================================================
+        // USUARIOS ACTIVOS AHORA
+        // =================================================
 
         elementos.activos.textContent =
             Number(
-                usuarios.usuarios
+                activos.activos
             ).toLocaleString("es-AR");
 
 
@@ -211,27 +218,27 @@ async function cargarDatos(dias) {
             `${dias} días`;
 
 
-        /* ---------------------------------------------
-           CREAR GRÁFICO
-        --------------------------------------------- */
+        // =================================================
+        // CREAR GRÁFICO
+        // =================================================
 
         crearGrafico(
             datosGrafico.grafico || []
         );
 
 
-        /* ---------------------------------------------
-           CREAR PAÍSES
-        --------------------------------------------- */
+        // =================================================
+        // CREAR PAÍSES
+        // =================================================
 
         crearPaises(
             datosPaises.paises || []
         );
 
 
-        /* ---------------------------------------------
-           CREAR DISPOSITIVOS
-        --------------------------------------------- */
+        // =================================================
+        // CREAR DISPOSITIVOS
+        // =================================================
 
         crearDispositivos(
             datosDispositivos.dispositivos || []
@@ -266,9 +273,9 @@ async function cargarDatos(dias) {
 }
 
 
-/* =====================================================
-   CREAR GRÁFICO
-===================================================== */
+// =====================================================
+// CREAR GRÁFICO
+// =====================================================
 
 function crearGrafico(datosGrafico) {
 
@@ -373,9 +380,9 @@ function crearGrafico(datosGrafico) {
 }
 
 
-/* =====================================================
-   CREAR PAÍSES
-===================================================== */
+// =====================================================
+// CREAR PAÍSES
+// =====================================================
 
 function crearPaises(paises) {
 
@@ -459,9 +466,9 @@ function crearPaises(paises) {
 }
 
 
-/* =====================================================
-   CREAR DISPOSITIVOS
-===================================================== */
+// =====================================================
+// CREAR DISPOSITIVOS
+// =====================================================
 
 function crearDispositivos(dispositivos) {
 
@@ -505,9 +512,9 @@ function crearDispositivos(dispositivos) {
                 : 0;
 
 
-        /* ---------------------------------------------
-           INFORMACIÓN DEL DISPOSITIVO
-        --------------------------------------------- */
+        // =================================================
+        // INFORMACIÓN DEL DISPOSITIVO
+        // =================================================
 
         let icono = "❓";
         let nombre = "Desconocido";
@@ -553,9 +560,9 @@ function crearDispositivos(dispositivos) {
         }
 
 
-        /* ---------------------------------------------
-           CREAR ELEMENTO
-        --------------------------------------------- */
+        // =================================================
+        // CREAR ELEMENTO
+        // =================================================
 
         const elemento =
             document.createElement("div");
@@ -580,8 +587,8 @@ function crearDispositivos(dispositivos) {
 }
 
 
-/* =====================================================
-   INICIO
-===================================================== */
+// =====================================================
+// INICIO
+// =====================================================
 
 cargarDatos(7);
