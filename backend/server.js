@@ -498,6 +498,81 @@ app.get("/api/dispositivos", async (req, res) => {
 
 });
 
+    // =====================================================
+// FUENTES DE TRÁFICO
+// =====================================================
+
+app.get("/api/fuentes", async (req, res) => {
+
+    try {
+
+        const dias =
+            Number(req.query.dias) || 7;
+
+        const response =
+            await obtenerReporte({
+
+                dias,
+
+                dimensions: [
+                    "sessionSource",
+                    "sessionMedium"
+                ],
+
+                metrics: [
+                    "activeUsers"
+                ]
+
+            });
+
+        const fuentes =
+            response.rows?.map(row => {
+
+                const fuente =
+                    row.dimensionValues?.[0]?.value ||
+                    "(not set)";
+
+                const medio =
+                    row.dimensionValues?.[1]?.value ||
+                    "(not set)";
+
+                const usuarios =
+                    Number(
+                        row.metricValues?.[0]?.value || 0
+                    );
+
+                return {
+                    fuente,
+                    medio,
+                    usuarios
+                };
+
+            }) || [];
+
+        fuentes.sort(
+            (a, b) =>
+                b.usuarios - a.usuarios
+        );
+
+        res.json({
+            fuentes
+        });
+
+    } catch (error) {
+
+        console.error(
+            "❌ Error obteniendo fuentes de tráfico:",
+            error
+        );
+
+        res.status(500).json({
+            error:
+                "No se pudieron obtener las fuentes de tráfico"
+        });
+
+    }
+
+});
 
 // =====================================================
 // USUARIOS ACTIVOS AHORA
