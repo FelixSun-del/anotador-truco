@@ -44,6 +44,13 @@ const elementos = {
 
 
 // =====================================================
+// PREPARAR FUENTES
+// =====================================================
+
+elementos.fuentes.classList.add("fuentes");
+
+
+// =====================================================
 // FILTROS
 // =====================================================
 
@@ -56,18 +63,13 @@ filtros.forEach(filtro => {
     filtro.addEventListener("click", () => {
 
         filtros.forEach(otro => {
-
             otro.classList.remove("activo");
-
         });
-
 
         filtro.classList.add("activo");
 
-
         const dias =
             Number(filtro.dataset.dias);
-
 
         cargarDatos(dias);
 
@@ -84,24 +86,12 @@ async function cargarDatos(dias) {
 
     try {
 
-        // =================================================
-        // MOSTRAR CARGANDO
-        // =================================================
-
         elementos.visitas.textContent = "…";
-
         elementos.usuarios.textContent = "…";
-
         elementos.instalaciones.textContent = "…";
-
         elementos.instalacionesPwa.textContent = "…";
-
         elementos.activos.textContent = "…";
 
-
-        // =================================================
-        // CONSULTAS AL BACKEND
-        // =================================================
 
         const [
             respuestaUsuarios,
@@ -150,10 +140,6 @@ async function cargarDatos(dias) {
         ]);
 
 
-        // =================================================
-        // COMPROBAR RESPUESTAS
-        // =================================================
-
         if (
             !respuestaUsuarios.ok ||
             !respuestaVisitas.ok ||
@@ -172,44 +158,33 @@ async function cargarDatos(dias) {
         }
 
 
-        // =================================================
-        // CONVERTIR RESPUESTAS
-        // =================================================
-
         const usuarios =
             await respuestaUsuarios.json();
-
 
         const visitas =
             await respuestaVisitas.json();
 
-
         const instalaciones =
             await respuestaInstalaciones.json();
-
 
         const datosGrafico =
             await respuestaGrafico.json();
 
-
         const datosPaises =
             await respuestaPaises.json();
-
 
         const datosDispositivos =
             await respuestaDispositivos.json();
 
-
         const activos =
             await respuestaActivos.json();
-
 
         const datosFuentes =
             await respuestaFuentes.json();
 
 
         // =================================================
-        // MOSTRAR TARJETAS
+        // TARJETAS
         // =================================================
 
         elementos.usuarios.textContent =
@@ -237,7 +212,7 @@ async function cargarDatos(dias) {
 
 
         // =================================================
-        // USUARIOS ACTIVOS AHORA
+        // USUARIOS ACTIVOS
         // =================================================
 
         elementos.activos.textContent =
@@ -251,35 +226,20 @@ async function cargarDatos(dias) {
 
 
         // =================================================
-        // CREAR GRÁFICO
+        // CONTENIDO
         // =================================================
 
         crearGrafico(
             datosGrafico.grafico || []
         );
 
-
-        // =================================================
-        // CREAR PAÍSES
-        // =================================================
-
         crearPaises(
             datosPaises.paises || []
         );
 
-
-        // =================================================
-        // CREAR DISPOSITIVOS
-        // =================================================
-
         crearDispositivos(
             datosDispositivos.dispositivos || []
         );
-
-
-        // =================================================
-        // CREAR FUENTES
-        // =================================================
 
         crearFuentes(
             datosFuentes.fuentes || []
@@ -294,20 +254,11 @@ async function cargarDatos(dias) {
         );
 
 
-        elementos.visitas.textContent =
-            "Error";
-
-        elementos.usuarios.textContent =
-            "Error";
-
-        elementos.instalaciones.textContent =
-            "Error";
-
-        elementos.instalacionesPwa.textContent =
-            "Error";
-
-        elementos.activos.textContent =
-            "Error";
+        elementos.visitas.textContent = "Error";
+        elementos.usuarios.textContent = "Error";
+        elementos.instalaciones.textContent = "Error";
+        elementos.instalacionesPwa.textContent = "Error";
+        elementos.activos.textContent = "Error";
 
     }
 
@@ -328,19 +279,15 @@ function crearGrafico(datosGrafico) {
         const mensaje =
             document.createElement("div");
 
-
         mensaje.textContent =
             "No hay datos para este período.";
-
 
         mensaje.className =
             "grafico-vacio";
 
-
         elementos.grafico.appendChild(
             mensaje
         );
-
 
         return;
 
@@ -361,7 +308,6 @@ function crearGrafico(datosGrafico) {
         const barra =
             document.createElement("div");
 
-
         barra.className =
             "barra";
 
@@ -376,20 +322,12 @@ function crearGrafico(datosGrafico) {
                 : 0;
 
 
-        /*
-         * El gráfico tiene un máximo visual
-         * de 205px en PC y 185px en celular.
-         *
-         * El CSS limita la altura máxima.
-         */
-
         barra.style.height =
             `${porcentaje}%`;
 
 
         const numero =
             document.createElement("span");
-
 
         numero.textContent =
             visitas.toLocaleString("es-AR");
@@ -416,19 +354,10 @@ function crearGrafico(datosGrafico) {
         }
 
 
-        barra.appendChild(
-            numero
-        );
+        barra.appendChild(numero);
+        barra.appendChild(etiqueta);
 
-
-        barra.appendChild(
-            etiqueta
-        );
-
-
-        elementos.grafico.appendChild(
-            barra
-        );
+        elementos.grafico.appendChild(barra);
 
     });
 
@@ -483,14 +412,12 @@ function crearPaises(paises) {
         const fila =
             document.createElement("div");
 
-
         fila.className =
             "fila";
 
 
         const nombre =
             document.createElement("span");
-
 
         nombre.textContent =
             pais.pais === "(not set)"
@@ -501,24 +428,14 @@ function crearPaises(paises) {
         const porcentajeElemento =
             document.createElement("strong");
 
-
         porcentajeElemento.textContent =
             `${porcentaje}%`;
 
 
-        fila.appendChild(
-            nombre
-        );
+        fila.appendChild(nombre);
+        fila.appendChild(porcentajeElemento);
 
-
-        fila.appendChild(
-            porcentajeElemento
-        );
-
-
-        elementos.listaPaises.appendChild(
-            fila
-        );
+        elementos.listaPaises.appendChild(fila);
 
     });
 
@@ -571,22 +488,16 @@ function crearDispositivos(dispositivos) {
                 : 0;
 
 
-        let icono =
-            "❓";
-
-        let nombre =
-            "Desconocido";
+        let icono = "❓";
+        let nombre = "Desconocido";
 
 
         if (
             dispositivo.dispositivo === "mobile"
         ) {
 
-            icono =
-                "📱";
-
-            nombre =
-                "Celular";
+            icono = "📱";
+            nombre = "Celular";
 
         }
 
@@ -595,11 +506,8 @@ function crearDispositivos(dispositivos) {
             dispositivo.dispositivo === "desktop"
         ) {
 
-            icono =
-                "💻";
-
-            nombre =
-                "PC";
+            icono = "💻";
+            nombre = "PC";
 
         }
 
@@ -608,31 +516,14 @@ function crearDispositivos(dispositivos) {
             dispositivo.dispositivo === "tablet"
         ) {
 
-            icono =
-                "📟";
-
-            nombre =
-                "Tablet";
-
-        }
-
-
-        if (
-            dispositivo.dispositivo === "(not set)"
-        ) {
-
-            icono =
-                "❓";
-
-            nombre =
-                "Desconocido";
+            icono = "📟";
+            nombre = "Tablet";
 
         }
 
 
         const elemento =
             document.createElement("div");
-
 
         elemento.className =
             "dispositivo";
@@ -677,10 +568,6 @@ function crearFuentes(fuentes) {
     }
 
 
-    // =================================================
-    // AGRUPAR FUENTES
-    // =================================================
-
     const fuentesAgrupadas = {};
 
 
@@ -693,7 +580,6 @@ function crearFuentes(fuentes) {
 
 
         let nombre;
-
         let icono;
 
 
@@ -701,75 +587,51 @@ function crearFuentes(fuentes) {
             fuenteOriginal === "(direct)"
         ) {
 
-            nombre =
-                "Enlace directo";
-
-            icono =
-                "🔗";
+            nombre = "Enlace directo";
+            icono = "🔗";
 
         } else if (
             fuenteOriginal === "(not set)"
         ) {
 
-            nombre =
-                "Desconocido";
-
-            icono =
-                "❓";
+            nombre = "Desconocido";
+            icono = "❓";
 
         } else if (
             fuenteOriginal.includes("chatgpt")
         ) {
 
-            nombre =
-                "ChatGPT";
-
-            icono =
-                "🤖";
+            nombre = "ChatGPT";
+            icono = "🤖";
 
         } else if (
             fuenteOriginal.includes("github")
         ) {
 
-            nombre =
-                "GitHub";
-
-            icono =
-                "💻";
+            nombre = "GitHub";
+            icono = "💻";
 
         } else if (
             fuenteOriginal.includes("google")
         ) {
 
-            nombre =
-                "Google";
-
-            icono =
-                "🔎";
+            nombre = "Google";
+            icono = "🔎";
 
         } else {
 
-            nombre =
-                fuente.fuente;
-
-            icono =
-                "🔗";
+            nombre = fuente.fuente;
+            icono = "🔗";
 
         }
 
 
-        if (
-            !fuentesAgrupadas[nombre]
-        ) {
+        if (!fuentesAgrupadas[nombre]) {
 
             fuentesAgrupadas[nombre] = {
-
                 nombre,
-
                 icono,
-
                 usuarios: 0
-
             };
 
         }
@@ -797,19 +659,11 @@ function crearFuentes(fuentes) {
         );
 
 
-    // =================================================
-    // ORDENAR
-    // =================================================
-
     fuentesFinales.sort(
         (a, b) =>
             b.usuarios - a.usuarios
     );
 
-
-    // =================================================
-    // MOSTRAR
-    // =================================================
 
     fuentesFinales.forEach(fuente => {
 

@@ -6,7 +6,6 @@
 
 
 body {
-
     min-height: 100vh;
 
     font-family:
@@ -34,7 +33,6 @@ body {
 
 
 button {
-
     font-family: inherit;
 
     -webkit-tap-highlight-color:
@@ -49,9 +47,7 @@ button {
 ===================================================== */
 
 .panel {
-
     width: 100%;
-
     max-width: 1150px;
 
     margin: auto;
@@ -97,7 +93,6 @@ button {
 ===================================================== */
 
 .encabezado-admin {
-
     display: flex;
 
     justify-content:
@@ -112,7 +107,6 @@ button {
 
 
 .encabezado-admin h1 {
-
     color: #2f5d50;
 
     font-size: 2rem;
@@ -122,7 +116,6 @@ button {
 
 
 .encabezado-admin p {
-
     color: #6d5b48;
 
     font-weight: bold;
@@ -130,7 +123,6 @@ button {
 
 
 .estado-conexion {
-
     display: flex;
 
     align-items: center;
@@ -154,9 +146,7 @@ button {
 
 
 .punto {
-
     width: 9px;
-
     height: 9px;
 
     border-radius: 50%;
@@ -174,7 +164,6 @@ button {
 ===================================================== */
 
 .filtros {
-
     display: flex;
 
     gap: 8px;
@@ -184,7 +173,6 @@ button {
 
 
 .filtro {
-
     border:
         2px solid #c9b99d;
 
@@ -205,7 +193,6 @@ button {
 
 
 .filtro:hover {
-
     transform:
         translateY(-2px);
 
@@ -219,7 +206,6 @@ button {
 
 
 .filtro.activo {
-
     background: #2f5d50;
 
     border-color:
@@ -230,7 +216,6 @@ button {
 
 
 .filtro:active {
-
     transform:
         translateY(2px)
         scale(.96);
@@ -242,7 +227,6 @@ button {
 ===================================================== */
 
 .resumen {
-
     display: grid;
 
     grid-template-columns:
@@ -255,7 +239,6 @@ button {
 
 
 .tarjeta {
-
     display: flex;
 
     align-items: center;
@@ -277,7 +260,6 @@ button {
 
 
 .tarjeta:hover {
-
     transform:
         translateY(-3px);
 
@@ -288,13 +270,11 @@ button {
 
 
 .icono {
-
     font-size: 1.8rem;
 }
 
 
 .tarjeta p {
-
     color: #6d5b48;
 
     font-size: .85rem;
@@ -304,7 +284,6 @@ button {
 
 
 .tarjeta strong {
-
     color: #2f5d50;
 
     font-size: 1.55rem;
@@ -316,7 +295,6 @@ button {
 ===================================================== */
 
 .bloque {
-
     background:
         rgba(255,255,255,.45);
 
@@ -332,7 +310,6 @@ button {
 
 
 .bloque h2 {
-
     color: #4a3928;
 
     margin-bottom: 3px;
@@ -340,7 +317,6 @@ button {
 
 
 .descripcion {
-
     color: #6d5b48;
 
     font-size: .85rem;
@@ -350,7 +326,6 @@ button {
 
 
 .titulo-bloque {
-
     display: flex;
 
     justify-content:
@@ -361,7 +336,6 @@ button {
 
 
 .etiqueta {
-
     padding: 6px 10px;
 
     border-radius: 15px;
@@ -382,7 +356,6 @@ button {
 ===================================================== */
 
 .grafico {
-
     height: 280px;
 
     display: flex;
@@ -395,11 +368,11 @@ button {
 
     padding: 35px 10px 45px;
 
-    border-bottom: 2px solid #c9b99d;
+    border-bottom:
+        2px solid #c9b99d;
 
     overflow: visible;
 }
-
 
 
 /* =====================================================
@@ -407,7 +380,6 @@ button {
 ===================================================== */
 
 .barra {
-
     flex: 1 1 0;
 
     min-width: 0;
@@ -418,7 +390,8 @@ button {
 
     background: #2f5d50;
 
-    border-radius: 7px 7px 0 0;
+    border-radius:
+        7px 7px 0 0;
 
     position: relative;
 
@@ -431,28 +404,26 @@ button {
 }
 
 
-/* ==========================================
-   CUANDO HAY MUCHOS DÍAS
-========================================== */
+/* =====================================================
+   MUCHOS DÍAS
+===================================================== */
 
 .grafico:has(.barra:nth-child(15)) {
-
     justify-content: flex-start;
 
     overflow-x: auto;
-
     overflow-y: visible;
 
     gap: 8px;
+
+    scrollbar-width: thin;
 }
 
 
 .grafico:has(.barra:nth-child(15)) .barra {
-
     flex: 0 0 42px;
 
     min-width: 42px;
-
     max-width: 42px;
 }
 
@@ -462,11 +433,9 @@ button {
 ===================================================== */
 
 .barra span {
-
     position: absolute;
 
     top: -27px;
-
     left: 0;
 
     width: 100%;
@@ -488,7 +457,6 @@ button {
 ===================================================== */
 
 .barra small {
-
     position: absolute;
 
     bottom: -32px;
@@ -510,15 +478,12 @@ button {
 ===================================================== */
 
 .grafico-vacio {
-
     width: 100%;
-
     height: 100%;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     color: #6d5b48;
@@ -532,7 +497,6 @@ button {
 ===================================================== */
 
 .dos-columnas {
-
     display: grid;
 
     grid-template-columns:
@@ -547,7 +511,6 @@ button {
 ===================================================== */
 
 .fila {
-
     display: flex;
 
     justify-content:
@@ -561,13 +524,11 @@ button {
 
 
 .fila:last-child {
-
     border-bottom: none;
 }
 
 
 .fila strong {
-
     color: #2f5d50;
 }
 
@@ -577,7 +538,6 @@ button {
 ===================================================== */
 
 .dispositivos {
-
     display: grid;
 
     grid-template-columns:
@@ -588,7 +548,6 @@ button {
 
 
 .dispositivo {
-
     text-align: center;
 
     padding: 15px 5px;
@@ -603,7 +562,6 @@ button {
 
 
 .dispositivo:hover {
-
     transform:
         translateY(-2px);
 
@@ -614,7 +572,6 @@ button {
 
 
 .dispositivo span {
-
     display: block;
 
     font-size: 1.7rem;
@@ -624,7 +581,6 @@ button {
 
 
 .dispositivo strong {
-
     display: block;
 
     color: #2f5d50;
@@ -634,7 +590,6 @@ button {
 
 
 .dispositivo small {
-
     color: #6d5b48;
 }
 
@@ -644,7 +599,16 @@ button {
 ===================================================== */
 
 .fuentes {
+    display: grid;
 
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+}
+
+
+#listaFuentes {
     display: grid;
 
     grid-template-columns:
@@ -655,7 +619,6 @@ button {
 
 
 .fuente {
-
     display: flex;
 
     justify-content:
@@ -675,7 +638,6 @@ button {
 
 
 .fuente:hover {
-
     transform:
         translateX(3px);
 
@@ -685,7 +647,6 @@ button {
 
 
 .fuente strong {
-
     color: #2f5d50;
 }
 
@@ -695,7 +656,6 @@ button {
 ===================================================== */
 
 .instalacion {
-
     display: flex;
 
     align-items: center;
@@ -712,13 +672,11 @@ button {
 
 
 .instalacion > span {
-
     font-size: 2.2rem;
 }
 
 
 .instalacion strong {
-
     color: #2f5d50;
 
     font-size: 1.7rem;
@@ -726,7 +684,6 @@ button {
 
 
 .instalacion p {
-
     color: #6d5b48;
 }
 
@@ -736,7 +693,6 @@ button {
 ===================================================== */
 
 code {
-
     background:
         rgba(47,93,80,.1);
 
@@ -747,7 +703,6 @@ code {
 
 
 .aviso {
-
     margin-top: 15px;
 
     padding: 13px;
@@ -767,7 +722,6 @@ code {
 
 
 footer {
-
     text-align: center;
 
     margin-top: 25px;
@@ -787,7 +741,6 @@ footer {
 @media (max-width: 750px) {
 
     body {
-
         padding: 6px;
 
         align-items: flex-start;
@@ -795,7 +748,6 @@ footer {
 
 
     .panel {
-
         padding: 16px 10px;
 
         border-radius: 8px;
@@ -803,7 +755,6 @@ footer {
 
 
     .encabezado-admin {
-
         flex-direction: column;
 
         text-align: center;
@@ -813,13 +764,11 @@ footer {
 
 
     .encabezado-admin h1 {
-
         font-size: 1.55rem;
     }
 
 
     .resumen {
-
         grid-template-columns:
             1fr 1fr;
 
@@ -828,7 +777,6 @@ footer {
 
 
     .tarjeta {
-
         padding: 12px 8px;
 
         gap: 7px;
@@ -836,46 +784,41 @@ footer {
 
 
     .icono {
-
         font-size: 1.35rem;
     }
 
 
     .tarjeta strong {
-
         font-size: 1.2rem;
     }
 
 
     .dos-columnas {
-
         grid-template-columns:
             1fr;
     }
 
 
-    .fuentes {
-
+    #listaFuentes {
         grid-template-columns:
             1fr;
     }
 
 
     .bloque {
-
         padding: 14px 10px;
     }
 
 
     .grafico {
-    gap: 5px;
-    padding-left: 4px;
-    padding-right: 4px;
-}
+        gap: 5px;
+
+        padding-left: 4px;
+        padding-right: 4px;
+    }
 
 
     .barra {
-
         flex-basis: 42px;
 
         max-height: 185px;
@@ -883,13 +826,11 @@ footer {
 
 
     .barra span {
-
         font-size: .7rem;
     }
 
 
     .barra small {
-
         font-size: .65rem;
     }
 
@@ -899,7 +840,6 @@ footer {
 @media (max-width: 380px) {
 
     .tarjeta {
-
         flex-direction:
             column;
 
@@ -908,7 +848,6 @@ footer {
 
 
     .filtro {
-
         flex: 1;
 
         padding: 8px 5px;
@@ -918,13 +857,11 @@ footer {
 
 
     .grafico {
-
         gap: 8px;
     }
 
 
     .barra {
-
         flex-basis: 38px;
     }
 
