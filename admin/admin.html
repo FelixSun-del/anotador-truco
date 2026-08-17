@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin · Anotador de Truco</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<main class="panel">
+
+    <!-- ENCABEZADO -->
+
+    <header class="encabezado-admin">
+
+        <div>
+            <h1>📊 Admin Panel</h1>
+            <p>Anotador de Truco</p>
+        </div>
+
+        <div class="estado-conexion">
+            <span class="punto"></span>
+            Panel administrativo
+        </div>
+
+    </header>
+
+
+    <!-- FILTROS -->
+
+    <section class="filtros">
+
+        <button
+            class="filtro activo"
+            data-dias="7"
+        >
+            Últimos 7 días
+        </button>
+
+        <button
+            class="filtro"
+            data-dias="30"
+        >
+            Últimos 30 días
+        </button>
+
+    </section>
+
+
+    <!-- RESUMEN -->
+
+    <section class="resumen">
+
+        <article class="tarjeta">
+
+            <span class="icono">👁️</span>
+
+            <div>
+                <p>Visitas</p>
+                <strong id="visitas">1.284</strong>
+            </div>
+
+        </article>
+
+
+        <article class="tarjeta">
+
+            <span class="icono">👥</span>
+
+            <div>
+                <p>Usuarios</p>
+                <strong id="usuarios">436</strong>
+            </div>
+
+        </article>
+
+
+        <article class="tarjeta">
+
+            <span class="icono">📥</span>
+
+            <div>
+                <p>Instalaciones</p>
+                <strong id="instalaciones">87</strong>
+            </div>
+
+        </article>
+
+
+        <article class="tarjeta">
+
+            <span class="icono">🟢</span>
+
+            <div>
+                <p>Usuarios activos</p>
+                <strong id="activos">24</strong>
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- VISITAS -->
+
+    <section class="bloque">
+
+        <div class="titulo-bloque">
+
+            <div>
+                <h2>📈 Visitas</h2>
+
+                <p class="descripcion">
+                    Visitas registradas por día
+                </p>
+            </div>
+
+            <span
+                class="etiqueta"
+                id="periodoGrafico"
+            >
+                7 días
+            </span>
+
+        </div>
+
+
+        <div
+            class="grafico"
+            id="grafico"
+        ></div>
+
+    </section>
+
+
+    <!-- DOS COLUMNAS -->
+
+    <section class="dos-columnas">
+
+
+        <!-- PAÍSES -->
+
+        <article class="bloque">
+
+            <h2>🌎 Países</h2>
+
+            <p class="descripcion">
+                País de procedencia de los visitantes
+            </p>
+
+
+            <div class="lista" id="listaPaises">
+
+                
+
+            </div>
+
+        </article>
+
+
+        <!-- DISPOSITIVOS -->
+
+        <article class="bloque">
+
+    <h2>📱 Dispositivos</h2>
+
+    <p class="descripcion">
+        Tipo de dispositivo utilizado
+    </p>
+
+    <div class="dispositivos" id="listaDispositivos">
+
+    </div>
+
+</article>
+
+    </section>
+
+
+    <!-- PC VS CELULAR -->
+
+    <section class="bloque">
+
+        <h2>💻 PC vs celular</h2>
+
+        <p class="descripcion">
+            Comparación de visitantes según dispositivo
+        </p>
+
+
+        <div class="comparacion">
+
+            <div class="comparacion-fila">
+
+                <div class="comparacion-nombre">
+                    <span>📱</span>
+                    <strong>Celular</strong>
+                </div>
+
+                <div class="barra-fondo">
+
+                    <div
+                        class="barra-progreso celular"
+                        style="width: 68%"
+                    ></div>
+
+                </div>
+
+                <strong class="porcentaje">
+                    68%
+                </strong>
+
+            </div>
+
+
+            <div class="comparacion-fila">
+
+                <div class="comparacion-nombre">
+                    <span>💻</span>
+                    <strong>PC</strong>
+                </div>
+
+                <div class="barra-fondo">
+
+                    <div
+                        class="barra-progreso pc"
+                        style="width: 29%"
+                    ></div>
+
+                </div>
+
+                <strong class="porcentaje">
+                    29%
+                </strong>
+
+            </div>
+
+
+            <div class="comparacion-fila">
+
+                <div class="comparacion-nombre">
+                    <span>📟</span>
+                    <strong>Tablet</strong>
+                </div>
+
+                <div class="barra-fondo">
+
+                    <div
+                        class="barra-progreso tablet"
+                        style="width: 3%"
+                    ></div>
+
+                </div>
+
+                <strong class="porcentaje">
+                    3%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FUENTES -->
+
+    <section class="bloque">
+
+        <h2>🔗 De dónde llegó la gente</h2>
+
+        <p class="descripcion">
+            Fuentes de tráfico
+        </p>
+
+
+        <div class="fuentes">
+
+            <div class="fuente">
+                <span>🎵 TikTok</span>
+                <strong>43%</strong>
+            </div>
+
+            <div class="fuente">
+                <span>🔎 Google</span>
+                <strong>27%</strong>
+            </div>
+
+            <div class="fuente">
+                <span>🔗 Enlace directo</span>
+                <strong>18%</strong>
+            </div>
+
+            <div class="fuente">
+                <span>📱 Redes sociales</span>
+                <strong>12%</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INSTALACIONES -->
+
+    <section class="bloque">
+
+        <h2>📥 Instalaciones de la PWA</h2>
+
+        <p class="descripcion">
+            Instalaciones registradas mediante
+            <code>pwa_installed</code>
+        </p>
+
+
+        <div class="instalacion">
+
+            <span>📱</span>
+
+            <div>
+
+                <strong id="instalacionesPwa">
+                    87
+                </strong>
+
+                <p>instalaciones</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- AVISO -->
+
+    <div class="aviso">
+
+        ⚠️ <strong>Modo de demostración.</strong>
+
+        Los números mostrados actualmente son de prueba.
+        Los reemplazaremos por datos reales al conectar
+        Google Analytics.
+
+    </div>
+
+
+    <!-- PIE -->
+
+    <footer>
+
+        <p>
+            Anotador de Truco · Panel administrativo
+        </p>
+
+        <p>
+            © 2026 FélixSun
+        </p>
+
+    </footer>
+
+</main>
+
+
+<script src="admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+NO_PUBLICAR/
+node_modules/
+google-credentials.json
+.env
