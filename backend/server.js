@@ -21,11 +21,19 @@ app.use(express.json());
 // GOOGLE ANALYTICS
 // =====================================================
 
+// En tu PC:
+// GOOGLE_APPLICATION_CREDENTIALS apunta a tu archivo JSON.
+//
+// En el hosting:
+// vamos a configurar esta variable desde el panel del hosting.
+
 const analyticsDataClient =
     new BetaAnalyticsDataClient({
         keyFilename:
             process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-            "./NO_PUBLICAR/google-credentials.json"
+            (process.env.RENDER
+                ? "/etc/secrets/google-credentials.json"
+                : "./NO_PUBLICAR/google-credentials.json")
     });
 
 
@@ -549,7 +557,7 @@ app.listen(
     () => {
 
         console.log(
-            `🚀 Backend funcionando en http://localhost:${PORT}`
+            `🚀 Backend funcionando en http://0.0.0.0:${PORT}`
         );
 
     }
