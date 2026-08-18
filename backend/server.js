@@ -1,11 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const admin = require("firebase-admin");
+
+const { initializeApp, cert } = require("firebase-admin/app");
+const { getAuth } = require("firebase-admin/auth");
 
 const {
     BetaAnalyticsDataClient
 } = require("@google-analytics/data");
-
 const app = express();
 
 // =====================================================
@@ -18,8 +19,8 @@ const serviceAccount = require(
         : "./NO_PUBLICAR/anotador-de-truco-83ae4-firebase-adminsdk-fbsvc-73b944571e.json"
 );
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+initializeApp({
+    credential: cert(serviceAccount)
 });
 
 // =====================================================
@@ -69,7 +70,7 @@ async function verificarAdministrador(req, res, next) {
             authorization.split("Bearer ")[1];
 
         const usuario =
-            await admin.auth().verifyIdToken(token);
+    await getAuth().verifyIdToken(token);
 
         if (
             !usuario.email ||
