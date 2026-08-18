@@ -1,10 +1,36 @@
 const express = require("express");
 const cors = require("cors");
+const admin = require("firebase-admin");
+
 const {
     BetaAnalyticsDataClient
 } = require("@google-analytics/data");
 
 const app = express();
+
+
+// =====================================================
+// FIREBASE ADMIN
+// =====================================================
+
+const serviceAccount = require(
+    "./NO_PUBLICAR/anotador-de-truco-83ae4-firebase-adminsdk-fbsvc-73b944571e.json"
+);
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+
+// =====================================================
+// ADMINISTRADORES AUTORIZADOS
+// =====================================================
+
+const ADMIN_EMAILS = [
+    "f341274@gmail.com",
+    "dylasun271203@gmail.com"
+];
+
 
 // =====================================================
 // CONFIGURACIÓN
@@ -18,22 +44,77 @@ app.use(express.json());
 
 
 // =====================================================
-// GOOGLE ANALYTICS
+// VERIFICAR ADMINISTRADOR
 // =====================================================
 
-// En tu PC:
-// GOOGLE_APPLICATION_CREDENTIALS apunta a tu archivo JSON.
-//
-// En el hosting:
-// vamos a configurar esta variable desde el panel del hosting.
+async function verificarAdministrador(req, res, next) {
+
+    try {
+
+        const authorization =
+            req.headers.authorization;
+
+        if (
+            !authorization ||
+            !authorization.startsWith("Bearer ")
+        ) {
+
+            return res.status(401).json({
+                error: "No autenticado"
+            });
+
+        }
+
+        const token =
+            authorization.split("Bearer ")[1];
+
+        const usuario =
+            await admin.auth().verifyIdToken(token);
+
+        if (
+            !usuario.email ||
+            !ADMIN_EMAILS.includes(usuario.email)
+        ) {
+
+            return res.status(403).json({
+                error: "No autorizado"
+            });
+
+        }
+
+        req.usuario = usuario;
+
+        next();
+
+    } catch (error) {
+
+        console.error(
+            "❌ Error verificando autenticación:",
+            error
+        );
+
+        return res.status(401).json({
+            error: "Token inválido o expirado"
+        });
+
+    }
+
+}
+
+
+// =====================================================
+// GOOGLE ANALYTICS
+// =====================================================
 
 const analyticsDataClient =
     new BetaAnalyticsDataClient({
         keyFilename:
             process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-            (process.env.RENDER
-                ? "/etc/secrets/google-credentials.json"
-                : "./NO_PUBLICAR/google-credentials.json")
+            (
+                process.env.RENDER
+                    ? "/etc/secrets/google-credentials.json"
+                    : "./NO_PUBLICAR/google-credentials.json"
+            )
     });
 
 
@@ -69,6 +150,7 @@ async function obtenerReporte({
                 metrics.map(nombre => ({
                     name: nombre
                 }))
+
         });
 
     return response;
@@ -94,532 +176,562 @@ app.get("/", (req, res) => {
 // USUARIOS
 // =====================================================
 
-app.get("/api/usuarios", async (req, res) => {
+app.get(
+    "/api/usuarios",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                metrics: [
-                    "activeUsers"
-                ]
+                    metrics: [
+                        "activeUsers"
+                    ]
 
+                });
+
+            const usuarios =
+                response.rows?.[0]
+                    ?.metricValues?.[0]
+                    ?.value || "0";
+
+            res.json({
+                usuarios: Number(usuarios)
             });
 
-        const usuarios =
-            response.rows?.[0]
-                ?.metricValues?.[0]
-                ?.value || "0";
+        } catch (error) {
 
-        res.json({
-            usuarios: Number(usuarios)
-        });
+            console.error(
+                "❌ Error obteniendo usuarios:",
+                error
+            );
 
-    } catch (error) {
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener los usuarios"
+            });
 
-        console.error(
-            "❌ Error obteniendo usuarios:",
-            error
-        );
-
-        res.status(500).json({
-            error:
-                "No se pudieron obtener los usuarios"
-        });
+        }
 
     }
-
-});
+);
 
 
 // =====================================================
 // VISITAS
 // =====================================================
 
-app.get("/api/visitas", async (req, res) => {
+app.get(
+    "/api/visitas",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                metrics: [
-                    "eventCount"
-                ]
+                    metrics: [
+                        "eventCount"
+                    ]
 
+                });
+
+            const visitas =
+                response.rows?.[0]
+                    ?.metricValues?.[0]
+                    ?.value || "0";
+
+            res.json({
+                visitas: Number(visitas)
             });
 
-        const visitas =
-            response.rows?.[0]
-                ?.metricValues?.[0]
-                ?.value || "0";
+        } catch (error) {
 
-        res.json({
-            visitas: Number(visitas)
-        });
+            console.error(
+                "❌ Error obteniendo visitas:",
+                error
+            );
 
-    } catch (error) {
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener las visitas"
+            });
 
-        console.error(
-            "❌ Error obteniendo visitas:",
-            error
-        );
-
-        res.status(500).json({
-            error:
-                "No se pudieron obtener las visitas"
-        });
+        }
 
     }
-
-});
+);
 
 
 // =====================================================
 // INSTALACIONES
 // =====================================================
 
-app.get("/api/instalaciones", async (req, res) => {
+app.get(
+    "/api/instalaciones",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                dimensions: [
-                    "eventName"
-                ],
+                    dimensions: [
+                        "eventName"
+                    ],
 
-                metrics: [
-                    "eventCount"
-                ]
+                    metrics: [
+                        "eventCount"
+                    ]
 
+                });
+
+            const fila =
+                response.rows?.find(
+                    row =>
+                        row.dimensionValues?.[0]
+                            ?.value === "pwa_installed"
+                );
+
+            const instalaciones =
+                fila
+                    ?.metricValues?.[0]
+                    ?.value || "0";
+
+            res.json({
+                instalaciones:
+                    Number(instalaciones)
             });
 
-        const fila =
-            response.rows?.find(
-                row =>
-                    row.dimensionValues?.[0]
-                        ?.value === "pwa_installed"
+        } catch (error) {
+
+            console.error(
+                "❌ Error obteniendo instalaciones:",
+                error
             );
 
-        const instalaciones =
-            fila
-                ?.metricValues?.[0]
-                ?.value || "0";
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener las instalaciones"
+            });
 
-        res.json({
-            instalaciones:
-                Number(instalaciones)
-        });
-
-    } catch (error) {
-
-        console.error(
-            "❌ Error obteniendo instalaciones:",
-            error
-        );
-
-        res.status(500).json({
-            error:
-                "No se pudieron obtener las instalaciones"
-        });
+        }
 
     }
-
-});
+);
 
 
 // =====================================================
 // GRÁFICO DE VISITAS POR DÍA
 // =====================================================
 
-app.get("/api/grafico", async (req, res) => {
+app.get(
+    "/api/grafico",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                dimensions: [
-                    "date"
-                ],
+                    dimensions: [
+                        "date"
+                    ],
 
-                metrics: [
-                    "eventCount"
-                ]
+                    metrics: [
+                        "eventCount"
+                    ]
+
+                });
+
+            const datosAnalytics = {};
+
+            response.rows?.forEach(row => {
+
+                const fecha =
+                    row.dimensionValues?.[0]?.value;
+
+                const visitas =
+                    Number(
+                        row.metricValues?.[0]?.value || 0
+                    );
+
+                if (fecha) {
+
+                    datosAnalytics[fecha] =
+                        visitas;
+
+                }
 
             });
 
-        const datosAnalytics = {};
+            const grafico = [];
 
-        response.rows?.forEach(row => {
+            const hoy =
+                new Date();
 
-            const fecha =
-                row.dimensionValues?.[0]?.value;
+            for (
+                let i = dias - 1;
+                i >= 0;
+                i--
+            ) {
 
-            const visitas =
-                Number(
-                    row.metricValues?.[0]?.value || 0
+                const fecha =
+                    new Date(hoy);
+
+                fecha.setDate(
+                    hoy.getDate() - i
                 );
 
-            if (fecha) {
+                const año =
+                    fecha.getFullYear();
 
-                datosAnalytics[fecha] =
-                    visitas;
+                const mes =
+                    String(
+                        fecha.getMonth() + 1
+                    ).padStart(2, "0");
+
+                const dia =
+                    String(
+                        fecha.getDate()
+                    ).padStart(2, "0");
+
+                const fechaFormato =
+                    `${año}${mes}${dia}`;
+
+                grafico.push({
+
+                    dia:
+                        fechaFormato,
+
+                    visitas:
+                        datosAnalytics[
+                            fechaFormato
+                        ] || 0
+
+                });
 
             }
 
-        });
+            res.json({
+                grafico
+            });
 
-        const grafico = [];
+        } catch (error) {
 
-        const hoy =
-            new Date();
-
-        for (
-            let i = dias - 1;
-            i >= 0;
-            i--
-        ) {
-
-            const fecha =
-                new Date(hoy);
-
-            fecha.setDate(
-                hoy.getDate() - i
+            console.error(
+                "❌ Error obteniendo gráfico:",
+                error
             );
 
-            const año =
-                fecha.getFullYear();
-
-            const mes =
-                String(
-                    fecha.getMonth() + 1
-                ).padStart(2, "0");
-
-            const dia =
-                String(
-                    fecha.getDate()
-                ).padStart(2, "0");
-
-            const fechaFormato =
-                `${año}${mes}${dia}`;
-
-            grafico.push({
-
-                dia:
-                    fechaFormato,
-
-                visitas:
-                    datosAnalytics[
-                        fechaFormato
-                    ] || 0
-
+            res.status(500).json({
+                error:
+                    "No se pudo obtener el gráfico"
             });
 
         }
 
-        res.json({
-            grafico
-        });
-
-    } catch (error) {
-
-        console.error(
-            "❌ Error obteniendo gráfico:",
-            error
-        );
-
-        res.status(500).json({
-
-            error:
-                "No se pudo obtener el gráfico"
-
-        });
-
     }
-
-});
+);
 
 
 // =====================================================
 // USUARIOS POR PAÍS
 // =====================================================
 
-app.get("/api/paises", async (req, res) => {
+app.get(
+    "/api/paises",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                dimensions: [
-                    "country"
-                ],
+                    dimensions: [
+                        "country"
+                    ],
 
-                metrics: [
-                    "activeUsers"
-                ]
+                    metrics: [
+                        "activeUsers"
+                    ]
 
+                });
+
+            const paises =
+                response.rows?.map(row => {
+
+                    const pais =
+                        row.dimensionValues?.[0]
+                            ?.value || "(not set)";
+
+                    const usuarios =
+                        Number(
+                            row.metricValues?.[0]
+                                ?.value || 0
+                        );
+
+                    return {
+                        pais,
+                        usuarios
+                    };
+
+                }) || [];
+
+            paises.sort(
+                (a, b) =>
+                    b.usuarios - a.usuarios
+            );
+
+            res.json({
+                paises
             });
 
-        const paises =
-            response.rows?.map(row => {
+        } catch (error) {
 
-                const pais =
-                    row.dimensionValues?.[0]
-                        ?.value || "(not set)";
+            console.error(
+                "❌ Error obteniendo países:",
+                error
+            );
 
-                const usuarios =
-                    Number(
-                        row.metricValues?.[0]
-                            ?.value || 0
-                    );
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener los países"
+            });
 
-                return {
-                    pais,
-                    usuarios
-                };
-
-            }) || [];
-
-        paises.sort(
-            (a, b) =>
-                b.usuarios - a.usuarios
-        );
-
-        res.json({
-            paises
-        });
-
-    } catch (error) {
-
-        console.error(
-            "❌ Error obteniendo países:",
-            error
-        );
-
-        res.status(500).json({
-
-            error:
-                "No se pudieron obtener los países"
-
-        });
+        }
 
     }
-
-});
+);
 
 
 // =====================================================
 // DISPOSITIVOS
 // =====================================================
 
-app.get("/api/dispositivos", async (req, res) => {
+app.get(
+    "/api/dispositivos",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                dimensions: [
-                    "deviceCategory"
-                ],
+                    dimensions: [
+                        "deviceCategory"
+                    ],
 
-                metrics: [
-                    "activeUsers"
-                ]
+                    metrics: [
+                        "activeUsers"
+                    ]
 
+                });
+
+            const dispositivos =
+                response.rows?.map(row => ({
+
+                    dispositivo:
+                        row.dimensionValues?.[0]?.value ||
+                        "(not set)",
+
+                    usuarios:
+                        Number(
+                            row.metricValues?.[0]?.value || 0
+                        )
+
+                })) || [];
+
+            res.json({
+                dispositivos
             });
 
-        const dispositivos =
-            response.rows?.map(row => ({
+        } catch (error) {
 
-                dispositivo:
-                    row.dimensionValues?.[0]?.value ||
-                    "(not set)",
+            console.error(
+                "❌ Error obteniendo dispositivos:",
+                error
+            );
 
-                usuarios:
-                    Number(
-                        row.metricValues?.[0]?.value || 0
-                    )
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener los dispositivos"
+            });
 
-            })) || [];
-
-        res.json({
-            dispositivos
-        });
-
-    } catch (error) {
-
-        console.error(
-            "❌ Error obteniendo dispositivos:",
-            error
-        );
-
-        res.status(500).json({
-            error:
-                "No se pudieron obtener los dispositivos"
-        });
+        }
 
     }
+);
 
-});
 
-    // =====================================================
+// =====================================================
 // FUENTES DE TRÁFICO
 // =====================================================
 
-app.get("/api/fuentes", async (req, res) => {
+app.get(
+    "/api/fuentes",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const dias =
-            Number(req.query.dias) || 7;
+            const dias =
+                Number(req.query.dias) || 7;
 
-        const response =
-            await obtenerReporte({
+            const response =
+                await obtenerReporte({
 
-                dias,
+                    dias,
 
-                dimensions: [
-                    "sessionSource",
-                    "sessionMedium"
-                ],
+                    dimensions: [
+                        "sessionSource",
+                        "sessionMedium"
+                    ],
 
-                metrics: [
-                    "activeUsers"
-                ]
+                    metrics: [
+                        "activeUsers"
+                    ]
 
+                });
+
+            const fuentes =
+                response.rows?.map(row => {
+
+                    const fuente =
+                        row.dimensionValues?.[0]?.value ||
+                        "(not set)";
+
+                    const medio =
+                        row.dimensionValues?.[1]?.value ||
+                        "(not set)";
+
+                    const usuarios =
+                        Number(
+                            row.metricValues?.[0]?.value || 0
+                        );
+
+                    return {
+                        fuente,
+                        medio,
+                        usuarios
+                    };
+
+                }) || [];
+
+            fuentes.sort(
+                (a, b) =>
+                    b.usuarios - a.usuarios
+            );
+
+            res.json({
+                fuentes
             });
 
-        const fuentes =
-            response.rows?.map(row => {
+        } catch (error) {
 
-                const fuente =
-                    row.dimensionValues?.[0]?.value ||
-                    "(not set)";
+            console.error(
+                "❌ Error obteniendo fuentes de tráfico:",
+                error
+            );
 
-                const medio =
-                    row.dimensionValues?.[1]?.value ||
-                    "(not set)";
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener las fuentes de tráfico"
+            });
 
-                const usuarios =
-                    Number(
-                        row.metricValues?.[0]?.value || 0
-                    );
-
-                return {
-                    fuente,
-                    medio,
-                    usuarios
-                };
-
-            }) || [];
-
-        fuentes.sort(
-            (a, b) =>
-                b.usuarios - a.usuarios
-        );
-
-        res.json({
-            fuentes
-        });
-
-    } catch (error) {
-
-        console.error(
-            "❌ Error obteniendo fuentes de tráfico:",
-            error
-        );
-
-        res.status(500).json({
-            error:
-                "No se pudieron obtener las fuentes de tráfico"
-        });
+        }
 
     }
+);
 
-});
 
 // =====================================================
 // USUARIOS ACTIVOS AHORA
 // =====================================================
 
-app.get("/api/activos", async (req, res) => {
+app.get(
+    "/api/activos",
+    verificarAdministrador,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const [response] =
-            await analyticsDataClient.runRealtimeReport({
+            const [response] =
+                await analyticsDataClient.runRealtimeReport({
 
-                property:
-                    `properties/${PROPERTY_ID}`,
+                    property:
+                        `properties/${PROPERTY_ID}`,
 
-                metrics: [
-                    {
-                        name: "activeUsers"
-                    }
-                ]
+                    metrics: [
+                        {
+                            name: "activeUsers"
+                        }
+                    ]
 
+                });
+
+            const activos =
+                response.rows?.[0]
+                    ?.metricValues?.[0]
+                    ?.value || "0";
+
+            res.json({
+                activos: Number(activos)
             });
 
-        const activos =
-            response.rows?.[0]
-                ?.metricValues?.[0]
-                ?.value || "0";
+        } catch (error) {
 
-        res.json({
-            activos: Number(activos)
-        });
+            console.error(
+                "❌ Error obteniendo usuarios activos:",
+                error
+            );
 
-    } catch (error) {
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener los usuarios activos"
+            });
 
-        console.error(
-            "❌ Error obteniendo usuarios activos:",
-            error
-        );
-
-        res.status(500).json({
-            error:
-                "No se pudieron obtener los usuarios activos"
-        });
+        }
 
     }
-
-});
+);
 
 
 // =====================================================

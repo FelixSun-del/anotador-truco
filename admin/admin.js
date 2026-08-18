@@ -12,14 +12,7 @@ import {
 
 
 // =====================================================
-// NOTA
-// =====================================================
-//
-// Firebase ya fue inicializado en admin.html.
-//
-// Este archivo solamente obtiene la instancia de
-// Authentication y espera a que Firebase confirme
-// que existe un usuario autenticado.
+// FIREBASE
 // =====================================================
 
 const auth = getAuth();
@@ -97,13 +90,10 @@ filtros.forEach(filtro => {
 
         });
 
-
         filtro.classList.add("activo");
-
 
         const dias =
             Number(filtro.dataset.dias);
-
 
         cargarDatos(dias);
 
@@ -141,12 +131,11 @@ async function cargarDatos(dias) {
 
 
         // =================================================
-        // OBTENER TOKEN DE FIREBASE
+        // USUARIO AUTENTICADO
         // =================================================
 
         const usuario =
             auth.currentUser;
-
 
         if (!usuario) {
 
@@ -157,12 +146,16 @@ async function cargarDatos(dias) {
         }
 
 
+        // =================================================
+        // TOKEN DE FIREBASE
+        // =================================================
+
         const token =
             await usuario.getIdToken();
 
 
         // =================================================
-        // CONSULTAS AL BACKEND
+        // OPCIONES DE LAS PETICIONES
         // =================================================
 
         const opciones = {
@@ -176,6 +169,10 @@ async function cargarDatos(dias) {
 
         };
 
+
+        // =================================================
+        // CONSULTAS AL BACKEND
+        // =================================================
 
         const [
 
@@ -264,30 +261,23 @@ async function cargarDatos(dias) {
         const usuarios =
             await respuestaUsuarios.json();
 
-
         const visitas =
             await respuestaVisitas.json();
-
 
         const instalaciones =
             await respuestaInstalaciones.json();
 
-
         const datosGrafico =
             await respuestaGrafico.json();
-
 
         const datosPaises =
             await respuestaPaises.json();
 
-
         const datosDispositivos =
             await respuestaDispositivos.json();
 
-
         const activos =
             await respuestaActivos.json();
-
 
         const datosFuentes =
             await respuestaFuentes.json();
@@ -302,18 +292,15 @@ async function cargarDatos(dias) {
                 usuarios.usuarios
             ).toLocaleString("es-AR");
 
-
         elementos.visitas.textContent =
             Number(
                 visitas.visitas
             ).toLocaleString("es-AR");
 
-
         elementos.instalaciones.textContent =
             Number(
                 instalaciones.instalaciones
             ).toLocaleString("es-AR");
-
 
         elementos.instalacionesPwa.textContent =
             Number(
@@ -343,16 +330,13 @@ async function cargarDatos(dias) {
             datosGrafico.grafico || []
         );
 
-
         crearPaises(
             datosPaises.paises || []
         );
 
-
         crearDispositivos(
             datosDispositivos.dispositivos || []
         );
-
 
         crearFuentes(
             datosFuentes.fuentes || []
@@ -365,7 +349,6 @@ async function cargarDatos(dias) {
             "❌ Error cargando datos:",
             error
         );
-
 
         elementos.visitas.textContent =
             "Error";
@@ -396,25 +379,20 @@ function crearGrafico(datosGrafico) {
     elementos.grafico.innerHTML =
         "";
 
-
     if (!datosGrafico.length) {
 
         const mensaje =
             document.createElement("div");
 
-
         mensaje.textContent =
             "No hay datos para este período.";
-
 
         mensaje.className =
             "grafico-vacio";
 
-
         elementos.grafico.appendChild(
             mensaje
         );
-
 
         return;
 
@@ -435,20 +413,16 @@ function crearGrafico(datosGrafico) {
         const barra =
             document.createElement("div");
 
-
         barra.className =
             "barra";
 
-
         const visitas =
             Number(dato.visitas) || 0;
-
 
         const porcentaje =
             maximo > 0
                 ? (visitas / maximo) * 100
                 : 0;
-
 
         barra.style.height =
             `${porcentaje}%`;
@@ -457,14 +431,12 @@ function crearGrafico(datosGrafico) {
         const numero =
             document.createElement("span");
 
-
         numero.textContent =
             visitas.toLocaleString("es-AR");
 
 
         const etiqueta =
             document.createElement("small");
-
 
         const fecha =
             String(dato.dia);
@@ -487,11 +459,9 @@ function crearGrafico(datosGrafico) {
             numero
         );
 
-
         barra.appendChild(
             etiqueta
         );
-
 
         elementos.grafico.appendChild(
             barra
@@ -510,7 +480,6 @@ function crearPaises(paises) {
 
     elementos.listaPaises.innerHTML =
         "";
-
 
     if (!paises.length) {
 
@@ -551,14 +520,12 @@ function crearPaises(paises) {
         const fila =
             document.createElement("div");
 
-
         fila.className =
             "fila";
 
 
         const nombre =
             document.createElement("span");
-
 
         nombre.textContent =
             pais.pais === "(not set)"
@@ -569,7 +536,6 @@ function crearPaises(paises) {
         const porcentajeElemento =
             document.createElement("strong");
 
-
         porcentajeElemento.textContent =
             `${porcentaje}%`;
 
@@ -578,11 +544,9 @@ function crearPaises(paises) {
             nombre
         );
 
-
         fila.appendChild(
             porcentajeElemento
         );
-
 
         elementos.listaPaises.appendChild(
             fila
@@ -601,7 +565,6 @@ function crearDispositivos(dispositivos) {
 
     elementos.listaDispositivos.innerHTML =
         "";
-
 
     if (!dispositivos.length) {
 
@@ -692,17 +655,14 @@ function crearDispositivos(dispositivos) {
         const elemento =
             document.createElement("div");
 
-
         elemento.className =
             "dispositivo";
-
 
         elemento.innerHTML = `
             <span>${icono}</span>
             <strong>${porcentaje}%</strong>
             <small>${nombre}</small>
         `;
-
 
         elementos.listaDispositivos.appendChild(
             elemento
@@ -721,7 +681,6 @@ function crearFuentes(fuentes) {
 
     elementos.fuentes.innerHTML =
         "";
-
 
     if (!fuentes.length) {
 
