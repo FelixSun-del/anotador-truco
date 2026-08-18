@@ -8,19 +8,19 @@ const {
 
 const app = express();
 
-
 // =====================================================
 // FIREBASE ADMIN
 // =====================================================
 
 const serviceAccount = require(
-    "./NO_PUBLICAR/anotador-de-truco-83ae4-firebase-adminsdk-fbsvc-73b944571e.json"
+    process.env.RENDER
+        ? "/etc/secrets/firebase-admin.json"
+        : "./NO_PUBLICAR/anotador-de-truco-83ae4-firebase-adminsdk-fbsvc-73b944571e.json"
 );
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-
 
 // =====================================================
 // ADMINISTRADORES AUTORIZADOS
