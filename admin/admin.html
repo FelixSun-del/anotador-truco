@@ -15,20 +15,78 @@
 
 <body>
 
-<main class="panel">
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="login" class="login">
+
+    <div class="login-panel">
+
+        <h1>🔐 Admin Panel</h1>
+
+        <p>
+            Anotador de Truco
+        </p>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Correo electrónico"
+            autocomplete="email"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Contraseña"
+            autocomplete="current-password"
+        >
+
+        <button id="btnLogin">
+            Ingresar
+        </button>
+
+        <p
+            id="mensajeLogin"
+            class="mensaje-login"
+        ></p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PANEL ADMINISTRATIVO
+===================================================== -->
+
+<main
+    class="panel"
+    id="adminPanel"
+    style="display: none;"
+>
 
     <!-- ENCABEZADO -->
 
     <header class="encabezado-admin">
 
         <div>
+
             <h1>📊 Admin Panel</h1>
-            <p>Anotador de Truco</p>
+
+            <p>
+                Anotador de Truco
+            </p>
+
         </div>
 
         <div class="estado-conexion">
+
             <span class="punto"></span>
+
             Panel administrativo
+
         </div>
 
     </header>
@@ -64,8 +122,11 @@
             <span class="icono">👁️</span>
 
             <div>
+
                 <p>Visitas</p>
-                <strong id="visitas">1.284</strong>
+
+                <strong id="visitas">…</strong>
+
             </div>
 
         </article>
@@ -76,8 +137,11 @@
             <span class="icono">👥</span>
 
             <div>
+
                 <p>Usuarios</p>
-                <strong id="usuarios">436</strong>
+
+                <strong id="usuarios">…</strong>
+
             </div>
 
         </article>
@@ -88,8 +152,11 @@
             <span class="icono">📥</span>
 
             <div>
+
                 <p>Instalaciones</p>
-                <strong id="instalaciones">87</strong>
+
+                <strong id="instalaciones">…</strong>
+
             </div>
 
         </article>
@@ -100,8 +167,11 @@
             <span class="icono">🟢</span>
 
             <div>
+
                 <p>Usuarios activos</p>
-                <strong id="activos">24</strong>
+
+                <strong id="activos">…</strong>
+
             </div>
 
         </article>
@@ -116,11 +186,13 @@
         <div class="titulo-bloque">
 
             <div>
+
                 <h2>📈 Visitas</h2>
 
                 <p class="descripcion">
                     Visitas registradas por día
                 </p>
+
             </div>
 
             <span
@@ -144,6 +216,7 @@
     <!-- DOS COLUMNAS -->
 
     <section class="dos-columnas">
+
 
         <!-- PAÍSES -->
 
@@ -205,9 +278,12 @@
         <h2>📥 Instalaciones de la PWA</h2>
 
         <p class="descripcion">
+
             Instalaciones registradas mediante
             <code>pwa_installed</code>
+
         </p>
+
 
         <div class="instalacion">
 
@@ -216,10 +292,12 @@
             <div>
 
                 <strong id="instalacionesPwa">
-                    87
+                    …
                 </strong>
 
-                <p>instalaciones</p>
+                <p>
+                    instalaciones
+                </p>
 
             </div>
 
@@ -257,7 +335,184 @@
 </main>
 
 
-<script src="admin.js"></script>
+<!-- =====================================================
+     FIREBASE AUTHENTICATION
+===================================================== -->
+
+<script type="module">
+
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+
+    import {
+        getAuth,
+        signInWithEmailAndPassword,
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyDoRxqYQzul22__ZpOTmcurjSnM6jL9MeU",
+
+        authDomain:
+            "anotador-de-truco-83ae4.firebaseapp.com",
+
+        projectId:
+            "anotador-de-truco-83ae4",
+
+        storageBucket:
+            "anotador-de-truco-83ae4.firebasestorage.app",
+
+        messagingSenderId:
+            "579527324889",
+
+        appId:
+            "1:579527324889:web:59229e5ab1d9e2f5a57ac8",
+
+        measurementId:
+            "G-X61DWMYGP3"
+
+    };
+
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const auth =
+        getAuth(app);
+
+
+    const login =
+        document.getElementById("login");
+
+
+    const adminPanel =
+        document.getElementById("adminPanel");
+
+
+    const email =
+        document.getElementById("email");
+
+
+    const password =
+        document.getElementById("password");
+
+
+    const btnLogin =
+        document.getElementById("btnLogin");
+
+
+    const mensajeLogin =
+        document.getElementById("mensajeLogin");
+
+
+    // =================================================
+    // INICIAR SESIÓN
+    // =================================================
+
+    btnLogin.addEventListener(
+        "click",
+        async () => {
+
+            const correo =
+                email.value.trim();
+
+
+            const contrasena =
+                password.value;
+
+
+            mensajeLogin.textContent =
+                "";
+
+
+            if (!correo || !contrasena) {
+
+                mensajeLogin.textContent =
+                    "Completá el correo y la contraseña.";
+
+                return;
+
+            }
+
+
+            btnLogin.disabled = true;
+
+            btnLogin.textContent =
+                "Ingresando…";
+
+
+            try {
+
+                await signInWithEmailAndPassword(
+                    auth,
+                    correo,
+                    contrasena
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Error de autenticación:",
+                    error
+                );
+
+
+                mensajeLogin.textContent =
+                    "Correo o contraseña incorrectos.";
+
+            }
+
+
+            btnLogin.disabled = false;
+
+            btnLogin.textContent =
+                "Ingresar";
+
+        }
+    );
+
+
+    // =================================================
+    // COMPROBAR AUTENTICACIÓN
+    // =================================================
+
+    onAuthStateChanged(
+        auth,
+        usuario => {
+
+            if (usuario) {
+
+                // Usuario autenticado
+                login.style.display =
+                    "none";
+
+                adminPanel.style.display =
+                    "block";
+
+            } else {
+
+                // Nadie autenticado
+                login.style.display =
+                    "flex";
+
+                adminPanel.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+</script>
+
+
+<script type="module" src="admin.js"></script>
 
 </body>
 </html>

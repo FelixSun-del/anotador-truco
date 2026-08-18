@@ -1,5 +1,34 @@
 "use strict";
 
+
+// =====================================================
+// FIREBASE AUTHENTICATION
+// =====================================================
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+// =====================================================
+// NOTA
+// =====================================================
+//
+// Firebase ya fue inicializado en admin.html.
+//
+// Este archivo solamente obtiene la instancia de
+// Authentication y espera a que Firebase confirme
+// que existe un usuario autenticado.
+// =====================================================
+
+const auth = getAuth();
+
+
+// =====================================================
+// API
+// =====================================================
+
 const API_URL =
     "https://anotador-truco-backend.onrender.com";
 
@@ -63,13 +92,18 @@ filtros.forEach(filtro => {
     filtro.addEventListener("click", () => {
 
         filtros.forEach(otro => {
+
             otro.classList.remove("activo");
+
         });
+
 
         filtro.classList.add("activo");
 
+
         const dias =
             Number(filtro.dataset.dias);
+
 
         cargarDatos(dias);
 
@@ -86,14 +120,65 @@ async function cargarDatos(dias) {
 
     try {
 
-        elementos.visitas.textContent = "…";
-        elementos.usuarios.textContent = "…";
-        elementos.instalaciones.textContent = "…";
-        elementos.instalacionesPwa.textContent = "…";
-        elementos.activos.textContent = "…";
+        // =================================================
+        // MOSTRAR CARGANDO
+        // =================================================
+
+        elementos.visitas.textContent =
+            "…";
+
+        elementos.usuarios.textContent =
+            "…";
+
+        elementos.instalaciones.textContent =
+            "…";
+
+        elementos.instalacionesPwa.textContent =
+            "…";
+
+        elementos.activos.textContent =
+            "…";
+
+
+        // =================================================
+        // OBTENER TOKEN DE FIREBASE
+        // =================================================
+
+        const usuario =
+            auth.currentUser;
+
+
+        if (!usuario) {
+
+            throw new Error(
+                "No hay un usuario autenticado."
+            );
+
+        }
+
+
+        const token =
+            await usuario.getIdToken();
+
+
+        // =================================================
+        // CONSULTAS AL BACKEND
+        // =================================================
+
+        const opciones = {
+
+            headers: {
+
+                Authorization:
+                    `Bearer ${token}`
+
+            }
+
+        };
 
 
         const [
+
             respuestaUsuarios,
             respuestaVisitas,
             respuestaInstalaciones,
@@ -106,41 +191,54 @@ async function cargarDatos(dias) {
         ] = await Promise.all([
 
             fetch(
-                `${API_URL}/api/usuarios?dias=${dias}`
+                `${API_URL}/api/usuarios?dias=${dias}`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/visitas?dias=${dias}`
+                `${API_URL}/api/visitas?dias=${dias}`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/instalaciones?dias=${dias}`
+                `${API_URL}/api/instalaciones?dias=${dias}`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/grafico?dias=${dias}`
+                `${API_URL}/api/grafico?dias=${dias}`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/paises?dias=${dias}`
+                `${API_URL}/api/paises?dias=${dias}`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/dispositivos?dias=${dias}`
+                `${API_URL}/api/dispositivos?dias=${dias}`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/activos`
+                `${API_URL}/api/activos`,
+                opciones
             ),
 
             fetch(
-                `${API_URL}/api/fuentes?dias=${dias}`
+                `${API_URL}/api/fuentes?dias=${dias}`,
+                opciones
             )
 
         ]);
 
 
+        // =================================================
+        // COMPROBAR RESPUESTAS
+        // =================================================
+
         if (
+
             !respuestaUsuarios.ok ||
             !respuestaVisitas.ok ||
             !respuestaInstalaciones.ok ||
@@ -149,6 +247,7 @@ async function cargarDatos(dias) {
             !respuestaDispositivos.ok ||
             !respuestaActivos.ok ||
             !respuestaFuentes.ok
+
         ) {
 
             throw new Error(
@@ -158,26 +257,37 @@ async function cargarDatos(dias) {
         }
 
 
+        // =================================================
+        // CONVERTIR RESPUESTAS
+        // =================================================
+
         const usuarios =
             await respuestaUsuarios.json();
+
 
         const visitas =
             await respuestaVisitas.json();
 
+
         const instalaciones =
             await respuestaInstalaciones.json();
+
 
         const datosGrafico =
             await respuestaGrafico.json();
 
+
         const datosPaises =
             await respuestaPaises.json();
+
 
         const datosDispositivos =
             await respuestaDispositivos.json();
 
+
         const activos =
             await respuestaActivos.json();
+
 
         const datosFuentes =
             await respuestaFuentes.json();
@@ -233,13 +343,16 @@ async function cargarDatos(dias) {
             datosGrafico.grafico || []
         );
 
+
         crearPaises(
             datosPaises.paises || []
         );
 
+
         crearDispositivos(
             datosDispositivos.dispositivos || []
         );
+
 
         crearFuentes(
             datosFuentes.fuentes || []
@@ -254,11 +367,20 @@ async function cargarDatos(dias) {
         );
 
 
-        elementos.visitas.textContent = "Error";
-        elementos.usuarios.textContent = "Error";
-        elementos.instalaciones.textContent = "Error";
-        elementos.instalacionesPwa.textContent = "Error";
-        elementos.activos.textContent = "Error";
+        elementos.visitas.textContent =
+            "Error";
+
+        elementos.usuarios.textContent =
+            "Error";
+
+        elementos.instalaciones.textContent =
+            "Error";
+
+        elementos.instalacionesPwa.textContent =
+            "Error";
+
+        elementos.activos.textContent =
+            "Error";
 
     }
 
@@ -271,7 +393,8 @@ async function cargarDatos(dias) {
 
 function crearGrafico(datosGrafico) {
 
-    elementos.grafico.innerHTML = "";
+    elementos.grafico.innerHTML =
+        "";
 
 
     if (!datosGrafico.length) {
@@ -279,15 +402,19 @@ function crearGrafico(datosGrafico) {
         const mensaje =
             document.createElement("div");
 
+
         mensaje.textContent =
             "No hay datos para este período.";
+
 
         mensaje.className =
             "grafico-vacio";
 
+
         elementos.grafico.appendChild(
             mensaje
         );
+
 
         return;
 
@@ -307,6 +434,7 @@ function crearGrafico(datosGrafico) {
 
         const barra =
             document.createElement("div");
+
 
         barra.className =
             "barra";
@@ -328,6 +456,7 @@ function crearGrafico(datosGrafico) {
 
         const numero =
             document.createElement("span");
+
 
         numero.textContent =
             visitas.toLocaleString("es-AR");
@@ -354,10 +483,19 @@ function crearGrafico(datosGrafico) {
         }
 
 
-        barra.appendChild(numero);
-        barra.appendChild(etiqueta);
+        barra.appendChild(
+            numero
+        );
 
-        elementos.grafico.appendChild(barra);
+
+        barra.appendChild(
+            etiqueta
+        );
+
+
+        elementos.grafico.appendChild(
+            barra
+        );
 
     });
 
@@ -370,7 +508,8 @@ function crearGrafico(datosGrafico) {
 
 function crearPaises(paises) {
 
-    elementos.listaPaises.innerHTML = "";
+    elementos.listaPaises.innerHTML =
+        "";
 
 
     if (!paises.length) {
@@ -412,12 +551,14 @@ function crearPaises(paises) {
         const fila =
             document.createElement("div");
 
+
         fila.className =
             "fila";
 
 
         const nombre =
             document.createElement("span");
+
 
         nombre.textContent =
             pais.pais === "(not set)"
@@ -428,14 +569,24 @@ function crearPaises(paises) {
         const porcentajeElemento =
             document.createElement("strong");
 
+
         porcentajeElemento.textContent =
             `${porcentaje}%`;
 
 
-        fila.appendChild(nombre);
-        fila.appendChild(porcentajeElemento);
+        fila.appendChild(
+            nombre
+        );
 
-        elementos.listaPaises.appendChild(fila);
+
+        fila.appendChild(
+            porcentajeElemento
+        );
+
+
+        elementos.listaPaises.appendChild(
+            fila
+        );
 
     });
 
@@ -448,7 +599,8 @@ function crearPaises(paises) {
 
 function crearDispositivos(dispositivos) {
 
-    elementos.listaDispositivos.innerHTML = "";
+    elementos.listaDispositivos.innerHTML =
+        "";
 
 
     if (!dispositivos.length) {
@@ -488,42 +640,58 @@ function crearDispositivos(dispositivos) {
                 : 0;
 
 
-        let icono = "❓";
-        let nombre = "Desconocido";
+        let icono =
+            "❓";
+
+        let nombre =
+            "Desconocido";
 
 
         if (
-            dispositivo.dispositivo === "mobile"
+            dispositivo.dispositivo ===
+            "mobile"
         ) {
 
-            icono = "📱";
-            nombre = "Celular";
+            icono =
+                "📱";
+
+            nombre =
+                "Celular";
 
         }
 
 
         if (
-            dispositivo.dispositivo === "desktop"
+            dispositivo.dispositivo ===
+            "desktop"
         ) {
 
-            icono = "💻";
-            nombre = "PC";
+            icono =
+                "💻";
+
+            nombre =
+                "PC";
 
         }
 
 
         if (
-            dispositivo.dispositivo === "tablet"
+            dispositivo.dispositivo ===
+            "tablet"
         ) {
 
-            icono = "📟";
-            nombre = "Tablet";
+            icono =
+                "📟";
+
+            nombre =
+                "Tablet";
 
         }
 
 
         const elemento =
             document.createElement("div");
+
 
         elemento.className =
             "dispositivo";
@@ -551,7 +719,8 @@ function crearDispositivos(dispositivos) {
 
 function crearFuentes(fuentes) {
 
-    elementos.fuentes.innerHTML = "";
+    elementos.fuentes.innerHTML =
+        "";
 
 
     if (!fuentes.length) {
@@ -568,14 +737,20 @@ function crearFuentes(fuentes) {
     }
 
 
-    const fuentesAgrupadas = {};
+    // =================================================
+    // AGRUPAR FUENTES
+    // =================================================
+
+    const fuentesAgrupadas =
+        {};
 
 
     fuentes.forEach(fuente => {
 
         const fuenteOriginal =
             String(
-                fuente.fuente || "(not set)"
+                fuente.fuente ||
+                "(not set)"
             ).toLowerCase();
 
 
@@ -584,54 +759,86 @@ function crearFuentes(fuentes) {
 
 
         if (
-            fuenteOriginal === "(direct)"
+            fuenteOriginal ===
+            "(direct)"
         ) {
 
-            nombre = "Enlace directo";
-            icono = "🔗";
+            nombre =
+                "Enlace directo";
+
+            icono =
+                "🔗";
 
         } else if (
-            fuenteOriginal === "(not set)"
+            fuenteOriginal ===
+            "(not set)"
         ) {
 
-            nombre = "Desconocido";
-            icono = "❓";
+            nombre =
+                "Desconocido";
+
+            icono =
+                "❓";
 
         } else if (
-            fuenteOriginal.includes("chatgpt")
+            fuenteOriginal.includes(
+                "chatgpt"
+            )
         ) {
 
-            nombre = "ChatGPT";
-            icono = "🤖";
+            nombre =
+                "ChatGPT";
+
+            icono =
+                "🤖";
 
         } else if (
-            fuenteOriginal.includes("github")
+            fuenteOriginal.includes(
+                "github"
+            )
         ) {
 
-            nombre = "GitHub";
-            icono = "💻";
+            nombre =
+                "GitHub";
+
+            icono =
+                "💻";
 
         } else if (
-            fuenteOriginal.includes("google")
+            fuenteOriginal.includes(
+                "google"
+            )
         ) {
 
-            nombre = "Google";
-            icono = "🔎";
+            nombre =
+                "Google";
+
+            icono =
+                "🔎";
 
         } else {
 
-            nombre = fuente.fuente;
-            icono = "🔗";
+            nombre =
+                fuente.fuente;
+
+            icono =
+                "🔗";
 
         }
 
 
-        if (!fuentesAgrupadas[nombre]) {
+        if (
+            !fuentesAgrupadas[nombre]
+        ) {
 
             fuentesAgrupadas[nombre] = {
+
                 nombre,
+
                 icono,
+
                 usuarios: 0
+
             };
 
         }
@@ -654,10 +861,15 @@ function crearFuentes(fuentes) {
     const total =
         fuentesFinales.reduce(
             (suma, fuente) =>
-                suma + fuente.usuarios,
+                suma +
+                fuente.usuarios,
             0
         );
 
+
+    // =================================================
+    // ORDENAR
+    // =================================================
 
     fuentesFinales.sort(
         (a, b) =>
@@ -665,50 +877,82 @@ function crearFuentes(fuentes) {
     );
 
 
-    fuentesFinales.forEach(fuente => {
+    // =================================================
+    // MOSTRAR
+    // =================================================
 
-        const porcentaje =
-            total > 0
-                ? Math.round(
-                    (
-                        fuente.usuarios /
-                        total
-                    ) * 100
-                )
-                : 0;
+    fuentesFinales.forEach(
+        fuente => {
 
-
-        const elemento =
-            document.createElement("div");
-
-
-        elemento.className =
-            "fuente";
+            const porcentaje =
+                total > 0
+                    ? Math.round(
+                        (
+                            fuente.usuarios /
+                            total
+                        ) * 100
+                    )
+                    : 0;
 
 
-        elemento.innerHTML = `
-            <span>
-                ${fuente.icono}
-                ${fuente.nombre}
-            </span>
-
-            <strong>
-                ${porcentaje}%
-            </strong>
-        `;
+            const elemento =
+                document.createElement(
+                    "div"
+                );
 
 
-        elementos.fuentes.appendChild(
-            elemento
-        );
+            elemento.className =
+                "fuente";
 
-    });
+
+            elemento.innerHTML = `
+                <span>
+                    ${fuente.icono}
+                    ${fuente.nombre}
+                </span>
+
+                <strong>
+                    ${porcentaje}%
+                </strong>
+            `;
+
+
+            elementos.fuentes.appendChild(
+                elemento
+            );
+
+        }
+    );
 
 }
 
 
 // =====================================================
-// INICIO
+// ESPERAR A FIREBASE
 // =====================================================
 
-cargarDatos(7);
+onAuthStateChanged(
+    auth,
+    usuario => {
+
+        if (!usuario) {
+
+            console.log(
+                "🔒 No hay usuario autenticado. Datos no cargados."
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "🔓 Usuario autenticado:",
+            usuario.email
+        );
+
+
+        cargarDatos(7);
+
+    }
+);
