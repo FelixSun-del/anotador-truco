@@ -174,6 +174,8 @@ async function cargarDatos(dias) {
         // CONSULTAS AL BACKEND
         // =================================================
 
+        console.time("⏱️ Carga total Admin");
+
         const [
 
             respuestaUsuarios,
@@ -229,6 +231,7 @@ async function cargarDatos(dias) {
 
         ]);
 
+        console.timeEnd("⏱️ Carga total Admin");
 
         // =================================================
         // COMPROBAR RESPUESTAS
@@ -534,10 +537,13 @@ function crearPaises(paises) {
 
 
         const porcentajeElemento =
-            document.createElement("strong");
+    document.createElement("strong");
 
-        porcentajeElemento.textContent =
-            `${porcentaje}%`;
+const cantidad =
+    Number(pais.usuarios) || 0;
+
+porcentajeElemento.textContent =
+    `${cantidad} · ${porcentaje}%`;
 
 
         fila.appendChild(
@@ -607,7 +613,7 @@ function crearDispositivos(dispositivos) {
             "❓";
 
         let nombre =
-            "Desconocido";
+            "Sin origen identificado";
 
 
         if (
@@ -659,11 +665,10 @@ function crearDispositivos(dispositivos) {
             "dispositivo";
 
         elemento.innerHTML = `
-            <span>${icono}</span>
-            <strong>${porcentaje}%</strong>
-            <small>${nombre}</small>
-        `;
-
+    <span>${icono}</span>
+    <strong>${porcentaje}%</strong>
+    <small>${nombre} · ${Number(dispositivo.usuarios).toLocaleString("es-AR")} usuarios</small>
+`;
         elementos.listaDispositivos.appendChild(
             elemento
         );
@@ -704,17 +709,18 @@ function crearFuentes(fuentes) {
         {};
 
 
-    fuentes.forEach(fuente => {
+fuentes.forEach(fuente => {
 
-        const fuenteOriginal =
-            String(
-                fuente.fuente ||
-                "(not set)"
-            ).toLowerCase();
+    const fuenteOriginal =
+        String(
+            fuente.fuente ||
+            "(not set)"
+        ).toLowerCase();
 
+    console.log("🔗 FUENTE ANALYTICS:", fuente);
 
-        let nombre;
-        let icono;
+    let nombre;
+    let icono;
 
 
         if (
@@ -865,15 +871,15 @@ function crearFuentes(fuentes) {
 
 
             elemento.innerHTML = `
-                <span>
-                    ${fuente.icono}
-                    ${fuente.nombre}
-                </span>
+    <span>
+        ${fuente.icono}
+        ${fuente.nombre}
+    </span>
 
-                <strong>
-                    ${porcentaje}%
-                </strong>
-            `;
+    <strong>
+        ${fuente.usuarios} · ${porcentaje}%
+    </strong>
+`;
 
 
             elementos.fuentes.appendChild(
