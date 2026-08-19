@@ -339,9 +339,11 @@
 
 
     import {
-        getAuth,
-        signInWithEmailAndPassword,
-        onAuthStateChanged
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      setPersistence,
+      inMemoryPersistence
     } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
@@ -376,7 +378,12 @@
 
 
     const auth =
-        getAuth(app);
+    getAuth(app);
+
+await setPersistence(
+    auth,
+    inMemoryPersistence
+);
 
 
     const login =
@@ -469,6 +476,17 @@
         }
     );
 
+        email.addEventListener("keydown", evento => {
+    if (evento.key === "Enter") {
+        btnLogin.click();
+    }
+});
+
+password.addEventListener("keydown", evento => {
+    if (evento.key === "Enter") {
+        btnLogin.click();
+    }
+});
 
     // =================================================
     // COMPROBAR AUTENTICACIÓN
