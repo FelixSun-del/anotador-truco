@@ -393,51 +393,88 @@ app.get(
 
             const grafico = [];
 
-            const hoy =
-                new Date();
+            const partesFecha =
+    new Intl.DateTimeFormat(
+        "en-CA",
+        {
+            timeZone:
+                "America/Argentina/Buenos_Aires",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        }
+    ).formatToParts(new Date());
 
-            for (
-                let i = dias - 1;
-                i >= 0;
-                i--
-            ) {
+const añoActual =
+    Number(
+        partesFecha.find(
+            parte => parte.type === "year"
+        ).value
+    );
 
-                const fecha =
-                    new Date(hoy);
+const mesActual =
+    Number(
+        partesFecha.find(
+            parte => parte.type === "month"
+        ).value
+    );
 
-                fecha.setDate(
-                    hoy.getDate() - i
-                );
+const diaActual =
+    Number(
+        partesFecha.find(
+            parte => parte.type === "day"
+        ).value
+    );
 
-                const año =
-                    fecha.getFullYear();
+const hoyArgentina =
+    new Date(
+        añoActual,
+        mesActual - 1,
+        diaActual
+    );
 
-                const mes =
-                    String(
-                        fecha.getMonth() + 1
-                    ).padStart(2, "0");
+for (
+    let i = dias - 1;
+    i >= 0;
+    i--
+) {
 
-                const dia =
-                    String(
-                        fecha.getDate()
-                    ).padStart(2, "0");
+    const fecha =
+        new Date(hoyArgentina);
 
-                const fechaFormato =
-                    `${año}${mes}${dia}`;
+    fecha.setDate(
+        hoyArgentina.getDate() - i
+    );
 
-                grafico.push({
+    const año =
+        fecha.getFullYear();
 
-                    dia:
-                        fechaFormato,
+    const mes =
+        String(
+            fecha.getMonth() + 1
+        ).padStart(2, "0");
 
-                    visitas:
-                        datosAnalytics[
-                            fechaFormato
-                        ] || 0
+    const dia =
+        String(
+            fecha.getDate()
+        ).padStart(2, "0");
 
-                });
+    const fechaFormato =
+        `${año}${mes}${dia}`;
 
-            }
+    grafico.push({
+
+        dia:
+            fechaFormato,
+
+        visitas:
+            datosAnalytics[
+                fechaFormato
+            ] || 0
+
+    });
+
+}
 
             res.json({
                 grafico
