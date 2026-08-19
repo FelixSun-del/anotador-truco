@@ -70,7 +70,7 @@ async function verificarAdministrador(req, res, next) {
             authorization.split("Bearer ")[1];
 
         const usuario =
-    await getAuth().verifyIdToken(token);
+          await getAuth().verifyIdToken(token);
 
         if (
             !usuario.email ||
