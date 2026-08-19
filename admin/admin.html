@@ -85,7 +85,9 @@
 
             <span class="punto"></span>
 
-            Panel administrativo
+            <span id="rangoUsuario">
+                Panel administrativo
+            </span>
 
         </div>
 
@@ -217,7 +219,6 @@
 
     <section class="dos-columnas">
 
-
         <!-- PAÍSES -->
 
         <article class="bloque">
@@ -339,11 +340,11 @@
 
 
     import {
-      getAuth,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      setPersistence,
-      inMemoryPersistence
+        getAuth,
+        signInWithEmailAndPassword,
+        onAuthStateChanged,
+        setPersistence,
+        inMemoryPersistence
     } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
@@ -378,12 +379,13 @@
 
 
     const auth =
-    getAuth(app);
+        getAuth(app);
 
-await setPersistence(
-    auth,
-    inMemoryPersistence
-);
+
+    await setPersistence(
+        auth,
+        inMemoryPersistence
+    );
 
 
     const login =
@@ -410,6 +412,10 @@ await setPersistence(
         document.getElementById("mensajeLogin");
 
 
+    const rangoUsuario =
+        document.getElementById("rangoUsuario");
+
+
     // =================================================
     // INICIAR SESIÓN
     // =================================================
@@ -421,14 +427,11 @@ await setPersistence(
             const correo =
                 email.value.trim();
 
-
             const contrasena =
                 password.value;
 
-
             mensajeLogin.textContent =
                 "";
-
 
             if (!correo || !contrasena) {
 
@@ -461,7 +464,6 @@ await setPersistence(
                     error
                 );
 
-
                 mensajeLogin.textContent =
                     "Correo o contraseña incorrectos.";
 
@@ -476,17 +478,38 @@ await setPersistence(
         }
     );
 
-        email.addEventListener("keydown", evento => {
-    if (evento.key === "Enter") {
-        btnLogin.click();
-    }
-});
 
-password.addEventListener("keydown", evento => {
-    if (evento.key === "Enter") {
-        btnLogin.click();
-    }
-});
+    // =================================================
+    // ENTER PARA INICIAR SESIÓN
+    // =================================================
+
+    email.addEventListener(
+        "keydown",
+        evento => {
+
+            if (evento.key === "Enter") {
+
+                btnLogin.click();
+
+            }
+
+        }
+    );
+
+
+    password.addEventListener(
+        "keydown",
+        evento => {
+
+            if (evento.key === "Enter") {
+
+                btnLogin.click();
+
+            }
+
+        }
+    );
+
 
     // =================================================
     // COMPROBAR AUTENTICACIÓN
@@ -498,16 +521,52 @@ password.addEventListener("keydown", evento => {
 
             if (usuario) {
 
-                // Usuario autenticado
+                // =================================================
+                // RANGO DEL USUARIO
+                // =================================================
+
+                if (
+                    usuario.email ===
+                    "f341274@gmail.com"
+                ) {
+
+                    rangoUsuario.textContent =
+                        "👑 Administrador · FélixSun";
+
+                    document.title =
+                        "📊 Admin · Anotador de Truco";
+
+                } else {
+
+                    rangoUsuario.textContent =
+                        "🛡️ Moderador";
+
+                    document.title =
+                        "🛡️ Panel · Anotador de Truco";
+
+                }
+
+
+                // =================================================
+                // MOSTRAR PANEL
+                // =================================================
+
                 login.style.display =
                     "none";
 
                 adminPanel.style.display =
                     "block";
 
+
             } else {
 
-                // Nadie autenticado
+                // =================================================
+                // SIN SESIÓN
+                // =================================================
+
+                document.title =
+                    "🔐 Iniciar sesión · Anotador de Truco";
+
                 login.style.display =
                     "flex";
 
@@ -522,7 +581,11 @@ password.addEventListener("keydown", evento => {
 </script>
 
 
-<script type="module" src="admin.js"></script>
+<script
+    type="module"
+    src="admin.js"
+></script>
+
 
 </body>
 </html>
