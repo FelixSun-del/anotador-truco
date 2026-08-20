@@ -29,7 +29,8 @@ initializeApp({
 
 const ADMIN_EMAILS = [
     "f341274@gmail.com",
-    "dylasun271203@gmail.com"
+    "dylasun271203@gmail.com",
+    "johansabe1@gmail.com"
 ];
 
 
