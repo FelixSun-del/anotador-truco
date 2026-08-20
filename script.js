@@ -2,6 +2,100 @@
 
 
 /* =====================================================
+   FIREBASE
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDoRxqYQzul22__ZpOTmcurjSnM6jL9MeU",
+
+    authDomain:
+        "anotador-de-truco-83ae4.firebaseapp.com",
+
+    projectId:
+        "anotador-de-truco-83ae4",
+
+    storageBucket:
+        "anotador-de-truco-83ae4.firebasestorage.app",
+
+    messagingSenderId:
+        "579527324889",
+
+    appId:
+        "1:579527324889:web:59229e5ab1d9e2f5a57ac8"
+
+};
+
+
+/* =====================================================
+   INICIALIZAR FIREBASE
+===================================================== */
+
+let firebaseDisponible = false;
+let auth = null;
+
+try {
+
+    if (
+        typeof firebase !== "undefined" &&
+        firebaseConfig.apiKey !== "TU_API_KEY"
+    ) {
+
+        firebase.initializeApp(
+            firebaseConfig
+        );
+
+        auth = firebase.auth();
+
+        firebaseDisponible = true;
+
+        console.log(
+            "🔥 Firebase iniciado correctamente."
+        );
+
+    } else {
+
+        console.warn(
+            "Firebase todavía no está configurado."
+        );
+    }
+
+} catch (error) {
+
+    console.error(
+        "Error iniciando Firebase:",
+        error
+    );
+}
+
+
+/* =====================================================
+   ADMINISTRADORES AUTORIZADOS
+===================================================== */
+
+/*
+    CAMBIÁ ESTOS CORREOS.
+
+    Ejemplo:
+
+    const ADMIN_EMAILS = [
+        "felix@gmail.com",
+        "otroadmin@gmail.com"
+    ];
+
+    Solo esos correos tendrán acceso
+    al panel desde la aplicación.
+*/
+
+const ADMIN_EMAILS = [
+
+    "TU_CORREO_ADMIN@gmail.com"
+
+];
+
+
+/* =====================================================
    ESTADO
 ===================================================== */
 
@@ -14,18 +108,22 @@ const estado = {
     apuestas: true,
 
     puntos1: 0,
+
     puntos2: 0,
 
     fichas1: 100,
+
     fichas2: 100,
 
     apuesta1: 0,
+
     apuesta2: 0,
 
     historial: [],
 
-    terminada: false
+    terminada: false,
 
+    partidasJugadas: 0
 };
 
 
@@ -35,40 +133,498 @@ const estado = {
 
 const pantallas = {
 
-    1: document.getElementById("pantalla1"),
+    1:
+        document.getElementById(
+            "pantalla1"
+        ),
 
-    2: document.getElementById("pantalla2"),
+    2:
+        document.getElementById(
+            "pantalla2"
+        ),
 
-    3: document.getElementById("pantalla3"),
+    3:
+        document.getElementById(
+            "pantalla3"
+        ),
 
-    4: document.getElementById("pantalla4"),
+    4:
+        document.getElementById(
+            "pantalla4"
+        ),
 
-    5: document.getElementById("pantalla5"),
+    5:
+        document.getElementById(
+            "pantalla5"
+        ),
 
-    ganador: document.getElementById("pantallaGanador")
+    ganador:
+        document.getElementById(
+            "pantallaGanador"
+        ),
 
+    admin:
+        document.getElementById(
+            "pantallaAdmin"
+        )
 };
 
 
 function mostrarPantalla(numero) {
 
-    Object.values(pantallas).forEach(pantalla => {
+    Object.values(pantallas)
+        .forEach(pantalla => {
 
-        if (pantalla) {
+            if (pantalla) {
 
-            pantalla.classList.add("oculto");
-
-        }
-
-    });
+                pantalla.classList.add(
+                    "oculto"
+                );
+            }
+        });
 
 
     if (pantallas[numero]) {
 
-        pantallas[numero].classList.remove("oculto");
+        pantallas[numero]
+            .classList
+            .remove("oculto");
+    }
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+function esAdministrador(user) {
+
+    if (!user) {
+        return false;
+    }
+
+    if (!user.email) {
+        return false;
+    }
+
+    return ADMIN_EMAILS
+        .map(email =>
+            email.trim().toLowerCase()
+        )
+        .includes(
+            user.email
+                .trim()
+                .toLowerCase()
+        );
+}
+
+
+/* =====================================================
+   ACTUALIZAR INTERFAZ ADMIN
+===================================================== */
+
+function actualizarInterfazAdmin(user) {
+
+    const botonAdmin =
+        document.getElementById(
+            "botonAdmin"
+        );
+
+    const emailAdmin =
+        document.getElementById(
+            "adminEmail"
+        );
+
+    const usuarioAdmin =
+        document.getElementById(
+            "adminUsuario"
+        );
+
+
+    if (!esAdministrador(user)) {
+
+        if (botonAdmin) {
+
+            botonAdmin.classList.add(
+                "oculto"
+            );
+        }
+
+        return;
+    }
+
+
+    if (botonAdmin) {
+
+        botonAdmin.classList.remove(
+            "oculto"
+        );
+    }
+
+
+    if (emailAdmin) {
+
+        emailAdmin.textContent =
+            user.email;
+    }
+
+
+    if (usuarioAdmin) {
+
+        usuarioAdmin.textContent =
+            `Sesión iniciada como ${user.email}`;
+    }
+}
+
+
+/* =====================================================
+   LOGIN ADMIN
+===================================================== */
+
+async function iniciarSesionAdmin() {
+
+    if (!firebaseDisponible) {
+
+        alert(
+            "Firebase todavía no está configurado."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const provider =
+            new firebase.auth.GoogleAuthProvider();
+
+
+        await auth.signInWithPopup(
+            provider
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error de autenticación:",
+            error
+        );
+
+        alert(
+            "No se pudo iniciar sesión."
+        );
+    }
+}
+
+
+// =====================================================
+// BOTÓN ADMIN
+// =====================================================
+
+const botonAdmin =
+    document.getElementById("botonAdmin");
+
+const API_URL =
+    "https://anotador-truco-backend.onrender.com";
+
+
+// =====================================================
+// COMPROBAR ADMINISTRADOR
+// =====================================================
+
+async function comprobarAdministrador(user) {
+
+    if (!botonAdmin) {
+        return;
+    }
+
+
+    // Siempre empieza oculto
+    botonAdmin.classList.add(
+        "oculto"
+    );
+
+
+    // No hay usuario autenticado
+    if (!user) {
+        return;
+    }
+
+
+    // =================================================
+    // COMPROBAR VENCIMIENTO 7 / 30 DÍAS
+    // =================================================
+
+    const expiracionGuardada =
+        localStorage.getItem(
+            "adminSesionExpira"
+        );
+
+
+    if (expiracionGuardada) {
+
+        const expiracion =
+            Number(expiracionGuardada);
+
+
+        if (
+            Number.isFinite(expiracion) &&
+            Date.now() >= expiracion
+        ) {
+
+            localStorage.removeItem(
+                "adminSesionExpira"
+            );
+
+            localStorage.removeItem(
+                "adminSesionDias"
+            );
+
+
+            await auth.signOut();
+
+
+            return;
+
+        }
 
     }
 
+
+    try {
+
+        // TOKEN FIREBASE
+        const token =
+            await user.getIdToken();
+
+
+        // PREGUNTAR AL BACKEND
+        const respuesta =
+            await fetch(
+                `${API_URL}/api/admin/check`,
+                {
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+
+                    }
+
+                }
+            );
+
+
+        // NO AUTORIZADO
+        if (!respuesta.ok) {
+
+            console.warn(
+                "🔒 Usuario sin permisos de administrador."
+            );
+
+            return;
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        // AUTORIZADO
+        if (datos.autorizado === true) {
+
+            botonAdmin.classList.remove(
+                "oculto"
+            );
+
+
+            console.log(
+                "🔐 Administrador autorizado:",
+                datos.email
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Error comprobando administrador:",
+            error
+        );
+
+
+        botonAdmin.classList.add(
+            "oculto"
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// ESTADO DE FIREBASE
+// =====================================================
+
+if (firebaseDisponible) {
+
+    auth.onAuthStateChanged(
+        user => {
+
+            comprobarAdministrador(
+                user
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// ABRIR PANEL ADMIN
+// =====================================================
+
+if (botonAdmin) {
+
+    botonAdmin.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "./admin/admin.html";
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   VOLVER DESDE ADMIN
+===================================================== */
+
+const volverAdmin =
+    document.getElementById(
+        "volverAdmin"
+    );
+
+
+if (volverAdmin) {
+
+    volverAdmin.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(1);
+        }
+    );
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+const cerrarSesionAdmin =
+    document.getElementById(
+        "cerrarSesionAdmin"
+    );
+
+
+if (cerrarSesionAdmin) {
+
+    cerrarSesionAdmin.addEventListener(
+        "click",
+        async () => {
+
+            if (!auth) {
+                return;
+            }
+
+            try {
+
+                await auth.signOut();
+
+                mostrarPantalla(1);
+
+                alert(
+                    "Sesión cerrada."
+                );
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+            }
+        }
+    );
+}
+
+
+/* =====================================================
+   PANEL ADMIN
+===================================================== */
+
+function actualizarPanelAdmin() {
+
+    const partidas =
+        document.getElementById(
+            "adminPartidas"
+        );
+
+    const puntos1 =
+        document.getElementById(
+            "adminPuntos1"
+        );
+
+    const puntos2 =
+        document.getElementById(
+            "adminPuntos2"
+        );
+
+
+    if (partidas) {
+
+        partidas.textContent =
+            estado.partidasJugadas;
+    }
+
+
+    if (puntos1) {
+
+        puntos1.textContent =
+            estado.puntos1;
+    }
+
+
+    if (puntos2) {
+
+        puntos2.textContent =
+            estado.puntos2;
+    }
+
+
+    if (
+        auth &&
+        auth.currentUser
+    ) {
+
+        const email =
+            document.getElementById(
+                "adminEmail"
+            );
+
+        if (email) {
+
+            email.textContent =
+                auth.currentUser.email;
+        }
+    }
 }
 
 
@@ -80,24 +636,33 @@ document
     .querySelectorAll(".jugadores")
     .forEach(boton => {
 
-        boton.addEventListener("click", () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-            document
-                .querySelectorAll(".jugadores")
-                .forEach(b => {
+                document
+                    .querySelectorAll(
+                        ".jugadores"
+                    )
+                    .forEach(b => {
 
-                    b.classList.remove("seleccionado");
+                        b.classList.remove(
+                            "seleccionado"
+                        );
+                    });
 
-                });
+
+                boton.classList.add(
+                    "seleccionado"
+                );
 
 
-            boton.classList.add("seleccionado");
-
-            estado.jugadores =
-                Number(boton.dataset.jugadores);
-
-        });
-
+                estado.jugadores =
+                    Number(
+                        boton.dataset.jugadores
+                    );
+            }
+        );
     });
 
 
@@ -109,24 +674,33 @@ document
     .querySelectorAll(".objetivo")
     .forEach(boton => {
 
-        boton.addEventListener("click", () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-            document
-                .querySelectorAll(".objetivo")
-                .forEach(b => {
+                document
+                    .querySelectorAll(
+                        ".objetivo"
+                    )
+                    .forEach(b => {
 
-                    b.classList.remove("seleccionado");
+                        b.classList.remove(
+                            "seleccionado"
+                        );
+                    });
 
-                });
+
+                boton.classList.add(
+                    "seleccionado"
+                );
 
 
-            boton.classList.add("seleccionado");
-
-            estado.objetivo =
-                Number(boton.dataset.objetivo);
-
-        });
-
+                estado.objetivo =
+                    Number(
+                        boton.dataset.objetivo
+                    );
+            }
+        );
     });
 
 
@@ -138,186 +712,231 @@ document
     .querySelectorAll(".apuestas")
     .forEach(boton => {
 
-        boton.addEventListener("click", () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-            document
-                .querySelectorAll(".apuestas")
-                .forEach(b => {
+                document
+                    .querySelectorAll(
+                        ".apuestas"
+                    )
+                    .forEach(b => {
 
-                    b.classList.remove("seleccionado");
+                        b.classList.remove(
+                            "seleccionado"
+                        );
+                    });
 
-                });
+
+                boton.classList.add(
+                    "seleccionado"
+                );
 
 
-            boton.classList.add("seleccionado");
-
-            estado.apuestas =
-                boton.dataset.apuestas === "si";
-
-        });
-
+                estado.apuestas =
+                    boton.dataset.apuestas
+                    === "si";
+            }
+        );
     });
 
 
 /* =====================================================
-   PESTAÑA 1 → 2
+   PANTALLA 1 → 2
 ===================================================== */
 
-document
-    .getElementById("siguiente1")
-    .addEventListener("click", () => {
+const siguiente1 =
+    document.getElementById(
+        "siguiente1"
+    );
 
-        mostrarPantalla(2);
 
-    });
+if (siguiente1) {
+
+    siguiente1.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(2);
+        }
+    );
+}
 
 
 /* =====================================================
-   PESTAÑA 1 → REGLAS
+   REGLAS
 ===================================================== */
 
-document
-    .getElementById("verReglas")
-    .addEventListener("click", () => {
+const verReglas =
+    document.getElementById(
+        "verReglas"
+    );
 
-        mostrarPantalla(5);
 
-    });
+if (verReglas) {
+
+    verReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(5);
+        }
+    );
+}
+
+
+const volverReglas =
+    document.getElementById(
+        "volverReglas"
+    );
+
+
+if (volverReglas) {
+
+    volverReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(1);
+        }
+    );
+}
 
 
 /* =====================================================
-   REGLAS → PESTAÑA 1
+   PANTALLA 2
 ===================================================== */
 
-document
-    .getElementById("volverReglas")
-    .addEventListener("click", () => {
+const siguiente2 =
+    document.getElementById(
+        "siguiente2"
+    );
 
-        mostrarPantalla(1);
-
-    });
-
-
-/* =====================================================
-   PESTAÑA 2 → 3 O 4
-===================================================== */
-
-const siguiente2 = document.getElementById("siguiente2");
 
 if (siguiente2) {
 
-    siguiente2.addEventListener("click", function () {
+    siguiente2.addEventListener(
+        "click",
+        () => {
 
-        console.log("Siguiente 2 presionado");
-        console.log("Apuestas:", estado.apuestas);
+            if (estado.apuestas) {
 
-        if (estado.apuestas === true) {
+                actualizarFichas();
 
-            actualizarFichas();
-            mostrarPantalla(3);
+                mostrarPantalla(3);
 
-        } else {
+            } else {
 
-            iniciarPartida();
-
+                iniciarPartida();
+            }
         }
-
-    });
-
+    );
 }
 
 
-/* =====================================================
-   VOLVER 2 → 1
-===================================================== */
+const volver2 =
+    document.getElementById(
+        "volver2"
+    );
 
-const volver2 = document.getElementById("volver2");
 
 if (volver2) {
 
-    volver2.addEventListener("click", function () {
+    volver2.addEventListener(
+        "click",
+        () => {
 
-        mostrarPantalla(1);
-
-    });
-
+            mostrarPantalla(1);
+        }
+    );
 }
 
 
 /* =====================================================
-   APUESTAS PESTAÑA 3
+   APUESTAS
 ===================================================== */
 
 document
     .querySelectorAll(".apuesta")
     .forEach(boton => {
 
-        boton.addEventListener("click", () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-            const equipo =
-                Number(boton.dataset.equipo);
-
-            const cantidad =
-                Number(boton.dataset.apuesta);
-
-
-            const fichas =
-                equipo === 1
-                    ? estado.fichas1
-                    : estado.fichas2;
+                const equipo =
+                    Number(
+                        boton.dataset.equipo
+                    );
 
 
-            if (cantidad > fichas) {
+                const cantidad =
+                    Number(
+                        boton.dataset.apuesta
+                    );
 
-                alert(
-                    "Ese equipo no tiene suficientes fichas."
+
+                const fichas =
+                    equipo === 1
+                        ? estado.fichas1
+                        : estado.fichas2;
+
+
+                if (
+                    cantidad >
+                    fichas
+                ) {
+
+                    alert(
+                        "Ese equipo no tiene suficientes fichas."
+                    );
+
+                    return;
+                }
+
+
+                if (equipo === 1) {
+
+                    estado.apuesta1 =
+                        cantidad;
+
+                } else {
+
+                    estado.apuesta2 =
+                        cantidad;
+                }
+
+
+                document
+                    .querySelectorAll(
+                        `.apuesta[data-equipo="${equipo}"]`
+                    )
+                    .forEach(b => {
+
+                        b.classList.remove(
+                            "seleccionado"
+                        );
+                    });
+
+
+                boton.classList.add(
+                    "seleccionado"
                 );
 
-                return;
 
+                const texto =
+                    document.getElementById(
+                        `apuesta${equipo}Texto`
+                    );
+
+
+                if (texto) {
+
+                    texto.textContent =
+                        `Apuesta: ${cantidad} fichas`;
+                }
             }
-
-
-            if (equipo === 1) {
-
-                estado.apuesta1 = cantidad;
-
-            } else {
-
-                estado.apuesta2 = cantidad;
-
-            }
-
-
-            document
-                .querySelectorAll(
-                    `.apuesta[data-equipo="${equipo}"]`
-                )
-                .forEach(b => {
-
-                    b.classList.remove("seleccionado");
-
-                });
-
-
-            boton.classList.add("seleccionado");
-
-
-            const texto =
-                document.getElementById(
-                    `apuesta${equipo}Texto`
-                );
-
-
-            if (texto) {
-
-                texto.textContent =
-                    `Apuesta: ${cantidad} fichas`;
-
-            }
-
-        });
-
+        );
     });
 
 
@@ -325,115 +944,120 @@ document
    REINICIAR FICHAS
 ===================================================== */
 
-document
-    .getElementById("reiniciarFichas")
-    .addEventListener("click", () => {
-
-        estado.fichas1 = 100;
-
-        estado.fichas2 = 100;
-
-        estado.apuesta1 = 0;
-
-        estado.apuesta2 = 0;
+const reiniciarFichas =
+    document.getElementById(
+        "reiniciarFichas"
+    );
 
 
-        document
-            .querySelectorAll(".apuesta")
-            .forEach(boton => {
+if (reiniciarFichas) {
 
-                boton.classList.remove("seleccionado");
+    reiniciarFichas.addEventListener(
+        "click",
+        () => {
 
-            });
+            estado.fichas1 = 100;
 
+            estado.fichas2 = 100;
 
-        document
-            .getElementById("apuesta1Texto")
-            .textContent = "Sin apuesta";
+            estado.apuesta1 = 0;
 
-
-        document
-            .getElementById("apuesta2Texto")
-            .textContent = "Sin apuesta";
+            estado.apuesta2 = 0;
 
 
-        actualizarFichas();
+            document
+                .querySelectorAll(
+                    ".apuesta"
+                )
+                .forEach(boton => {
 
-    });
+                    boton.classList.remove(
+                        "seleccionado"
+                    );
+                });
 
 
-/* =====================================================
-   VOLVER 3 → 2
-===================================================== */
+            document.getElementById(
+                "apuesta1Texto"
+            ).textContent =
+                "Sin apuesta";
 
-const volver3 = document.getElementById("volver3");
 
-if (volver3) {
+            document.getElementById(
+                "apuesta2Texto"
+            ).textContent =
+                "Sin apuesta";
 
-    volver3.addEventListener("click", function () {
 
-        mostrarPantalla(2);
-
-    });
-
+            actualizarFichas();
+        }
+    );
 }
 
 
 /* =====================================================
-   PESTAÑA 3 → 4
+   PANTALLA 3
 ===================================================== */
 
-const siguiente3 = document.getElementById("siguiente3");
+const volver3 =
+    document.getElementById(
+        "volver3"
+    );
+
+
+if (volver3) {
+
+    volver3.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(2);
+        }
+    );
+}
+
+
+const siguiente3 =
+    document.getElementById(
+        "siguiente3"
+    );
+
 
 if (siguiente3) {
 
-    siguiente3.addEventListener("click", function () {
+    siguiente3.addEventListener(
+        "click",
+        () => {
 
-        console.log("Siguiente 3 presionado");
+            if (
+                estado.apuesta1 <= 0 ||
+                estado.apuesta2 <= 0
+            ) {
 
-        console.log(
-            "Apuesta equipo 1:",
-            estado.apuesta1
-        );
+                alert(
+                    "Los dos equipos deben elegir una apuesta."
+                );
 
-        console.log(
-            "Apuesta equipo 2:",
-            estado.apuesta2
-        );
+                return;
+            }
 
 
-        if (
-            estado.apuesta1 <= 0 ||
-            estado.apuesta2 <= 0
-        ) {
+            if (
+                estado.apuesta1 !==
+                estado.apuesta2
+            ) {
 
-            alert(
-                "Los dos equipos deben elegir una apuesta."
-            );
+                alert(
+                    "Los dos equipos deben apostar la misma cantidad."
+                );
 
-            return;
+                return;
+            }
 
+
+            iniciarPartida();
         }
-
-
-        if (
-            estado.apuesta1 !==
-            estado.apuesta2
-        ) {
-
-            alert(
-                "Los dos equipos deben apostar la misma cantidad."
-            );
-
-            return;
-
-        }
-
-
-        iniciarPartida();
-
-    });
-
+    );
 }
 
 
@@ -451,33 +1075,49 @@ function iniciarPartida() {
 
     estado.terminada = false;
 
+    estado.partidasJugadas++;
+
+
     actualizarTodo();
 
     mostrarPantalla(4);
-
 }
 
 
 /* =====================================================
-   ACTUALIZAR FICHAS
+   FICHAS
 ===================================================== */
 
 function actualizarFichas() {
 
-    document
-        .getElementById("fichasConfig1")
-        .textContent = estado.fichas1;
+    const fichas1 =
+        document.getElementById(
+            "fichasConfig1"
+        );
+
+    const fichas2 =
+        document.getElementById(
+            "fichasConfig2"
+        );
 
 
-    document
-        .getElementById("fichasConfig2")
-        .textContent = estado.fichas2;
+    if (fichas1) {
 
+        fichas1.textContent =
+            estado.fichas1;
+    }
+
+
+    if (fichas2) {
+
+        fichas2.textContent =
+            estado.fichas2;
+    }
 }
 
 
 /* =====================================================
-   GENERAR PALITOS
+   PALITOS
 ===================================================== */
 
 function generarPalitos(puntos) {
@@ -485,21 +1125,13 @@ function generarPalitos(puntos) {
     let html = "";
 
     const gruposDeCinco =
-        Math.floor(puntos / 5);
+        Math.floor(
+            puntos / 5
+        );
 
     const resto =
         puntos % 5;
 
-
-    /* =================================================
-       CADA GRUPO DE 5
-
-       1 → |
-       2 → |__
-       3 → |__|
-       4 → cuadrado completo
-       5 → cuadrado + diagonal
-    ================================================= */
 
     for (
         let i = 0;
@@ -508,6 +1140,7 @@ function generarPalitos(puntos) {
     ) {
 
         html += `
+
             <span class="grupo-palitos">
 
                 <span class="linea vertical v1"></span>
@@ -521,19 +1154,10 @@ function generarPalitos(puntos) {
                 <span class="linea diagonal"></span>
 
             </span>
-        `;
 
+        `;
     }
 
-
-    /* =================================================
-       RESTO
-
-       1 → |
-       2 → |__
-       3 → |__|
-       4 → cuadrado
-    ================================================= */
 
     if (resto > 0) {
 
@@ -547,7 +1171,6 @@ function generarPalitos(puntos) {
             html += `
                 <span class="linea vertical v1"></span>
             `;
-
         }
 
 
@@ -556,7 +1179,6 @@ function generarPalitos(puntos) {
             html += `
                 <span class="linea horizontal h1"></span>
             `;
-
         }
 
 
@@ -565,7 +1187,6 @@ function generarPalitos(puntos) {
             html += `
                 <span class="linea vertical v2"></span>
             `;
-
         }
 
 
@@ -574,19 +1195,16 @@ function generarPalitos(puntos) {
             html += `
                 <span class="linea horizontal h2"></span>
             `;
-
         }
 
 
         html += `
             </span>
         `;
-
     }
 
 
     return html;
-
 }
 
 
@@ -596,34 +1214,62 @@ function generarPalitos(puntos) {
 
 function actualizarTodo() {
 
-    document
-        .getElementById("puntos1")
-        .innerHTML =
-        generarPalitos(estado.puntos1);
+    const puntos1 =
+        document.getElementById(
+            "puntos1"
+        );
+
+    const puntos2 =
+        document.getElementById(
+            "puntos2"
+        );
+
+    const infoPartida =
+        document.getElementById(
+            "infoPartida"
+        );
+
+    const objetivoTexto =
+        document.getElementById(
+            "objetivoTexto"
+        );
 
 
-    document
-        .getElementById("puntos2")
-        .innerHTML =
-        generarPalitos(estado.puntos2);
+    if (puntos1) {
+
+        puntos1.innerHTML =
+            generarPalitos(
+                estado.puntos1
+            );
+    }
 
 
-    document
-        .getElementById("infoPartida")
-        .textContent =
-        `${estado.jugadores} vs ${estado.jugadores} · A ${estado.objetivo}`;
+    if (puntos2) {
+
+        puntos2.innerHTML =
+            generarPalitos(
+                estado.puntos2
+            );
+    }
 
 
-    document
-        .getElementById("objetivoTexto")
-        .textContent =
-        `Objetivo: ${estado.objetivo} puntos`;
+    if (infoPartida) {
+
+        infoPartida.textContent =
+            `${estado.jugadores} vs ${estado.jugadores} · A ${estado.objetivo}`;
+    }
+
+
+    if (objetivoTexto) {
+
+        objetivoTexto.textContent =
+            `Objetivo: ${estado.objetivo} puntos`;
+    }
 
 
     actualizarFichas();
 
     actualizarHistorial();
-
 }
 
 
@@ -638,43 +1284,47 @@ function modificarPuntos(
 ) {
 
     if (estado.terminada) {
-
         return;
-
     }
 
 
     if (equipo === 1) {
 
-        estado.puntos1 += cantidad;
+        estado.puntos1 +=
+            cantidad;
 
         estado.puntos1 =
-            Math.max(0, estado.puntos1);
-
+            Math.max(
+                0,
+                estado.puntos1
+            );
     }
 
 
     if (equipo === 2) {
 
-        estado.puntos2 += cantidad;
+        estado.puntos2 +=
+            cantidad;
 
         estado.puntos2 =
-            Math.max(0, estado.puntos2);
-
+            Math.max(
+                0,
+                estado.puntos2
+            );
     }
 
 
     if (historial) {
 
-        agregarHistorial(historial);
-
+        agregarHistorial(
+            historial
+        );
     }
 
 
     comprobarGanador();
 
     actualizarTodo();
-
 }
 
 
@@ -683,139 +1333,182 @@ function modificarPuntos(
 ===================================================== */
 
 document
-    .querySelectorAll(".boton-punto")
+    .querySelectorAll(
+        ".boton-punto"
+    )
     .forEach(boton => {
 
-        boton.addEventListener("click", () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-            const equipo =
-                Number(boton.dataset.equipo);
-
-            const sumar =
-                boton.classList.contains("sumar");
+                if (estado.terminada) {
+                    return;
+                }
 
 
-            if (
-                !sumar &&
-                (
+                const equipo =
+                    Number(
+                        boton.dataset.equipo
+                    );
+
+
+                const sumar =
+                    boton.classList
+                        .contains(
+                            "sumar"
+                        );
+
+
+                const puntosActuales =
                     equipo === 1
-                        ? estado.puntos1 <= 0
-                        : estado.puntos2 <= 0
-                )
-            ) {
-
-                return;
-
-            }
+                        ? estado.puntos1
+                        : estado.puntos2;
 
 
-            modificarPuntos(
+                if (
+                    !sumar &&
+                    puntosActuales <= 0
+                ) {
 
-                equipo,
+                    return;
+                }
 
-                sumar ? 1 : -1,
-
-                `Equipo ${equipo}: ${
-                    sumar ? "+1" : "-1"
-                }`
-
-            );
-
-        });
-
-    });
-
-
-/* =====================================================
-   MENÚS DEL MARCADOR
-===================================================== */
-
-document
-    .querySelectorAll(".boton-menu")
-    .forEach(boton => {
-
-        boton.addEventListener("click", event => {
-
-            event.stopPropagation();
-
-
-            const menu =
-                boton.parentElement
-                    .querySelector(".desplegable");
-
-
-            document
-                .querySelectorAll(".desplegable")
-                .forEach(otro => {
-
-                    if (otro !== menu) {
-
-                        otro.classList.add("oculto");
-
-                    }
-
-                });
-
-
-            menu.classList.toggle("oculto");
-
-        });
-
-    });
-
-
-document
-    .querySelectorAll(".desplegable button")
-    .forEach(boton => {
-
-        boton.addEventListener("click", () => {
-
-            if (estado.terminada) {
-
-                return;
-
-            }
-
-
-            const equipo =
-                Number(boton.dataset.equipo);
-
-            const nombre =
-                boton.dataset.nombre;
-
-
-            if (
-                boton.dataset.falta === "true"
-            ) {
-
-                resolverFalta(
-                    equipo,
-                    nombre
-                );
-
-            } else {
 
                 modificarPuntos(
 
                     equipo,
 
-                    Number(
-                        boton.dataset.puntos
-                    ),
+                    sumar
+                        ? 1
+                        : -1,
 
-                    `Equipo ${equipo}: ${nombre} · +${
-                        boton.dataset.puntos
+                    `Equipo ${equipo}: ${
+                        sumar
+                            ? "+1"
+                            : "-1"
                     }`
-
                 );
-
             }
+        );
+    });
 
 
-            cerrarMenus();
+/* =====================================================
+   MENÚS
+===================================================== */
 
-        });
+document
+    .querySelectorAll(
+        ".boton-menu"
+    )
+    .forEach(boton => {
 
+        boton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+
+                const menu =
+                    boton.parentElement
+                        ?.querySelector(
+                            ".desplegable"
+                        );
+
+
+                if (!menu) {
+                    return;
+                }
+
+
+                document
+                    .querySelectorAll(
+                        ".desplegable"
+                    )
+                    .forEach(otro => {
+
+                        if (
+                            otro !== menu
+                        ) {
+
+                            otro.classList.add(
+                                "oculto"
+                            );
+                        }
+                    });
+
+
+                menu.classList.toggle(
+                    "oculto"
+                );
+            }
+        );
+    });
+
+
+/* =====================================================
+   OPCIONES DE MENÚ
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".desplegable button"
+    )
+    .forEach(boton => {
+
+        boton.addEventListener(
+            "click",
+            () => {
+
+                if (estado.terminada) {
+                    return;
+                }
+
+
+                const equipo =
+                    Number(
+                        boton.dataset.equipo
+                    );
+
+
+                const nombre =
+                    boton.dataset.nombre;
+
+
+                if (
+                    boton.dataset.falta ===
+                    "true"
+                ) {
+
+                    resolverFalta(
+                        equipo,
+                        nombre
+                    );
+
+                } else {
+
+                    const puntos =
+                        Number(
+                            boton.dataset.puntos
+                        );
+
+
+                    modificarPuntos(
+
+                        equipo,
+
+                        puntos,
+
+                        `Equipo ${equipo}: ${nombre} · +${puntos}`
+                    );
+                }
+
+
+                cerrarMenus();
+            }
+        );
     });
 
 
@@ -828,13 +1521,15 @@ document.addEventListener(
 function cerrarMenus() {
 
     document
-        .querySelectorAll(".desplegable")
+        .querySelectorAll(
+            ".desplegable"
+        )
         .forEach(menu => {
 
-            menu.classList.add("oculto");
-
+            menu.classList.add(
+                "oculto"
+            );
         });
-
 }
 
 
@@ -848,7 +1543,9 @@ function resolverFalta(
 ) {
 
     const otro =
-        equipo === 1 ? 2 : 1;
+        equipo === 1
+            ? 2
+            : 1;
 
 
     const puntosOtro =
@@ -856,6 +1553,11 @@ function resolverFalta(
             ? estado.puntos1
             : estado.puntos2;
 
+
+    /*
+        La falta se calcula según lo que le
+        falta al rival para llegar al objetivo.
+    */
 
     const necesarios =
         Math.max(
@@ -872,9 +1574,7 @@ function resolverFalta(
         necesarios,
 
         `Equipo ${equipo}: ${nombre} · +${necesarios}`
-
     );
-
 }
 
 
@@ -882,64 +1582,83 @@ function resolverFalta(
    HISTORIAL
 ===================================================== */
 
-function agregarHistorial(texto) {
+function agregarHistorial(
+    texto
+) {
 
-    estado.historial.push(texto);
+    estado.historial.push(
+        texto
+    );
 
     actualizarHistorial();
-
 }
 
 
 function actualizarHistorial() {
 
     const historial =
-        document.getElementById("historial");
+        document.getElementById(
+            "historial"
+        );
 
 
     if (!historial) {
-
         return;
-
     }
 
 
     if (
-        estado.historial.length === 0
+        estado.historial.length ===
+        0
     ) {
 
-        historial.innerHTML =
+        historial.textContent =
             "Sin jugadas todavía";
 
         return;
-
     }
 
 
     historial.innerHTML =
         estado.historial
-            .map(
-                jugada =>
-                    `<div class="entrada">${jugada}</div>`
+            .map(jugada =>
+                `<div class="entrada">${jugada}</div>`
             )
             .join("");
-
 }
 
 
 /* =====================================================
-   BOTÓN HISTORIAL
+   HISTORIAL
 ===================================================== */
 
-document
-    .getElementById("botonHistorial")
-    .addEventListener("click", () => {
+const botonHistorial =
+    document.getElementById(
+        "botonHistorial"
+    );
 
-        document
-            .getElementById("historial")
-            .classList.toggle("oculto");
 
-    });
+if (botonHistorial) {
+
+    botonHistorial.addEventListener(
+        "click",
+        () => {
+
+            const historial =
+                document.getElementById(
+                    "historial"
+                );
+
+
+            if (historial) {
+
+                historial.classList.toggle(
+                    "oculto"
+                );
+            }
+        }
+    );
+}
 
 
 /* =====================================================
@@ -959,7 +1678,6 @@ function comprobarGanador() {
         terminarPartida(1);
 
         return;
-
     }
 
 
@@ -972,16 +1690,27 @@ function comprobarGanador() {
             estado.objetivo;
 
         terminarPartida(2);
-
     }
-
 }
 
 
-function terminarPartida(ganador) {
+/* =====================================================
+   TERMINAR PARTIDA
+===================================================== */
+
+function terminarPartida(
+    ganador
+) {
+
+    if (estado.terminada) {
+        return;
+    }
+
 
     estado.terminada = true;
 
+
+    /* FICHAS */
 
     if (
         estado.apuestas &&
@@ -997,7 +1726,8 @@ function terminarPartida(ganador) {
 
         if (ganador === 1) {
 
-            estado.fichas1 += cantidad;
+            estado.fichas1 +=
+                cantidad;
 
             estado.fichas2 =
                 Math.max(
@@ -1008,7 +1738,8 @@ function terminarPartida(ganador) {
 
         } else {
 
-            estado.fichas2 += cantidad;
+            estado.fichas2 +=
+                cantidad;
 
             estado.fichas1 =
                 Math.max(
@@ -1016,44 +1747,74 @@ function terminarPartida(ganador) {
                     estado.fichas1 -
                     cantidad
                 );
-
         }
-
     }
 
 
-    document
-        .getElementById("resultado1")
-        .textContent =
-        estado.puntos1;
+    const resultado1 =
+        document.getElementById(
+            "resultado1"
+        );
+
+    const resultado2 =
+        document.getElementById(
+            "resultado2"
+        );
+
+    const fichasFinal1 =
+        document.getElementById(
+            "fichasFinal1"
+        );
+
+    const fichasFinal2 =
+        document.getElementById(
+            "fichasFinal2"
+        );
+
+    const textoGanador =
+        document.getElementById(
+            "textoGanador"
+        );
 
 
-    document
-        .getElementById("resultado2")
-        .textContent =
-        estado.puntos2;
+    if (resultado1) {
+
+        resultado1.textContent =
+            estado.puntos1;
+    }
 
 
-    document
-        .getElementById("fichasFinal1")
-        .textContent =
-        estado.fichas1;
+    if (resultado2) {
+
+        resultado2.textContent =
+            estado.puntos2;
+    }
 
 
-    document
-        .getElementById("fichasFinal2")
-        .textContent =
-        estado.fichas2;
+    if (fichasFinal1) {
+
+        fichasFinal1.textContent =
+            estado.fichas1;
+    }
 
 
-    document
-        .getElementById("textoGanador")
-        .textContent =
-        `Ganó el Equipo ${ganador}`;
+    if (fichasFinal2) {
+
+        fichasFinal2.textContent =
+            estado.fichas2;
+    }
 
 
-    mostrarPantalla("ganador");
+    if (textoGanador) {
 
+        textoGanador.textContent =
+            `Ganó el Equipo ${ganador}`;
+    }
+
+
+    mostrarPantalla(
+        "ganador"
+    );
 }
 
 
@@ -1077,104 +1838,141 @@ function nuevaPartida() {
 
 
     document
-        .querySelectorAll(".apuesta")
+        .querySelectorAll(
+            ".apuesta"
+        )
         .forEach(boton => {
 
             boton.classList.remove(
                 "seleccionado"
             );
-
         });
 
 
-    document
-        .getElementById("apuesta1Texto")
-        .textContent =
-        "Sin apuesta";
+    const apuesta1Texto =
+        document.getElementById(
+            "apuesta1Texto"
+        );
+
+    const apuesta2Texto =
+        document.getElementById(
+            "apuesta2Texto"
+        );
 
 
-    document
-        .getElementById("apuesta2Texto")
-        .textContent =
-        "Sin apuesta";
+    if (apuesta1Texto) {
+
+        apuesta1Texto.textContent =
+            "Sin apuesta";
+    }
+
+
+    if (apuesta2Texto) {
+
+        apuesta2Texto.textContent =
+            "Sin apuesta";
+    }
 
 
     actualizarTodo();
 
     mostrarPantalla(1);
-
 }
 
 
-document
-    .getElementById("nuevaPartida")
-    .addEventListener(
-        "click",
-        nuevaPartida
+/* =====================================================
+   NUEVA PARTIDA
+===================================================== */
+
+const nuevaPartidaBoton =
+    document.getElementById(
+        "nuevaPartida"
     );
 
 
-document
-    .getElementById("nuevaPartidaGanador")
-    .addEventListener(
+if (nuevaPartidaBoton) {
+
+    nuevaPartidaBoton.addEventListener(
         "click",
         nuevaPartida
     );
+}
+
+
+const nuevaPartidaGanador =
+    document.getElementById(
+        "nuevaPartidaGanador"
+    );
+
+
+if (nuevaPartidaGanador) {
+
+    nuevaPartidaGanador.addEventListener(
+        "click",
+        nuevaPartida
+    );
+}
 
 
 /* =====================================================
-   MENÚS DE REGLAS
+   REGLAS
 ===================================================== */
 
 document
-    .querySelectorAll(".boton-regla")
+    .querySelectorAll(
+        ".boton-regla"
+    )
     .forEach(boton => {
 
-        boton.addEventListener("click", event => {
+        boton.addEventListener(
+            "click",
+            event => {
 
-            event.stopPropagation();
-
-
-            const contenido =
-                boton.nextElementSibling;
+                event.stopPropagation();
 
 
-            const flecha =
-                boton.querySelector("span");
+                const contenido =
+                    boton.nextElementSibling;
 
 
-            if (!contenido) {
-
-                return;
-
-            }
-
-
-            contenido.classList.toggle("oculto");
+                const flecha =
+                    boton.querySelector(
+                        "span"
+                    );
 
 
-            if (
-                contenido.classList.contains("oculto")
-            ) {
-
-                if (flecha) {
-
-                    flecha.textContent = "▼";
-
+                if (!contenido) {
+                    return;
                 }
 
-            } else {
 
-                if (flecha) {
+                contenido.classList.toggle(
+                    "oculto"
+                );
 
-                    flecha.textContent = "▲";
 
+                if (
+                    contenido.classList.contains(
+                        "oculto"
+                    )
+                ) {
+
+                    if (flecha) {
+
+                        flecha.textContent =
+                            "▼";
+                    }
+
+                } else {
+
+                    if (flecha) {
+
+                        flecha.textContent =
+                            "▲";
+                    }
                 }
-
             }
-
-        });
-
+        );
     });
 
 
@@ -1182,35 +1980,73 @@ document
    INICIO
 ===================================================== */
 
-document
-    .querySelector(
+const jugadorInicial =
+    document.querySelector(
         '.jugadores[data-jugadores="1"]'
-    )
-    .classList.add("seleccionado");
+    );
 
 
-document
-    .querySelector(
+if (jugadorInicial) {
+
+    jugadorInicial.classList.add(
+        "seleccionado"
+    );
+}
+
+
+const objetivoInicial =
+    document.querySelector(
         '.objetivo[data-objetivo="15"]'
-    )
-    .classList.add("seleccionado");
+    );
+
+
+if (objetivoInicial) {
+
+    objetivoInicial.classList.add(
+        "seleccionado"
+    );
+}
+
+
+const apuestasInicial =
+    document.querySelector(
+        '.apuestas[data-apuestas="si"]'
+    );
+
+
+if (apuestasInicial) {
+
+    apuestasInicial.classList.add(
+        "seleccionado"
+    );
+}
 
 
 actualizarTodo();
 
 
 /* =====================================================
-   DETECTAR INSTALACIÓN DE LA PWA
+   PWA
 ===================================================== */
 
-window.addEventListener("appinstalled", () => {
+window.addEventListener(
+    "appinstalled",
+    () => {
 
-    console.log("📱 Anotador de Truco instalado");
+        console.log(
+            "📱 Anotador de Truco instalado"
+        );
 
-    if (typeof gtag === "function") {
 
-        gtag("event", "pwa_installed");
+        if (
+            typeof gtag ===
+            "function"
+        ) {
 
+            gtag(
+                "event",
+                "pwa_installed"
+            );
+        }
     }
-
-});
+);
