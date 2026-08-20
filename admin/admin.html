@@ -36,16 +36,70 @@
             autocomplete="email"
         >
 
+       <input
+    type="password"
+    id="password"
+    placeholder="Contraseña"
+    autocomplete="current-password"
+>
+
+
+
+
+<div class="recordar-sesion">
+
+    <label class="recordar-check">
+
         <input
-            type="password"
-            id="password"
-            placeholder="Contraseña"
-            autocomplete="current-password"
+            type="checkbox"
+            id="guardarSesion"
         >
 
-        <button id="btnLogin">
-            Ingresar
-        </button>
+        <span>
+            Mantener sesión iniciada
+        </span>
+
+    </label>
+
+
+    <div
+        id="duracionSesion"
+        class="duracion-sesion"
+        hidden
+    >
+
+        <p>
+            ¿Durante cuánto tiempo?
+        </p>
+
+        <div class="opciones-duracion">
+
+            <button
+                type="button"
+                class="duracion activo"
+                data-dias="7"
+            >
+                7 días
+            </button>
+
+            <button
+                type="button"
+                class="duracion"
+                data-dias="30"
+            >
+                30 días
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<button id="btnLogin">
+    Ingresar
+</button>
 
         <p
             id="mensajeLogin"
@@ -340,12 +394,14 @@
 
 
     import {
-        getAuth,
-        signInWithEmailAndPassword,
-        onAuthStateChanged,
-        setPersistence,
-        inMemoryPersistence
-    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
     const firebaseConfig = {
@@ -381,13 +437,6 @@
     const auth =
         getAuth(app);
 
-
-    await setPersistence(
-        auth,
-        inMemoryPersistence
-    );
-
-
     const login =
         document.getElementById("login");
 
@@ -411,6 +460,70 @@
     const mensajeLogin =
         document.getElementById("mensajeLogin");
 
+
+        const guardarSesion =
+    document.getElementById(
+        "guardarSesion"
+    );
+
+const duracionSesion =
+    document.getElementById(
+        "duracionSesion"
+    );
+
+const botonesDuracion =
+    document.querySelectorAll(
+        ".duracion"
+    );
+
+
+let diasSesion = 7;
+
+
+guardarSesion.addEventListener(
+    "change",
+    () => {
+
+        duracionSesion.hidden =
+            !guardarSesion.checked;
+
+    }
+);
+
+
+botonesDuracion.forEach(
+    boton => {
+
+        boton.addEventListener(
+            "click",
+            () => {
+
+                botonesDuracion.forEach(
+                    otro => {
+
+                        otro.classList.remove(
+                            "activo"
+                        );
+
+                    }
+                );
+
+
+                boton.classList.add(
+                    "activo"
+                );
+
+
+                diasSesion =
+                    Number(
+                        boton.dataset.dias
+                    );
+
+            }
+        );
+
+    }
+);
 
     const rangoUsuario =
         document.getElementById("rangoUsuario");
@@ -451,11 +564,63 @@
 
             try {
 
+                if (guardarSesion.checked) {
+
+    await setPersistence(
+        auth,
+        browserLocalPersistence
+    );
+
+} else {
+
+    await setPersistence(
+        auth,
+        browserSessionPersistence
+    );
+
+}
                 await signInWithEmailAndPassword(
                     auth,
                     correo,
                     contrasena
                 );
+
+                if (guardarSesion.checked) {
+
+    const milisegundosPorDia =
+        24 * 60 * 60 * 1000;
+
+
+    const fechaExpiracion =
+        Date.now() +
+        (
+            diasSesion *
+            milisegundosPorDia
+        );
+
+
+    localStorage.setItem(
+        "adminSesionExpira",
+        String(fechaExpiracion)
+    );
+
+
+    localStorage.setItem(
+        "adminSesionDias",
+        String(diasSesion)
+    );
+
+} else {
+
+    localStorage.removeItem(
+        "adminSesionExpira"
+    );
+
+    localStorage.removeItem(
+        "adminSesionDias"
+    );
+
+}
 
             } catch (error) {
 
@@ -546,6 +711,42 @@
 
                 }
 
+                if (usuario) {
+
+    const expiracion =
+        Number(
+            localStorage.getItem(
+                "adminSesionExpira"
+            )
+        );
+
+
+    if (
+        expiracion &&
+        Date.now() > expiracion
+    ) {
+
+        localStorage.removeItem(
+            "adminSesionExpira"
+        );
+
+        localStorage.removeItem(
+            "adminSesionDias"
+        );
+
+
+        signOut(auth);
+
+
+        mensajeLogin.textContent =
+            "Tu sesión guardada venció. Iniciá sesión nuevamente.";
+
+
+        return;
+
+    }
+
+}
 
                 // =================================================
                 // MOSTRAR PANEL
