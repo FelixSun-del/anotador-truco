@@ -233,6 +233,14 @@ h3 {
     gap: 10px;
 }
 
+.opciones-objetivo {
+
+    grid-template-columns:
+        repeat(2, minmax(110px, 160px)) !important;
+
+    justify-content: center;
+}
+
 .opciones-grandes {
 
     grid-template-columns:
@@ -422,7 +430,13 @@ h3 {
 ===================================================== */
 
 .boton-reglas {
-    margin-top: 12px;
+
+    display: block;
+
+    width: fit-content;
+
+    margin:
+        12px auto 0;
 }
 
 .reglas {
