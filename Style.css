@@ -297,6 +297,35 @@ h3 {
         0 4px 10px rgba(0, 0, 0, 0.20);
 }
 
+/* =====================================================
+   OBJETIVO CENTRADO
+===================================================== */
+
+.opciones-objetivo {
+
+    grid-template-columns:
+        repeat(2, minmax(110px, 160px)) !important;
+
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   BOTÓN REGLAS CENTRADO
+===================================================== */
+
+.boton-reglas {
+
+    display: block;
+
+    width: fit-content;
+
+    margin:
+        12px auto 0;
+
+}
+
 
 /* =====================================================
    BOTONES
