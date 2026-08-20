@@ -1039,6 +1039,22 @@ app.get(
     }
 );
 
+// =====================================================
+// COMPROBAR SI EL USUARIO ES ADMIN
+// =====================================================
+
+app.get(
+    "/api/admin/check",
+    verificarAdministrador,
+    (req, res) => {
+
+        res.json({
+            autorizado: true,
+            email: req.usuario.email
+        });
+
+    }
+);
 
 // =====================================================
 // SERVIDOR
