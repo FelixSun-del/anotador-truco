@@ -1,13 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
-const { initializeApp, cert } = require("firebase-admin/app");
-const { getAuth } = require("firebase-admin/auth");
+const {
+    initializeApp,
+    cert
+} = require("firebase-admin/app");
+
+const {
+    getAuth
+} = require("firebase-admin/auth");
 
 const {
     BetaAnalyticsDataClient
 } = require("@google-analytics/data");
+
 const app = express();
+
 
 // =====================================================
 // FIREBASE ADMIN
@@ -22,6 +31,7 @@ const serviceAccount = require(
 initializeApp({
     credential: cert(serviceAccount)
 });
+
 
 // =====================================================
 // ADMINISTRADORES AUTORIZADOS
@@ -38,23 +48,34 @@ const ADMIN_EMAILS = [
 // CONFIGURACIÓN
 // =====================================================
 
-const PORT = process.env.PORT || 3000;
-const PROPERTY_ID = "549943222";
+const PORT =
+    process.env.PORT || 3000;
+
+const PROPERTY_ID =
+    "549943222";
 
 app.use(cors());
-app.use(express.json());
+
+app.use(
+    express.json()
+);
 
 
 // =====================================================
 // VERIFICAR ADMINISTRADOR
 // =====================================================
 
-async function verificarAdministrador(req, res, next) {
+async function verificarAdministrador(
+    req,
+    res,
+    next
+) {
 
     try {
 
         const authorization =
             req.headers.authorization;
+
 
         if (
             !authorization ||
@@ -67,15 +88,20 @@ async function verificarAdministrador(req, res, next) {
 
         }
 
+
         const token =
             authorization.split("Bearer ")[1];
 
+
         const usuario =
-          await getAuth().verifyIdToken(token);
+            await getAuth().verifyIdToken(token);
+
 
         if (
             !usuario.email ||
-            !ADMIN_EMAILS.includes(usuario.email)
+            !ADMIN_EMAILS.includes(
+                usuario.email
+            )
         ) {
 
             return res.status(403).json({
@@ -84,9 +110,13 @@ async function verificarAdministrador(req, res, next) {
 
         }
 
-        req.usuario = usuario;
+
+        req.usuario =
+            usuario;
+
 
         next();
+
 
     } catch (error) {
 
@@ -95,8 +125,10 @@ async function verificarAdministrador(req, res, next) {
             error
         );
 
+
         return res.status(401).json({
-            error: "Token inválido o expirado"
+            error:
+                "Token inválido o expirado"
         });
 
     }
@@ -110,6 +142,7 @@ async function verificarAdministrador(req, res, next) {
 
 const analyticsDataClient =
     new BetaAnalyticsDataClient({
+
         keyFilename:
             process.env.GOOGLE_APPLICATION_CREDENTIALS ||
             (
@@ -117,6 +150,7 @@ const analyticsDataClient =
                     ? "/etc/secrets/google-credentials.json"
                     : "./NO_PUBLICAR/google-credentials.json"
             )
+
     });
 
 
@@ -125,9 +159,13 @@ const analyticsDataClient =
 // =====================================================
 
 async function obtenerReporte({
+
     dias = 7,
+
     dimensions = [],
+
     metrics = []
+
 }) {
 
     const [response] =
@@ -137,25 +175,36 @@ async function obtenerReporte({
                 `properties/${PROPERTY_ID}`,
 
             dateRanges: [
+
                 {
-                    startDate: `${dias}daysAgo`,
-                    endDate: "today"
+                    startDate:
+                        `${dias}daysAgo`,
+
+                    endDate:
+                        "today"
                 }
+
             ],
 
             dimensions:
-                dimensions.map(nombre => ({
-                    name: nombre
-                })),
+                dimensions.map(
+                    nombre => ({
+                        name: nombre
+                    })
+                ),
 
             metrics:
-                metrics.map(nombre => ({
-                    name: nombre
-                }))
+                metrics.map(
+                    nombre => ({
+                        name: nombre
+                    })
+                )
 
         });
 
+
     return response;
+
 }
 
 
@@ -163,15 +212,52 @@ async function obtenerReporte({
 // PRUEBA DEL SERVIDOR
 // =====================================================
 
-app.get("/", (req, res) => {
+app.get(
+    "/",
+    (req, res) => {
 
-    res.json({
-        estado: "online",
-        mensaje:
-            "🚀 Backend del Anotador de Truco funcionando"
-    });
+        res.json({
 
-});
+            estado:
+                "online",
+
+            mensaje:
+                "🚀 Backend del Anotador de Truco funcionando"
+
+        });
+
+    }
+);
+
+
+// =====================================================
+// ACCESO AL ADMIN
+// =====================================================
+//
+// IMPORTANTE:
+// Esta ruta NO reemplaza la autenticación.
+// Las estadísticas siguen protegidas por
+// verificarAdministrador().
+//
+// El panel puede estar alojado junto al proyecto,
+// pero los datos solamente se entregan a usuarios
+// autorizados.
+// =====================================================
+
+app.get(
+    "/admin",
+    (req, res) => {
+
+        res.sendFile(
+            path.join(
+                __dirname,
+                "admin",
+                "admin.html"
+            )
+        );
+
+    }
+);
 
 
 // =====================================================
@@ -186,7 +272,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -199,14 +288,20 @@ app.get(
 
                 });
 
+
             const usuarios =
                 response.rows?.[0]
                     ?.metricValues?.[0]
                     ?.value || "0";
 
+
             res.json({
-                usuarios: Number(usuarios)
+
+                usuarios:
+                    Number(usuarios)
+
             });
+
 
         } catch (error) {
 
@@ -215,9 +310,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener los usuarios"
+
             });
 
         }
@@ -238,7 +336,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -251,14 +352,20 @@ app.get(
 
                 });
 
+
             const visitas =
                 response.rows?.[0]
                     ?.metricValues?.[0]
                     ?.value || "0";
 
+
             res.json({
-                visitas: Number(visitas)
+
+                visitas:
+                    Number(visitas)
+
             });
+
 
         } catch (error) {
 
@@ -267,9 +374,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener las visitas"
+
             });
 
         }
@@ -290,7 +400,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -307,22 +420,29 @@ app.get(
 
                 });
 
+
             const fila =
                 response.rows?.find(
                     row =>
                         row.dimensionValues?.[0]
-                            ?.value === "pwa_installed"
+                            ?.value ===
+                        "pwa_installed"
                 );
+
 
             const instalaciones =
                 fila
                     ?.metricValues?.[0]
                     ?.value || "0";
 
+
             res.json({
+
                 instalaciones:
                     Number(instalaciones)
+
             });
+
 
         } catch (error) {
 
@@ -331,9 +451,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener las instalaciones"
+
             });
 
         }
@@ -354,7 +477,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -371,115 +497,174 @@ app.get(
 
                 });
 
+
             const datosAnalytics = {};
 
-            response.rows?.forEach(row => {
 
-                const fecha =
-                    row.dimensionValues?.[0]?.value;
+            response.rows?.forEach(
+                row => {
 
-                const visitas =
-                    Number(
-                        row.metricValues?.[0]?.value || 0
-                    );
+                    const fecha =
+                        row.dimensionValues?.[0]
+                            ?.value;
 
-                if (fecha) {
 
-                    datosAnalytics[fecha] =
-                        visitas;
+                    const visitas =
+                        Number(
+                            row.metricValues?.[0]
+                                ?.value || 0
+                        );
+
+
+                    if (fecha) {
+
+                        datosAnalytics[
+                            fecha
+                        ] =
+                            visitas;
+
+                    }
 
                 }
+            );
 
-            });
 
             const grafico = [];
 
+
+            // =================================================
+            // FECHA ARGENTINA
+            // =================================================
+
             const partesFecha =
-    new Intl.DateTimeFormat(
-        "en-CA",
-        {
-            timeZone:
-                "America/Argentina/Buenos_Aires",
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit"
-        }
-    ).formatToParts(new Date());
+                new Intl.DateTimeFormat(
+                    "en-CA",
+                    {
 
-const añoActual =
-    Number(
-        partesFecha.find(
-            parte => parte.type === "year"
-        ).value
-    );
+                        timeZone:
+                            "America/Argentina/Buenos_Aires",
 
-const mesActual =
-    Number(
-        partesFecha.find(
-            parte => parte.type === "month"
-        ).value
-    );
+                        year:
+                            "numeric",
 
-const diaActual =
-    Number(
-        partesFecha.find(
-            parte => parte.type === "day"
-        ).value
-    );
+                        month:
+                            "2-digit",
 
-const hoyArgentina =
-    new Date(
-        añoActual,
-        mesActual - 1,
-        diaActual
-    );
+                        day:
+                            "2-digit"
 
-for (
-    let i = dias - 1;
-    i >= 0;
-    i--
-) {
+                    }
+                ).formatToParts(
+                    new Date()
+                );
 
-    const fecha =
-        new Date(hoyArgentina);
 
-    fecha.setDate(
-        hoyArgentina.getDate() - i
-    );
+            const añoActual =
+                Number(
+                    partesFecha.find(
+                        parte =>
+                            parte.type ===
+                            "year"
+                    ).value
+                );
 
-    const año =
-        fecha.getFullYear();
 
-    const mes =
-        String(
-            fecha.getMonth() + 1
-        ).padStart(2, "0");
+            const mesActual =
+                Number(
+                    partesFecha.find(
+                        parte =>
+                            parte.type ===
+                            "month"
+                    ).value
+                );
 
-    const dia =
-        String(
-            fecha.getDate()
-        ).padStart(2, "0");
 
-    const fechaFormato =
-        `${año}${mes}${dia}`;
+            const diaActual =
+                Number(
+                    partesFecha.find(
+                        parte =>
+                            parte.type ===
+                            "day"
+                    ).value
+                );
 
-    grafico.push({
 
-        dia:
-            fechaFormato,
+            const hoyArgentina =
+                new Date(
+                    añoActual,
+                    mesActual - 1,
+                    diaActual
+                );
 
-        visitas:
-            datosAnalytics[
-                fechaFormato
-            ] || 0
 
-    });
+            // =================================================
+            // CREAR LOS DÍAS
+            // =================================================
 
-}
+            for (
+                let i = dias - 1;
+                i >= 0;
+                i--
+            ) {
+
+                const fecha =
+                    new Date(
+                        hoyArgentina
+                    );
+
+
+                fecha.setDate(
+                    hoyArgentina.getDate() - i
+                );
+
+
+                const año =
+                    fecha.getFullYear();
+
+
+                const mes =
+                    String(
+                        fecha.getMonth() + 1
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const dia =
+                    String(
+                        fecha.getDate()
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const fechaFormato =
+                    `${año}${mes}${dia}`;
+
+
+                grafico.push({
+
+                    dia:
+                        fechaFormato,
+
+                    visitas:
+                        datosAnalytics[
+                            fechaFormato
+                        ] || 0
+
+                });
+
+            }
+
 
             res.json({
+
                 grafico
+
             });
+
 
         } catch (error) {
 
@@ -488,9 +673,12 @@ for (
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudo obtener el gráfico"
+
             });
 
         }
@@ -511,7 +699,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -528,34 +719,49 @@ app.get(
 
                 });
 
+
             const paises =
-                response.rows?.map(row => {
+                response.rows?.map(
+                    row => {
 
-                    const pais =
-                        row.dimensionValues?.[0]
-                            ?.value || "(not set)";
+                        const pais =
+                            row.dimensionValues?.[0]
+                                ?.value ||
+                            "(not set)";
 
-                    const usuarios =
-                        Number(
-                            row.metricValues?.[0]
-                                ?.value || 0
-                        );
 
-                    return {
-                        pais,
-                        usuarios
-                    };
+                        const usuarios =
+                            Number(
+                                row.metricValues?.[0]
+                                    ?.value || 0
+                            );
 
-                }) || [];
+
+                        return {
+
+                            pais,
+
+                            usuarios
+
+                        };
+
+                    }
+                ) || [];
+
 
             paises.sort(
                 (a, b) =>
-                    b.usuarios - a.usuarios
+                    b.usuarios -
+                    a.usuarios
             );
 
+
             res.json({
+
                 paises
+
             });
+
 
         } catch (error) {
 
@@ -564,9 +770,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener los países"
+
             });
 
         }
@@ -587,7 +796,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -604,23 +816,32 @@ app.get(
 
                 });
 
+
             const dispositivos =
-                response.rows?.map(row => ({
+                response.rows?.map(
+                    row => ({
 
-                    dispositivo:
-                        row.dimensionValues?.[0]?.value ||
-                        "(not set)",
+                        dispositivo:
+                            row.dimensionValues?.[0]
+                                ?.value ||
+                            "(not set)",
 
-                    usuarios:
-                        Number(
-                            row.metricValues?.[0]?.value || 0
-                        )
+                        usuarios:
+                            Number(
+                                row.metricValues?.[0]
+                                    ?.value || 0
+                            )
 
-                })) || [];
+                    })
+                ) || [];
+
 
             res.json({
+
                 dispositivos
+
             });
+
 
         } catch (error) {
 
@@ -629,9 +850,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener los dispositivos"
+
             });
 
         }
@@ -652,7 +876,10 @@ app.get(
         try {
 
             const dias =
-                Number(req.query.dias) || 7;
+                Number(
+                    req.query.dias
+                ) || 7;
+
 
             const response =
                 await obtenerReporte({
@@ -660,48 +887,72 @@ app.get(
                     dias,
 
                     dimensions: [
+
                         "sessionSource",
+
                         "sessionMedium"
+
                     ],
 
                     metrics: [
+
                         "activeUsers"
+
                     ]
 
                 });
 
+
             const fuentes =
-                response.rows?.map(row => {
+                response.rows?.map(
+                    row => {
 
-                    const fuente =
-                        row.dimensionValues?.[0]?.value ||
-                        "(not set)";
+                        const fuente =
+                            row.dimensionValues?.[0]
+                                ?.value ||
+                            "(not set)";
 
-                    const medio =
-                        row.dimensionValues?.[1]?.value ||
-                        "(not set)";
 
-                    const usuarios =
-                        Number(
-                            row.metricValues?.[0]?.value || 0
-                        );
+                        const medio =
+                            row.dimensionValues?.[1]
+                                ?.value ||
+                            "(not set)";
 
-                    return {
-                        fuente,
-                        medio,
-                        usuarios
-                    };
 
-                }) || [];
+                        const usuarios =
+                            Number(
+                                row.metricValues?.[0]
+                                    ?.value || 0
+                            );
+
+
+                        return {
+
+                            fuente,
+
+                            medio,
+
+                            usuarios
+
+                        };
+
+                    }
+                ) || [];
+
 
             fuentes.sort(
                 (a, b) =>
-                    b.usuarios - a.usuarios
+                    b.usuarios -
+                    a.usuarios
             );
 
+
             res.json({
+
                 fuentes
+
             });
+
 
         } catch (error) {
 
@@ -710,9 +961,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener las fuentes de tráfico"
+
             });
 
         }
@@ -733,27 +987,37 @@ app.get(
         try {
 
             const [response] =
-                await analyticsDataClient.runRealtimeReport({
+                await analyticsDataClient
+                    .runRealtimeReport({
 
-                    property:
-                        `properties/${PROPERTY_ID}`,
+                        property:
+                            `properties/${PROPERTY_ID}`,
 
-                    metrics: [
-                        {
-                            name: "activeUsers"
-                        }
-                    ]
+                        metrics: [
 
-                });
+                            {
+                                name:
+                                    "activeUsers"
+                            }
+
+                        ]
+
+                    });
+
 
             const activos =
                 response.rows?.[0]
                     ?.metricValues?.[0]
                     ?.value || "0";
 
+
             res.json({
-                activos: Number(activos)
+
+                activos:
+                    Number(activos)
+
             });
+
 
         } catch (error) {
 
@@ -762,9 +1026,12 @@ app.get(
                 error
             );
 
+
             res.status(500).json({
+
                 error:
                     "No se pudieron obtener los usuarios activos"
+
             });
 
         }
