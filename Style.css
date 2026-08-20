@@ -9,6 +9,7 @@
 }
 
 :root {
+
     --madera-oscura: #3b2114;
     --madera: #6b3d24;
     --madera-clara: #8a5432;
@@ -21,16 +22,21 @@
 
     --texto: #2d241d;
 
+    --rojo: #9b3d3d;
+
     --sombra:
         0 12px 30px rgba(0, 0, 0, 0.30);
 }
 
 html,
 body {
+    width: 100%;
     min-height: 100%;
+    max-width: 100%;
 }
 
 body {
+
     min-height: 100vh;
 
     font-family:
@@ -79,6 +85,7 @@ body {
 ===================================================== */
 
 .pantalla {
+
     width: 100%;
     min-height: 100vh;
 
@@ -99,6 +106,7 @@ body {
 ===================================================== */
 
 .papel {
+
     width: min(900px, 100%);
 
     background:
@@ -121,38 +129,8 @@ body {
     overflow: visible;
 }
 
-
-/* =====================================================
-   PAPEL DEL MENÚ PRINCIPAL
-===================================================== */
-
-/*
-   Esto devuelve la pestaña 1 al aspecto original:
-   - ancho más compacto
-   - jugadores en 3 x 2
-   - objetivos en 2 columnas
-   - botones principales a todo el ancho
-*/
-
-#pantalla1 .papel {
-    width: min(600px, 100%);
-    padding: 35px;
-}
-
-#pantalla1 .opciones {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-#pantalla1 .opciones-grandes {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-
-/* =====================================================
-   EFECTO DE PAPEL
-===================================================== */
-
 .papel::before {
+
     content: "";
 
     position: absolute;
@@ -175,11 +153,31 @@ body {
 
 
 /* =====================================================
+   PANTALLA PRINCIPAL
+===================================================== */
+
+#pantalla1 .papel {
+
+    width: min(600px, 100%);
+
+    padding: 35px;
+}
+
+#pantalla1 .opciones {
+
+    grid-template-columns:
+        repeat(3, 1fr);
+}
+
+
+/* =====================================================
    TÍTULOS
 ===================================================== */
 
 h1 {
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
+
+    font-size:
+        clamp(1.8rem, 5vw, 2.6rem);
 
     text-align: center;
 
@@ -189,6 +187,7 @@ h1 {
 }
 
 h2 {
+
     margin-bottom: 12px;
 
     font-size: 1.2rem;
@@ -197,6 +196,7 @@ h2 {
 }
 
 h3 {
+
     margin-top: 20px;
     margin-bottom: 8px;
 
@@ -204,6 +204,7 @@ h3 {
 }
 
 .subtitulo {
+
     text-align: center;
 
     margin-bottom: 28px;
@@ -222,11 +223,8 @@ h3 {
     margin-bottom: 25px;
 }
 
-.grupo-configuracion {
-    margin-bottom: 25px;
-}
-
 .opciones {
+
     display: grid;
 
     grid-template-columns:
@@ -236,20 +234,23 @@ h3 {
 }
 
 .opciones-grandes {
+
     grid-template-columns:
         repeat(2, 1fr);
 
     max-width: 500px;
 
-    margin: 0 auto 30px;
+    margin:
+        0 auto 30px;
 }
 
 
 /* =====================================================
-   BOTONES DE OPCIONES
+   OPCIONES
 ===================================================== */
 
 .opcion {
+
     border: 2px solid #c9b99f;
 
     background: #eee2cc;
@@ -274,6 +275,7 @@ h3 {
 }
 
 .opcion:hover {
+
     transform: translateY(-2px);
 
     border-color: var(--verde);
@@ -284,6 +286,7 @@ h3 {
 }
 
 .opcion.seleccionado {
+
     background: var(--verde);
 
     color: white;
@@ -296,12 +299,12 @@ h3 {
 
 
 /* =====================================================
-   BOTONES PRINCIPALES
+   BOTONES
 ===================================================== */
 
 .boton-principal,
-.boton-secundario {
-    border: none;
+.boton-secundario,
+.boton-admin {
 
     border-radius: 10px;
 
@@ -320,7 +323,10 @@ h3 {
 }
 
 .boton-principal {
+
     width: 100%;
+
+    border: none;
 
     background: var(--verde);
 
@@ -331,6 +337,7 @@ h3 {
 }
 
 .boton-principal:hover {
+
     background: var(--verde-oscuro);
 
     transform: translateY(-2px);
@@ -341,20 +348,24 @@ h3 {
 }
 
 .boton-secundario {
+
     background: #dfd1b9;
 
     color: var(--texto);
 
-    border: 1px solid #c4b296;
+    border:
+        1px solid #c4b296;
 }
 
 .boton-secundario:hover {
+
     background: #d2c1a5;
 
     transform: translateY(-1px);
 }
 
 .botones {
+
     display: flex;
 
     gap: 12px;
@@ -364,6 +375,45 @@ h3 {
 
 .botones > * {
     flex: 1;
+}
+
+
+/* =====================================================
+   BOTÓN ADMIN
+===================================================== */
+
+.boton-admin {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    border:
+        1px solid #756047;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b2114,
+            #654128
+        );
+
+    color: white;
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,0.25);
+}
+
+.boton-admin:hover {
+
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #4b2919,
+            #795032
+        );
 }
 
 
@@ -384,6 +434,7 @@ h3 {
 }
 
 .boton-regla {
+
     width: 100%;
 
     display: flex;
@@ -392,7 +443,8 @@ h3 {
 
     align-items: center;
 
-    border: 1px solid #c7b699;
+    border:
+        1px solid #c7b699;
 
     background: #e7dac3;
 
@@ -416,15 +468,18 @@ h3 {
 }
 
 .contenido-regla {
+
     background: #eee3d0;
 
-    border: 1px solid #d1c0a4;
+    border:
+        1px solid #d1c0a4;
 
     border-top: none;
 
     padding: 15px;
 
-    border-radius: 0 0 9px 9px;
+    border-radius:
+        0 0 9px 9px;
 
     line-height: 1.55;
 }
@@ -435,16 +490,16 @@ h3 {
 
 .contenido-regla ul {
     margin-left: 20px;
-
     margin-bottom: 12px;
 }
 
 
 /* =====================================================
-   PESTAÑA DE APUESTAS
+   APUESTAS
 ===================================================== */
 
 .equipos-config {
+
     display: grid;
 
     grid-template-columns:
@@ -456,9 +511,11 @@ h3 {
 }
 
 .config-equipo {
+
     background: #eadfc9;
 
-    border: 1px solid #cbbb9f;
+    border:
+        1px solid #cbbb9f;
 
     border-radius: 12px;
 
@@ -467,23 +524,22 @@ h3 {
     text-align: center;
 }
 
-.config-equipo h2 {
-    margin-bottom: 10px;
-}
-
 .fichas {
+
     font-size: 1.3rem;
 
     margin-bottom: 15px;
 }
 
 .fichas strong {
+
     color: #9a6a22;
 
     font-size: 1.5rem;
 }
 
 .apuestas-grid {
+
     display: grid;
 
     grid-template-columns:
@@ -493,7 +549,9 @@ h3 {
 }
 
 .apuesta {
-    border: 2px solid #c4b394;
+
+    border:
+        2px solid #c4b394;
 
     background: #f2e7d3;
 
@@ -509,12 +567,14 @@ h3 {
 }
 
 .apuesta:hover {
+
     border-color: var(--verde);
 
     transform: translateY(-1px);
 }
 
 .apuesta.seleccionado {
+
     background: var(--verde);
 
     color: white;
@@ -523,6 +583,7 @@ h3 {
 }
 
 .apuesta-texto {
+
     margin-top: 12px;
 
     font-weight: 700;
@@ -531,6 +592,7 @@ h3 {
 }
 
 .reiniciar {
+
     display: block;
 
     width: 100%;
@@ -548,6 +610,7 @@ h3 {
 }
 
 .encabezado {
+
     display: flex;
 
     justify-content: space-between;
@@ -560,6 +623,7 @@ h3 {
 }
 
 .encabezado h1 {
+
     text-align: left;
 
     margin-bottom: 3px;
@@ -579,6 +643,7 @@ h3 {
 ===================================================== */
 
 .equipos {
+
     display: grid;
 
     grid-template-columns:
@@ -588,9 +653,11 @@ h3 {
 }
 
 .equipo {
+
     background: #eee2cd;
 
-    border: 1px solid #cbbb9f;
+    border:
+        1px solid #cbbb9f;
 
     border-radius: 12px;
 
@@ -601,19 +668,17 @@ h3 {
     position: relative;
 }
 
-.equipo h2 {
-    margin-bottom: 10px;
-}
-
 
 /* =====================================================
-   PALITOS DE MADERA
+   PALITOS
 ===================================================== */
 
 .puntos {
+
     min-height: 105px;
 
-    margin: 15px 0 20px;
+    margin:
+        15px 0 20px;
 
     display: flex;
 
@@ -626,10 +691,8 @@ h3 {
     gap: 10px;
 }
 
-
-/* grupo de 5 */
-
 .grupo-palitos {
+
     position: relative;
 
     display: block;
@@ -638,13 +701,12 @@ h3 {
 
     height: 85px;
 
-    flex: 0 0 85px;
+    flex:
+        0 0 85px;
 }
 
-
-/* cada palo */
-
 .linea {
+
     position: absolute;
 
     display: block;
@@ -659,7 +721,8 @@ h3 {
             #4a2815 100%
         );
 
-    border: 1px solid #42230f;
+    border:
+        1px solid #42230f;
 
     border-radius: 6px;
 
@@ -669,16 +732,13 @@ h3 {
         1px 3px 4px rgba(0,0,0,0.25);
 }
 
-
-/* veta de madera */
-
 .linea::after {
+
     content: "";
 
     position: absolute;
 
     left: 18%;
-
     right: 18%;
 
     top: 38%;
@@ -691,85 +751,65 @@ h3 {
         rgba(55, 27, 10, 0.38);
 }
 
-
-/* palo vertical izquierdo */
-
 .v1 {
-    width: 11px;
 
+    width: 11px;
     height: 70px;
 
     left: 5px;
-
     top: 7px;
 }
 
-
-/* palo horizontal inferior */
-
 .h1 {
-    width: 70px;
 
+    width: 70px;
     height: 11px;
 
     left: 7px;
-
     top: 66px;
 }
 
-
-/* palo vertical derecho */
-
 .v2 {
-    width: 11px;
 
+    width: 11px;
     height: 70px;
 
     right: 5px;
-
     top: 7px;
 }
 
-
-/* palo horizontal superior */
-
 .h2 {
-    width: 70px;
 
+    width: 70px;
     height: 11px;
 
     left: 7px;
-
     top: 7px;
 }
 
-
-/* diagonal del quinto */
-
 .diagonal {
-    width: 11px;
 
+    width: 11px;
     height: 88px;
 
     left: 37px;
-
     top: -1px;
 
     transform:
         rotate(45deg);
 
-    transform-origin:
-        center;
+    transform-origin: center;
 
     border-radius: 7px;
 }
 
 
 /* =====================================================
-   CONTROLES DE PUNTOS
+   CONTROLES
 ===================================================== */
 
 .controles {
+
     display: flex;
 
     justify-content: center;
@@ -780,6 +820,7 @@ h3 {
 }
 
 .boton-punto {
+
     border: none;
 
     border-radius: 9px;
@@ -798,18 +839,21 @@ h3 {
 }
 
 .boton-punto.sumar {
+
     background: var(--verde);
 
     color: white;
 }
 
 .boton-punto.restar {
+
     background: #d5c5ad;
 
     color: var(--texto);
 }
 
 .boton-punto:hover {
+
     transform: translateY(-2px);
 
     box-shadow:
@@ -822,10 +866,11 @@ h3 {
 
 
 /* =====================================================
-   MENÚS DEL MARCADOR
+   MENÚS
 ===================================================== */
 
 .menus {
+
     display: grid;
 
     grid-template-columns:
@@ -839,9 +884,11 @@ h3 {
 }
 
 .boton-menu {
+
     width: 100%;
 
-    border: 1px solid #c2b08f;
+    border:
+        1px solid #c2b08f;
 
     background: #e3d4ba;
 
@@ -865,19 +912,21 @@ h3 {
 }
 
 .desplegable {
+
     position: absolute;
 
     left: 0;
-
     right: 0;
 
-    top: calc(100% + 5px);
+    top:
+        calc(100% + 5px);
 
     z-index: 100;
 
     background: #f4ead7;
 
-    border: 1px solid #bca98b;
+    border:
+        1px solid #bca98b;
 
     border-radius: 8px;
 
@@ -885,9 +934,14 @@ h3 {
 
     box-shadow:
         0 8px 18px rgba(0,0,0,0.25);
+
+    max-width: 100%;
+
+    overflow: hidden;
 }
 
 .desplegable button {
+
     width: 100%;
 
     border: none;
@@ -917,15 +971,18 @@ h3 {
 ===================================================== */
 
 .historial-contenedor {
+
     margin-top: 25px;
 
     position: relative;
 }
 
 .boton-historial {
+
     width: 100%;
 
-    border: 1px solid #c4b292;
+    border:
+        1px solid #c4b292;
 
     background: #e2d3b9;
 
@@ -941,6 +998,7 @@ h3 {
 }
 
 .historial {
+
     margin-top: 8px;
 
     max-height: 220px;
@@ -949,7 +1007,8 @@ h3 {
 
     background: #eee2ce;
 
-    border: 1px solid #c6b493;
+    border:
+        1px solid #c6b493;
 
     border-radius: 9px;
 
@@ -957,6 +1016,7 @@ h3 {
 }
 
 .entrada {
+
     padding: 8px;
 
     border-bottom:
@@ -970,6 +1030,7 @@ h3 {
 }
 
 .objetivo-texto {
+
     text-align: center;
 
     margin-top: 20px;
@@ -981,16 +1042,22 @@ h3 {
 
 
 /* =====================================================
-   PANTALLA GANADOR
+   GANADOR
 ===================================================== */
 
 .ganador {
+
     max-width: 600px;
 
     text-align: center;
+
+    position: relative;
+
+    overflow: visible;
 }
 
 .trofeo {
+
     font-size: 5rem;
 
     margin-bottom: 10px;
@@ -999,11 +1066,8 @@ h3 {
         aparecerTrofeo 0.7s ease;
 }
 
-.ganador h1 {
-    margin-bottom: 10px;
-}
-
 #textoGanador {
+
     font-size: 1.3rem;
 
     font-weight: 800;
@@ -1014,6 +1078,7 @@ h3 {
 }
 
 .resultado {
+
     display: grid;
 
     grid-template-columns:
@@ -1024,10 +1089,13 @@ h3 {
     margin-bottom: 20px;
 }
 
-.resultado > div {
+.resultado > div,
+.resultado-fichas > div {
+
     background: #e8dcc7;
 
-    border: 1px solid #c9b99e;
+    border:
+        1px solid #c9b99e;
 
     border-radius: 10px;
 
@@ -1036,12 +1104,14 @@ h3 {
 
 .resultado span,
 .resultado-fichas span {
+
     display: block;
 
     margin-bottom: 5px;
 }
 
 .resultado strong {
+
     display: block;
 
     font-size: 2rem;
@@ -1050,6 +1120,7 @@ h3 {
 }
 
 .resultado-fichas {
+
     display: grid;
 
     grid-template-columns:
@@ -1060,17 +1131,8 @@ h3 {
     margin-bottom: 25px;
 }
 
-.resultado-fichas > div {
-    background: #e8dcc7;
-
-    border: 1px solid #c9b99e;
-
-    border-radius: 10px;
-
-    padding: 15px;
-}
-
 .resultado-fichas strong {
+
     display: block;
 
     font-size: 1.5rem;
@@ -1080,324 +1142,12 @@ h3 {
 
 
 /* =====================================================
-   FOOTER
+   CONFETI
 ===================================================== */
 
-.copyright {
-    width: 100%;
-
-    text-align: center;
-
-    padding: 12px 10px;
-
-    color: rgba(255,255,255,0.75);
-
-    font-size: 0.8rem;
-}
-
-
-/* =====================================================
-   ANIMACIÓN GANADOR
-===================================================== */
-
-@keyframes aparecerTrofeo {
-
-    from {
-        opacity: 0;
-
-        transform:
-            scale(0.5)
-            rotate(-10deg);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            scale(1)
-            rotate(0);
-    }
-}
-
-
-/* =====================================================
-   FOCUS
-===================================================== */
-
-button:focus-visible {
-    outline: 3px solid rgba(47,93,80,0.45);
-
-    outline-offset: 2px;
-}
-
-
-/* =====================================================
-   SCROLLBAR
-===================================================== */
-
-::-webkit-scrollbar {
-    width: 9px;
-}
-
-::-webkit-scrollbar-track {
-    background: #d8c9b0;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #8a765b;
-
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #6f5c43;
-}
-
-
-/* =====================================================
-   RESPONSIVE - TABLET
-===================================================== */
-
-@media (max-width: 700px) {
-
-    .pantalla {
-        align-items: flex-start;
-
-        padding: 15px 10px;
-    }
-
-    .papel {
-        padding: 24px 16px;
-
-        margin-top: 5px;
-
-        width: 100%;
-    }
-
-    /*
-       Menú principal:
-       seguimos manteniendo 3 x 2 en tablet.
-    */
-
-    #pantalla1 .papel {
-        width: 100%;
-    }
-
-    #pantalla1 .opciones {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    #pantalla1 .opciones-grandes {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .equipos {
-        grid-template-columns: 1fr;
-    }
-
-    .equipos-config {
-        grid-template-columns: 1fr;
-    }
-
-    .encabezado {
-        align-items: flex-start;
-    }
-
-    .encabezado h1 {
-        font-size: 1.7rem;
-    }
-
-    .menus {
-        grid-template-columns:
-            repeat(3, 1fr);
-    }
-}
-
-
-/* =====================================================
-   RESPONSIVE - CELULAR
-===================================================== */
-
-@media (max-width: 480px) {
-
-    .pantalla {
-        padding: 8px;
-    }
-
-    .papel {
-        padding: 20px 12px;
-
-        border-radius: 7px;
-    }
-
-    h1 {
-        font-size: 1.7rem;
-    }
-
-    h2 {
-        font-size: 1.05rem;
-    }
-
-    .subtitulo {
-        font-size: 0.9rem;
-
-        margin-bottom: 20px;
-    }
-
-    /*
-       En celulares mantenemos 2 columnas
-       para jugadores, como estaba originalmente.
-    */
-
-    #pantalla1 .opciones {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    #pantalla1 .opciones-grandes {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .opciones {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .opciones-grandes {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .opcion {
-        padding: 12px 8px;
-
-        font-size: 0.9rem;
-    }
-
-    .botones {
-        flex-direction: column;
-    }
-
-    .encabezado {
-        flex-direction: column;
-    }
-
-    .encabezado .boton-secundario {
-        width: 100%;
-    }
-
-    .equipo {
-        padding: 14px 10px;
-    }
-
-    .puntos {
-        min-height: 90px;
-
-        gap: 6px;
-    }
-
-    .grupo-palitos {
-        width: 65px;
-
-        height: 65px;
-
-        transform: scale(0.78);
-    }
-
-    .boton-punto {
-        min-width: 75px;
-
-        padding: 12px 10px;
-    }
-
-    .menus {
-        grid-template-columns:
-            1fr;
-    }
-
-    .desplegable {
-        position: relative;
-
-        top: auto;
-
-        margin-top: 4px;
-    }
-
-    .resultado {
-        grid-template-columns: 1fr;
-    }
-
-    .resultado-fichas {
-        grid-template-columns: 1fr;
-    }
-
-    .trofeo {
-        font-size: 4rem;
-    }
-}
-
-
-/* =====================================================
-   RESPONSIVE - CELULARES MUY CHICOS
-===================================================== */
-
-@media (max-width: 350px) {
-
-    .papel {
-        padding: 16px 9px;
-    }
-
-    #pantalla1 .opciones {
-        grid-template-columns: 1fr;
-    }
-
-    #pantalla1 .opciones-grandes {
-        grid-template-columns: 1fr;
-    }
-
-    .opciones {
-        grid-template-columns: 1fr;
-    }
-
-    .opciones-grandes {
-        grid-template-columns: 1fr;
-    }
-
-    .grupo-palitos {
-        transform: scale(0.68);
-    }
-}
-/* =====================================================
-   BOTONES DEL MENÚ PRINCIPAL
-===================================================== */
-
-#pantalla1 .grupo:nth-of-type(2) .opciones {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-#pantalla1 .grupo:nth-of-type(2) .opcion {
-    width: 100%;
-}
-
-#pantalla1 .boton-reglas {
-    width: 100%;
-    text-align: center;
-}
-
-/* =====================================================
-   CONFETI DE VICTORIA
-===================================================== */
-
-.ganador {
-    position: relative;
-    overflow: visible;
-}
-
-/* Confeti izquierdo y derecho */
 .ganador::before,
 .ganador::after {
+
     content: "";
 
     position: absolute;
@@ -1410,10 +1160,26 @@ button:focus-visible {
     pointer-events: none;
 
     background-image:
-        linear-gradient(45deg, #d94b4b 0 8px, transparent 8px),
-        linear-gradient(-45deg, #e0a52f 0 8px, transparent 8px),
-        linear-gradient(20deg, #2f5d50 0 7px, transparent 7px),
-        linear-gradient(-20deg, #8b4fa3 0 8px, transparent 8px);
+        linear-gradient(
+            45deg,
+            #d94b4b 0 8px,
+            transparent 8px
+        ),
+        linear-gradient(
+            -45deg,
+            #e0a52f 0 8px,
+            transparent 8px
+        ),
+        linear-gradient(
+            20deg,
+            #2f5d50 0 7px,
+            transparent 7px
+        ),
+        linear-gradient(
+            -20deg,
+            #8b4fa3 0 8px,
+            transparent 8px
+        );
 
     background-size:
         35px 45px,
@@ -1433,18 +1199,20 @@ button:focus-visible {
         confetiVictoria 1.8s ease-out infinite;
 }
 
-/* Lado izquierdo */
 .ganador::before {
+
     right: 100%;
 
-    transform-origin: right center;
+    transform-origin:
+        right center;
 }
 
-/* Lado derecho */
 .ganador::after {
+
     left: 100%;
 
-    transform-origin: left center;
+    transform-origin:
+        left center;
 
     animation-delay: 0.4s;
 }
@@ -1452,8 +1220,12 @@ button:focus-visible {
 @keyframes confetiVictoria {
 
     0% {
+
         opacity: 0;
-        transform: scale(0.3) translateY(20px);
+
+        transform:
+            scale(0.3)
+            translateY(20px);
     }
 
     20% {
@@ -1461,7 +1233,466 @@ button:focus-visible {
     }
 
     100% {
+
         opacity: 0;
-        transform: scale(1.1) translateY(-35px);
+
+        transform:
+            scale(1.1)
+            translateY(-35px);
+    }
+}
+
+
+/* =====================================================
+   PANEL ADMIN
+===================================================== */
+
+.admin-panel {
+
+    max-width: 750px;
+}
+
+.admin-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.admin-header h1 {
+
+    text-align: left;
+
+    margin-bottom: 5px;
+}
+
+.admin-header p {
+
+    color: #66584a;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-badge {
+
+    background: var(--verde);
+
+    color: white;
+
+    border-radius: 20px;
+
+    padding: 8px 14px;
+
+    font-size: 0.8rem;
+
+    font-weight: 800;
+}
+
+.admin-card {
+
+    background: #eadfc9;
+
+    border:
+        1px solid #cbbb9f;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 18px;
+}
+
+.admin-card h2 {
+    margin-bottom: 15px;
+}
+
+.admin-datos {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.admin-datos > div {
+
+    background: #f2e7d3;
+
+    border:
+        1px solid #cbbb9f;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    text-align: center;
+}
+
+.admin-datos span {
+
+    display: block;
+
+    color: #66584a;
+
+    margin-bottom: 5px;
+}
+
+.admin-datos strong {
+
+    font-size: 1.7rem;
+
+    color: var(--verde);
+}
+
+#adminEmail {
+
+    background: #f2e7d3;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    margin-bottom: 12px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.copyright {
+
+    width: 100%;
+
+    text-align: center;
+
+    padding: 12px 10px;
+
+    color:
+        rgba(255,255,255,0.75);
+
+    font-size: 0.8rem;
+}
+
+
+/* =====================================================
+   FOCUS
+===================================================== */
+
+button:focus-visible {
+
+    outline:
+        3px solid rgba(47,93,80,0.45);
+
+    outline-offset: 2px;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #d8c9b0;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #8a765b;
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6f5c43;
+}
+
+
+/* =====================================================
+   ANIMACIÓN
+===================================================== */
+
+@keyframes aparecerTrofeo {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(0.5)
+            rotate(-10deg);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0);
+    }
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+button {
+
+    max-width: 100%;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    user-select: none;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .pantalla {
+
+        align-items: flex-start;
+
+        padding:
+            15px 10px;
+    }
+
+    .papel {
+
+        padding:
+            24px 16px;
+
+        margin-top: 5px;
+
+        width: 100%;
+    }
+
+    #pantalla1 .papel {
+        width: 100%;
+    }
+
+    #pantalla1 .opciones {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .equipos,
+    .equipos-config {
+
+        grid-template-columns: 1fr;
+    }
+
+    .encabezado {
+        align-items: flex-start;
+    }
+
+    .encabezado h1 {
+        font-size: 1.7rem;
+    }
+
+    .menus {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .pantalla {
+        padding: 8px;
+    }
+
+    .papel {
+
+        padding:
+            20px 12px;
+
+        border-radius: 7px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 1.05rem;
+    }
+
+    .subtitulo {
+
+        font-size: 0.9rem;
+
+        margin-bottom: 20px;
+    }
+
+    #pantalla1 .opciones {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .opciones {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .opcion {
+
+        padding:
+            12px 8px;
+
+        font-size: 0.9rem;
+    }
+
+    .botones {
+        flex-direction: column;
+    }
+
+    .encabezado {
+        flex-direction: column;
+    }
+
+    .encabezado .boton-secundario {
+        width: 100%;
+    }
+
+    .equipo {
+        padding:
+            14px 10px;
+    }
+
+    .puntos {
+
+        min-height: 90px;
+
+        gap: 6px;
+
+        width: 100%;
+
+        overflow: hidden;
+    }
+
+    .grupo-palitos {
+
+        width: 65px;
+        height: 65px;
+
+        transform:
+            scale(0.78);
+    }
+
+    .boton-punto {
+
+        min-width: 75px;
+
+        padding:
+            12px 10px;
+    }
+
+    .menus {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .desplegable {
+
+        position: relative;
+
+        top: auto;
+
+        margin-top: 4px;
+    }
+
+    .resultado,
+    .resultado-fichas {
+
+        grid-template-columns: 1fr;
+    }
+
+    .trofeo {
+        font-size: 4rem;
+    }
+
+    .ganador::before,
+    .ganador::after {
+
+        width: 70px;
+        height: 150px;
+    }
+
+    .admin-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .admin-header h1 {
+        text-align: center;
+    }
+
+    .admin-badge {
+
+        align-self: center;
+    }
+
+    .admin-datos {
+
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =====================================================
+   CELULARES MUY CHICOS
+===================================================== */
+
+@media (max-width: 350px) {
+
+    .papel {
+        padding:
+            16px 9px;
+    }
+
+    #pantalla1 .opciones,
+    .opciones {
+
+        grid-template-columns: 1fr;
+    }
+
+    .grupo-palitos {
+        transform:
+            scale(0.68);
     }
 }
