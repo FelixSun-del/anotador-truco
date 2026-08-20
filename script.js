@@ -5,22 +5,6 @@
    FIREBASE
 ===================================================== */
 
-/*
-    IMPORTANTE:
-
-    Estos datos NO son una contraseña.
-
-    Firebase permite que la configuración del proyecto
-    esté en el frontend.
-
-    LA SEGURIDAD REAL se hace mediante:
-    Firebase Authentication
-    +
-    reglas de Firebase.
-
-    No pongas contraseñas dentro de este archivo.
-*/
-
 const firebaseConfig = {
 
     apiKey:
@@ -351,47 +335,96 @@ const API_URL =
 
 async function comprobarAdministrador(user) {
 
-    // El botón siempre empieza oculto
-    botonAdmin.classList.add("oculto");
+    if (!botonAdmin) {
+        return;
+    }
 
 
-    // Si no hay usuario autenticado,
-    // no hacemos nada
+    // Siempre empieza oculto
+    botonAdmin.classList.add(
+        "oculto"
+    );
+
+
+    // No hay usuario autenticado
     if (!user) {
         return;
     }
 
 
+    // =================================================
+    // COMPROBAR VENCIMIENTO 7 / 30 DÍAS
+    // =================================================
+
+    const expiracionGuardada =
+        localStorage.getItem(
+            "adminSesionExpira"
+        );
+
+
+    if (expiracionGuardada) {
+
+        const expiracion =
+            Number(expiracionGuardada);
+
+
+        if (
+            Number.isFinite(expiracion) &&
+            Date.now() >= expiracion
+        ) {
+
+            localStorage.removeItem(
+                "adminSesionExpira"
+            );
+
+            localStorage.removeItem(
+                "adminSesionDias"
+            );
+
+
+            await auth.signOut();
+
+
+            return;
+
+        }
+
+    }
+
+
     try {
 
-        // Pedimos el token real de Firebase
+        // TOKEN FIREBASE
         const token =
             await user.getIdToken();
 
 
-        // Preguntamos al BACKEND
+        // PREGUNTAR AL BACKEND
         const respuesta =
             await fetch(
                 `${API_URL}/api/admin/check`,
                 {
+
                     headers: {
 
                         Authorization:
                             `Bearer ${token}`
 
                     }
+
                 }
             );
 
 
-        // Si el backend dice que NO está autorizado
+        // NO AUTORIZADO
         if (!respuesta.ok) {
 
-            botonAdmin.classList.add(
-                "oculto"
+            console.warn(
+                "🔒 Usuario sin permisos de administrador."
             );
 
             return;
+
         }
 
 
@@ -399,11 +432,17 @@ async function comprobarAdministrador(user) {
             await respuesta.json();
 
 
-        // Solamente si el backend confirma
-        if (datos.autorizado) {
+        // AUTORIZADO
+        if (datos.autorizado === true) {
 
             botonAdmin.classList.remove(
                 "oculto"
+            );
+
+
+            console.log(
+                "🔐 Administrador autorizado:",
+                datos.email
             );
 
         }
@@ -415,6 +454,7 @@ async function comprobarAdministrador(user) {
             "Error comprobando administrador:",
             error
         );
+
 
         botonAdmin.classList.add(
             "oculto"
@@ -434,7 +474,9 @@ if (firebaseDisponible) {
     auth.onAuthStateChanged(
         user => {
 
-            comprobarAdministrador(user);
+            comprobarAdministrador(
+                user
+            );
 
         }
     );
@@ -453,7 +495,7 @@ if (botonAdmin) {
         () => {
 
             window.location.href =
-                "https://anotador-truco-backend.onrender.com/admin";
+                "./admin/admin.html";
 
         }
     );
@@ -517,42 +559,6 @@ if (cerrarSesionAdmin) {
 
                 console.error(
                     error
-                );
-            }
-        }
-    );
-}
-
-
-/* =====================================================
-   ESTADO DE AUTENTICACIÓN
-===================================================== */
-
-if (firebaseDisponible) {
-
-    auth.onAuthStateChanged(
-        user => {
-
-            actualizarInterfazAdmin(
-                user
-            );
-
-
-            if (
-                user &&
-                esAdministrador(user)
-            ) {
-
-                console.log(
-                    "🔐 Administrador autorizado:",
-                    user.email
-                );
-
-            } else if (user) {
-
-                console.warn(
-                    "Usuario autenticado pero NO autorizado:",
-                    user.email
                 );
             }
         }
