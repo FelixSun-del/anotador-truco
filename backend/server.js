@@ -1040,7 +1040,7 @@ app.get(
 );
 
 // =====================================================
-// COMPROBAR SI EL USUARIO ES ADMIN
+// COMPROBAR ACCESO ADMIN
 // =====================================================
 
 app.get(
@@ -1049,8 +1049,12 @@ app.get(
     (req, res) => {
 
         res.json({
+
             autorizado: true,
-            email: req.usuario.email
+
+            email:
+                req.usuario.email
+
         });
 
     }
