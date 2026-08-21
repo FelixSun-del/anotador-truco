@@ -486,43 +486,131 @@ if (siguiente1) {
 
 
 /* =====================================================
-   REGLAS
+                     REGLAS
 ===================================================== */
 
-const verReglas =
-    document.getElementById(
-        "verReglas"
-    );
+document
+    .querySelectorAll(
+        ".boton-regla"
+    )
+    .forEach(boton => {
+
+        boton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
 
 
-if (verReglas) {
+                const contenido =
+                    boton.nextElementSibling;
 
-    verReglas.addEventListener(
-        "click",
-        () => {
-
-            mostrarPantalla(5);
-        }
-    );
-}
+                const flecha =
+                    boton.querySelector(
+                        "span"
+                    );
 
 
-const volverReglas =
-    document.getElementById(
-        "volverReglas"
-    );
+                if (!contenido) {
+                    return;
+                }
 
 
-if (volverReglas) {
+                /*
+                 * Guardamos si ESTE menú
+                 * ya estaba abierto.
+                 */
 
-    volverReglas.addEventListener(
-        "click",
-        () => {
+                const estabaAbierto =
+                    !contenido.classList.contains(
+                        "oculto"
+                    );
 
-            mostrarPantalla(1);
-        }
-    );
-}
+
+                /*
+                 * Cerramos todos los demás.
+                 */
+
+                document
+                    .querySelectorAll(
+                        ".boton-regla"
+                    )
+                    .forEach(otroBoton => {
+
+                        if (
+                            otroBoton === boton
+                        ) {
+                            return;
+                        }
+
+
+                        const otroContenido =
+                            otroBoton
+                                .nextElementSibling;
+
+                        const otraFlecha =
+                            otroBoton
+                                .querySelector(
+                                    "span"
+                                );
+
+
+                        if (otroContenido) {
+
+                            otroContenido
+                                .classList.add(
+                                    "oculto"
+                                );
+
+                        }
+
+
+                        if (otraFlecha) {
+
+                            otraFlecha.textContent =
+                                "▼";
+
+                        }
+
+                    });
+
+
+                /*
+                 * Si el actual estaba abierto,
+                 * lo cerramos.
+                 *
+                 * Si estaba cerrado,
+                 * lo abrimos.
+                 */
+
+                if (estabaAbierto) {
+
+                    contenido.classList.add(
+                        "oculto"
+                    );
+
+                    if (flecha) {
+                        flecha.textContent =
+                            "▼";
+                    }
+
+                } else {
+
+                    contenido.classList.remove(
+                        "oculto"
+                    );
+
+                    if (flecha) {
+                        flecha.textContent =
+                            "▲";
+                    }
+
+                }
+
+            }
+        );
+
+    });
 
 
 /* =====================================================
