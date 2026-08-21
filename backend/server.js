@@ -233,30 +233,32 @@ app.get(
 // =====================================================
 // ACCESO AL ADMIN
 // =====================================================
-//
-// IMPORTANTE:
-// Esta ruta NO reemplaza la autenticación.
-// Las estadísticas siguen protegidas por
-// verificarAdministrador().
-//
-// El panel puede estar alojado junto al proyecto,
-// pero los datos solamente se entregan a usuarios
-// autorizados.
-// =====================================================
+
+const RUTA_ADMIN =
+    path.join(
+        __dirname,
+        "..",
+        "admin"
+    );
+
 
 app.get(
     "/admin",
     (req, res) => {
 
-        res.sendFile(
-            path.join(
-                __dirname,
-                "admin",
-                "admin.html"
-            )
+        res.redirect(
+            "/admin/admin.html"
         );
 
     }
+);
+
+
+app.use(
+    "/admin",
+    express.static(
+        RUTA_ADMIN
+    )
 );
 
 
