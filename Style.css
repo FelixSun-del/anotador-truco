@@ -1388,16 +1388,23 @@ h3 {
 .copyright {
 
     width: 100%;
+    min-height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     text-align: center;
 
-    padding: 12px 10px;
+    padding: 6px 10px;
 
     color: #5f5f5f;
 
     font-size: 0.8rem;
-
     font-weight: 500;
+
+    line-height: 1.3;
+
 }
 
 
