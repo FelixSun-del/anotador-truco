@@ -87,7 +87,7 @@ body {
 .pantalla {
 
     width: 100%;
-    min-height: calc(100vh - 42px);
+    min-height: 100vh;
 
     display: flex;
     justify-content: center;
