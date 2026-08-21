@@ -1300,16 +1300,64 @@
          FIREBASE
     ====================================================== -->
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script>
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    function cargarScript(src) {
+
+        return new Promise((resolve, reject) => {
+
+            const script =
+                document.createElement("script");
+
+            script.src = src;
+
+            script.onload = resolve;
+
+            script.onerror = reject;
+
+            document.body.appendChild(script);
+
+        });
+
+    }
 
 
-    <!-- =====================================================
-         SCRIPT PRINCIPAL
-    ====================================================== -->
+    async function iniciarAplicacion() {
 
-    <script src="./script.js"></script>
+        if (navigator.onLine) {
+
+            try {
+
+                await cargarScript(
+                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"
+                );
+
+                await cargarScript(
+                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "Firebase no pudo cargarse.",
+                    error
+                );
+
+            }
+
+        }
+
+
+        await cargarScript(
+            "./script.js"
+        );
+
+    }
+
+
+    iniciarAplicacion();
+
+</script>
 
 
     <!-- =====================================================
