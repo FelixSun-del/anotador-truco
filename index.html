@@ -47,11 +47,6 @@
     <!-- PWA -->
 
     <link
-        rel="manifest"
-        href="./manifest.json"
-    >
-
-    <link
         rel="icon"
         href="./icon-192.png"
     >
@@ -1671,44 +1666,6 @@
     iniciarAplicacion();
 
 </script>
-
-
-    <!-- =====================================================
-         SERVICE WORKER
-    ====================================================== -->
-
-    <script>
-
-        if ("serviceWorker" in navigator) {
-
-            window.addEventListener(
-                "load",
-                () => {
-
-                    navigator.serviceWorker
-                        .register("./service-worker.js")
-                        .then(() => {
-
-                            console.log(
-                                "Service Worker registrado."
-                            );
-
-                        })
-                        .catch(error => {
-
-                            console.error(
-                                "Error del Service Worker:",
-                                error
-                            );
-
-                        });
-
-                }
-            );
-
-        }
-
-    </script>
 
 </body>
 
