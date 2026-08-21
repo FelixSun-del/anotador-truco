@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+
+<head>
+
+    <!-- =====================================================
+         GOOGLE ANALYTICS
+    ====================================================== -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8LM59TJBG8"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+
+        gtag("config", "G-8LM59TJBG8");
+    </script>
+
+
+    <!-- =====================================================
+         CONFIGURACIÓN
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#2f5d50"
+    >
+
+    <meta
+        name="description"
+        content="Anotador de Truco offline"
+    >
+
+
+    <!-- PWA -->
+
+    <link
+        rel="manifest"
+        href="./manifest.json"
+    >
+
+    <link
+    rel="icon"
+    href="./icons/icon-192.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="./Style.css"
+    >
+
+
+    <title>Anotador de Truco</title>
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         PANTALLA 1
+    ====================================================== -->
+
+    <main
+        id="pantalla1"
+        class="pantalla"
+    >
+
+        <section class="papel">
+
+            <h1>🃏 Anotador de Truco</h1>
+
+            <p class="subtitulo">
+                Configuración de la partida
+            </p>
+
+
+            <div class="grupo">
+
+                <h2>Jugadores</h2>
+
+                <div class="opciones">
+
+                    <button
+                        class="opcion jugadores"
+                        data-jugadores="1"
+                    >
+                        1 vs 1
+                    </button>
+
+                    <button
+                        class="opcion jugadores"
+                        data-jugadores="2"
+                    >
+                        2 vs 2
+                    </button>
+
+                    <button
+                        class="opcion jugadores"
+                        data-jugadores="3"
+                    >
+                        3 vs 3
+                    </button>
+
+                    <button
+                        class="opcion jugadores"
+                        data-jugadores="4"
+                    >
+                        4 vs 4
+                    </button>
+
+                    <button
+                        class="opcion jugadores"
+                        data-jugadores="5"
+                    >
+                        5 vs 5
+                    </button>
+
+                    <button
+                        class="opcion jugadores"
+                        data-jugadores="6"
+                    >
+                        6 vs 6
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
+            </div>
+
+
+            <div class="grupo">
+
+                <h2>Objetivo</h2>
+
+                <div class="opciones opciones-objetivo">
+
+                    <button
+                        class="opcion objetivo"
+                        data-objetivo="15"
+                    >
+                        15 puntos
+                    </button>
+
+                    <button
+                        class="opcion objetivo"
+                        data-objetivo="30"
+                    >
+                        30 puntos
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="siguiente1"
+                class="boton-principal"
+            >
+                Siguiente →
+            </button>
+
+
+            <button
+                id="verReglas"
+                class="boton-secundario boton-reglas"
+            >
+                📖 Ver reglas del juego
+            </button>
+
+
+            <!-- SOLO APARECE PARA ADMIN -->
+
+            <button
+                id="botonAdmin"
+                class="boton-admin oculto"
+            >
+                🔐 Panel de administración
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         PANTALLA 2
+    ====================================================== -->
+
+    <main
+        id="pantalla2"
+        class="pantalla oculto"
+    >
+
+        <section class="papel">
+
+            <h1>🪙 Apuestas</h1>
+
+            <p class="subtitulo">
+                ¿Querés utilizar fichas?
+            </p>
+
+
+            <div class="opciones opciones-grandes">
+
+                <button
+                    class="opcion apuestas seleccionado"
+                    data-apuestas="si"
+                >
+                    Sí
+                </button>
+
+                <button
+                    class="opcion apuestas"
+                    data-apuestas="no"
+                >
+                    No
+                </button>
+
+            </div>
+
+
+            <div class="botones">
+
+                <button
+                    id="volver2"
+                    type="button"
+                    class="boton-secundario"
+                >
+                    ← Volver
+                </button>
+
+                <div class="copyright">
+                    © 2026 Félix · todos los derechos reservados
+                </div>
+                
+                <button
+                    id="siguiente2"
+                    type="button"
+                    class="boton-principal"
+                >
+                    Siguiente →
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         PANTALLA 3
+    ====================================================== -->
+
+    <main
+        id="pantalla3"
+        class="pantalla oculto"
+    >
+
+        <section class="papel">
+
+            <h1>🎰 Casino Monaco</h1>
+
+            <p class="subtitulo">
+                Elegí cuánto apuesta cada equipo
+            </p>
+
+
+            <div class="equipos-config">
+
+                <!-- EQUIPO 1 -->
+
+                <article class="config-equipo">
+
+                    <h2>Equipo 1</h2>
+
+                    <div class="fichas">
+                        🪙
+                        <strong id="fichasConfig1">
+                            100
+                        </strong>
+                    </div>
+
+                    <p>Apuesta</p>
+
+                    <div class="apuestas-grid">
+
+                        <button
+                            class="apuesta"
+                            data-equipo="1"
+                            data-apuesta="5"
+                        >
+                            5
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="1"
+                            data-apuesta="10"
+                        >
+                            10
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="1"
+                            data-apuesta="25"
+                        >
+                            25
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="1"
+                            data-apuesta="50"
+                        >
+                            50
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="1"
+                            data-apuesta="100"
+                        >
+                            100
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="apuesta1Texto"
+                        class="apuesta-texto"
+                    >
+                        Sin apuesta
+                    </p>
+
+                </article>
+
+
+                <!-- EQUIPO 2 -->
+
+                <article class="config-equipo">
+
+                    <h2>Equipo 2</h2>
+
+                    <div class="fichas">
+                        🪙
+                        <strong id="fichasConfig2">
+                            100
+                        </strong>
+                    </div>
+
+                    <p>Apuesta</p>
+
+                    <div class="apuestas-grid">
+
+                        <button
+                            class="apuesta"
+                            data-equipo="2"
+                            data-apuesta="5"
+                        >
+                            5
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="2"
+                            data-apuesta="10"
+                        >
+                            10
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="2"
+                            data-apuesta="25"
+                        >
+                            25
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="2"
+                            data-apuesta="50"
+                        >
+                            50
+                        </button>
+
+                        <button
+                            class="apuesta"
+                            data-equipo="2"
+                            data-apuesta="100"
+                        >
+                            100
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="apuesta2Texto"
+                        class="apuesta-texto"
+                    >
+                        Sin apuesta
+                    </p>
+
+                </article>
+
+            </div>
+
+
+            <button
+                id="reiniciarFichas"
+                class="boton-secundario reiniciar"
+            >
+                🪙 Fichas cargadas
+            </button>
+
+
+            <div class="botones">
+
+                <button
+                    id="volver3"
+                    type="button"
+                    class="boton-secundario"
+                >
+                    ← Volver
+                </button>
+
+                <div class="copyright">
+                    © 2026 Félix · todos los derechos reservados
+                </div>
+
+                <button
+                    id="siguiente3"
+                    type="button"
+                    class="boton-principal"
+                >
+                    Siguiente →
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         PANTALLA 4
+    ====================================================== -->
+
+    <main
+        id="pantalla4"
+        class="pantalla oculto"
+    >
+
+        <section class="papel marcador">
+
+            <div class="encabezado">
+
+                <div>
+
+                    <h1>🃏 Truco</h1>
+
+                    <p id="infoPartida">
+                        1 vs 1 · A 15
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="nuevaPartida"
+                    class="boton-secundario"
+                >
+                    🃏 Nueva partida
+                </button>
+
+            </div>
+
+
+            <div class="equipos">
+
+                <!-- EQUIPO 1 -->
+
+                <article class="equipo">
+
+                    <h2>Equipo 1</h2>
+
+                    <div
+                        id="puntos1"
+                        class="puntos"
+                    ></div>
+
+
+                    <div class="controles">
+
+                        <button
+                            class="boton-punto sumar"
+                            data-equipo="1"
+                        >
+                            +1
+                        </button>
+
+                        <button
+                            class="boton-punto restar"
+                            data-equipo="1"
+                        >
+                            −1
+                        </button>
+
+                    </div>
+
+
+                    <div class="menus">
+
+                        <!-- TRUCO -->
+
+                        <div class="menu">
+
+                            <button class="boton-menu">
+                                🃏 Truco
+                            </button>
+
+                            <div class="desplegable oculto">
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="2"
+                                    data-nombre="Truco"
+                                >
+                                    Truco · 2
+                                </button>
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="3"
+                                    data-nombre="Retruco"
+                                >
+                                    Retruco · 3
+                                </button>
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="4"
+                                    data-nombre="Vale cuatro"
+                                >
+                                    Vale cuatro · 4
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ENVIDO -->
+
+                        <div class="menu">
+
+                            <button class="boton-menu">
+                                🪙 Envido
+                            </button>
+
+                            <div class="desplegable oculto">
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="2"
+                                    data-nombre="Envido"
+                                >
+                                    Envido · 2
+                                </button>
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="3"
+                                    data-nombre="Real Envido"
+                                >
+                                    Real Envido · 3
+                                </button>
+
+                                <button
+                                    data-equipo="1"
+                                    data-falta="true"
+                                    data-nombre="Falta Envido"
+                                >
+                                    Falta Envido
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- FLOR -->
+
+                        <div class="menu">
+
+                            <button class="boton-menu">
+                                🌸 Flor
+                            </button>
+
+                            <div class="desplegable oculto">
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="3"
+                                    data-nombre="Flor"
+                                >
+                                    Flor · 3
+                                </button>
+
+                                <button
+                                    data-equipo="1"
+                                    data-puntos="6"
+                                    data-nombre="Contraflor"
+                                >
+                                    Contraflor · 6
+                                </button>
+
+                                <button
+                                    data-equipo="1"
+                                    data-falta="true"
+                                    data-nombre="Contraflor al resto"
+                                >
+                                    Contraflor al resto
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EQUIPO 2 -->
+
+                <article class="equipo">
+
+                    <h2>Equipo 2</h2>
+
+                    <div
+                        id="puntos2"
+                        class="puntos"
+                    ></div>
+
+
+                    <div class="controles">
+
+                        <button
+                            class="boton-punto sumar"
+                            data-equipo="2"
+                        >
+                            +1
+                        </button>
+
+                        <button
+                            class="boton-punto restar"
+                            data-equipo="2"
+                        >
+                            −1
+                        </button>
+
+                    </div>
+
+
+                    <div class="menus">
+
+                        <div class="menu">
+
+                            <button class="boton-menu">
+                                🃏 Truco
+                            </button>
+
+                            <div class="desplegable oculto">
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="2"
+                                    data-nombre="Truco"
+                                >
+                                    Truco · 2
+                                </button>
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="3"
+                                    data-nombre="Retruco"
+                                >
+                                    Retruco · 3
+                                </button>
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="4"
+                                    data-nombre="Vale cuatro"
+                                >
+                                    Vale cuatro · 4
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="menu">
+
+                            <button class="boton-menu">
+                                🪙 Envido
+                            </button>
+
+                            <div class="desplegable oculto">
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="2"
+                                    data-nombre="Envido"
+                                >
+                                    Envido · 2
+                                </button>
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="3"
+                                    data-nombre="Real Envido"
+                                >
+                                    Real Envido · 3
+                                </button>
+
+                                <button
+                                    data-equipo="2"
+                                    data-falta="true"
+                                    data-nombre="Falta Envido"
+                                >
+                                    Falta Envido
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="menu">
+
+                            <button class="boton-menu">
+                                🌸 Flor
+                            </button>
+
+                            <div class="desplegable oculto">
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="3"
+                                    data-nombre="Flor"
+                                >
+                                    Flor · 3
+                                </button>
+
+                                <button
+                                    data-equipo="2"
+                                    data-puntos="6"
+                                    data-nombre="Contraflor"
+                                >
+                                    Contraflor · 6
+                                </button>
+
+                                <button
+                                    data-equipo="2"
+                                    data-falta="true"
+                                    data-nombre="Contraflor al resto"
+                                >
+                                    Contraflor al resto
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="historial-contenedor">
+
+                <button
+                    id="botonHistorial"
+                    class="boton-historial"
+                >
+                    📜 Historial
+                </button>
+
+                <div
+                    id="historial"
+                    class="historial oculto"
+                >
+                    Sin jugadas todavía
+                </div>
+
+            </div>
+
+            <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
+            </div>
+
+            <p
+                id="objetivoTexto"
+                class="objetivo-texto"
+            >
+                Objetivo: 15 puntos
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+      Pantalla 5 · REGLAS DEL JUEGO
+    ===================================================== -->
+
+<main
+    id="pantalla5"
+    class="pantalla oculto"
+>
+
+    <section class="papel reglas">
+
+        <h1>📖 Reglas del juego</h1>
+
+        <p class="subtitulo">
+            Tocá una categoría para ver sus reglas
+        </p>
+
+
+        <!-- =====================================================
+             VALOR DE LAS CARTAS
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🃏 Valor de las cartas
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    Cartas fuertes / mejores
+                </h3>
+
+                <p>
+                    🥇 <strong>1 de Espada</strong>
+                    = la más alta
+                </p>
+
+                <p>
+                    🥈 <strong>1 de Basto</strong>
+                    = la 2.ª más alta
+                </p>
+
+                <p>
+                    🥉 <strong>7 de Espada</strong>
+                    = la 3.ª más alta
+                </p>
+
+                <p>
+                    4️⃣ <strong>7 de Oro</strong>
+                    = la 4.ª más alta
+                </p>
+
+
+                <h3>
+                    Cartas buenas para el Truco
+                </h3>
+
+                <p>
+                    <strong>3</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>2</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>1</strong>
+                    de Oro
+                </p>
+
+                <p>
+                    <strong>1</strong>
+                    de Copa
+                </p>
+
+                <p>
+                    <strong>12</strong>
+                    = Rey de cualquier palo
+                </p>
+
+                <p>
+                    <strong>11</strong>
+                    = Caballo de cualquier palo
+                </p>
+
+
+                <h3>
+                    🚫 Cartas con las que no vale la pena cantar Truco
+                </h3>
+
+                <p>
+                    <strong>10</strong>
+                    = Sota de cualquier palo
+                </p>
+
+                <p>
+                    <strong>7</strong>
+                    de Copa
+                </p>
+
+                <p>
+                    <strong>7</strong>
+                    de Basto
+                </p>
+
+                <p>
+                    <strong>6</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>5</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>4</strong>
+                    de cualquier palo
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ENVIDO
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🪙 Envido
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    🃏 Valor de las cartas en el Envido individualmente
+                </h3>
+
+                <p>
+                    <strong>1 al 7</strong>
+                    = su valor
+                </p>
+
+                <p>
+                    <strong>10, 11, 12</strong>
+                    = 0
+                </p>
+
+
+                <h3>
+                    🧮 Cómo se calcula el Envido
+                </h3>
+
+                <p>
+                    <strong>Mismo palo:</strong>
+                    20 + valor de las 2 cartas más altas.
+                </p>
+
+                <p>
+                    Ej: 6 y 5 de oro =
+                    <strong>
+                        20 + 6 + 5 = 31
+                    </strong>
+                </p>
+
+                <p>
+                    Ej: 10 y 3 de basto =
+                    <strong>
+                        20 + 0 + 3 = 23
+                    </strong>
+                </p>
+
+
+                <p>
+                    <strong>Distinto palo:</strong>
+                    vale la carta más alta.
+                </p>
+
+                <p>
+                    Ej: 7 de espada y 5 de copa =
+                    <strong>7</strong>
+                </p>
+
+                <p>
+                    Ej: 12 de copas y 7 de espada =
+                    <strong>7</strong>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Solo cuenta si es del mismo palo:
+                    </strong>
+                </p>
+
+                <ul>
+                    <li>🟡 Oro con oro</li>
+                    <li>🟤 Basto con basto</li>
+                    <li>⚔️ Espada con espada</li>
+                    <li>🍷 Copa con copa</li>
+                </ul>
+
+
+                <h3>
+                    📌 Importante
+                </h3>
+
+                <p>
+                    <strong>
+                        Cantidad recomendable para cantar:
+                    </strong>
+                    25 o más.
+                </p>
+
+                <p>
+                    <strong>En empate:</strong>
+                    gana el que es mano.
+                </p>
+
+
+                <h3>
+                    🔊 Puntos de Envido - Aceptados
+                </h3>
+
+                <p>
+                    Envido =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido =
+                    <strong>4 puntos</strong>
+                </p>
+
+                <p>
+                    Real Envido =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido Real Envido =
+                    <strong>7 puntos</strong>
+                </p>
+
+                <p>
+                    Falta Envido =
+                    <strong>
+                        lo que le falta al rival para ganar
+                    </strong>
+                </p>
+
+
+                <h3>
+                    ❌ Puntos de Envido - Rechazados
+                </h3>
+
+                <p>
+                    Envido / Real Envido / Falta Envido =
+                    <strong>1 punto</strong>
+                </p>
+
+                <p>
+                    Envido Envido =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido Real Envido =
+                    <strong>4 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido Real Envido Falta Envido =
+                    <strong>7 puntos</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FLOR
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🌸 Flor
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <p>
+                    Se necesitan
+                    <strong>
+                        3 cartas del mismo palo.
+                    </strong>
+                </p>
+
+                <p>
+                    🌸 Flor =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    🌺 Contraflor =
+                    <strong>6 puntos</strong>
+                </p>
+
+                <p>
+                    🌺 Contraflor al resto =
+                    <strong>
+                        lo que le falta al rival para ganar
+                    </strong>
+                </p>
+
+                <p>
+                    <strong>
+                        Si cantan Envido y vos tenés Flor,
+                        tu Flor tiene prioridad y se canta primero.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SEÑAS
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                👁️ Señas del Truco
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    ¿Qué son?
+                </h3>
+
+                <p>
+                    Las señas son gestos que se usan cuando
+                    se juega en equipos
+                    <strong>2 vs 2 o 3 vs 3</strong>
+                    para comunicarse las cartas.
+                </p>
+
+                <p>
+                    Las hace un jugador y se las hace a quien
+                    dirige la jugada, normalmente el
+                    <strong>jugador mano</strong>.
+                </p>
+
+                <p>
+                    Se hacen de forma
+                    <strong>disimulada y rápida</strong>,
+                    para que solo las vea tu compañero.
+                </p>
+
+                <p>
+                    Está en la picardía de cada uno:
+                    hacerlas sin que se den cuenta,
+                    descubrir las del rival,
+                    o incluso fingir señas para confundir.
+                </p>
+
+
+                <h3>
+                    📋 Lista de señas
+                </h3>
+
+                <p>
+                    <strong>As de Espadas:</strong>
+                    levantar las cejas.
+                </p>
+
+                <p>
+                    <strong>As de Bastos:</strong>
+                    guiñar un ojo.
+                </p>
+
+                <p>
+                    <strong>7 de Espadas:</strong>
+                    estirar la comisura de los labios
+                    del lado derecho de la boca.
+                </p>
+
+                <p>
+                    <strong>7 de Oros:</strong>
+                    estirar la comisura de los labios
+                    del lado izquierdo de la boca.
+                </p>
+
+                <p>
+                    <strong>Cualquier 3:</strong>
+                    morder el labio inferior.
+                </p>
+
+                <p>
+                    <strong>Cualquier 2:</strong>
+                    poner los labios como si tiraras un beso.
+                </p>
+
+                <p>
+                    <strong>As de Copas u Oros:</strong>
+                    abrir y cerrar la boca.
+                </p>
+
+                <p>
+                    <strong>
+                        Cartas Bajas (12 o menos):
+                    </strong>
+                    cerrar ambos ojos.
+                    Significa que estás
+                    <strong>CIEGO</strong>
+                    o que no tenés nada para jugar
+                    el Envido/Truco.
+                </p>
+
+                <p>
+                    <strong>Envido:</strong>
+                    arrugar la nariz para arriba,
+                    como sintiendo mal olor.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             TRUCO
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                ⚔️ Truco
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    ⚔️ Cómo se gana el Truco
+                </h3>
+
+                <p>
+                    Se juegan 3 manos.
+                    Gana quien gana 2 manos.
+                </p>
+
+                <p>
+                    Si empatan las 3 →
+                    gana el mano.
+                </p>
+
+
+                <h3>
+                    🔊 Puntos de Truco - Aceptados
+                </h3>
+
+                <p>
+                    Truco =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Re Truco =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    Vale Cuatro =
+                    <strong>4 puntos</strong>
+                </p>
+
+
+                <h3>
+                    ❌ Puntos de Truco - Rechazados
+                </h3>
+
+                <p>
+                    Truco =
+                    <strong>1 punto</strong>
+                </p>
+
+                <p>
+                    Re Truco =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Vale Cuatro =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    <strong>
+                        Si dicen "no quiero" al Truco,
+                        Re Truco o Vale Cuatro,
+                        la ronda termina y se le dan los
+                        puntos correspondientes al rival
+                        que cantó.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             IRSE AL MAZO
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🏳️ Irse al mazo
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <p>
+                    Sin haber jugado ni cantado =
+                    <strong>
+                        2 puntos para el otro.
+                    </strong>
+                </p>
+
+                <p>
+                    Después de jugar o cantar =
+                    <strong>
+                        1 punto para el otro.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- VOLVER -->
+
+        <button
+            id="volverReglas"
+            class="boton-principal"
+        >
+            ← Volver a configuración
+        </button>
+
+            <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         PANEL DE ADMINISTRACIÓN
+    ====================================================== -->
+
+    <main
+        id="pantallaAdmin"
+        class="pantalla oculto"
+    >
+
+        <section class="papel admin-panel">
+
+            <div class="admin-header">
+
+                <div>
+
+                    <h1>🔐 Panel Admin</h1>
+
+                    <p id="adminUsuario">
+                        Comprobando autorización...
+                    </p>
+
+                </div>
+
+                <span class="admin-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h2>📊 Estado de la aplicación</h2>
+
+                <div class="admin-datos">
+
+                    <div>
+                        <span>Partidas</span>
+                        <strong id="adminPartidas">
+                            0
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Equipo 1</span>
+                        <strong id="adminPuntos1">
+                            0
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Equipo 2</span>
+                        <strong id="adminPuntos2">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h2>👤 Sesión</h2>
+
+                <p id="adminEmail">
+                    -
+                </p>
+
+                <button
+                    id="cerrarSesionAdmin"
+                    class="boton-secundario"
+                >
+                    🚪 Cerrar sesión
+                </button>
+
+            </div>
+
+
+            <button
+                id="volverAdmin"
+                class="boton-principal"
+            >
+                ← Volver al anotador
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         GANADOR
+    ====================================================== -->
+
+    <main
+        id="pantallaGanador"
+        class="pantalla oculto"
+    >
+
+        <section class="papel ganador">
+
+            <div class="trofeo">
+                🏆
+            </div>
+
+            <h1>
+                ¡Partida terminada!
+            </h1>
+
+            <p id="textoGanador">
+                Ganó el Equipo 1
+            </p>
+
+
+            <div class="resultado">
+
+                <div>
+
+                    <span>
+                        Equipo 1
+                    </span>
+
+                    <strong id="resultado1">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Equipo 2
+                    </span>
+
+                    <strong id="resultado2">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="resultadoFichas"
+                class="resultado-fichas"
+            >
+
+                <div>
+
+                    <span>
+                        🪙 Equipo 1
+                    </span>
+
+                    <strong id="fichasFinal1">
+                        100
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        🪙 Equipo 2
+                    </span>
+
+                    <strong id="fichasFinal2">
+                        100
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="nuevaPartidaGanador"
+                class="boton-principal"
+            >
+                🃏 Nueva partida
+            </button>
+            
+            <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FIREBASE
+    ====================================================== -->
+
+    <script>
+
+    function cargarScript(src) {
+
+        return new Promise((resolve, reject) => {
+
+            const script =
+                document.createElement("script");
+
+            script.src = src;
+
+            script.onload = resolve;
+
+            script.onerror = reject;
+
+            document.body.appendChild(script);
+
+        });
+
+    }
+
+
+    async function iniciarAplicacion() {
+
+        if (navigator.onLine) {
+
+            try {
+
+                await cargarScript(
+                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"
+                );
+
+                await cargarScript(
+                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "Firebase no pudo cargarse.",
+                    error
+                );
+
+            }
+
+        }
+
+
+        await cargarScript(
+            "./script.js"
+        );
+
+    }
+
+
+    iniciarAplicacion();
+
+</script>
+
+
+    <!-- =====================================================
+         SERVICE WORKER
+    ====================================================== -->
+
+    <script>
+
+        if ("serviceWorker" in navigator) {
+
+            window.addEventListener(
+                "load",
+                () => {
+
+                    navigator.serviceWorker
+                        .register("./service-worker.js")
+                        .then(() => {
+
+                            console.log(
+                                "Service Worker registrado."
+                            );
+
+                        })
+                        .catch(error => {
+
+                            console.error(
+                                "Error del Service Worker:",
+                                error
+                            );
+
+                        });
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
