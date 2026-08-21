@@ -787,6 +787,38 @@ botonesDuracion.forEach(
     src="admin.js"
 ></script>
 
+    <script>
+    if ("serviceWorker" in navigator) {
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                navigator.serviceWorker
+                    .register(
+                        "./admin-service-worker.js"
+                    )
+                    .then(() => {
+
+                        console.log(
+                            "📴 Service Worker del Admin registrado."
+                        );
+
+                    })
+                    .catch(error => {
+
+                        console.error(
+                            "Error registrando Service Worker del Admin:",
+                            error
+                        );
+
+                    });
+
+            }
+        );
+
+    }
+</script>
 
 </body>
 </html>

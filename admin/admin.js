@@ -69,7 +69,13 @@ const elementos = {
 // PREPARAR FUENTES
 // =====================================================
 
-elementos.fuentes.classList.add("fuentes");
+if (elementos.fuentes) {
+
+    elementos.fuentes.classList.add(
+        "fuentes"
+    );
+
+}
 
 
 // =====================================================
@@ -77,58 +83,317 @@ elementos.fuentes.classList.add("fuentes");
 // =====================================================
 
 const filtros =
-    document.querySelectorAll(".filtro");
+    document.querySelectorAll(
+        ".filtro"
+    );
 
 
-filtros.forEach(filtro => {
+filtros.forEach(
+    filtro => {
 
-    filtro.addEventListener("click", () => {
+        filtro.addEventListener(
+            "click",
+            () => {
 
-        filtros.forEach(otro => {
+                filtros.forEach(
+                    otro => {
 
-            otro.classList.remove("activo");
+                        otro.classList.remove(
+                            "activo"
+                        );
 
-        });
+                    }
+                );
 
-        filtro.classList.add("activo");
 
-        const dias =
-            Number(filtro.dataset.dias);
+                filtro.classList.add(
+                    "activo"
+                );
 
-        cargarDatos(dias);
 
-    });
+                const dias =
+                    Number(
+                        filtro.dataset.dias
+                    );
 
-});
+
+                cargarDatos(
+                    dias
+                );
+
+            }
+        );
+
+    }
+);
+
+
+// =====================================================
+// DATOS OFFLINE
+// =====================================================
+
+function guardarDatosOffline(
+    dias,
+    datos
+) {
+
+    try {
+
+        localStorage.setItem(
+
+            `adminDatos_${dias}`,
+
+            JSON.stringify({
+
+                fecha:
+                    Date.now(),
+
+                datos
+
+            })
+
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "No se pudieron guardar los datos offline:",
+            error
+        );
+
+    }
+
+}
+
+
+function obtenerDatosOffline(
+    dias
+) {
+
+    try {
+
+        const guardado =
+            localStorage.getItem(
+                `adminDatos_${dias}`
+            );
+
+
+        if (!guardado) {
+
+            return null;
+
+        }
+
+
+        return JSON.parse(
+            guardado
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "No se pudieron leer los datos offline:",
+            error
+        );
+
+
+        return null;
+
+    }
+
+}
+
+
+// =====================================================
+// UTILIDADES
+// =====================================================
+
+function formatearNumero(
+    valor
+) {
+
+    return Number(
+        valor || 0
+    ).toLocaleString(
+        "es-AR"
+    );
+
+}
+
+
+function mostrarCargando() {
+
+    elementos.visitas.textContent =
+        "…";
+
+    elementos.usuarios.textContent =
+        "…";
+
+    elementos.instalaciones.textContent =
+        "…";
+
+    elementos.instalacionesPwa.textContent =
+        "…";
+
+    elementos.activos.textContent =
+        "…";
+
+}
+
+
+function mostrarSinDatos(
+    dias
+) {
+
+    elementos.visitas.textContent =
+        "Sin datos";
+
+    elementos.usuarios.textContent =
+        "Sin datos";
+
+    elementos.instalaciones.textContent =
+        "Sin datos";
+
+    elementos.instalacionesPwa.textContent =
+        "Sin datos";
+
+    elementos.activos.textContent =
+        "Sin datos";
+
+
+    if (elementos.periodo) {
+
+        elementos.periodo.textContent =
+            `${dias} días · offline`;
+
+    }
+
+
+    crearGrafico(
+        []
+    );
+
+    crearPaises(
+        []
+    );
+
+    crearDispositivos(
+        []
+    );
+
+    crearFuentes(
+        []
+    );
+
+}
+
+
+function mostrarDatos(
+    dias,
+    datos,
+    modoOffline = false
+) {
+
+    const {
+
+        usuarios,
+        visitas,
+        instalaciones,
+        datosGrafico,
+        datosPaises,
+        datosDispositivos,
+        activos,
+        datosFuentes
+
+    } = datos;
+
+
+    // =================================================
+    // TARJETAS
+    // =================================================
+
+    elementos.usuarios.textContent =
+        formatearNumero(
+            usuarios?.usuarios
+        );
+
+
+    elementos.visitas.textContent =
+        formatearNumero(
+            visitas?.visitas
+        );
+
+
+    elementos.instalaciones.textContent =
+        formatearNumero(
+            instalaciones?.instalaciones
+        );
+
+
+    elementos.instalacionesPwa.textContent =
+        formatearNumero(
+            instalaciones?.instalaciones
+        );
+
+
+    elementos.activos.textContent =
+        formatearNumero(
+            activos?.activos
+        );
+
+
+    // =================================================
+    // PERÍODO
+    // =================================================
+
+    if (elementos.periodo) {
+
+        elementos.periodo.textContent =
+            modoOffline
+                ? `${dias} días · offline`
+                : `${dias} días`;
+
+    }
+
+
+    // =================================================
+    // CONTENIDO
+    // =================================================
+
+    crearGrafico(
+        datosGrafico?.grafico || []
+    );
+
+
+    crearPaises(
+        datosPaises?.paises || []
+    );
+
+
+    crearDispositivos(
+        datosDispositivos?.dispositivos || []
+    );
+
+
+    crearFuentes(
+        datosFuentes?.fuentes || []
+    );
+
+}
 
 
 // =====================================================
 // CARGAR DATOS
 // =====================================================
 
-async function cargarDatos(dias) {
+async function cargarDatos(
+    dias
+) {
+
+    mostrarCargando();
+
 
     try {
-
-        // =================================================
-        // MOSTRAR CARGANDO
-        // =================================================
-
-        elementos.visitas.textContent =
-            "…";
-
-        elementos.usuarios.textContent =
-            "…";
-
-        elementos.instalaciones.textContent =
-            "…";
-
-        elementos.instalacionesPwa.textContent =
-            "…";
-
-        elementos.activos.textContent =
-            "…";
-
 
         // =================================================
         // USUARIO AUTENTICADO
@@ -136,6 +401,7 @@ async function cargarDatos(dias) {
 
         const usuario =
             auth.currentUser;
+
 
         if (!usuario) {
 
@@ -147,7 +413,7 @@ async function cargarDatos(dias) {
 
 
         // =================================================
-        // TOKEN DE FIREBASE
+        // TOKEN FIREBASE
         // =================================================
 
         const token =
@@ -155,7 +421,7 @@ async function cargarDatos(dias) {
 
 
         // =================================================
-        // OPCIONES DE LAS PETICIONES
+        // OPCIONES
         // =================================================
 
         const opciones = {
@@ -174,64 +440,111 @@ async function cargarDatos(dias) {
         // CONSULTAS AL BACKEND
         // =================================================
 
-        console.time("⏱️ Carga total Admin");
+        console.time(
+            "⏱️ Carga total Admin"
+        );
+
 
         const [
 
             respuestaUsuarios,
+
             respuestaVisitas,
+
             respuestaInstalaciones,
+
             respuestaGrafico,
+
             respuestaPaises,
+
             respuestaDispositivos,
+
             respuestaActivos,
+
             respuestaFuentes
 
         ] = await Promise.all([
 
+
             fetch(
+
                 `${API_URL}/api/usuarios?dias=${dias}`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/visitas?dias=${dias}`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/instalaciones?dias=${dias}`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/grafico?dias=${dias}`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/paises?dias=${dias}`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/dispositivos?dias=${dias}`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/activos`,
+
                 opciones
+
             ),
 
+
             fetch(
+
                 `${API_URL}/api/fuentes?dias=${dias}`,
+
                 opciones
+
             )
+
 
         ]);
 
-        console.timeEnd("⏱️ Carga total Admin");
+
+        console.timeEnd(
+            "⏱️ Carga total Admin"
+        );
+
 
         // =================================================
         // COMPROBAR RESPUESTAS
@@ -240,12 +553,19 @@ async function cargarDatos(dias) {
         if (
 
             !respuestaUsuarios.ok ||
+
             !respuestaVisitas.ok ||
+
             !respuestaInstalaciones.ok ||
+
             !respuestaGrafico.ok ||
+
             !respuestaPaises.ok ||
+
             !respuestaDispositivos.ok ||
+
             !respuestaActivos.ok ||
+
             !respuestaFuentes.ok
 
         ) {
@@ -264,109 +584,150 @@ async function cargarDatos(dias) {
         const usuarios =
             await respuestaUsuarios.json();
 
+
         const visitas =
             await respuestaVisitas.json();
+
 
         const instalaciones =
             await respuestaInstalaciones.json();
 
+
         const datosGrafico =
             await respuestaGrafico.json();
+
 
         const datosPaises =
             await respuestaPaises.json();
 
+
         const datosDispositivos =
             await respuestaDispositivos.json();
 
+
         const activos =
             await respuestaActivos.json();
+
 
         const datosFuentes =
             await respuestaFuentes.json();
 
 
         // =================================================
-        // TARJETAS
+        // AGRUPAR DATOS
         // =================================================
 
-        elementos.usuarios.textContent =
-            Number(
-                usuarios.usuarios
-            ).toLocaleString("es-AR");
+        const datos = {
 
-        elementos.visitas.textContent =
-            Number(
-                visitas.visitas
-            ).toLocaleString("es-AR");
+            usuarios,
 
-        elementos.instalaciones.textContent =
-            Number(
-                instalaciones.instalaciones
-            ).toLocaleString("es-AR");
+            visitas,
 
-        elementos.instalacionesPwa.textContent =
-            Number(
-                instalaciones.instalaciones
-            ).toLocaleString("es-AR");
+            instalaciones,
 
+            datosGrafico,
 
-        // =================================================
-        // USUARIOS ACTIVOS
-        // =================================================
+            datosPaises,
 
-        elementos.activos.textContent =
-            Number(
-                activos.activos
-            ).toLocaleString("es-AR");
+            datosDispositivos,
 
+            activos,
 
-        elementos.periodo.textContent =
-            `${dias} días`;
+            datosFuentes
+
+        };
 
 
         // =================================================
-        // CONTENIDO
+        // GUARDAR COPIA OFFLINE
         // =================================================
 
-        crearGrafico(
-            datosGrafico.grafico || []
+        guardarDatosOffline(
+            dias,
+            datos
         );
 
-        crearPaises(
-            datosPaises.paises || []
-        );
 
-        crearDispositivos(
-            datosDispositivos.dispositivos || []
-        );
+        // =================================================
+        // MOSTRAR ONLINE
+        // =================================================
 
-        crearFuentes(
-            datosFuentes.fuentes || []
+        mostrarDatos(
+
+            dias,
+
+            datos,
+
+            false
+
         );
 
 
     } catch (error) {
 
-        console.error(
-            "❌ Error cargando datos:",
+        console.warn(
+
+            "📴 Sin conexión. Intentando usar datos guardados:",
+
             error
+
         );
 
-        elementos.visitas.textContent =
-            "Error";
 
-        elementos.usuarios.textContent =
-            "Error";
+        // =================================================
+        // BUSCAR COPIA LOCAL
+        // =================================================
 
-        elementos.instalaciones.textContent =
-            "Error";
+        const copia =
+            obtenerDatosOffline(
+                dias
+            );
 
-        elementos.instalacionesPwa.textContent =
-            "Error";
 
-        elementos.activos.textContent =
-            "Error";
+        if (
+
+            !copia ||
+
+            !copia.datos
+
+        ) {
+
+            mostrarSinDatos(
+                dias
+            );
+
+
+            return;
+
+        }
+
+
+        // =================================================
+        // MOSTRAR DATOS OFFLINE
+        // =================================================
+
+        mostrarDatos(
+
+            dias,
+
+            copia.datos,
+
+            true
+
+        );
+
+
+        console.log(
+
+            "📦 Datos offline cargados.",
+
+            new Date(
+                copia.fecha
+            ).toLocaleString(
+                "es-AR"
+            )
+
+        );
 
     }
 
@@ -377,25 +738,36 @@ async function cargarDatos(dias) {
 // CREAR GRÁFICO
 // =====================================================
 
-function crearGrafico(datosGrafico) {
+function crearGrafico(
+    datosGrafico
+) {
 
     elementos.grafico.innerHTML =
         "";
 
-    if (!datosGrafico.length) {
+
+    if (
+        !datosGrafico.length
+    ) {
 
         const mensaje =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         mensaje.textContent =
             "No hay datos para este período.";
 
+
         mensaje.className =
             "grafico-vacio";
+
 
         elementos.grafico.appendChild(
             mensaje
         );
+
 
         return;
 
@@ -404,73 +776,115 @@ function crearGrafico(datosGrafico) {
 
     const maximo =
         Math.max(
+
             ...datosGrafico.map(
+
                 dato =>
-                    Number(dato.visitas) || 0
+                    Number(
+                        dato.visitas
+                    ) || 0
+
             )
+
         );
 
 
-    datosGrafico.forEach(dato => {
+    datosGrafico.forEach(
+        dato => {
 
-        const barra =
-            document.createElement("div");
-
-        barra.className =
-            "barra";
-
-        const visitas =
-            Number(dato.visitas) || 0;
-
-        const porcentaje =
-            maximo > 0
-                ? (visitas / maximo) * 100
-                : 0;
-
-        barra.style.height =
-            `${porcentaje}%`;
+            const barra =
+                document.createElement(
+                    "div"
+                );
 
 
-        const numero =
-            document.createElement("span");
-
-        numero.textContent =
-            visitas.toLocaleString("es-AR");
+            barra.className =
+                "barra";
 
 
-        const etiqueta =
-            document.createElement("small");
+            const visitas =
+                Number(
+                    dato.visitas
+                ) || 0;
 
-        const fecha =
-            String(dato.dia);
+
+            const porcentaje =
+
+                maximo > 0
+
+                    ? (
+                        visitas /
+                        maximo
+                    ) * 100
+
+                    : 0;
 
 
-        if (fecha.length === 8) {
+            barra.style.height =
+                `${porcentaje}%`;
 
-            etiqueta.textContent =
-                `${fecha.slice(6, 8)}/${fecha.slice(4, 6)}`;
 
-        } else {
+            const numero =
+                document.createElement(
+                    "span"
+                );
 
-            etiqueta.textContent =
-                fecha;
+
+            numero.textContent =
+                visitas.toLocaleString(
+                    "es-AR"
+                );
+
+
+            const etiqueta =
+                document.createElement(
+                    "small"
+                );
+
+
+            const fecha =
+                String(
+                    dato.dia
+                );
+
+
+            if (
+                fecha.length === 8
+            ) {
+
+                etiqueta.textContent =
+                    `${fecha.slice(
+                        6,
+                        8
+                    )}/${fecha.slice(
+                        4,
+                        6
+                    )}`;
+
+            } else {
+
+                etiqueta.textContent =
+                    fecha;
+
+            }
+
+
+            barra.appendChild(
+                numero
+            );
+
+
+            barra.appendChild(
+                etiqueta
+            );
+
+
+            elementos.grafico.appendChild(
+                barra
+            );
 
         }
-
-
-        barra.appendChild(
-            numero
-        );
-
-        barra.appendChild(
-            etiqueta
-        );
-
-        elementos.grafico.appendChild(
-            barra
-        );
-
-    });
+    );
 
 }
 
@@ -479,19 +893,34 @@ function crearGrafico(datosGrafico) {
 // CREAR PAÍSES
 // =====================================================
 
-function crearPaises(paises) {
+function crearPaises(
+    paises
+) {
 
     elementos.listaPaises.innerHTML =
         "";
 
-    if (!paises.length) {
+
+    if (
+        !paises.length
+    ) {
 
         elementos.listaPaises.innerHTML = `
+
             <div class="fila">
-                <span>No hay datos disponibles</span>
-                <strong>0%</strong>
+
+                <span>
+                    No hay datos disponibles
+                </span>
+
+                <strong>
+                    0%
+                </strong>
+
             </div>
+
         `;
+
 
         return;
 
@@ -500,65 +929,102 @@ function crearPaises(paises) {
 
     const total =
         paises.reduce(
-            (suma, pais) =>
+
+            (
+                suma,
+                pais
+            ) =>
+
                 suma +
-                (Number(pais.usuarios) || 0),
+
+                (
+                    Number(
+                        pais.usuarios
+                    ) || 0
+                ),
+
             0
+
         );
 
 
-    paises.forEach(pais => {
+    paises.forEach(
+        pais => {
 
-        const porcentaje =
-            total > 0
-                ? Math.round(
-                    (
-                        (Number(pais.usuarios) || 0)
-                        / total
-                    ) * 100
-                )
-                : 0;
+            const cantidad =
+                Number(
+                    pais.usuarios
+                ) || 0;
 
 
-        const fila =
-            document.createElement("div");
+            const porcentaje =
 
-        fila.className =
-            "fila";
+                total > 0
 
+                    ? Math.round(
 
-        const nombre =
-            document.createElement("span");
+                        (
+                            cantidad /
+                            total
+                        ) * 100
 
-        nombre.textContent =
-            pais.pais === "(not set)"
-                ? "🌎 Ubicación desconocida"
-                : `🌎 ${pais.pais}`;
+                    )
 
-
-        const porcentajeElemento =
-    document.createElement("strong");
-
-const cantidad =
-    Number(pais.usuarios) || 0;
-
-porcentajeElemento.textContent =
-    `${cantidad} · ${porcentaje}%`;
+                    : 0;
 
 
-        fila.appendChild(
-            nombre
-        );
+            const fila =
+                document.createElement(
+                    "div"
+                );
 
-        fila.appendChild(
-            porcentajeElemento
-        );
 
-        elementos.listaPaises.appendChild(
-            fila
-        );
+            fila.className =
+                "fila";
 
-    });
+
+            const nombre =
+                document.createElement(
+                    "span"
+                );
+
+
+            nombre.textContent =
+
+                pais.pais ===
+                "(not set)"
+
+                    ? "🌎 Ubicación desconocida"
+
+                    : `🌎 ${pais.pais}`;
+
+
+            const porcentajeElemento =
+                document.createElement(
+                    "strong"
+                );
+
+
+            porcentajeElemento.textContent =
+                `${cantidad} · ${porcentaje}%`;
+
+
+            fila.appendChild(
+                nombre
+            );
+
+
+            fila.appendChild(
+                porcentajeElemento
+            );
+
+
+            elementos.listaPaises.appendChild(
+                fila
+            );
+
+        }
+    );
 
 }
 
@@ -567,20 +1033,38 @@ porcentajeElemento.textContent =
 // CREAR DISPOSITIVOS
 // =====================================================
 
-function crearDispositivos(dispositivos) {
+function crearDispositivos(
+    dispositivos
+) {
 
     elementos.listaDispositivos.innerHTML =
         "";
 
-    if (!dispositivos.length) {
+
+    if (
+        !dispositivos.length
+    ) {
 
         elementos.listaDispositivos.innerHTML = `
+
             <div class="dispositivo">
-                <span>❓</span>
-                <strong>0%</strong>
-                <small>Sin datos</small>
+
+                <span>
+                    ❓
+                </span>
+
+                <strong>
+                    0%
+                </strong>
+
+                <small>
+                    Sin datos
+                </small>
+
             </div>
+
         `;
+
 
         return;
 
@@ -589,91 +1073,146 @@ function crearDispositivos(dispositivos) {
 
     const total =
         dispositivos.reduce(
-            (suma, dispositivo) =>
+
+            (
+                suma,
+                dispositivo
+            ) =>
+
                 suma +
-                (Number(dispositivo.usuarios) || 0),
+
+                (
+                    Number(
+                        dispositivo.usuarios
+                    ) || 0
+                ),
+
             0
+
         );
 
 
-    dispositivos.forEach(dispositivo => {
+    dispositivos.forEach(
+        dispositivo => {
 
-        const porcentaje =
-            total > 0
-                ? Math.round(
-                    (
-                        (Number(dispositivo.usuarios) || 0)
-                        / total
-                    ) * 100
-                )
-                : 0;
+            const cantidad =
+                Number(
+                    dispositivo.usuarios
+                ) || 0;
 
 
-        let icono =
-            "❓";
+            const porcentaje =
 
-        let nombre =
-            "Sin origen identificado";
+                total > 0
+
+                    ? Math.round(
+
+                        (
+                            cantidad /
+                            total
+                        ) * 100
+
+                    )
+
+                    : 0;
 
 
-        if (
-            dispositivo.dispositivo ===
-            "mobile"
-        ) {
+            let icono =
+                "❓";
 
-            icono =
-                "📱";
 
-            nombre =
-                "Celular";
+            let nombre =
+                "Sin origen identificado";
+
+
+            if (
+
+                dispositivo.dispositivo ===
+                "mobile"
+
+            ) {
+
+                icono =
+                    "📱";
+
+
+                nombre =
+                    "Celular";
+
+            }
+
+
+            if (
+
+                dispositivo.dispositivo ===
+                "desktop"
+
+            ) {
+
+                icono =
+                    "💻";
+
+
+                nombre =
+                    "PC";
+
+            }
+
+
+            if (
+
+                dispositivo.dispositivo ===
+                "tablet"
+
+            ) {
+
+                icono =
+                    "📟";
+
+
+                nombre =
+                    "Tablet";
+
+            }
+
+
+            const elemento =
+                document.createElement(
+                    "div"
+                );
+
+
+            elemento.className =
+                "dispositivo";
+
+
+            elemento.innerHTML = `
+
+                <span>
+                    ${icono}
+                </span>
+
+                <strong>
+                    ${porcentaje}%
+                </strong>
+
+                <small>
+                    ${nombre} ·
+                    ${cantidad.toLocaleString(
+                        "es-AR"
+                    )}
+                    usuarios
+                </small>
+
+            `;
+
+
+            elementos.listaDispositivos.appendChild(
+                elemento
+            );
 
         }
-
-
-        if (
-            dispositivo.dispositivo ===
-            "desktop"
-        ) {
-
-            icono =
-                "💻";
-
-            nombre =
-                "PC";
-
-        }
-
-
-        if (
-            dispositivo.dispositivo ===
-            "tablet"
-        ) {
-
-            icono =
-                "📟";
-
-            nombre =
-                "Tablet";
-
-        }
-
-
-        const elemento =
-            document.createElement("div");
-
-        elemento.className =
-            "dispositivo";
-
-        elemento.innerHTML = `
-    <span>${icono}</span>
-    <strong>${porcentaje}%</strong>
-    <small>${nombre} · ${Number(dispositivo.usuarios).toLocaleString("es-AR")} usuarios</small>
-`;
-        elementos.listaDispositivos.appendChild(
-            elemento
-        );
-
-    });
+    );
 
 }
 
@@ -682,19 +1221,34 @@ function crearDispositivos(dispositivos) {
 // CREAR FUENTES
 // =====================================================
 
-function crearFuentes(fuentes) {
+function crearFuentes(
+    fuentes
+) {
 
     elementos.fuentes.innerHTML =
         "";
 
-    if (!fuentes.length) {
+
+    if (
+        !fuentes.length
+    ) {
 
         elementos.fuentes.innerHTML = `
+
             <div class="fuente">
-                <span>🔗 Sin datos</span>
-                <strong>0%</strong>
+
+                <span>
+                    🔗 Sin datos
+                </span>
+
+                <strong>
+                    0%
+                </strong>
+
             </div>
+
         `;
+
 
         return;
 
@@ -709,112 +1263,155 @@ function crearFuentes(fuentes) {
         {};
 
 
-fuentes.forEach(fuente => {
+    fuentes.forEach(
+        fuente => {
 
-    const fuenteOriginal =
-        String(
-            fuente.fuente ||
-            "(not set)"
-        ).toLowerCase();
+            const fuenteOriginal =
+                String(
 
-    console.log("🔗 FUENTE ANALYTICS:", fuente);
+                    fuente.fuente ||
 
-    let nombre;
-    let icono;
+                    "(not set)"
+
+                ).toLowerCase();
 
 
-        if (
-            fuenteOriginal ===
-            "(direct)"
-        ) {
+            console.log(
 
-            nombre =
-                "Enlace directo";
+                "🔗 FUENTE ANALYTICS:",
 
-            icono =
-                "🔗";
+                fuente
 
-        } else if (
-            fuenteOriginal ===
-            "(not set)"
-        ) {
+            );
 
-            nombre =
-                "Desconocido";
 
-            icono =
-                "❓";
+            let nombre;
 
-        } else if (
-            fuenteOriginal.includes(
-                "chatgpt"
-            )
-        ) {
+            let icono;
 
-            nombre =
-                "ChatGPT";
 
-            icono =
-                "🤖";
+            if (
 
-        } else if (
-            fuenteOriginal.includes(
-                "github"
-            )
-        ) {
+                fuenteOriginal ===
+                "(direct)"
 
-            nombre =
-                "GitHub";
+            ) {
 
-            icono =
-                "💻";
+                nombre =
+                    "Enlace directo";
 
-        } else if (
-            fuenteOriginal.includes(
-                "google"
-            )
-        ) {
 
-            nombre =
-                "Google";
+                icono =
+                    "🔗";
 
-            icono =
-                "🔎";
 
-        } else {
+            } else if (
 
-            nombre =
-                fuente.fuente;
+                fuenteOriginal ===
+                "(not set)"
 
-            icono =
-                "🔗";
+            ) {
+
+                nombre =
+                    "Desconocido";
+
+
+                icono =
+                    "❓";
+
+
+            } else if (
+
+                fuenteOriginal.includes(
+                    "chatgpt"
+                )
+
+            ) {
+
+                nombre =
+                    "ChatGPT";
+
+
+                icono =
+                    "🤖";
+
+
+            } else if (
+
+                fuenteOriginal.includes(
+                    "github"
+                )
+
+            ) {
+
+                nombre =
+                    "GitHub";
+
+
+                icono =
+                    "💻";
+
+
+            } else if (
+
+                fuenteOriginal.includes(
+                    "google"
+                )
+
+            ) {
+
+                nombre =
+                    "Google";
+
+
+                icono =
+                    "🔎";
+
+
+            } else {
+
+                nombre =
+                    fuente.fuente;
+
+
+                icono =
+                    "🔗";
+
+            }
+
+
+            if (
+                !fuentesAgrupadas[
+                    nombre
+                ]
+            ) {
+
+                fuentesAgrupadas[
+                    nombre
+                ] = {
+
+                    nombre,
+
+                    icono,
+
+                    usuarios:
+                        0
+
+                };
+
+            }
+
+
+            fuentesAgrupadas[
+                nombre
+            ].usuarios +=
+
+                Number(
+                    fuente.usuarios
+                ) || 0;
 
         }
-
-
-        if (
-            !fuentesAgrupadas[nombre]
-        ) {
-
-            fuentesAgrupadas[nombre] = {
-
-                nombre,
-
-                icono,
-
-                usuarios: 0
-
-            };
-
-        }
-
-
-        fuentesAgrupadas[nombre].usuarios +=
-            Number(
-                fuente.usuarios
-            ) || 0;
-
-    });
+    );
 
 
     const fuentesFinales =
@@ -825,10 +1422,17 @@ fuentes.forEach(fuente => {
 
     const total =
         fuentesFinales.reduce(
-            (suma, fuente) =>
+
+            (
+                suma,
+                fuente
+            ) =>
+
                 suma +
                 fuente.usuarios,
+
             0
+
         );
 
 
@@ -837,8 +1441,15 @@ fuentes.forEach(fuente => {
     // =================================================
 
     fuentesFinales.sort(
-        (a, b) =>
-            b.usuarios - a.usuarios
+
+        (
+            a,
+            b
+        ) =>
+
+            b.usuarios -
+            a.usuarios
+
     );
 
 
@@ -850,13 +1461,18 @@ fuentes.forEach(fuente => {
         fuente => {
 
             const porcentaje =
+
                 total > 0
+
                     ? Math.round(
+
                         (
                             fuente.usuarios /
                             total
                         ) * 100
+
                     )
+
                     : 0;
 
 
@@ -871,15 +1487,25 @@ fuentes.forEach(fuente => {
 
 
             elemento.innerHTML = `
-    <span>
-        ${fuente.icono}
-        ${fuente.nombre}
-    </span>
 
-    <strong>
-        ${fuente.usuarios} · ${porcentaje}%
-    </strong>
-`;
+                <span>
+
+                    ${fuente.icono}
+
+                    ${fuente.nombre}
+
+                </span>
+
+
+                <strong>
+
+                    ${fuente.usuarios}
+                    ·
+                    ${porcentaje}%
+
+                </strong>
+
+            `;
 
 
             elementos.fuentes.appendChild(
@@ -897,14 +1523,19 @@ fuentes.forEach(fuente => {
 // =====================================================
 
 onAuthStateChanged(
+
     auth,
+
     usuario => {
 
-        if (!usuario) {
+        if (
+            !usuario
+        ) {
 
             console.log(
                 "🔒 No hay usuario autenticado. Datos no cargados."
             );
+
 
             return;
 
@@ -912,12 +1543,18 @@ onAuthStateChanged(
 
 
         console.log(
+
             "🔓 Usuario autenticado:",
+
             usuario.email
+
         );
 
 
-        cargarDatos(7);
+        cargarDatos(
+            7
+        );
 
     }
+
 );
