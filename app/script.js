@@ -1767,68 +1767,6 @@ if (nuevaPartidaGanador) {
 
 
 /* =====================================================
-   REGLAS
-===================================================== */
-
-document
-    .querySelectorAll(
-        ".boton-regla"
-    )
-    .forEach(boton => {
-
-        boton.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-
-
-                const contenido =
-                    boton.nextElementSibling;
-
-
-                const flecha =
-                    boton.querySelector(
-                        "span"
-                    );
-
-
-                if (!contenido) {
-                    return;
-                }
-
-
-                contenido.classList.toggle(
-                    "oculto"
-                );
-
-
-                if (
-                    contenido.classList.contains(
-                        "oculto"
-                    )
-                ) {
-
-                    if (flecha) {
-
-                        flecha.textContent =
-                            "▼";
-                    }
-
-                } else {
-
-                    if (flecha) {
-
-                        flecha.textContent =
-                            "▲";
-                    }
-                }
-            }
-        );
-    });
-
-
-/* =====================================================
    INICIO
 ===================================================== */
 
