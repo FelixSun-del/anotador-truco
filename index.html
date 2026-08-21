@@ -837,260 +837,573 @@
 
 
     <!-- =====================================================
-         PANTALLA 5 - REGLAS
-    ====================================================== -->
+      Pantalla 5 · REGLAS DEL JUEGO
+    ===================================================== -->
 
-    <main
-        id="pantalla5"
-        class="pantalla oculto"
-    >
+<main
+    id="pantalla5"
+    class="pantalla oculto"
+>
 
-        <section class="papel reglas">
+    <section class="papel reglas">
 
-            <h1>📖 Reglas del juego</h1>
+        <h1>📖 Reglas del juego</h1>
 
-            <p class="subtitulo">
-                Tocá una categoría para ver sus reglas
-            </p>
+        <p class="subtitulo">
+            Tocá una categoría para ver sus reglas
+        </p>
 
 
-            <div class="menu-regla">
+        <!-- =====================================================
+             VALOR DE LAS CARTAS
+        ====================================================== -->
 
-                <button class="boton-regla">
-                    🃏 Valor de las cartas
-                    <span>▼</span>
-                </button>
+        <div class="menu-regla">
 
-                <div class="contenido-regla oculto">
-
-                    <h3>Cartas anchas / matas</h3>
-
-                    <p>🥇 <strong>1 de Espada</strong> = la más alta</p>
-                    <p>🥈 <strong>1 de Basto</strong> = la 2.ª más alta</p>
-                    <p>🥉 <strong>7 de Espada</strong> = la 3.ª más alta</p>
-                    <p>4️⃣ <strong>7 de Oro</strong> = la 4.ª más alta</p>
-
-                    <h3>Cartas normales</h3>
-
-                    <p><strong>3</strong> de cualquier palo</p>
-                    <p><strong>2</strong> de cualquier palo</p>
-                    <p><strong>1</strong> de Oro</p>
-                    <p><strong>1</strong> de Copa</p>
-                    <p><strong>12</strong> = Rey</p>
-                    <p><strong>11</strong> = Caballo</p>
-
-                    <h3>🚫 Cartas que no sirven</h3>
-
-                    <p><strong>10</strong> = Sota</p>
-                    <p><strong>7</strong> de Copa</p>
-                    <p><strong>7</strong> de Basto</p>
-                    <p><strong>6</strong> de cualquier palo</p>
-                    <p><strong>5</strong> de cualquier palo</p>
-                    <p><strong>4</strong> de cualquier palo</p>
-
-                </div>
-
-            </div>
-
-
-            <div class="menu-regla">
-
-                <button class="boton-regla">
-                    🪙 Envido
-                    <span>▼</span>
-                </button>
-
-                <div class="contenido-regla oculto">
-
-                    <h3>Valor</h3>
-
-                    <p><strong>1 al 7</strong> = su valor</p>
-                    <p><strong>10, 11, 12</strong> = 0</p>
-
-                    <h3>Cómo se calcula</h3>
-
-                    <p>
-                        <strong>Mismo palo:</strong>
-                        20 + las dos cartas más altas.
-                    </p>
-
-                    <p>
-                        Ejemplo: 6 y 5 de oro =
-                        <strong>31</strong>
-                    </p>
-
-                    <p>
-                        <strong>Distinto palo:</strong>
-                        cuenta la carta más alta.
-                    </p>
-
-                    <h3>Puntos aceptados</h3>
-
-                    <p>Envido = <strong>2</strong></p>
-                    <p>Envido Envido = <strong>4</strong></p>
-                    <p>Real Envido = <strong>3</strong></p>
-                    <p>Falta Envido = lo que falta para ganar</p>
-
-                </div>
-
-            </div>
-
-
-            <div class="menu-regla">
-
-                <button class="boton-regla">
-                    🌸 Flor
-                    <span>▼</span>
-                </button>
-
-                <div class="contenido-regla oculto">
-
-                    <p>
-                        Se necesitan
-                        <strong>3 cartas del mismo palo.</strong>
-                    </p>
-
-                    <p>
-                        🌸 Flor =
-                        <strong>3 puntos</strong>
-                    </p>
-
-                    <p>
-                        🌺 Contraflor =
-                        <strong>6 puntos</strong>
-                    </p>
-
-                    <p>
-                        🌺 Contraflor al resto =
-                        <strong>los puntos que faltan</strong>
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="menu-regla">
-
-                <button class="boton-regla">
-                    👁️ Señas del Truco
-                    <span>▼</span>
-                </button>
-
-                <div class="contenido-regla oculto">
-
-                    <p>
-                        Las señas se utilizan principalmente
-                        en partidas por equipos.
-                    </p>
-
-                    <p>
-                        Se hacen de forma rápida y disimulada
-                        para comunicarse con el compañero.
-                    </p>
-
-                    <p>
-                        <strong>As de Espadas:</strong>
-                        levantar las cejas.
-                    </p>
-
-                    <p>
-                        <strong>As de Bastos:</strong>
-                        guiñar un ojo.
-                    </p>
-
-                    <p>
-                        <strong>7 de Espadas:</strong>
-                        estirar la comisura derecha.
-                    </p>
-
-                    <p>
-                        <strong>7 de Oros:</strong>
-                        estirar la comisura izquierda.
-                    </p>
-
-                    <p>
-                        <strong>Cualquier 3:</strong>
-                        morder el labio inferior.
-                    </p>
-
-                    <p>
-                        <strong>Cualquier 2:</strong>
-                        poner los labios como beso.
-                    </p>
-
-                    <p>
-                        <strong>As de Copas u Oros:</strong>
-                        abrir y cerrar la boca.
-                    </p>
-
-                    <p>
-                        <strong>Cartas bajas:</strong>
-                        cerrar ambos ojos.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="menu-regla">
-
-                <button class="boton-regla">
-                    ⚔️ Truco
-                    <span>▼</span>
-                </button>
-
-                <div class="contenido-regla oculto">
-
-                    <h3>Cómo se gana</h3>
-
-                    <p>
-                        Se juegan hasta 3 manos.
-                        Gana quien gana 2.
-                    </p>
-
-                    <h3>Puntos aceptados</h3>
-
-                    <p>Truco = <strong>2</strong></p>
-                    <p>Retruco = <strong>3</strong></p>
-                    <p>Vale cuatro = <strong>4</strong></p>
-
-                </div>
-
-            </div>
-
-
-            <div class="menu-regla">
-
-                <button class="boton-regla">
-                    🏳️ Irse al mazo
-                    <span>▼</span>
-                </button>
-
-                <div class="contenido-regla oculto">
-
-                    <p>
-                        Sin haber jugado ni cantado =
-                        <strong>2 puntos para el otro.</strong>
-                    </p>
-
-                    <p>
-                        Después de jugar o cantar =
-                        <strong>1 punto para el otro.</strong>
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <button
-                id="volverReglas"
-                class="boton-principal"
-            >
-                ← Volver a configuración
+            <button class="boton-regla">
+                🃏 Valor de las cartas
+                <span>▼</span>
             </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    Cartas fuertes / mejores
+                </h3>
+
+                <p>
+                    🥇 <strong>1 de Espada</strong>
+                    = la más alta
+                </p>
+
+                <p>
+                    🥈 <strong>1 de Basto</strong>
+                    = la 2.ª más alta
+                </p>
+
+                <p>
+                    🥉 <strong>7 de Espada</strong>
+                    = la 3.ª más alta
+                </p>
+
+                <p>
+                    4️⃣ <strong>7 de Oro</strong>
+                    = la 4.ª más alta
+                </p>
+
+
+                <h3>
+                    Cartas buenas para el Truco
+                </h3>
+
+                <p>
+                    <strong>3</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>2</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>1</strong>
+                    de Oro
+                </p>
+
+                <p>
+                    <strong>1</strong>
+                    de Copa
+                </p>
+
+                <p>
+                    <strong>12</strong>
+                    = Rey de cualquier palo
+                </p>
+
+                <p>
+                    <strong>11</strong>
+                    = Caballo de cualquier palo
+                </p>
+
+
+                <h3>
+                    🚫 Cartas con las que no vale la pena cantar Truco
+                </h3>
+
+                <p>
+                    <strong>10</strong>
+                    = Sota de cualquier palo
+                </p>
+
+                <p>
+                    <strong>7</strong>
+                    de Copa
+                </p>
+
+                <p>
+                    <strong>7</strong>
+                    de Basto
+                </p>
+
+                <p>
+                    <strong>6</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>5</strong>
+                    de cualquier palo
+                </p>
+
+                <p>
+                    <strong>4</strong>
+                    de cualquier palo
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ENVIDO
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🪙 Envido
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    🃏 Valor de las cartas en el Envido individualmente
+                </h3>
+
+                <p>
+                    <strong>1 al 7</strong>
+                    = su valor
+                </p>
+
+                <p>
+                    <strong>10, 11, 12</strong>
+                    = 0
+                </p>
+
+
+                <h3>
+                    🧮 Cómo se calcula el Envido
+                </h3>
+
+                <p>
+                    <strong>Mismo palo:</strong>
+                    20 + valor de las 2 cartas más altas.
+                </p>
+
+                <p>
+                    Ej: 6 y 5 de oro =
+                    <strong>
+                        20 + 6 + 5 = 31
+                    </strong>
+                </p>
+
+                <p>
+                    Ej: 10 y 3 de basto =
+                    <strong>
+                        20 + 0 + 3 = 23
+                    </strong>
+                </p>
+
+
+                <p>
+                    <strong>Distinto palo:</strong>
+                    vale la carta más alta.
+                </p>
+
+                <p>
+                    Ej: 7 de espada y 5 de copa =
+                    <strong>7</strong>
+                </p>
+
+                <p>
+                    Ej: 12 de copas y 7 de espada =
+                    <strong>7</strong>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Solo cuenta si es del mismo palo:
+                    </strong>
+                </p>
+
+                <ul>
+                    <li>🟡 Oro con oro</li>
+                    <li>🟤 Basto con basto</li>
+                    <li>⚔️ Espada con espada</li>
+                    <li>🍷 Copa con copa</li>
+                </ul>
+
+
+                <h3>
+                    📌 Importante
+                </h3>
+
+                <p>
+                    <strong>
+                        Cantidad recomendable para cantar:
+                    </strong>
+                    25 o más.
+                </p>
+
+                <p>
+                    <strong>En empate:</strong>
+                    gana el que es mano.
+                </p>
+
+
+                <h3>
+                    🔊 Puntos de Envido - Aceptados
+                </h3>
+
+                <p>
+                    Envido =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido =
+                    <strong>4 puntos</strong>
+                </p>
+
+                <p>
+                    Real Envido =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido Real Envido =
+                    <strong>7 puntos</strong>
+                </p>
+
+                <p>
+                    Falta Envido =
+                    <strong>
+                        lo que le falta al rival para ganar
+                    </strong>
+                </p>
+
+
+                <h3>
+                    ❌ Puntos de Envido - Rechazados
+                </h3>
+
+                <p>
+                    Envido / Real Envido / Falta Envido =
+                    <strong>1 punto</strong>
+                </p>
+
+                <p>
+                    Envido Envido =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido Real Envido =
+                    <strong>4 puntos</strong>
+                </p>
+
+                <p>
+                    Envido Envido Real Envido Falta Envido =
+                    <strong>7 puntos</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FLOR
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🌸 Flor
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <p>
+                    Se necesitan
+                    <strong>
+                        3 cartas del mismo palo.
+                    </strong>
+                </p>
+
+                <p>
+                    🌸 Flor =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    🌺 Contraflor =
+                    <strong>6 puntos</strong>
+                </p>
+
+                <p>
+                    🌺 Contraflor al resto =
+                    <strong>
+                        lo que le falta al rival para ganar
+                    </strong>
+                </p>
+
+                <p>
+                    <strong>
+                        Si cantan Envido y vos tenés Flor,
+                        tu Flor tiene prioridad y se canta primero.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SEÑAS
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                👁️ Señas del Truco
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    ¿Qué son?
+                </h3>
+
+                <p>
+                    Las señas son gestos que se usan cuando
+                    se juega en equipos
+                    <strong>2 vs 2 o 3 vs 3</strong>
+                    para comunicarse las cartas.
+                </p>
+
+                <p>
+                    Las hace un jugador y se las hace a quien
+                    dirige la jugada, normalmente el
+                    <strong>jugador mano</strong>.
+                </p>
+
+                <p>
+                    Se hacen de forma
+                    <strong>disimulada y rápida</strong>,
+                    para que solo las vea tu compañero.
+                </p>
+
+                <p>
+                    Está en la picardía de cada uno:
+                    hacerlas sin que se den cuenta,
+                    descubrir las del rival,
+                    o incluso fingir señas para confundir.
+                </p>
+
+
+                <h3>
+                    📋 Lista de señas
+                </h3>
+
+                <p>
+                    <strong>As de Espadas:</strong>
+                    levantar las cejas.
+                </p>
+
+                <p>
+                    <strong>As de Bastos:</strong>
+                    guiñar un ojo.
+                </p>
+
+                <p>
+                    <strong>7 de Espadas:</strong>
+                    estirar la comisura de los labios
+                    del lado derecho de la boca.
+                </p>
+
+                <p>
+                    <strong>7 de Oros:</strong>
+                    estirar la comisura de los labios
+                    del lado izquierdo de la boca.
+                </p>
+
+                <p>
+                    <strong>Cualquier 3:</strong>
+                    morder el labio inferior.
+                </p>
+
+                <p>
+                    <strong>Cualquier 2:</strong>
+                    poner los labios como si tiraras un beso.
+                </p>
+
+                <p>
+                    <strong>As de Copas u Oros:</strong>
+                    abrir y cerrar la boca.
+                </p>
+
+                <p>
+                    <strong>
+                        Cartas Bajas (12 o menos):
+                    </strong>
+                    cerrar ambos ojos.
+                    Significa que estás
+                    <strong>CIEGO</strong>
+                    o que no tenés nada para jugar
+                    el Envido/Truco.
+                </p>
+
+                <p>
+                    <strong>Envido:</strong>
+                    arrugar la nariz para arriba,
+                    como sintiendo mal olor.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             TRUCO
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                ⚔️ Truco
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <h3>
+                    ⚔️ Cómo se gana el Truco
+                </h3>
+
+                <p>
+                    Se juegan 3 manos.
+                    Gana quien gana 2 manos.
+                </p>
+
+                <p>
+                    Si empatan las 3 →
+                    gana el mano.
+                </p>
+
+
+                <h3>
+                    🔊 Puntos de Truco - Aceptados
+                </h3>
+
+                <p>
+                    Truco =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Re Truco =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    Vale Cuatro =
+                    <strong>4 puntos</strong>
+                </p>
+
+
+                <h3>
+                    ❌ Puntos de Truco - Rechazados
+                </h3>
+
+                <p>
+                    Truco =
+                    <strong>1 punto</strong>
+                </p>
+
+                <p>
+                    Re Truco =
+                    <strong>2 puntos</strong>
+                </p>
+
+                <p>
+                    Vale Cuatro =
+                    <strong>3 puntos</strong>
+                </p>
+
+                <p>
+                    <strong>
+                        Si dicen "no quiero" al Truco,
+                        Re Truco o Vale Cuatro,
+                        la ronda termina y se le dan los
+                        puntos correspondientes al rival
+                        que cantó.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             IRSE AL MAZO
+        ====================================================== -->
+
+        <div class="menu-regla">
+
+            <button class="boton-regla">
+                🏳️ Irse al mazo
+                <span>▼</span>
+            </button>
+
+            <div class="contenido-regla oculto">
+
+                <p>
+                    Sin haber jugado ni cantado =
+                    <strong>
+                        2 puntos para el otro.
+                    </strong>
+                </p>
+
+                <p>
+                    Después de jugar o cantar =
+                    <strong>
+                        1 punto para el otro.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- VOLVER -->
+
+        <button
+            id="volverReglas"
+            class="boton-principal"
+        >
+            ← Volver a configuración
+        </button>
 
             <div class="copyright">
                 © 2026 Félix · todos los derechos reservados
@@ -1300,16 +1613,64 @@
          FIREBASE
     ====================================================== -->
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script>
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    function cargarScript(src) {
+
+        return new Promise((resolve, reject) => {
+
+            const script =
+                document.createElement("script");
+
+            script.src = src;
+
+            script.onload = resolve;
+
+            script.onerror = reject;
+
+            document.body.appendChild(script);
+
+        });
+
+    }
 
 
-    <!-- =====================================================
-         SCRIPT PRINCIPAL
-    ====================================================== -->
+    async function iniciarAplicacion() {
 
-    <script src="./script.js"></script>
+        if (navigator.onLine) {
+
+            try {
+
+                await cargarScript(
+                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"
+                );
+
+                await cargarScript(
+                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "Firebase no pudo cargarse.",
+                    error
+                );
+
+            }
+
+        }
+
+
+        await cargarScript(
+            "./script.js"
+        );
+
+    }
+
+
+    iniciarAplicacion();
+
+</script>
 
 
     <!-- =====================================================
