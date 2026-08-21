@@ -1723,6 +1723,48 @@ if (nuevaPartidaGanador) {
     );
 }
 
+    /* =====================================================
+   ABRIR / CERRAR REGLAS
+===================================================== */
+
+const verReglas =
+    document.getElementById(
+        "verReglas"
+    );
+
+
+if (verReglas) {
+
+    verReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(5);
+
+        }
+    );
+
+}
+
+
+const volverReglas =
+    document.getElementById(
+        "volverReglas"
+    );
+
+
+if (volverReglas) {
+
+    volverReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(1);
+
+        }
+    );
+
+}
 
 /* =====================================================
    REGLAS
