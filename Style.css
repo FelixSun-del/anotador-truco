@@ -1721,3 +1721,495 @@ button {
             scale(0.68);
     }
 }
+
+/* =====================================================
+   NUEVO MARCADOR DE TANTOS
+===================================================== */
+
+/*
+    0 a 15 puntos:
+    formato clásico vertical
+*/
+
+.puntos {
+
+    min-height: 270px;
+
+    margin:
+        12px 0 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex-wrap: nowrap;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    overflow: visible;
+}
+
+
+.puntos .grupo-palitos {
+
+    flex:
+        0 0 85px;
+
+    margin: 0;
+}
+
+
+/* =====================================================
+   PARTIDA A 30 · DESDE 16 PUNTOS
+===================================================== */
+
+.puntos.puntos-compactos {
+
+    min-height: 205px;
+
+    display: grid;
+
+    grid-template-rows:
+        repeat(3, 58px);
+
+    grid-auto-flow: column;
+
+    grid-auto-columns: 58px;
+
+    justify-content: center;
+
+    align-content: center;
+
+    gap:
+        7px 12px;
+}
+
+
+.puntos.puntos-compactos
+.grupo-palitos {
+
+    width: 58px;
+
+    height: 58px;
+
+    flex:
+        0 0 58px;
+
+    transform: none;
+}
+
+
+/* Palitos más chicos */
+
+.puntos.puntos-compactos
+.v1 {
+
+    width: 7px;
+    height: 46px;
+
+    left: 4px;
+    top: 5px;
+}
+
+
+.puntos.puntos-compactos
+.h1 {
+
+    width: 46px;
+    height: 7px;
+
+    left: 5px;
+    top: 44px;
+}
+
+
+.puntos.puntos-compactos
+.v2 {
+
+    width: 7px;
+    height: 46px;
+
+    right: 4px;
+    top: 5px;
+}
+
+
+.puntos.puntos-compactos
+.h2 {
+
+    width: 46px;
+    height: 7px;
+
+    left: 5px;
+    top: 5px;
+}
+
+
+.puntos.puntos-compactos
+.diagonal {
+
+    width: 7px;
+    height: 58px;
+
+    left: 25px;
+    top: 0;
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* =====================================================
+   +1 / -1 MÁS PROLIJOS
+===================================================== */
+
+.controles {
+
+    width: min(
+        180px,
+        100%
+    );
+
+    margin:
+        0 auto 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 7px;
+}
+
+
+.boton-punto {
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding:
+        10px 6px;
+
+    font-size: 1rem;
+
+    border-radius: 8px;
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .puntos {
+
+        min-height: 225px;
+
+        gap: 0;
+    }
+
+
+    /*
+        Anulamos el scale viejo.
+        El tamaño queda más controlado.
+    */
+
+    .puntos
+    .grupo-palitos {
+
+        width: 70px;
+
+        height: 70px;
+
+        flex:
+            0 0 70px;
+
+        transform:
+            scale(0.82);
+
+        transform-origin:
+            center;
+    }
+
+
+    .puntos.puntos-compactos {
+
+    min-height: 180px;
+
+    grid-template-rows:
+        repeat(3, 55px);
+
+    grid-auto-flow: column;
+
+    grid-auto-columns: 55px;
+
+    gap:
+        5px 8px;
+}
+
+    .puntos.puntos-compactos
+    .grupo-palitos {
+
+        width: 55px;
+
+        height: 55px;
+
+        flex:
+            0 0 55px;
+
+        transform:
+            scale(0.92);
+
+        transform-origin:
+            center;
+    }
+
+
+    .controles {
+
+        width: min(
+            140px,
+            100%
+        );
+
+        gap: 6px;
+
+        margin-bottom: 14px;
+    }
+
+
+    .boton-punto {
+
+        min-width: 0;
+
+        padding:
+            9px 4px;
+
+        font-size: 0.95rem;
+    }
+
+}
+
+/* =====================================================
+   CASINO · FICHAS DE APUESTA MÁS COMPACTAS
+===================================================== */
+
+.config-equipo {
+    padding: 16px 12px;
+}
+
+.apuestas-grid {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 6px;
+
+    max-width: 250px;
+
+    margin:
+        8px auto 0;
+}
+
+.apuesta {
+    min-width: 0;
+
+    padding:
+        8px 4px;
+
+    font-size: 0.9rem;
+
+    border-radius: 7px;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 480px) {
+
+    .config-equipo {
+        padding:
+            13px 7px;
+    }
+
+    .fichas {
+        font-size: 1.05rem;
+
+        margin-bottom: 10px;
+    }
+
+    .fichas strong {
+        font-size: 1.25rem;
+    }
+
+    .apuestas-grid {
+        gap: 4px;
+
+        width: 100%;
+    }
+
+    .apuesta {
+        padding:
+            7px 2px;
+
+        font-size: 0.8rem;
+
+        border-width: 1px;
+    }
+
+    .apuesta-texto {
+        margin-top: 9px;
+
+        font-size: 0.82rem;
+    }
+}
+
+/* =====================================================
+   HISTORIAL SEPARADO POR EQUIPOS
+===================================================== */
+
+.historial {
+
+    margin-top: 8px;
+
+    max-height: 300px;
+
+    overflow-y: auto;
+
+    background: #eee2ce;
+
+    border:
+        1px solid #c6b493;
+
+    border-radius: 9px;
+
+    padding: 10px;
+}
+
+
+.historial-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+.historial-equipo {
+
+    min-width: 0;
+
+    background:
+        rgba(255, 255, 255, 0.20);
+
+    border:
+        1px solid rgba(100, 70, 40, 0.18);
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+
+.historial-equipo h3 {
+
+    margin: 0;
+
+    padding:
+        9px 6px;
+
+    text-align: center;
+
+    font-size: 0.95rem;
+
+    background: #e2d3b9;
+
+    color: var(--verde-oscuro);
+
+    border-bottom:
+        1px solid rgba(100, 70, 40, 0.18);
+}
+
+
+.historial-lista {
+
+    max-height: 210px;
+
+    overflow-y: auto;
+}
+
+
+.historial-lista .entrada {
+
+    padding:
+        8px 6px;
+
+    font-size: 0.85rem;
+
+    text-align: left;
+
+    overflow-wrap: anywhere;
+}
+
+
+.historial-vacio {
+
+    padding:
+        16px 5px;
+
+    text-align: center;
+
+    font-size: 0.82rem;
+
+    color: #76695d;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 480px) {
+
+    .historial {
+
+        padding: 6px;
+    }
+
+
+    .historial-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 6px;
+    }
+
+
+    .historial-equipo h3 {
+
+        padding:
+            8px 3px;
+
+        font-size: 0.82rem;
+    }
+
+
+    .historial-lista .entrada {
+
+        padding:
+            7px 4px;
+
+        font-size: 0.76rem;
+    }
+
+}

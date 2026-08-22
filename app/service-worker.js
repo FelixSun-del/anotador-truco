@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "anotador-truco-app-v1";
+const CACHE_NAME = "anotador-truco-app-v2";
 
 const ARCHIVOS = [
     "./",

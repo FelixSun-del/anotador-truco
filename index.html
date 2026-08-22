@@ -47,8 +47,10 @@
     <!-- PWA -->
 
     <link
-        rel="icon"
-        href="./icon-192.png"
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="./icons/icon-192.png"
     >
 
     <link
@@ -799,21 +801,67 @@
 
             <div class="historial-contenedor">
 
-                <button
-                    id="botonHistorial"
-                    class="boton-historial"
-                >
-                    📜 Historial
-                </button>
+    <button
+        id="botonHistorial"
+        class="boton-historial"
+    >
+        📜 Historial
+    </button>
+
+
+    <div
+        id="historial"
+        class="historial oculto"
+    >
+
+        <div class="historial-grid">
+
+
+            <!-- EQUIPO 1 -->
+
+            <section class="historial-equipo">
+
+                <h3>
+                    Equipo 1
+                </h3>
 
                 <div
-                    id="historial"
-                    class="historial oculto"
+                    id="historial1"
+                    class="historial-lista"
                 >
-                    Sin jugadas todavía
+                    <div class="historial-vacio">
+                        Sin jugadas
+                    </div>
                 </div>
 
-            </div>
+            </section>
+
+
+            <!-- EQUIPO 2 -->
+
+            <section class="historial-equipo">
+
+                <h3>
+                    Equipo 2
+                </h3>
+
+                <div
+                    id="historial2"
+                    class="historial-lista"
+                >
+                    <div class="historial-vacio">
+                        Sin jugadas
+                    </div>
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </div>
+
+</div>
 
             <div class="copyright">
                 © 2026 Félix · todos los derechos reservados

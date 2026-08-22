@@ -94,7 +94,9 @@ const estado = {
 
     apuesta2: 0,
 
-    historial: [],
+    historial1: [],
+
+    historial2: [],
 
     terminada: false,
 
@@ -881,7 +883,9 @@ function iniciarPartida() {
 
     estado.puntos2 = 0;
 
-    estado.historial = [];
+    estado.historial1 = [];
+
+    estado.historial2 = [];
 
     estado.terminada = false;
 
@@ -1045,22 +1049,34 @@ function actualizarTodo() {
         );
 
 
-    if (puntos1) {
+if (puntos1) {
 
-        puntos1.innerHTML =
-            generarPalitos(
-                estado.puntos1
-            );
-    }
+    puntos1.classList.toggle(
+        "puntos-compactos",
+        estado.objetivo === 30 &&
+        estado.puntos1 >= 16
+    );
+
+    puntos1.innerHTML =
+        generarPalitos(
+            estado.puntos1
+        );
+}
 
 
-    if (puntos2) {
+if (puntos2) {
 
-        puntos2.innerHTML =
-            generarPalitos(
-                estado.puntos2
-            );
-    }
+    puntos2.classList.toggle(
+        "puntos-compactos",
+        estado.objetivo === 30 &&
+        estado.puntos2 >= 16
+    );
+
+    puntos2.innerHTML =
+        generarPalitos(
+            estado.puntos2
+        );
+}
 
 
     if (infoPartida) {
@@ -1126,10 +1142,11 @@ function modificarPuntos(
 
     if (historial) {
 
-        agregarHistorial(
-            historial
-        );
-    }
+    agregarHistorial(
+        equipo,
+        historial
+    );
+}
 
 
     comprobarGanador();
@@ -1393,12 +1410,35 @@ function resolverFalta(
 ===================================================== */
 
 function agregarHistorial(
+    equipo,
     texto
 ) {
 
-    estado.historial.push(
-        texto
-    );
+    /*
+        Como cada columna ya dice Equipo 1 / Equipo 2,
+        sacamos "Equipo X:" del texto para no repetirlo.
+    */
+
+    const textoLimpio =
+        texto.replace(
+            /^Equipo \d+:\s*/,
+            ""
+        );
+
+
+    if (equipo === 1) {
+
+        estado.historial1.push(
+            textoLimpio
+        );
+
+    } else {
+
+        estado.historial2.push(
+            textoLimpio
+        );
+    }
+
 
     actualizarHistorial();
 }
@@ -1406,35 +1446,65 @@ function agregarHistorial(
 
 function actualizarHistorial() {
 
-    const historial =
+    const historial1 =
         document.getElementById(
-            "historial"
+            "historial1"
+        );
+
+    const historial2 =
+        document.getElementById(
+            "historial2"
         );
 
 
-    if (!historial) {
+    if (
+        !historial1 ||
+        !historial2
+    ) {
         return;
     }
 
 
-    if (
-        estado.historial.length ===
-        0
+    function mostrarHistorial(
+        elemento,
+        jugadas
     ) {
 
-        historial.textContent =
-            "Sin jugadas todavía";
+        if (jugadas.length === 0) {
 
-        return;
+            elemento.innerHTML =
+                `
+                    <div class="historial-vacio">
+                        Sin jugadas
+                    </div>
+                `;
+
+            return;
+        }
+
+
+        elemento.innerHTML =
+            jugadas
+                .map(jugada =>
+                    `
+                        <div class="entrada">
+                            ${jugada}
+                        </div>
+                    `
+                )
+                .join("");
     }
 
 
-    historial.innerHTML =
-        estado.historial
-            .map(jugada =>
-                `<div class="entrada">${jugada}</div>`
-            )
-            .join("");
+    mostrarHistorial(
+        historial1,
+        estado.historial1
+    );
+
+    mostrarHistorial(
+        historial2,
+        estado.historial2
+    );
 }
 
 
@@ -1642,7 +1712,9 @@ function nuevaPartida() {
 
     estado.apuesta2 = 0;
 
-    estado.historial = [];
+    estado.historial1 = [];
+
+    estado.historial2 = [];
 
     estado.terminada = false;
 

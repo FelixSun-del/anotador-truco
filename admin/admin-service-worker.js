@@ -1,13 +1,16 @@
 "use strict";
 
 const CACHE_ADMIN =
-    "anotador-truco-admin-v2";
+    "anotador-truco-admin-v4";
 
 const ARCHIVOS_ADMIN = [
     "./",
     "./admin.html",
     "./admin.css",
-    "./admin.js"
+    "./admin.js",
+    "./manifest.json",
+    "./icons/admin-icon-192.png",
+    "./icons/admin-icon-512.png"
 ];
 
 
