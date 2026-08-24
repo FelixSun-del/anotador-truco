@@ -40,18 +40,21 @@
 
     <meta
         name="description"
-        content="Anotador de Truco offline"
+        content="Anotador de Truco para llevar los tantos de tus partidas de forma rápida y simple."
     >
 
 
-    <!-- PWA -->
+    <!-- ICONO -->
 
     <link
-    rel="icon"
-    type="image/png"
-    sizes="192x192"
-    href="./icons/icon-192.png"
+        rel="icon"
+        type="image/png"
+        sizes="192x192"
+        href="./icons/icon-192.png"
     >
+
+
+    <!-- ESTILOS -->
 
     <link
         rel="stylesheet"
@@ -227,11 +230,6 @@
 
             </div>
 
-            <div class="copyright">
-                © 2026 Félix · todos los derechos reservados
-            </div>
-
-
             <div class="grupo">
 
                 <h2>Objetivo</h2>
@@ -282,6 +280,10 @@
             >
                 🔐 Panel de administración
             </button>
+
+            <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
+            </div>
 
         </section>
 
@@ -334,10 +336,6 @@
                 >
                     Volver
                 </button>
-
-                <div class="copyright">
-                    © 2026 Félix · todos los derechos reservados
-                </div>
                 
                 <button
                     id="siguiente2"
@@ -347,6 +345,10 @@
                     Siguiente
                 </button>
 
+            </div>
+
+            <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
             </div>
 
         </section>
@@ -532,10 +534,6 @@
                     Volver
                 </button>
 
-                <div class="copyright">
-                    © 2026 Félix · todos los derechos reservados
-                </div>
-
                 <button
                     id="siguiente3"
                     type="button"
@@ -545,6 +543,11 @@
                 </button>
 
             </div>
+
+             <div class="copyright">
+                © 2026 Félix · todos los derechos reservados
+            </div>
+
 
         </section>
 
@@ -1434,15 +1437,17 @@
                 </h3>
 
                 <p>
-                    Se juegan 3 manos.
-                    Gana quien gana 2 manos.
+                    Una ronda puede tener hasta
+                    <strong>3 bazas</strong>.
+                    En general, gana el equipo que
+                    gana 2 de las 3 bazas.
                 </p>
 
                 <p>
-                    Si empatan las 3 →
-                    gana el mano.
+                    Si las 3 bazas quedan pardas,
+                    gana la ronda el
+                    <strong>equipo de la mano</strong>.
                 </p>
-
 
                 <h3>
                     🔊 Puntos de Truco - Aceptados
@@ -1531,13 +1536,6 @@
 
 
         <!-- VOLVER -->
-
-        <button
-            id="volverReglas"
-            class="boton-principal"
-        >
-            ir al menú
-        </button>
 
         <div class="botones reglas-botones">
 
@@ -4298,98 +4296,6 @@
     </section>
 
 </main>
-
-    <!-- =====================================================
-         PANEL DE ADMINISTRACIÓN
-    ====================================================== -->
-
-    <main
-        id="pantallaAdmin"
-        class="pantalla oculto"
-    >
-
-        <section class="papel admin-panel">
-
-            <div class="admin-header">
-
-                <div>
-
-                    <h1>🔐 Panel Admin</h1>
-
-                    <p id="adminUsuario">
-                        Comprobando autorización...
-                    </p>
-
-                </div>
-
-                <span class="admin-badge">
-                    ADMIN
-                </span>
-
-            </div>
-
-
-            <div class="admin-card">
-
-                <h2>📊 Estado de la aplicación</h2>
-
-                <div class="admin-datos">
-
-                    <div>
-                        <span>Partidas</span>
-                        <strong id="adminPartidas">
-                            0
-                        </strong>
-                    </div>
-
-                    <div>
-                        <span>Equipo 1</span>
-                        <strong id="adminPuntos1">
-                            0
-                        </strong>
-                    </div>
-
-                    <div>
-                        <span>Equipo 2</span>
-                        <strong id="adminPuntos2">
-                            0
-                        </strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="admin-card">
-
-                <h2>👤 Sesión</h2>
-
-                <p id="adminEmail">
-                    -
-                </p>
-
-                <button
-                    id="cerrarSesionAdmin"
-                    class="boton-secundario"
-                >
-                    🚪 Cerrar sesión
-                </button>
-
-            </div>
-
-
-            <button
-                id="volverAdmin"
-                class="boton-principal"
-            >
-                Volver al anotador
-            </button>
-
-        </section>
-
-    </main>
-
 
     <!-- =====================================================
          GANADOR

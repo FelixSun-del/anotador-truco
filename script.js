@@ -2297,30 +2297,3 @@ if (
 
     actualizarTodo();
 }
-
-
-/* =====================================================
-   PWA
-===================================================== */
-
-window.addEventListener(
-    "appinstalled",
-    () => {
-
-        console.log(
-            "📱 Anotador de Truco instalado"
-        );
-
-
-        if (
-            typeof gtag ===
-            "function"
-        ) {
-
-            gtag(
-                "event",
-                "pwa_installed"
-            );
-        }
-    }
-);
