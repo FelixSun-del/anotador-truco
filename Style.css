@@ -3364,3 +3364,84 @@ button {
     }
 
 }
+
+/* =====================================================
+   NUEVO COLOR · BOTONES
+===================================================== */
+
+:root {
+
+    --boton-acento: #8b4f2f;
+    --boton-acento-oscuro: #62351f;
+
+}
+
+
+/* BOTONES PRINCIPALES */
+
+.boton-principal {
+
+    background:
+        var(--boton-acento);
+
+}
+
+
+.boton-principal:hover {
+
+    background:
+        var(--boton-acento-oscuro);
+
+}
+
+
+/* OPCIONES SELECCIONADAS */
+
+.opcion.seleccionado,
+.apuesta.seleccionado {
+
+    background:
+        var(--boton-acento);
+
+    border-color:
+        var(--boton-acento-oscuro);
+
+}
+
+
+.opcion:hover,
+.apuesta:hover {
+
+    border-color:
+        var(--boton-acento);
+
+}
+
+
+/* BOTÓN +1 */
+
+.boton-punto.sumar {
+
+    background:
+        var(--boton-acento);
+
+}
+
+
+/* CARPETAS DE LA GUÍA */
+
+.guia-carpeta > summary {
+
+    background:
+        var(--boton-acento);
+
+}
+
+
+.guia-carpeta > summary:hover,
+.guia-carpeta[open] > summary {
+
+    background:
+        var(--boton-acento-oscuro);
+
+}
