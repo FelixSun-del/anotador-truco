@@ -267,6 +267,11 @@ function borrarPartidaGuardada() {
 
 const pantallas = {
 
+    0:
+        document.getElementById(
+            "pantalla0"
+        ),
+
     1:
         document.getElementById(
             "pantalla1"
@@ -292,11 +297,15 @@ const pantallas = {
             "pantalla5"
         ),
 
+    6:
+        document.getElementById(
+            "pantalla6"
+        ),
+
     ganador:
         document.getElementById(
             "pantallaGanador"
         )
-
 
 };
 
@@ -501,7 +510,7 @@ if (botonAdmin) {
         () => {
 
             window.location.href =
-             "../admin/admin.html";
+              "../admin/admin.html";
 
         }
     );
@@ -643,48 +652,6 @@ if (siguiente1) {
     );
 }
 
-    /* =====================================================
-   ABRIR / CERRAR REGLAS
-===================================================== */
-
-const verReglas =
-    document.getElementById(
-        "verReglas"
-    );
-
-
-if (verReglas) {
-
-    verReglas.addEventListener(
-        "click",
-        () => {
-
-            mostrarPantalla(5);
-
-        }
-    );
-
-}
-
-
-const volverReglas =
-    document.getElementById(
-        "volverReglas"
-    );
-
-
-if (volverReglas) {
-
-    volverReglas.addEventListener(
-        "click",
-        () => {
-
-            mostrarPantalla(1);
-
-        }
-    );
-
-}
 
 /* =====================================================
                      REGLAS
@@ -1998,6 +1965,279 @@ if (nuevaPartidaGanador) {
     );
 }
 
+/* =====================================================
+   PRESENTACIÓN Y GUÍA PARA PRINCIPIANTES
+===================================================== */
+
+const empezarApp =
+    document.getElementById(
+        "empezarApp"
+    );
+
+if (empezarApp) {
+
+    empezarApp.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(1);
+
+        }
+    );
+
+}
+
+
+const verGuiaInicio =
+    document.getElementById(
+        "verGuiaInicio"
+    );
+
+if (verGuiaInicio) {
+
+    verGuiaInicio.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(6);
+
+        }
+    );
+
+}
+
+
+const irGuiaDesdeReglas =
+    document.getElementById(
+        "irGuiaDesdeReglas"
+    );
+
+if (irGuiaDesdeReglas) {
+
+    irGuiaDesdeReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(6);
+
+        }
+    );
+
+}
+
+
+const irReglasDesdeGuia =
+    document.getElementById(
+        "irReglasDesdeGuia"
+    );
+
+if (irReglasDesdeGuia) {
+
+    irReglasDesdeGuia.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(5);
+
+        }
+    );
+
+}
+
+
+const volverGuiaMenu =
+    document.getElementById(
+        "volverGuiaMenu"
+    );
+
+if (volverGuiaMenu) {
+
+    volverGuiaMenu.addEventListener(
+        "click",
+        () => {
+
+           mostrarPantalla(1);
+
+        }
+    );
+
+}
+
+/* =====================================================
+   ACORDEÓN · GUÍA PARA PRINCIPIANTES
+===================================================== */
+
+const carpetasGuia =
+    document.querySelectorAll(
+        ".guia-carpeta"
+    );
+
+
+carpetasGuia.forEach(
+    (carpeta) => {
+
+        carpeta.addEventListener(
+            "toggle",
+            () => {
+
+                if (!carpeta.open) {
+
+                    carpeta
+                        .querySelectorAll(
+                            ".guia-item[open]"
+                        )
+                        .forEach(
+                            (item) => {
+
+                                item.removeAttribute(
+                                    "open"
+                                );
+
+                            }
+                        );
+
+                    return;
+
+                }
+
+
+                carpetasGuia.forEach(
+                    (otraCarpeta) => {
+
+                        if (
+                            otraCarpeta !== carpeta
+                        ) {
+
+                            otraCarpeta.removeAttribute(
+                                "open"
+                            );
+
+
+                            otraCarpeta
+                                .querySelectorAll(
+                                    ".guia-item[open]"
+                                )
+                                .forEach(
+                                    (item) => {
+
+                                        item.removeAttribute(
+                                            "open"
+                                        );
+
+                                    }
+                                );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+
+
+const itemsGuia =
+    document.querySelectorAll(
+        ".guia-item"
+    );
+
+
+itemsGuia.forEach(
+    (item) => {
+
+        item.addEventListener(
+            "toggle",
+            () => {
+
+                if (!item.open) {
+                    return;
+                }
+
+
+                const carpetaActual =
+                    item.closest(
+                        ".guia-carpeta"
+                    );
+
+
+                if (!carpetaActual) {
+                    return;
+                }
+
+
+                carpetaActual
+                    .querySelectorAll(
+                        ".guia-item[open]"
+                    )
+                    .forEach(
+                        (otroItem) => {
+
+                            if (
+                                otroItem !== item
+                            ) {
+
+                                otroItem.removeAttribute(
+                                    "open"
+                                );
+
+                            }
+
+                        }
+                    );
+
+            }
+        );
+
+    }
+);
+
+/* =====================================================
+   ABRIR / CERRAR REGLAS
+===================================================== */
+
+const verGuiaMenu =
+    document.getElementById(
+        "verGuiaMenu"
+    );
+
+
+if (verGuiaMenu) {
+
+    verGuiaMenu.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(6);
+
+        }
+    );
+
+}
+
+
+const volverReglas =
+    document.getElementById(
+        "volverReglas"
+    );
+
+
+if (volverReglas) {
+
+    volverReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(1);
+
+        }
+    );
+
+}
+
 
 /* =====================================================
    INICIO
@@ -2058,7 +2298,6 @@ if (
     actualizarTodo();
 }
 
-
 /* =====================================================
    PWA
 ===================================================== */
@@ -2071,7 +2310,6 @@ window.addEventListener(
             "📱 Anotador de Truco instalado"
         );
 
-
         if (
             typeof gtag ===
             "function"
@@ -2081,6 +2319,8 @@ window.addEventListener(
                 "event",
                 "pwa_installed"
             );
+
         }
+
     }
 );

@@ -430,16 +430,6 @@ h3 {
    REGLAS
 ===================================================== */
 
-.boton-reglas {
-
-    display: block;
-
-    width: 100%;
-
-    margin-top: 12px;
-
-}
-
 .reglas {
     max-width: 850px;
 }
@@ -1257,130 +1247,6 @@ h3 {
     }
 }
 
-
-/* =====================================================
-   PANEL ADMIN
-===================================================== */
-
-.admin-panel {
-
-    max-width: 750px;
-}
-
-.admin-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 25px;
-}
-
-.admin-header h1 {
-
-    text-align: left;
-
-    margin-bottom: 5px;
-}
-
-.admin-header p {
-
-    color: #66584a;
-
-    overflow-wrap: anywhere;
-}
-
-.admin-badge {
-
-    background: var(--verde);
-
-    color: white;
-
-    border-radius: 20px;
-
-    padding: 8px 14px;
-
-    font-size: 0.8rem;
-
-    font-weight: 800;
-}
-
-.admin-card {
-
-    background: #eadfc9;
-
-    border:
-        1px solid #cbbb9f;
-
-    border-radius: 12px;
-
-    padding: 20px;
-
-    margin-bottom: 18px;
-}
-
-.admin-card h2 {
-    margin-bottom: 15px;
-}
-
-.admin-datos {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 12px;
-}
-
-.admin-datos > div {
-
-    background: #f2e7d3;
-
-    border:
-        1px solid #cbbb9f;
-
-    border-radius: 10px;
-
-    padding: 15px;
-
-    text-align: center;
-}
-
-.admin-datos span {
-
-    display: block;
-
-    color: #66584a;
-
-    margin-bottom: 5px;
-}
-
-.admin-datos strong {
-
-    font-size: 1.7rem;
-
-    color: var(--verde);
-}
-
-#adminEmail {
-
-    background: #f2e7d3;
-
-    border-radius: 8px;
-
-    padding: 12px;
-
-    margin-bottom: 12px;
-
-    overflow-wrap: anywhere;
-}
-
-
 /* =====================================================
    FOOTER
 ===================================================== */
@@ -1414,7 +1280,7 @@ h3 {
 button:focus-visible {
 
     outline:
-        3px solid rgba(47,93,80,0.45);
+        3px solid rgba(138,52,52,0.45);
 
     outline-offset: 2px;
 }
@@ -1675,27 +1541,6 @@ button {
         width: 70px;
         height: 150px;
     }
-
-    .admin-header {
-
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-    .admin-header h1 {
-        text-align: center;
-    }
-
-    .admin-badge {
-
-        align-self: center;
-    }
-
-    .admin-datos {
-
-        grid-template-columns: 1fr;
-    }
 }
 
 
@@ -1955,7 +1800,6 @@ button {
     gap:
         5px 8px;
 }
-
 
     .puntos.puntos-compactos
     .grupo-palitos {
@@ -2253,91 +2097,1122 @@ button {
 }
 
 /* =====================================================
-   INICIO · PRIMERA IMPRESIÓN
+   GUÍA PARA PRINCIPIANTES
 ===================================================== */
 
-.subtitulo-inicio {
+.guia-principiantes {
 
-    max-width: 430px;
+    width: min(900px, 100%);
 
-    margin:
-        0 auto 12px;
+    padding: 34px;
 
-    line-height: 1.45;
 }
 
 
-.ventajas-inicio {
+/* =====================================================
+   ENCABEZADO
+===================================================== */
+
+.guia-encabezado {
+
+    text-align: center;
+
+    margin-bottom: 24px;
+
+}
+
+
+.guia-icono {
+
+    font-size: 3rem;
+
+    line-height: 1;
+
+    margin-bottom: 10px;
+
+}
+
+
+.guia-encabezado h1 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.guia-encabezado .subtitulo {
+
+    margin-bottom: 10px;
+
+}
+
+
+.guia-introduccion {
+
+    max-width: 520px;
+
+    margin: 0 auto;
+
+    color: #6b5c4e;
+
+    font-size: 0.93rem;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================================
+   DATO CURIOSO
+===================================================== */
+
+.guia-dato-curioso {
+
+    max-width: 700px;
+
+    margin:
+        0 auto
+        26px;
+
+    padding:
+        16px
+        18px;
+
+    background:
+        rgba(236, 218, 169, 0.55);
+
+    border:
+        1px solid
+        rgba(147, 112, 48, 0.30);
+
+    border-left:
+        5px solid
+        #b88a37;
+
+    border-radius: 10px;
+
+    color: #574838;
+
+    line-height: 1.55;
+
+}
+
+
+.guia-dato-curioso strong {
+
+    color: #5f421e;
+
+}
+
+
+.guia-dato-curioso p {
+
+    margin:
+        7px
+        0
+        0;
+
+}
+
+
+/* =====================================================
+   CONTENEDOR DE CARPETAS
+===================================================== */
+
+.contenido-guia {
 
     display: flex;
 
-    justify-content: center;
+    flex-direction: column;
 
-    flex-wrap: wrap;
+    gap: 12px;
 
-    gap:
-        6px 14px;
-
-    margin-bottom: 26px;
-
-    color: var(--verde);
-
-    font-size: 0.82rem;
-
-    font-weight: 700;
 }
 
 
-.ventajas-inicio span {
+/* =====================================================
+   CARPETAS PRINCIPALES
+===================================================== */
 
-    display: inline-flex;
+.guia-carpeta {
+
+    border:
+        1px solid
+        rgba(51, 84, 57, 0.35);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.15);
+
+    box-shadow:
+        0 3px 8px
+        rgba(0, 0, 0, 0.08);
+
+}
+
+
+.guia-carpeta > summary {
+
+    position: relative;
+
+    display: flex;
 
     align-items: center;
 
-    gap: 4px;
+    min-height: 58px;
+
+    padding:
+        15px
+        52px
+        15px
+        18px;
+
+    background:
+        var(--verde);
+
+    color: white;
+
+    font-size: 1.02rem;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    list-style: none;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+
 }
 
 
-.boton-comenzar {
+.guia-carpeta > summary::-webkit-details-marker {
 
-    margin-top: 4px;
+    display: none;
 
-    font-size: 1.05rem;
 }
 
 
-@media (max-width: 480px) {
+.guia-carpeta > summary:hover {
 
-    .subtitulo-inicio {
+    background:
+        var(--verde-oscuro);
 
-        max-width: 290px;
+}
+
+
+.guia-carpeta > summary::after {
+
+    content: "+";
+
+    position: absolute;
+
+    right: 18px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.16);
+
+    font-size: 1.35rem;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+}
+
+
+.guia-carpeta[open] > summary {
+
+    background:
+        var(--verde-oscuro);
+
+}
+
+
+.guia-carpeta[open] > summary::after {
+
+    content: "−";
+
+}
+
+
+/* =====================================================
+   CONTENIDO DE CARPETAS
+===================================================== */
+
+.guia-carpeta-contenido {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 12px;
+
+    background:
+        rgba(247, 239, 224, 0.48);
+
+}
+
+
+/* =====================================================
+   PREGUNTAS / MENÚS INTERNOS
+===================================================== */
+
+.guia-item {
+
+    border:
+        1px solid
+        rgba(111, 87, 62, 0.22);
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.35);
+
+}
+
+
+.guia-item > summary {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 50px;
+
+    padding:
+        13px
+        46px
+        13px
+        15px;
+
+    color:
+        var(--texto);
+
+    font-size: 0.94rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    list-style: none;
+
+    background:
+        rgba(229, 215, 191, 0.70);
+
+    transition:
+        background 0.15s ease;
+
+}
+
+
+.guia-item > summary::-webkit-details-marker {
+
+    display: none;
+
+}
+
+
+.guia-item > summary:hover {
+
+    background:
+        rgba(215, 198, 168, 0.85);
+
+}
+
+
+.guia-item > summary::after {
+
+    content: "+";
+
+    position: absolute;
+
+    right: 15px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size: 1.25rem;
+
+    color:
+        var(--verde-oscuro);
+
+}
+
+
+.guia-item[open] > summary {
+
+    background:
+        rgba(208, 195, 170, 0.90);
+
+}
+
+
+.guia-item[open] > summary::after {
+
+    content: "−";
+
+}
+
+
+/* =====================================================
+   RESPUESTAS
+===================================================== */
+
+.guia-item-contenido {
+
+    padding:
+        16px
+        18px
+        18px;
+
+    color:
+        #4f463d;
+
+    font-size: 0.94rem;
+
+    line-height: 1.58;
+
+    background:
+        rgba(255, 252, 245, 0.72);
+
+}
+
+
+.guia-item-contenido p {
+
+    margin:
+        0
+        0
+        12px;
+
+}
+
+
+.guia-item-contenido p:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.guia-item-contenido h3 {
+
+    margin:
+        20px
+        0
+        8px;
+
+    color:
+        var(--verde-oscuro);
+
+    font-size: 0.98rem;
+
+}
+
+
+.guia-item-contenido ul,
+.guia-item-contenido ol {
+
+    margin:
+        8px
+        0
+        14px;
+
+    padding-left: 24px;
+
+}
+
+
+.guia-item-contenido li {
+
+    margin-bottom: 6px;
+
+}
+
+
+/* =====================================================
+   EJEMPLOS
+===================================================== */
+
+.guia-ejemplo {
+
+    margin:
+        12px
+        0;
+
+    padding:
+        12px
+        14px;
+
+    border-left:
+        4px solid
+        var(--verde);
+
+    border-radius: 6px;
+
+    background:
+        rgba(78, 112, 77, 0.10);
+
+    color:
+        #42513f;
+
+    line-height: 1.55;
+
+}
+
+
+/* =====================================================
+   DATOS ÚTILES
+===================================================== */
+
+.guia-dato-util {
+
+    margin:
+        14px
+        0;
+
+    padding:
+        13px
+        15px;
+
+    border:
+        1px solid
+        rgba(160, 123, 48, 0.25);
+
+    border-radius: 8px;
+
+    background:
+        rgba(237, 217, 169, 0.34);
+
+}
+
+
+.guia-dato-util p {
+
+    margin:
+        6px
+        0;
+
+}
+
+
+/* =====================================================
+   JERARQUÍA DE CARTAS
+===================================================== */
+
+.guia-jerarquia-cartas {
+
+    padding-left: 28px;
+
+}
+
+
+.guia-jerarquia-cartas li {
+
+    padding:
+        4px
+        0;
+
+}
+
+
+/* =====================================================
+   BOTONES INFERIORES
+===================================================== */
+
+.guia-botones {
+
+    margin-top: 28px;
+
+}
+
+
+.guia-botones .boton-secundario,
+.guia-botones .boton-principal {
+
+    min-height: 48px;
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .guia-principiantes {
+
+        padding:
+            22px
+            14px;
+
+    }
+
+
+    .guia-icono {
+
+        font-size: 2.5rem;
+
+    }
+
+
+    .guia-encabezado h1 {
+
+        font-size: 1.55rem;
+
+    }
+
+
+    .guia-introduccion {
+
+        font-size: 0.86rem;
+
+    }
+
+
+    .guia-dato-curioso {
+
+        padding:
+            13px
+            14px;
+
+        font-size: 0.86rem;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .contenido-guia {
+
+        gap: 9px;
+
+    }
+
+
+    .guia-carpeta > summary {
+
+        min-height: 54px;
+
+        padding:
+            13px
+            48px
+            13px
+            14px;
+
+        font-size: 0.94rem;
+
+    }
+
+
+    .guia-carpeta > summary::after {
+
+        right: 13px;
+
+    }
+
+
+    .guia-carpeta-contenido {
+
+        padding: 8px;
+
+        gap: 7px;
+
+    }
+
+
+    .guia-item > summary {
+
+        min-height: 47px;
+
+        padding:
+            12px
+            42px
+            12px
+            12px;
+
+        font-size: 0.87rem;
+
+        line-height: 1.35;
+
+    }
+
+
+    .guia-item > summary::after {
+
+        right: 12px;
+
+    }
+
+
+    .guia-item-contenido {
+
+        padding:
+            14px
+            13px
+            16px;
+
+        font-size: 0.87rem;
+
+        line-height: 1.55;
+
+    }
+
+
+    .guia-ejemplo {
+
+        padding:
+            10px
+            12px;
+
+    }
+
+
+    .guia-botones {
+
+        gap: 9px;
+
+    }
+
+}
+
+/* =====================================================
+   PANTALLA 0 · PRESENTACIÓN
+===================================================== */
+
+#pantalla0 .papel {
+
+    width: min(680px, 100%);
+
+}
+
+
+.presentacion {
+
+    padding:
+        46px
+        44px;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   ICONO
+===================================================== */
+
+.presentacion-icono {
+
+    font-size: 3.1rem;
+
+    line-height: 1;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* =====================================================
+   TÍTULO
+===================================================== */
+
+.presentacion h1 {
+
+    margin:
+        0
+        0
+        5px;
+
+    font-size: 2.35rem;
+
+    color:
+        var(--verde-oscuro);
+
+}
+
+
+/* =====================================================
+   FRASE PRINCIPAL
+===================================================== */
+
+.presentacion-frase {
+
+    margin:
+        0
+        0
+        16px;
+
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
+    color: #574b3f;
+
+}
+
+
+/* =====================================================
+   DESCRIPCIÓN
+===================================================== */
+
+.presentacion-texto {
+
+    max-width: 560px;
+
+    margin:
+        0 auto
+        24px;
+
+    color: #675b50;
+
+    font-size: 0.96rem;
+
+    line-height: 1.6;
+
+}
+
+
+/* =====================================================
+   FUNCIONES
+===================================================== */
+
+.presentacion-funciones {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 9px;
+
+    max-width: 560px;
+
+    margin:
+        0 auto
+        26px;
+
+    text-align: left;
+
+}
+
+
+.presentacion-funciones > div {
+
+    padding:
+        10px
+        12px;
+
+    border:
+        1px solid
+        rgba(95, 78, 58, 0.18);
+
+    border-radius: 8px;
+
+    background:
+        rgba(236, 225, 205, 0.58);
+
+    color: #51473d;
+
+    font-size: 0.88rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   BOTÓN EMPEZAR
+===================================================== */
+
+.boton-empezar-app {
+
+    max-width: 560px;
+
+    margin:
+        0 auto;
+
+    min-height: 52px;
+
+    font-size: 1.02rem;
+
+}
+
+
+/* =====================================================
+   PRINCIPIANTE
+===================================================== */
+
+.presentacion-principiante {
+
+    max-width: 560px;
+
+    margin:
+        22px auto
+        0;
+
+    padding-top: 19px;
+
+    border-top:
+        1px solid
+        rgba(93, 70, 46, 0.18);
+
+}
+
+
+.presentacion-principiante p {
+
+    margin:
+        0
+        0
+        10px;
+
+    color: #66584a;
+
+    font-size: 0.9rem;
+
+}
+
+
+.boton-guia-inicio {
+
+    width: 100%;
+
+    min-height: 48px;
+
+}
+
+
+/* =====================================================
+   COPYRIGHT
+===================================================== */
+
+.presentacion .copyright {
+
+    margin-top: 26px;
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .presentacion {
+
+        padding:
+            30px
+            18px;
+
+    }
+
+
+    .presentacion-icono {
+
+        font-size: 2.65rem;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .presentacion h1 {
+
+        font-size: 1.85rem;
+
+    }
+
+
+    .presentacion-frase {
+
+        font-size: 1rem;
+
+        margin-bottom: 13px;
+
+    }
+
+
+    .presentacion-texto {
 
         font-size: 0.88rem;
 
-        margin-bottom: 10px;
+        line-height: 1.55;
+
+        margin-bottom: 19px;
+
     }
 
 
-    .ventajas-inicio {
+    .presentacion-funciones {
 
-        flex-direction: column;
+        grid-template-columns:
+            1fr;
 
-        align-items: center;
-
-        gap: 4px;
+        gap: 7px;
 
         margin-bottom: 20px;
 
-        font-size: 0.76rem;
     }
 
 
-    .boton-comenzar {
+    .presentacion-funciones > div {
 
         padding:
-            13px 10px;
+            9px
+            11px;
 
-        font-size: 0.95rem;
+        font-size: 0.84rem;
+
     }
+
+
+    .presentacion-principiante {
+
+        margin-top: 18px;
+
+        padding-top: 16px;
+
+    }
+
+
+    .presentacion .copyright {
+
+        margin-top: 22px;
+
+    }
+
+}
+
+/* =====================================================
+   NUEVO COLOR · BOTONES
+===================================================== */
+
+:root {
+
+    --boton-acento: #8a3434;
+    --boton-acento-oscuro: #642424;
+
+}
+
+
+/* BOTONES PRINCIPALES */
+
+.boton-principal {
+
+    background:
+        var(--boton-acento);
+
+}
+
+
+.boton-principal:hover {
+
+    background:
+        var(--boton-acento-oscuro);
+
+}
+
+
+/* OPCIONES SELECCIONADAS */
+
+.opcion.seleccionado,
+.apuesta.seleccionado {
+
+    background:
+        var(--boton-acento);
+
+    border-color:
+        var(--boton-acento-oscuro);
+
+}
+
+
+.opcion:hover,
+.apuesta:hover {
+
+    border-color:
+        var(--boton-acento);
+
+}
+
+
+/* BOTÓN +1 */
+
+.boton-punto.sumar {
+
+    background:
+        var(--boton-acento);
+
+}
+
+
+/* CARPETAS DE LA GUÍA */
+
+.guia-carpeta > summary {
+
+    background:
+        var(--boton-acento);
+
+}
+
+
+.guia-carpeta > summary:hover,
+.guia-carpeta[open] > summary {
+
+    background:
+        var(--boton-acento-oscuro);
+
+}
+
+/* =====================================================
+   PANTALLA 1 · BOTÓN VER GUÍA
+===================================================== */
+
+#verGuiaMenu {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    text-align: center;
 
 }
