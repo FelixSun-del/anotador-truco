@@ -67,13 +67,105 @@
 <body>
 
     <!-- =====================================================
+     PANTALLA 0 · PRESENTACIÓN
+====================================================== -->
+
+<main
+    id="pantalla0"
+    class="pantalla"
+>
+
+    <section class="papel presentacion">
+
+        <div class="presentacion-icono">
+            🃏
+        </div>
+
+        <h1>
+            Anotador de Truco
+        </h1>
+
+        <p class="presentacion-frase">
+            Tu partida, sin papel.
+        </p>
+
+        <p class="presentacion-texto">
+            Llevá los tantos de forma rápida y simple.
+            Anotá Truco, Envido y Flor, consultá el historial
+            y seguí jugando aunque cierres la aplicación.
+        </p>
+
+
+        <div class="presentacion-funciones">
+
+            <div>
+                ✓ Partidas a 15 o 30 tantos
+            </div>
+
+            <div>
+                ✓ Truco, Envido y Flor
+            </div>
+
+            <div>
+                ✓ Historial de cada equipo
+            </div>
+
+            <div>
+                ✓ Modo apuestas con fichas
+            </div>
+
+            <div>
+                ✓ Fácil de usar desde celular o PC
+            </div>
+
+            <div>
+                ✓ Tu partida queda guardada
+            </div>
+
+        </div>
+
+
+        <button
+            id="empezarApp"
+            class="boton-principal boton-empezar-app"
+        >
+            🃏 Empezar a jugar
+        </button>
+
+
+        <div class="presentacion-principiante">
+
+            <p>
+                ¿Es tu primera vez jugando al Truco?
+            </p>
+
+            <button
+                id="verGuiaInicio"
+                type="button"
+                class="boton-secundario boton-guia-inicio"
+            >
+                📖 Ver guía para principiantes
+            </button>
+
+        </div>
+
+
+        <div class="copyright">
+            © 2026 Félix · todos los derechos reservados
+        </div>
+
+    </section>
+
+</main>
+
+    <!-- =====================================================
          PANTALLA 1
     ====================================================== -->
 
     <main
-        id="pantalla1"
-        class="pantalla"
-    >
+    id="pantalla1"
+    class="pantalla oculto"
+>
 
         <section class="papel">
 
@@ -82,7 +174,6 @@
             <p class="subtitulo">
                 Configuración de la partida
             </p>
-
 
             <div class="grupo">
 
@@ -169,16 +260,17 @@
             <button
                 id="siguiente1"
                 class="boton-principal"
-            >
-                Siguiente →
+            >   
+                    Siguiente
             </button>
 
 
             <button
-                id="verReglas"
-                class="boton-secundario boton-reglas"
+                id="verGuiaMenu"
+                type="button"
+                class="boton-secundario"
             >
-                📖 Ver reglas del juego
+                📖 Ver guía para principiantes
             </button>
 
 
@@ -240,7 +332,7 @@
                     type="button"
                     class="boton-secundario"
                 >
-                    ← Volver
+                    Volver
                 </button>
 
                 <div class="copyright">
@@ -252,7 +344,7 @@
                     type="button"
                     class="boton-principal"
                 >
-                    Siguiente →
+                    Siguiente
                 </button>
 
             </div>
@@ -437,7 +529,7 @@
                     type="button"
                     class="boton-secundario"
                 >
-                    ← Volver
+                    Volver
                 </button>
 
                 <div class="copyright">
@@ -449,7 +541,7 @@
                     type="button"
                     class="boton-principal"
                 >
-                    Siguiente →
+                    Siguiente
                 </button>
 
             </div>
@@ -895,7 +987,6 @@
         <p class="subtitulo">
             Tocá una categoría para ver sus reglas
         </p>
-
 
         <!-- =====================================================
              VALOR DE LAS CARTAS
@@ -1445,8 +1536,28 @@
             id="volverReglas"
             class="boton-principal"
         >
-            ← Volver a configuración
+            ir al menú
         </button>
+
+        <div class="botones reglas-botones">
+
+        <button
+            id="irGuiaDesdeReglas"
+            type="button"
+            class="boton-secundario"
+        >
+            📖 Ver guía para principiantes
+        </button>
+
+        <button
+            id="volverReglas"
+            type="button"
+            class="boton-principal"
+        >
+            Ir al menú
+        </button>
+
+      </div>
 
             <div class="copyright">
                 © 2026 Félix · todos los derechos reservados
@@ -1456,6 +1567,2737 @@
 
     </main>
 
+<!-- =====================================================
+     PANTALLA 6 · GUÍA PARA PRINCIPIANTES
+====================================================== -->
+
+<main
+    id="pantalla6"
+    class="pantalla oculto"
+>
+
+    <section class="papel guia-principiantes">
+
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+
+        <div class="guia-encabezado">
+
+            <div class="guia-icono">
+                🃏
+            </div>
+
+            <h1>
+                Guía para principiantes
+            </h1>
+
+            <p class="subtitulo">
+                Aprendé a jugar al Truco de forma simple
+                y paso a paso.
+            </p>
+
+            <p class="guia-introduccion">
+                No necesitás leer todo de una vez.
+                Podés abrir solamente el tema que necesites.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             DATO CURIOSO
+        ====================================================== -->
+
+        <div class="guia-dato-curioso">
+
+            <strong>
+                💬 Dato curioso
+            </strong>
+
+            <p>
+                Dependiendo de la mesa o del grupo de jugadores,
+                podés escuchar nombres distintos.
+                Algunas personas llaman
+                <strong>"mano"</strong>
+                a cada baza y
+                <strong>"ronda"</strong>
+                a la jugada completa.
+                También hay grupos que usan
+                <strong>"tantos"</strong>
+                para hablar del Envido y
+                <strong>"puntos"</strong>
+                para referirse al marcador de la partida.
+            </p>
+
+        </div>
+
+
+        <div class="contenido-guia">
+
+
+            <!-- =================================================
+                 1 · BÁSICO
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    🧩 Básico
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <!-- QUÉ ES EL TRUCO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🃏 ¿Qué es el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El <strong>Truco argentino</strong>
+                                es un juego de cartas muy popular
+                                en Argentina que se juega con una
+                                <strong>baraja española de 40 cartas</strong>.
+                            </p>
+
+                            <p>
+                                Cada jugador recibe
+                                <strong>3 cartas</strong>
+                                y juega toda la ronda con esas mismas cartas,
+                                sin sacar cartas nuevas del mazo.
+                            </p>
+
+                            <p>
+                                Durante el juego pueden aparecer distintos
+                                cantos, como el
+                                <strong>Truco</strong>,
+                                el <strong>Envido</strong>
+                                y la <strong>Flor</strong>,
+                                que permiten ganar diferentes cantidades
+                                de puntos.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- PUNTOS -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🎯 ¿A cuántos puntos se juega al Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Una partida de Truco se puede jugar a
+                                <strong>15 o 30 puntos</strong>.
+                            </p>
+
+                            <p>
+                                El objetivo es que tu equipo llegue
+                                a esa cantidad antes que el equipo rival.
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                Si la partida es a 15 y tu equipo
+                                llega primero a 15 puntos,
+                                gana la partida.
+                            </div>
+
+                            <p>
+                                En una partida a 30 también vas
+                                a escuchar estas expresiones:
+                            </p>
+
+                            <p>
+                                <strong>Las malas:</strong>
+                                los primeros 15 puntos.
+                            </p>
+
+                            <p>
+                                <strong>Las buenas:</strong>
+                                los últimos 15 puntos.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- PERSONAS -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            👥 ¿De a cuántas personas se puede jugar?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El Truco puede jugarse de forma
+                                individual o por equipos.
+                            </p>
+
+                            <p>
+                                <strong>1 vs 1:</strong>
+                                un jugador contra otro.
+                            </p>
+
+                            <p>
+                                <strong>2 vs 2:</strong>
+                                dos equipos de dos jugadores.
+                            </p>
+
+                            <p>
+                                <strong>3 vs 3:</strong>
+                                dos equipos de tres jugadores.
+                            </p>
+
+                            <p>
+                                En partidas con mucha gente también
+                                pueden hacerse equipos más grandes,
+                                incluso, en casos extremos,
+                                hasta <strong>6 vs 6</strong>.
+                            </p>
+
+                            <p>
+                                Cuando se juega en equipo,
+                                los puntos pertenecen
+                                <strong>al equipo completo</strong>,
+                                no a cada jugador por separado.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- CARTAS -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🂠 ¿Qué cartas se usan?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Se utiliza una
+                                <strong>baraja española de 40 cartas</strong>
+                                con cuatro palos:
+                            </p>
+
+                            <ul>
+                                <li>⚔️ Espada</li>
+                                <li>🌿 Basto</li>
+                                <li>🪙 Oro</li>
+                                <li>🏆 Copa</li>
+                            </ul>
+
+                            <p>
+                                Si tenés un mazo español de 50 cartas,
+                                se sacan los
+                                <strong>8</strong>,
+                                los <strong>9</strong>
+                                y los <strong>2 comodines</strong>.
+                            </p>
+
+                            <p>
+                                Así quedan las 40 cartas
+                                que se utilizan para jugar.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    Una carta no necesariamente tiene
+                                    el mismo valor para el
+                                    <strong>Truco</strong>
+                                    que para el
+                                    <strong>Envido</strong>.
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- CANTIDAD DE CARTAS -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🎴 ¿Cuántas cartas recibe cada jugador?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Cada jugador recibe
+                                <strong>3 cartas</strong>
+                                al comienzo de cada ronda.
+                            </p>
+
+                            <p>
+                                Esas son las únicas cartas
+                                que va a utilizar durante esa ronda.
+                            </p>
+
+                            <p>
+                                <strong>No se roba ninguna carta nueva.</strong>
+                            </p>
+
+                            <p>
+                                Cuando la ronda termina,
+                                se juntan todas las cartas y se vuelven
+                                a repartir
+                                <strong>3 cartas nuevas a cada jugador</strong>
+                                para empezar a jugar la siguiente
+                                mano o ronda.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- TANTO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔢 ¿Qué significa "tanto" en el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La palabra
+                                <strong>tanto</strong>
+                                puede tener dos significados.
+                            </p>
+
+                            <h3>
+                                1. Punto de la partida
+                            </h3>
+
+                            <div class="guia-ejemplo">
+                                "Ganamos 2 tantos."
+                            </div>
+
+                            <p>
+                                Significa que el equipo ganó
+                                <strong>2 puntos</strong>.
+                            </p>
+
+
+                            <h3>
+                                2. Número de Envido
+                            </h3>
+
+                            <div class="guia-ejemplo">
+                                "Tengo 29 de tanto."
+                            </div>
+
+                            <p>
+                                Significa que el jugador tiene
+                                <strong>29 de Envido</strong>.
+                            </p>
+
+                            <p>
+                                El contexto te permite saber
+                                de cuál de los dos significados
+                                están hablando.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- MANO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🖐️ ¿Qué significa "mano" en el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La palabra
+                                <strong>mano</strong>
+                                puede utilizarse de dos formas diferentes.
+                            </p>
+
+
+                            <h3>
+                                La mano como jugador
+                            </h3>
+
+                            <p>
+                                Es el jugador que
+                                <strong>empieza a jugar</strong>
+                                la ronda.
+                            </p>
+
+                            <p>
+                                Es quien tira la primera carta
+                                y además tiene prioridad
+                                en algunas situaciones de empate.
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                "Yo soy la mano."
+                            </div>
+
+
+                            <h3>
+                                Una mano
+                            </h3>
+
+                            <p>
+                                También se puede llamar
+                                <strong>mano</strong>
+                                a una ronda completa del juego:
+                                desde que se reparten las cartas
+                                hasta que termina la jugada.
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                "Terminó la mano."
+                            </div>
+
+                            <p>
+                                Son dos usos diferentes
+                                de la misma palabra.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- PIE -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🦶 ¿Qué significa ser "pie" en el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El <strong>pie</strong>
+                                es el jugador que está al final
+                                del orden de juego.
+                            </p>
+
+                            <p>
+                                El pie
+                                <strong>mezcla y reparte las cartas</strong>,
+                                mientras que el jugador que está
+                                a su izquierda
+                                <strong>corta el mazo</strong>.
+                            </p>
+
+                            <p>
+                                Después de repartir,
+                                el jugador que está a su derecha
+                                pasa a ser
+                                <strong>la mano</strong>
+                                y comienza a jugar.
+                            </p>
+
+
+                            <div class="guia-dato-util">
+
+                                <strong>
+                                    💡 Dato útil
+                                </strong>
+
+                                <p>
+                                    <strong>Mano:</strong>
+                                    es el jugador que juega primero.
+                                </p>
+
+                                <p>
+                                    <strong>Pie:</strong>
+                                    juega último, mezcla y reparte.
+                                    El jugador de su izquierda
+                                    corta el mazo.
+                                </p>
+
+                            </div>
+
+                            <p>
+                                Cuando termina la ronda,
+                                este rol cambia a la persona
+                                que anteriormente fue mano.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- BAZA -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔄 ¿Qué es una "baza" en el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Una <strong>baza</strong>
+                                es cada vuelta en la que todos
+                                los jugadores tiran
+                                <strong>una carta</strong>
+                                sobre la mesa.
+                            </p>
+
+                            <p>
+                                Por ejemplo, en un 2 vs 2:
+                            </p>
+
+                            <ol>
+                                <li>El primer jugador tira una carta.</li>
+                                <li>El segundo tira una carta.</li>
+                                <li>El tercero tira una carta.</li>
+                                <li>El cuarto tira una carta.</li>
+                            </ol>
+
+                            <p>
+                                Cuando los cuatro jugaron,
+                                terminó una baza.
+                            </p>
+
+                            <p>
+                                Después se compara cuál fue
+                                la carta más fuerte y se determina
+                                qué jugador o equipo ganó esa baza.
+                            </p>
+
+                            <p>
+                                Dentro de una ronda puede haber
+                                hasta <strong>3 bazas</strong>.
+                            </p>
+
+
+                            <div class="guia-dato-util">
+
+                                <strong>
+                                    💡 Dato útil
+                                </strong>
+
+                                <p>
+                                    <strong>Ronda o mano:</strong>
+                                    la jugada completa con las 3 cartas.
+                                </p>
+
+                                <p>
+                                    <strong>Baza:</strong>
+                                    cada vuelta en la que todos
+                                    tiran una carta.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 2 · CÓMO SE JUEGA UNA RONDA
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    🎮 Cómo se juega una ronda
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ▶️ ¿Quién comienza la siguiente baza?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La primera baza la comienza siempre
+                                <strong>la mano</strong>.
+                            </p>
+
+                            <p>
+                                Después, si existe un ganador claro,
+                                la siguiente baza la comienza
+                                el jugador que ganó la baza anterior.
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                Si un equipo gana la primera baza,
+                                el jugador de ese equipo que tiró
+                                la carta ganadora comienza
+                                la segunda vuelta.
+                            </div>
+
+                            <p>
+                                Si la baza queda parda,
+                                se aplican las reglas de las pardas.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🏆 ¿Cómo se gana una ronda?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Una ronda puede tener hasta
+                                <strong>3 bazas</strong>.
+                            </p>
+
+                            <p>
+                                Para ganar la ronda,
+                                un equipo debe
+                                <strong>ganar 2 de las 3 bazas</strong>.
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1 gana la primera baza.<br>
+                                Equipo 2 gana la segunda baza.<br>
+                                La tercera define quién gana la ronda.
+
+                            </div>
+
+                            <p>
+                                Si hay pardas,
+                                se aplican reglas especiales.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🤝 ¿Qué significa que una baza quede parda?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Una baza queda
+                                <strong>parda</strong>
+                                cuando los dos equipos juegan
+                                cartas de igual valor y ninguno
+                                logra superar al otro.
+                            </p>
+
+                            <p>
+                                También vas a escuchar expresiones como:
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                "Se empardó."
+                            </div>
+
+                            <div class="guia-ejemplo">
+                                "Quedó parda."
+                            </div>
+
+                            <p>
+                                Una parda es, básicamente,
+                                <strong>un empate de esa baza</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🟰 ¿Qué pasa si la primera baza queda parda?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Si la
+                                <strong>primera baza queda parda</strong>,
+                                la segunda se vuelve decisiva.
+                            </p>
+
+                            <p>
+                                El equipo que gane la
+                                <strong>segunda baza</strong>
+                                gana la ronda.
+                            </p>
+
+                            <p>
+                                Si la segunda también queda parda,
+                                entonces se juega la tercera.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔁 ¿Qué pasa si la segunda o tercera baza queda parda?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Si la
+                                <strong>primera baza tuvo un ganador</strong>
+                                y después la segunda o la tercera
+                                queda parda,
+                                gana la ronda el equipo que había
+                                ganado la primera baza.
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1 gana la primera.<br>
+                                La segunda queda parda.<br>
+                                <strong>Equipo 1 gana la ronda.</strong>
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔂 ¿Qué pasa si la primera y la segunda baza quedan pardas?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Si la
+                                <strong>primera y la segunda baza
+                                quedan pardas</strong>,
+                                se juega todo a la tercera.
+                            </p>
+
+                            <p>
+                                El equipo que gane la
+                                <strong>tercera baza</strong>
+                                gana la ronda.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🖐️ ¿Qué pasa si las tres bazas quedan pardas?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Si las
+                                <strong>tres bazas quedan pardas</strong>,
+                                gana la ronda el
+                                <strong>equipo de la mano</strong>.
+                            </p>
+
+                            <p>
+                                Es decir, gana el equipo
+                                al que pertenece el jugador
+                                que comenzó la ronda.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🧮 ¿Cuándo se anotan los tantos ganados?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Los tantos se anotan cuando ya quedó
+                                definido qué ganó cada equipo
+                                durante esa ronda.
+                            </p>
+
+                            <p>
+                                En una misma ronda puede ocurrir que:
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1 gane el Envido.<br>
+                                Equipo 2 gane el Truco.
+
+                            </div>
+
+                            <p>
+                                En ese caso,
+                                <strong>
+                                    los dos equipos pueden sumar tantos
+                                    durante la misma ronda.
+                                </strong>
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 3 · IMPORTANTE PARA JUGAR
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    ⚠️ Importante para jugar
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🥇 ¿Cuál es el orden de las cartas en el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Para saber qué carta gana una baza,
+                                tenés que conocer la jerarquía
+                                de las cartas.
+                            </p>
+
+                            <p>
+                                De mayor a menor:
+                            </p>
+
+                            <ol class="guia-jerarquia-cartas">
+
+                                <li>
+                                    <strong>1 de Espada</strong>
+                                    — Ancho de Espada
+                                </li>
+
+                                <li>
+                                    <strong>1 de Basto</strong>
+                                    — Ancho de Basto
+                                </li>
+
+                                <li>
+                                    <strong>7 de Espada</strong>
+                                </li>
+
+                                <li>
+                                    <strong>7 de Oro</strong>
+                                </li>
+
+                                <li>
+                                    <strong>3</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>2</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>1 de Copa y 1 de Oro</strong>
+                                </li>
+
+                                <li>
+                                    <strong>12</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>11</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>10</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>7 de Copa y 7 de Basto</strong>
+                                </li>
+
+                                <li>
+                                    <strong>6</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>5</strong>
+                                    de cualquier palo
+                                </li>
+
+                                <li>
+                                    <strong>4</strong>
+                                    de cualquier palo
+                                </li>
+
+                            </ol>
+
+                            <p>
+                                El <strong>1 de Espada</strong>
+                                es la carta más fuerte.
+                            </p>
+
+                            <p>
+                                Los <strong>4</strong>
+                                son las cartas más débiles.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🎴 ¿Importa el palo de una carta?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Depende de qué parte del juego
+                                estés jugando.
+                            </p>
+
+                            <h3>
+                                En el Truco
+                            </h3>
+
+                            <p>
+                                El palo importa especialmente
+                                en las cartas más fuertes:
+                                1 de Espada, 1 de Basto,
+                                7 de Espada y 7 de Oro.
+                            </p>
+
+                            <p>
+                                En el resto de las cartas
+                                que tienen el mismo número,
+                                el palo no cambia su fuerza.
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                Un 3 de Espada y un 3 de Copa
+                                tienen la misma fuerza para el Truco.
+                            </div>
+
+
+                            <h3>
+                                En el Envido y la Flor
+                            </h3>
+
+                            <p>
+                                El palo es fundamental,
+                                porque permite combinar las cartas
+                                para calcular el Envido
+                                o saber si existe Flor.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ⚔️ ¿Qué significa "matar" una carta?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Matar una carta</strong>
+                                significa jugar una carta
+                                que le gana en valor
+                                a la mejor carta rival
+                                que está sobre la mesa.
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                "Te maté el 3 con el Ancho de Espada."
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔀 ¿Las cartas valen igual para el Truco y el Envido?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>No.</strong>
+                            </p>
+
+                            <p>
+                                Para ganar una baza de Truco,
+                                las cartas tienen una
+                                <strong>jerarquía especial</strong>.
+                            </p>
+
+                            <p>
+                                Para calcular el Envido,
+                                se utiliza el
+                                <strong>valor numérico</strong>
+                                de las cartas.
+                            </p>
+
+                            <p>
+                                En el Envido:
+                            </p>
+
+                            <ul>
+                                <li>Las cartas del 1 al 7 valen su número.</li>
+                                <li>El 10 vale 0.</li>
+                                <li>El 11 vale 0.</li>
+                                <li>El 12 vale 0.</li>
+                            </ul>
+
+                            <div class="guia-ejemplo">
+                                El 1 de Espada es la carta más fuerte
+                                para el Truco, pero para calcular
+                                el Envido vale solamente 1.
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🏳️ ¿Qué significa "irse al mazo"?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Irse al mazo</strong>
+                                significa abandonar la ronda
+                                antes de que termine.
+                            </p>
+
+                            <p>
+                                Normalmente se hace cuando un jugador
+                                o equipo considera que seguir jugando
+                                no le conviene.
+                            </p>
+
+                            <p>
+                                Los puntos que recibe el rival
+                                dependen de lo que ya haya ocurrido
+                                o se haya cantado durante la ronda.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🗣️ ¿Es obligatorio cantar algo para jugar?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>No.</strong>
+                            </p>
+
+                            <p>
+                                Se puede jugar toda una ronda
+                                sin cantar Truco, Envido ni Flor.
+                            </p>
+
+                            <p>
+                                Si nadie aumenta el valor del Truco,
+                                ganar la ronda vale
+                                <strong>1 tanto</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🎭 ¿Se puede cantar Truco con cartas malas?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Sí.</strong>
+                            </p>
+
+                            <p>
+                                No necesitás tener buenas cartas
+                                para cantar Truco.
+                            </p>
+
+                            <p>
+                                Parte del juego consiste en intentar
+                                hacerle creer al rival que tenés
+                                una mano mejor de la que realmente tenés.
+                            </p>
+
+                            <p>
+                                Esa parte de engaño y estrategia
+                                es una de las características
+                                más conocidas del Truco.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 4 · CANTOS Y APUESTAS
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    📣 Cantos y apuestas
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <!-- CANTAR -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🗣️ ¿Qué significa "cantar" en el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Cantar</strong>
+                                significa anunciar en voz alta
+                                un desafío o una apuesta del juego.
+                            </p>
+
+                            <p>
+                                Por ejemplo:
+                            </p>
+
+                            <ul>
+                                <li>"Truco"</li>
+                                <li>"Envido"</li>
+                                <li>"Flor"</li>
+                            </ul>
+
+                            <p>
+                                Cuando alguien canta algo,
+                                el rival generalmente tiene que
+                                decidir cómo responder.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- QUIERO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ✅ ¿Qué significa "Quiero"?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Decir
+                                <strong>"Quiero"</strong>
+                                significa aceptar el desafío
+                                o la apuesta que hizo el rival.
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1: "Truco".<br>
+                                Equipo 2: "Quiero".
+
+                            </div>
+
+                            <p>
+                                El Truco fue aceptado
+                                y la ronda continúa jugando
+                                por el valor correspondiente.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- NO QUIERO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ❌ ¿Qué significa "No quiero"?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Decir
+                                <strong>"No quiero"</strong>
+                                significa rechazar el desafío
+                                o la apuesta del rival.
+                            </p>
+
+                            <p>
+                                Cuando se rechaza un canto,
+                                se entregan los tantos
+                                que correspondan según
+                                lo que se había cantado.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- TRUCO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ⚔️ ¿Cómo funciona el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El Truco permite aumentar
+                                la cantidad de tantos
+                                que vale ganar la ronda.
+                            </p>
+
+                            <div class="guia-valores">
+
+                                <p>
+                                    <strong>Sin cantar Truco:</strong>
+                                    1 tanto
+                                </p>
+
+                                <p>
+                                    <strong>Truco:</strong>
+                                    2 tantos
+                                </p>
+
+                                <p>
+                                    <strong>Retruco:</strong>
+                                    3 tantos
+                                </p>
+
+                                <p>
+                                    <strong>Vale Cuatro:</strong>
+                                    4 tantos
+                                </p>
+
+                            </div>
+
+                            <p>
+                                El orden es:
+                            </p>
+
+                            <ol>
+                                <li>Truco</li>
+                                <li>Retruco</li>
+                                <li>Vale Cuatro</li>
+                            </ol>
+
+                            <p>
+                                El Retruco aparece después
+                                de que ya hubo Truco,
+                                y el Vale Cuatro después
+                                de que ya hubo Retruco.
+                            </p>
+
+                            <p>
+                                Después de Vale Cuatro
+                                ya no se puede subir más
+                                el valor del Truco.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- ENVIDO -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🪙 ¿Cómo funciona el Envido?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El Envido es una apuesta
+                                que utiliza el valor de las cartas
+                                para determinar quién tiene
+                                el número más alto.
+                            </p>
+
+                            <p>
+                                Se juega al comienzo de la ronda.
+                            </p>
+
+
+                            <h3>
+                                ¿Cómo calculo mi Envido?
+                            </h3>
+
+                            <p>
+                                Si tenés
+                                <strong>dos cartas del mismo palo</strong>,
+                                sumás el valor de esas dos cartas
+                                y agregás <strong>20</strong>.
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                7 de Oro + 6 de Oro<br>
+                                7 + 6 + 20 = <strong>33 de tanto</strong>
+
+                            </div>
+
+                            <p>
+                                Si no tenés dos cartas del mismo palo,
+                                cuenta la carta numérica
+                                de mayor valor.
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                7 de Oro + 5 de Copa + 12 de Espada<br>
+                                <strong>Tengo 7 de tanto.</strong>
+
+                            </div>
+
+                            <p>
+                                Recordá que para el Envido
+                                el 10, 11 y 12 valen
+                                <strong>0</strong>.
+                            </p>
+
+
+                            <h3>
+                                Tipos de Envido
+                            </h3>
+
+                            <p>
+                                <strong>Envido:</strong>
+                                normalmente vale 2 tantos
+                                si es aceptado.
+                            </p>
+
+                            <p>
+                                <strong>Real Envido:</strong>
+                                normalmente vale 3 tantos
+                                si es aceptado.
+                            </p>
+
+                            <p>
+                                <strong>Falta Envido:</strong>
+                                su valor depende de lo que falta
+                                para llegar al objetivo
+                                de la partida.
+                            </p>
+
+                            <p>
+                                Los cantos de Envido también
+                                pueden combinarse entre sí.
+                                Los valores exactos de cada combinación
+                                están explicados en
+                                <strong>Reglas del juego</strong>.
+                            </p>
+
+
+                            <h3>
+                                ¿Qué pasa si empatan?
+                            </h3>
+
+                            <p>
+                                Si dos jugadores tienen
+                                la misma cantidad de Envido,
+                                tiene prioridad
+                                <strong>la mano</strong>
+                                según el orden de juego.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <!-- FLOR -->
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🌸 ¿Cómo funciona la Flor?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Un jugador tiene
+                                <strong>Flor</strong>
+                                cuando sus
+                                <strong>3 cartas son del mismo palo</strong>.
+                            </p>
+
+                            <p>
+                                Si la mesa decidió jugar con Flor,
+                                el jugador debe anunciarla.
+                            </p>
+
+
+                            <h3>
+                                🌼 ¿Qué significa "Jardinera"?
+                            </h3>
+
+                            <p>
+                                <strong>Jardinera</strong>
+                                es una forma coloquial
+                                de decir que un jugador tiene Flor.
+                            </p>
+
+                            <p>
+                                Pero decir
+                                <strong>"Jardinera"</strong>
+                                no cuenta como cantar la Flor.
+                            </p>
+
+                            <p>
+                                Para realizar el canto,
+                                hay que decir
+                                <strong>"Flor"</strong>.
+                            </p>
+
+
+                            <h3>
+                                ¿Puedo empezar diciendo Contraflor?
+                            </h3>
+
+                            <p>
+                                <strong>No.</strong>
+                            </p>
+
+                            <p>
+                                Para iniciar el canto,
+                                solamente se canta
+                                <strong>Flor</strong>.
+                            </p>
+
+                            <p>
+                                <strong>Contraflor</strong>
+                                y
+                                <strong>Contraflor al resto</strong>
+                                aparecen como respuesta
+                                cuando dos o más jugadores
+                                tienen Flor.
+                            </p>
+
+
+                            <h3>
+                                Valores
+                            </h3>
+
+                            <p>
+                                <strong>Flor:</strong>
+                                3 tantos.
+                            </p>
+
+                            <p>
+                                <strong>Contraflor:</strong>
+                                6 tantos.
+                            </p>
+
+                            <p>
+                                <strong>Contraflor al resto:</strong>
+                                su valor depende de lo que falta
+                                para cerrar la partida.
+                            </p>
+
+
+                            <h3>
+                                Flor y Envido
+                            </h3>
+
+                            <p>
+                                Si se está jugando con Flor
+                                y un jugador tiene Flor,
+                                la Flor tiene prioridad
+                                frente al Envido.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 5 · JUGAR EN EQUIPO
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    🤝 Jugar en equipo
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            👥 ¿Cómo funciona un equipo?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Cuando se juega 2 vs 2,
+                                3 vs 3 o con equipos más grandes,
+                                todos los integrantes del mismo equipo
+                                juegan para conseguir
+                                <strong>un marcador en común</strong>.
+                            </p>
+
+                            <p>
+                                Cada jugador tiene sus propias cartas,
+                                pero los tantos obtenidos
+                                pertenecen a todo el equipo.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🪑 ¿Cómo se ubican los equipos?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Normalmente los jugadores
+                                de ambos equipos se ubican
+                                <strong>intercalados alrededor de la mesa</strong>.
+                            </p>
+
+                            <p>
+                                De esta forma,
+                                después de un jugador suele jugar
+                                un integrante del equipo rival.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            😉 ¿Qué son las señas?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Las <strong>señas</strong>
+                                son gestos que se utilizan
+                                para comunicar ciertas cartas
+                                a tus compañeros
+                                sin decirlas en voz alta.
+                            </p>
+
+                            <p>
+                                Se hacen de forma rápida
+                                y disimulada para intentar
+                                que solamente las vea
+                                tu propio equipo.
+                            </p>
+
+                            <p>
+                                La lista completa de señas
+                                está disponible en
+                                <strong>Reglas del juego</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🖐️ ¿Qué cambia ser mano o pie en equipo?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Aunque se juegue en equipo,
+                                sigue existiendo una sola
+                                <strong>mano</strong>
+                                y un solo
+                                <strong>pie</strong>
+                                según el orden de la mesa.
+                            </p>
+
+                            <p>
+                                La ventaja que tenga uno de esos jugadores
+                                también beneficia a todo su equipo.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🎯 ¿Quién suele dirigir la jugada?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                En muchas partidas en equipo,
+                                la mano suele tener un papel importante
+                                para decidir cómo comenzar la jugada.
+                            </p>
+
+                            <p>
+                                Las señas y las cartas que va mostrando
+                                cada jugador permiten que el equipo
+                                vaya tomando decisiones durante la ronda.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 6 · SITUACIONES
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    🧠 Situaciones que te pueden pasar
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🤐 ¿Qué pasa si nadie canta nada?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La ronda se puede jugar normalmente
+                                aunque nadie cante Truco,
+                                Envido o Flor.
+                            </p>
+
+                            <p>
+                                Si nadie canta Truco,
+                                ganar la ronda vale
+                                <strong>1 tanto</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🪙 ¿Puedo ganar el Envido y perder el Truco?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Sí.</strong>
+                            </p>
+
+                            <p>
+                                El Envido y el Truco
+                                son enfrentamientos diferentes
+                                dentro de la misma ronda.
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1 gana el Envido.<br>
+                                Equipo 2 gana el Truco.
+
+                            </div>
+
+                            <p>
+                                En ese caso,
+                                cada equipo recibe
+                                los tantos que le correspondan.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔢 ¿Pueden sumar puntos los dos equipos en la misma ronda?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Sí.</strong>
+                            </p>
+
+                            <p>
+                                Un equipo puede ganar el Envido
+                                y el otro ganar el Truco,
+                                por ejemplo.
+                            </p>
+
+                            <p>
+                                Por eso una misma ronda puede terminar
+                                con tantos para ambos equipos.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🏳️ ¿Qué pasa si me voy al mazo?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Irse al mazo significa
+                                abandonar la ronda.
+                            </p>
+
+                            <p>
+                                El rival recibe los tantos
+                                que correspondan según
+                                cómo venía desarrollándose
+                                la jugada.
+                            </p>
+
+                            <p>
+                                Los valores exactos están explicados
+                                en <strong>Reglas del juego</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🏁 ¿Una sola jugada puede terminar la partida?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                <strong>Sí.</strong>
+                            </p>
+
+                            <p>
+                                Cantos como
+                                <strong>Falta Envido</strong>
+                                o
+                                <strong>Contraflor al resto</strong>
+                                pueden poner en juego
+                                una cantidad suficiente de tantos
+                                como para definir la partida.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🌸 ¿Qué pasa si nadie tiene Flor?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Si ningún jugador tiene Flor,
+                                simplemente no se juega
+                                esa parte de la ronda.
+                            </p>
+
+                            <p>
+                                La partida continúa normalmente
+                                con el Truco y,
+                                cuando corresponde,
+                                el Envido.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 7 · DICCIONARIO
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    📖 Diccionario del Truco
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+                        <summary>🔢 Tanto</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Puede significar un punto de la partida
+                                o el número de Envido de un jugador.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🖐️ Mano</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Puede referirse al jugador que empieza
+                                o a una ronda completa del juego.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🦶 Pie</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Jugador que juega último,
+                                mezcla y reparte las cartas.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🎮 Ronda</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Jugada completa desde el reparto
+                                hasta que se define el resultado.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🔄 Baza</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Una vuelta en la que todos
+                                los jugadores tiran una carta.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🤝 Parda / Empardar</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Empate entre las mejores cartas
+                                jugadas durante una baza.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🗣️ Cantar</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Anunciar en voz alta
+                                un desafío o una apuesta del juego.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>✅ Quiero</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Aceptar un canto realizado por el rival.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>❌ No quiero</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Rechazar un canto realizado por el rival.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>⚔️ Matar</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Jugar una carta que supera
+                                a la mejor carta rival
+                                que está sobre la mesa.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🏳️ Irse al mazo</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Abandonar una ronda antes
+                                de que termine.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>1️⃣ Ancho</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Forma habitual de llamar
+                                a una carta número 1.
+                            </p>
+
+                            <p>
+                                Por ejemplo:
+                                <strong>Ancho de Espada</strong>.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>⚔️ Truco</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Canto que aumenta el valor
+                                de ganar la ronda a 2 tantos.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>⚔️ Retruco</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Aumenta el valor del Truco
+                                a 3 tantos.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>4️⃣ Vale Cuatro</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Último aumento posible del Truco.
+                                La ronda pasa a valer 4 tantos.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🪙 Envido</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Apuesta basada en el valor
+                                que forman las cartas del jugador.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🪙 Real Envido</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Una apuesta de Envido
+                                de mayor valor.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🔥 Falta Envido</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Apuesta cuyo valor depende
+                                de los tantos que faltan
+                                para alcanzar el objetivo.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🌸 Flor</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Se produce cuando un jugador
+                                tiene las tres cartas
+                                del mismo palo.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🌼 Jardinera</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Forma coloquial de decir
+                                que un jugador tiene Flor.
+                            </p>
+
+                            <p>
+                                Decir "Jardinera"
+                                no cuenta como cantar Flor.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🌺 Contraflor</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Respuesta que puede aparecer
+                                cuando dos o más jugadores
+                                tienen Flor.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>🔥 Al resto</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Expresión utilizada cuando
+                                se ponen en juego tantos
+                                relacionados con lo que falta
+                                para cerrar la partida.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>😬 Las malas</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Los primeros 15 puntos
+                                de una partida a 30.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>😎 Las buenas</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Los últimos 15 puntos
+                                de una partida a 30.
+                            </p>
+                        </div>
+                    </details>
+
+
+                    <details class="guia-item">
+                        <summary>😉 Seña</summary>
+                        <div class="guia-item-contenido">
+                            <p>
+                                Gesto utilizado para comunicar
+                                determinadas cartas
+                                a los compañeros de equipo.
+                            </p>
+                        </div>
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 8 · EJEMPLOS
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    🎯 Ejemplos para entenderlo
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🎴 Una ronda sin cantar nada
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Ningún jugador canta Truco,
+                                Envido ni Flor.
+                            </p>
+
+                            <p>
+                                Los jugadores disputan normalmente
+                                las bazas.
+                            </p>
+
+                            <p>
+                                El equipo que gana la ronda
+                                suma <strong>1 tanto</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ⚔️ Ejemplo de Truco aceptado
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1: "Truco".<br>
+                                Equipo 2: "Quiero".
+
+                            </div>
+
+                            <p>
+                                Se continúa jugando.
+                            </p>
+
+                            <p>
+                                El equipo que gane la ronda
+                                obtiene <strong>2 tantos</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ❌ Ejemplo de Truco rechazado
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1: "Truco".<br>
+                                Equipo 2: "No quiero".
+
+                            </div>
+
+                            <p>
+                                La disputa del Truco termina
+                                en ese momento y se anotan
+                                los tantos que correspondan
+                                por el rechazo.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🪙 Ejemplo para calcular Envido
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Tenés:
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                7 de Oro<br>
+                                6 de Oro<br>
+                                12 de Copa
+
+                            </div>
+
+                            <p>
+                                Como el 7 y el 6 son del mismo palo:
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                7 + 6 + 20 =
+                                <strong>33 de tanto</strong>
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🤝 Ejemplo de parda
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La mejor carta de un equipo
+                                es un 3.
+                            </p>
+
+                            <p>
+                                La mejor carta del otro equipo
+                                también es un 3.
+                            </p>
+
+                            <p>
+                                Como tienen el mismo valor,
+                                la baza queda
+                                <strong>parda</strong>.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔢 Ejemplo donde suman los dos equipos
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <div class="guia-ejemplo">
+
+                                Equipo 1 gana un Envido aceptado:
+                                <strong>+2</strong>.<br><br>
+
+                                Equipo 2 gana un Truco aceptado:
+                                <strong>+2</strong>.
+
+                            </div>
+
+                            <p>
+                                En la misma ronda,
+                                ambos equipos terminaron
+                                sumando tantos.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🌸 Ejemplo de Flor
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Un jugador recibe:
+                            </p>
+
+                            <div class="guia-ejemplo">
+
+                                7 de Oro<br>
+                                5 de Oro<br>
+                                12 de Oro
+
+                            </div>
+
+                            <p>
+                                Como las tres cartas
+                                son del mismo palo,
+                                tiene <strong>Flor</strong>.
+                            </p>
+
+                            <p>
+                                Para cantarla debe decir:
+                            </p>
+
+                            <div class="guia-ejemplo">
+                                "Flor"
+                            </div>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+
+            <!-- =================================================
+                 9 · USAR EL ANOTADOR
+            ================================================== -->
+
+            <details class="guia-carpeta">
+
+                <summary>
+                    📱 Usar el anotador
+                </summary>
+
+                <div class="guia-carpeta-contenido">
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🃏 ¿Cómo empiezo una partida?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Desde el menú principal,
+                                elegí cuántos jugadores participan,
+                                si la partida es a
+                                <strong>15 o 30 puntos</strong>
+                                y si querés utilizar
+                                el modo de apuestas con fichas.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            ➕ ¿Para qué sirven +1 y -1?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El botón
+                                <strong>+1</strong>
+                                suma un punto manualmente.
+                            </p>
+
+                            <p>
+                                El botón
+                                <strong>-1</strong>
+                                resta un punto.
+                            </p>
+
+                            <p>
+                                Son útiles para realizar
+                                correcciones o anotar situaciones
+                                manualmente.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            📣 ¿Para qué sirven Truco, Envido y Flor?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Esos botones permiten registrar
+                                directamente los tantos
+                                obtenidos por esos cantos.
+                            </p>
+
+                            <p>
+                                Cuando los utilizás,
+                                la jugada también queda registrada
+                                en el historial del equipo.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            📜 ¿Qué muestra el historial?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                El historial permite ver
+                                qué jugadas fueron anotadas
+                                para cada equipo.
+                            </p>
+
+                            <p>
+                                Cada equipo tiene
+                                su propio historial independiente.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🪙 ¿Qué son las fichas?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Las fichas forman parte
+                                del modo opcional de apuestas.
+                            </p>
+
+                            <p>
+                                Permiten que ambos equipos
+                                elijan una cantidad de fichas
+                                antes de comenzar la partida.
+                            </p>
+
+                            <p>
+                                No son necesarias
+                                para jugar una partida normal.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            💾 ¿Qué pasa si cierro o recargo la página?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La partida actual queda guardada
+                                en este navegador.
+                            </p>
+
+                            <p>
+                                Si cerrás la página,
+                                la recargás o volvés más tarde,
+                                el anotador puede recuperar
+                                la partida que estabas jugando.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            🔄 ¿Cómo empiezo una partida nueva?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                Desde el anotador podés utilizar
+                                el botón
+                                <strong>Nueva partida</strong>.
+                            </p>
+
+                            <p>
+                                Eso finaliza la partida actual
+                                y te devuelve a la configuración
+                                para comenzar otra.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="guia-item">
+
+                        <summary>
+                            📖 ¿Dónde veo las reglas completas?
+                        </summary>
+
+                        <div class="guia-item-contenido">
+
+                            <p>
+                                La sección
+                                <strong>Reglas del juego</strong>
+                                contiene información más específica
+                                sobre cartas, Envido, Flor,
+                                señas, Truco y otras situaciones.
+                            </p>
+
+                            <p>
+                                Esta guía está pensada
+                                principalmente para aprender,
+                                mientras que las Reglas sirven
+                                como consulta más detallada.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </details>
+
+
+        </div>
+
+
+        <!-- =====================================================
+             BOTONES
+        ====================================================== -->
+
+        <div class="botones guia-botones">
+
+            <button
+                id="irReglasDesdeGuia"
+                type="button"
+                class="boton-secundario"
+            >
+                📖 Ver reglas completas
+            </button>
+
+            <button
+                id="volverGuiaMenu"
+                type="button"
+                class="boton-principal"
+            >
+                ir al menú
+            </button>
+
+        </div>
+
+
+        <div class="copyright">
+            © 2026 Félix · todos los derechos reservados
+        </div>
+
+    </section>
+
+</main>
 
     <!-- =====================================================
          PANEL DE ADMINISTRACIÓN
@@ -1541,7 +4383,7 @@
                 id="volverAdmin"
                 class="boton-principal"
             >
-                ← Volver al anotador
+                Volver al anotador
             </button>
 
         </section>

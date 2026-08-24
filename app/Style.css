@@ -2214,3 +2214,130 @@ button {
     }
 
 }
+
+/* =====================================================
+   MENÚ TRUCO / ENVIDO / FLOR MÁS COMPACTO EN CELULAR
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .menus {
+        gap: 5px;
+    }
+
+    .boton-menu {
+        padding: 7px 4px;
+
+        min-height: 38px;
+
+        font-size: 0.82rem;
+
+        border-radius: 7px;
+    }
+
+    .desplegable {
+        margin-top: 3px;
+    }
+
+    .desplegable button {
+        padding: 7px 5px;
+
+        font-size: 0.78rem;
+
+        line-height: 1.25;
+    }
+
+    .controles {
+        margin-bottom: 10px;
+    }
+}
+
+/* =====================================================
+   INICIO · PRIMERA IMPRESIÓN
+===================================================== */
+
+.subtitulo-inicio {
+
+    max-width: 430px;
+
+    margin:
+        0 auto 12px;
+
+    line-height: 1.45;
+}
+
+
+.ventajas-inicio {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap:
+        6px 14px;
+
+    margin-bottom: 26px;
+
+    color: var(--verde);
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+}
+
+
+.ventajas-inicio span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+
+.boton-comenzar {
+
+    margin-top: 4px;
+
+    font-size: 1.05rem;
+}
+
+
+@media (max-width: 480px) {
+
+    .subtitulo-inicio {
+
+        max-width: 290px;
+
+        font-size: 0.88rem;
+
+        margin-bottom: 10px;
+    }
+
+
+    .ventajas-inicio {
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 4px;
+
+        margin-bottom: 20px;
+
+        font-size: 0.76rem;
+    }
+
+
+    .boton-comenzar {
+
+        padding:
+            13px 10px;
+
+        font-size: 0.95rem;
+    }
+
+}

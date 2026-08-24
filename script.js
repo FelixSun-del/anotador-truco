@@ -103,12 +103,174 @@ const estado = {
     partidasJugadas: 0
 };
 
+    /* =====================================================
+   GUARDAR PARTIDA ACTUAL
+===================================================== */
+
+const CLAVE_PARTIDA =
+    "anotadorTruco_partidaActual";
+
+let partidaActiva = false;
+
+
+function guardarPartidaActual() {
+
+    if (!partidaActiva) {
+        return;
+    }
+
+
+    const datos = {
+
+        jugadores:
+            estado.jugadores,
+
+        objetivo:
+            estado.objetivo,
+
+        apuestas:
+            estado.apuestas,
+
+        puntos1:
+            estado.puntos1,
+
+        puntos2:
+            estado.puntos2,
+
+        fichas1:
+            estado.fichas1,
+
+        fichas2:
+            estado.fichas2,
+
+        apuesta1:
+            estado.apuesta1,
+
+        apuesta2:
+            estado.apuesta2,
+
+        historial1:
+            estado.historial1,
+
+        historial2:
+            estado.historial2,
+
+        terminada:
+            estado.terminada,
+
+        partidasJugadas:
+            estado.partidasJugadas
+    };
+
+
+    localStorage.setItem(
+        CLAVE_PARTIDA,
+        JSON.stringify(datos)
+    );
+}
+
+
+function cargarPartidaGuardada() {
+
+    const guardado =
+        localStorage.getItem(
+            CLAVE_PARTIDA
+        );
+
+
+    if (!guardado) {
+        return false;
+    }
+
+
+    try {
+
+        const datos =
+            JSON.parse(
+                guardado
+            );
+
+
+        estado.jugadores =
+            datos.jugadores ?? 1;
+
+        estado.objetivo =
+            datos.objetivo ?? 15;
+
+        estado.apuestas =
+            datos.apuestas ?? true;
+
+        estado.puntos1 =
+            datos.puntos1 ?? 0;
+
+        estado.puntos2 =
+            datos.puntos2 ?? 0;
+
+        estado.fichas1 =
+            datos.fichas1 ?? 100;
+
+        estado.fichas2 =
+            datos.fichas2 ?? 100;
+
+        estado.apuesta1 =
+            datos.apuesta1 ?? 0;
+
+        estado.apuesta2 =
+            datos.apuesta2 ?? 0;
+
+        estado.historial1 =
+            datos.historial1 ?? [];
+
+        estado.historial2 =
+            datos.historial2 ?? [];
+
+        estado.terminada =
+            datos.terminada ?? false;
+
+        estado.partidasJugadas =
+            datos.partidasJugadas ?? 0;
+
+
+        partidaActiva = true;
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando la partida:",
+            error
+        );
+
+        localStorage.removeItem(
+            CLAVE_PARTIDA
+        );
+
+        return false;
+    }
+}
+
+
+function borrarPartidaGuardada() {
+
+    partidaActiva = false;
+
+    localStorage.removeItem(
+        CLAVE_PARTIDA
+    );
+}
 
 /* =====================================================
    PANTALLAS
 ===================================================== */
 
 const pantallas = {
+
+    0:
+        document.getElementById(
+            "pantalla0"
+        ),
 
     1:
         document.getElementById(
@@ -135,11 +297,15 @@ const pantallas = {
             "pantalla5"
         ),
 
+    6:
+        document.getElementById(
+            "pantalla6"
+        ),
+
     ganador:
         document.getElementById(
             "pantallaGanador"
         )
-
 
 };
 
@@ -891,6 +1057,7 @@ function iniciarPartida() {
 
     estado.partidasJugadas++;
 
+    partidaActiva = true;
 
     actualizarTodo();
 
@@ -1096,6 +1263,8 @@ if (puntos2) {
     actualizarFichas();
 
     actualizarHistorial();
+
+    guardarPartidaActual();
 }
 
 
@@ -1755,6 +1924,7 @@ function nuevaPartida() {
             "Sin apuesta";
     }
 
+    borrarPartidaGuardada();
 
     actualizarTodo();
 
@@ -1795,23 +1965,253 @@ if (nuevaPartidaGanador) {
     );
 }
 
-    /* =====================================================
-   ABRIR / CERRAR REGLAS
+/* =====================================================
+   PRESENTACIÓN Y GUÍA PARA PRINCIPIANTES
 ===================================================== */
 
-const verReglas =
+const empezarApp =
     document.getElementById(
-        "verReglas"
+        "empezarApp"
     );
 
+if (empezarApp) {
 
-if (verReglas) {
+    empezarApp.addEventListener(
+        "click",
+        () => {
 
-    verReglas.addEventListener(
+            mostrarPantalla(1);
+
+        }
+    );
+
+}
+
+
+const verGuiaInicio =
+    document.getElementById(
+        "verGuiaInicio"
+    );
+
+if (verGuiaInicio) {
+
+    verGuiaInicio.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(6);
+
+        }
+    );
+
+}
+
+
+const irGuiaDesdeReglas =
+    document.getElementById(
+        "irGuiaDesdeReglas"
+    );
+
+if (irGuiaDesdeReglas) {
+
+    irGuiaDesdeReglas.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(6);
+
+        }
+    );
+
+}
+
+
+const irReglasDesdeGuia =
+    document.getElementById(
+        "irReglasDesdeGuia"
+    );
+
+if (irReglasDesdeGuia) {
+
+    irReglasDesdeGuia.addEventListener(
         "click",
         () => {
 
             mostrarPantalla(5);
+
+        }
+    );
+
+}
+
+
+const volverGuiaMenu =
+    document.getElementById(
+        "volverGuiaMenu"
+    );
+
+if (volverGuiaMenu) {
+
+    volverGuiaMenu.addEventListener(
+        "click",
+        () => {
+
+           mostrarPantalla(1);
+
+        }
+    );
+
+}
+
+/* =====================================================
+   ACORDEÓN · GUÍA PARA PRINCIPIANTES
+===================================================== */
+
+const carpetasGuia =
+    document.querySelectorAll(
+        ".guia-carpeta"
+    );
+
+
+carpetasGuia.forEach(
+    (carpeta) => {
+
+        carpeta.addEventListener(
+            "toggle",
+            () => {
+
+                if (!carpeta.open) {
+
+                    carpeta
+                        .querySelectorAll(
+                            ".guia-item[open]"
+                        )
+                        .forEach(
+                            (item) => {
+
+                                item.removeAttribute(
+                                    "open"
+                                );
+
+                            }
+                        );
+
+                    return;
+
+                }
+
+
+                carpetasGuia.forEach(
+                    (otraCarpeta) => {
+
+                        if (
+                            otraCarpeta !== carpeta
+                        ) {
+
+                            otraCarpeta.removeAttribute(
+                                "open"
+                            );
+
+
+                            otraCarpeta
+                                .querySelectorAll(
+                                    ".guia-item[open]"
+                                )
+                                .forEach(
+                                    (item) => {
+
+                                        item.removeAttribute(
+                                            "open"
+                                        );
+
+                                    }
+                                );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+
+
+const itemsGuia =
+    document.querySelectorAll(
+        ".guia-item"
+    );
+
+
+itemsGuia.forEach(
+    (item) => {
+
+        item.addEventListener(
+            "toggle",
+            () => {
+
+                if (!item.open) {
+                    return;
+                }
+
+
+                const carpetaActual =
+                    item.closest(
+                        ".guia-carpeta"
+                    );
+
+
+                if (!carpetaActual) {
+                    return;
+                }
+
+
+                carpetaActual
+                    .querySelectorAll(
+                        ".guia-item[open]"
+                    )
+                    .forEach(
+                        (otroItem) => {
+
+                            if (
+                                otroItem !== item
+                            ) {
+
+                                otroItem.removeAttribute(
+                                    "open"
+                                );
+
+                            }
+
+                        }
+                    );
+
+            }
+        );
+
+    }
+);
+
+/* =====================================================
+   ABRIR / CERRAR REGLAS
+===================================================== */
+
+const verGuiaMenu =
+    document.getElementById(
+        "verGuiaMenu"
+    );
+
+
+if (verGuiaMenu) {
+
+    verGuiaMenu.addEventListener(
+        "click",
+        () => {
+
+            mostrarPantalla(6);
 
         }
     );
@@ -1885,7 +2285,18 @@ if (apuestasInicial) {
 }
 
 
-actualizarTodo();
+if (
+    cargarPartidaGuardada()
+) {
+
+    actualizarTodo();
+
+    mostrarPantalla(4);
+
+} else {
+
+    actualizarTodo();
+}
 
 
 /* =====================================================
