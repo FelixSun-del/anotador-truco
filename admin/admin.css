@@ -1224,3 +1224,115 @@ footer {
     }
 
 }
+
+/* =====================================================
+   ACCIONES ADMIN
+===================================================== */
+
+.acciones-admin {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+.btn-cerrar-sesion {
+
+    padding:
+        9px 13px;
+
+    border:
+        1px solid #c9b99d;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .55
+        );
+
+    color:
+        #6d5b48;
+
+    font-family: inherit;
+
+    font-size:
+        .85rem;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+    transition:
+        .15s;
+
+}
+
+
+.btn-cerrar-sesion:hover {
+
+    color:
+        #8a3434;
+
+    border-color:
+        #8a3434;
+
+    background:
+        rgba(
+            138,
+            52,
+            52,
+            .08
+        );
+
+}
+
+
+.btn-cerrar-sesion:active {
+
+    transform:
+        scale(.96);
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 750px) {
+
+    .acciones-admin {
+
+        width: 100%;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .btn-cerrar-sesion {
+
+        width: 100%;
+
+        max-width:
+            260px;
+
+    }
+
+}

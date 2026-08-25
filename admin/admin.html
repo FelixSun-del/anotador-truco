@@ -142,15 +142,28 @@
 
         </div>
 
-        <div class="estado-conexion">
+        <div class="acciones-admin">
 
-            <span class="punto"></span>
+    <div class="estado-conexion">
 
-            <span id="rangoUsuario">
-                Panel administrativo
-            </span>
+        <span class="punto"></span>
 
-        </div>
+        <span id="rangoUsuario">
+            Panel administrativo
+        </span>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="btnCerrarSesion"
+        class="btn-cerrar-sesion"
+    >
+        🚪 Cerrar sesión
+    </button>
+
+</div>
 
     </header>
 
@@ -468,6 +481,11 @@
         document.getElementById("mensajeLogin");
 
 
+    const btnCerrarSesion =
+        document.getElementById(
+            "btnCerrarSesion"
+        );
+
         const guardarSesion =
     document.getElementById(
         "guardarSesion"
@@ -682,6 +700,89 @@ botonesDuracion.forEach(
         }
     );
 
+    // =================================================
+// CERRAR SESIÓN
+// =================================================
+
+btnCerrarSesion.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            await signOut(
+                auth
+            );
+
+
+            /*
+             * Borramos datos de sesión.
+             */
+
+            localStorage.removeItem(
+                "adminSesionExpira"
+            );
+
+            localStorage.removeItem(
+                "adminSesionDias"
+            );
+
+
+            /*
+             * También eliminamos las estadísticas
+             * guardadas offline.
+             *
+             * Esto evita que queden visibles
+             * en una PC compartida.
+             */
+
+            localStorage.removeItem(
+                "adminDatos_7"
+            );
+
+            localStorage.removeItem(
+                "adminDatos_30"
+            );
+
+
+            email.value =
+                "";
+
+            password.value =
+                "";
+
+
+            guardarSesion.checked =
+                false;
+
+            duracionSesion.hidden =
+                true;
+
+
+            mensajeLogin.textContent =
+                "Sesión cerrada correctamente.";
+
+
+            console.log(
+                "🚪 Sesión administrativa cerrada."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Error cerrando sesión:",
+                error
+            );
+
+
+            mensajeLogin.textContent =
+                "No se pudo cerrar la sesión.";
+
+        }
+
+    }
+);
 
     // =================================================
     // COMPROBAR AUTENTICACIÓN
