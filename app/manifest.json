@@ -1,7 +1,7 @@
 {
     "name": "Anotador de Truco",
     "short_name": "Anotador de Truco",
-    "description": "Anotador de Truco offline",
+    "description": "Anotador de Truco para llevar los tantos de tus partidas de forma rápida y simple.",
     "lang": "es-AR",
 
     "id": "./",
@@ -11,23 +11,23 @@
     "display": "standalone",
     "orientation": "portrait",
 
-    "theme_color": "#2f5d50",
+    "theme_color": "#8a3434",
     "background_color": "#f4ead3",
 
     "icons": [
-    {
-        "src": "./icons/icon-192.png",
-        "sizes": "192x192",
-        "type": "image/png",
-        "purpose": "any maskable"
-    },
-    {
-        "src": "./icons/icon-512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "any maskable"
-    }
-],
+        {
+            "src": "./icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "./icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
 
     "categories": [
         "games",
