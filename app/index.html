@@ -78,6 +78,11 @@
 >
 
 <meta
+    property="og:locale"
+    content="es_AR"
+>
+
+<meta
     property="og:site_name"
     content="Anotador de Truco"
 >
@@ -89,7 +94,7 @@
 
 <meta
     property="og:description"
-    content="Llevá los puntos de tus partidas de Truco desde el celular o PC. Instalá la app y seguí jugando incluso sin conexión."
+    content="Anotá tus partidas de Truco. Instalá la app en tu celular o PC y usala incluso sin conexión."
 >
 
 <meta
@@ -129,7 +134,7 @@
 
 <meta
     name="twitter:card"
-    content="summary_large_image"
+    content="summary"
 >
 
 <meta
@@ -139,7 +144,7 @@
 
 <meta
     name="twitter:description"
-    content="Llevá los tantos de tus partidas de Truco desde el celular o PC. Instalable y funciona sin conexión."
+    content="Anotá tus partidas de Truco. Instalá la app en tu celular o PC y usala incluso sin conexión."
 >
 
 <meta
@@ -165,7 +170,13 @@
     >
 
 
-    <!-- ESTILOS -->
+    <link
+    rel="apple-touch-icon"
+    href="./icons/icon-192.png"
+>
+
+
+<!-- ESTILOS -->
 
     <link
         rel="stylesheet"
@@ -180,7 +191,7 @@
 
 <body>
 
-    <!-- =====================================================
+<!-- =====================================================
      PANTALLA 0 · PRESENTACIÓN
 ====================================================== -->
 
@@ -263,6 +274,12 @@
 
         </div>
 
+        <button
+            type="button"
+            class="boton-secundario abrir-compartir-app"
+        >
+            📤 Compartir app
+        </button>
 
         <div class="copyright">
             © 2026 Félix · todos los derechos reservados
@@ -4510,7 +4527,117 @@
 
     </main>
 
-    <!-- =====================================================
+<!-- =====================================================
+     COMPARTIR APP
+====================================================== -->
+
+<div
+    id="modalCompartirApp"
+    class="modal-compartir-app oculto"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloCompartirApp"
+    aria-describedby="textoCompartirApp"
+>
+
+    <div class="compartir-app-panel">
+
+        <button
+            id="cerrarCompartirApp"
+            type="button"
+            class="cerrar-compartir-app"
+            aria-label="Cerrar ventana de compartir"
+        >
+            ×
+        </button>
+
+
+        <img
+            src="./icons/icon-192.png"
+            alt=""
+            class="compartir-app-icono"
+            width="192"
+            height="192"
+        >
+
+
+        <h2 id="tituloCompartirApp">
+            Compartir Anotador de Truco
+        </h2>
+
+        <p
+            id="textoCompartirApp"
+            class="compartir-app-texto"
+        >
+            Compartí la app con tus amigos
+            para que puedan instalarla y usarla
+            incluso sin conexión.
+        </p>
+
+
+        <div class="compartir-app-opciones">
+
+            <button
+                id="compartirAppNativo"
+                type="button"
+                class="boton-principal"
+            >
+                📤 Compartir
+            </button>
+
+
+            <button
+                id="copiarEnlaceApp"
+                type="button"
+                class="boton-secundario"
+            >
+                🔗 Copiar enlace
+            </button>
+
+
+            <button
+                id="mostrarQrApp"
+                type="button"
+                class="boton-secundario"
+                aria-expanded="false"
+                aria-controls="contenedorQrApp"
+            >
+                🔳 Mostrar QR
+            </button>
+
+        </div>
+
+
+        <div
+            id="contenedorQrApp"
+            class="contenedor-qr-app oculto"
+        >
+
+            <img
+                src="./icons/qr-app.png"
+                alt="Código QR para abrir Anotador de Truco"
+                width="588"
+                height="588"
+            >
+
+            <p>
+                Escaneá el QR para abrir la app
+            </p>
+
+        </div>
+
+
+        <p
+            id="mensajeCompartirApp"
+            class="mensaje-compartir-app"
+            aria-live="polite"
+        ></p>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
      INVITACIÓN PARA INSTALAR LA APP
 ====================================================== -->
 

@@ -59,6 +59,7 @@ try {
         console.warn(
             "Firebase todavía no está configurado."
         );
+
     }
 
 } catch (error) {
@@ -67,6 +68,7 @@ try {
         "Error iniciando Firebase:",
         error
     );
+
 }
 
 
@@ -101,22 +103,28 @@ const estado = {
     terminada: false,
 
     partidasJugadas: 0
+
 };
 
-    /* =====================================================
+
+/* =====================================================
    GUARDAR PARTIDA ACTUAL
 ===================================================== */
 
 const CLAVE_PARTIDA =
     "anotadorTruco_partidaActual";
 
-let partidaActiva = false;
+
+let partidaActiva =
+    false;
 
 
 function guardarPartidaActual() {
 
     if (!partidaActiva) {
+
         return;
+
     }
 
 
@@ -160,13 +168,17 @@ function guardarPartidaActual() {
 
         partidasJugadas:
             estado.partidasJugadas
+
     };
 
 
     localStorage.setItem(
         CLAVE_PARTIDA,
-        JSON.stringify(datos)
+        JSON.stringify(
+            datos
+        )
     );
+
 }
 
 
@@ -179,7 +191,9 @@ function cargarPartidaGuardada() {
 
 
     if (!guardado) {
+
         return false;
+
     }
 
 
@@ -231,7 +245,9 @@ function cargarPartidaGuardada() {
             datos.partidasJugadas ?? 0;
 
 
-        partidaActiva = true;
+        partidaActiva =
+            true;
+
 
         return true;
 
@@ -243,23 +259,31 @@ function cargarPartidaGuardada() {
             error
         );
 
+
         localStorage.removeItem(
             CLAVE_PARTIDA
         );
 
+
         return false;
+
     }
+
 }
 
 
 function borrarPartidaGuardada() {
 
-    partidaActiva = false;
+    partidaActiva =
+        false;
+
 
     localStorage.removeItem(
         CLAVE_PARTIDA
     );
+
 }
+
 
 /* =====================================================
    PANTALLAS
@@ -310,66 +334,88 @@ const pantallas = {
 };
 
 
-function mostrarPantalla(numero) {
+function mostrarPantalla(
+    numero
+) {
 
-    Object.values(pantallas)
-        .forEach(pantalla => {
+    Object
+        .values(
+            pantallas
+        )
+        .forEach(
+            pantalla => {
 
-            if (pantalla) {
+                if (pantalla) {
 
-                pantalla.classList.add(
-                    "oculto"
-                );
+                    pantalla
+                        .classList
+                        .add(
+                            "oculto"
+                        );
+
+                }
+
             }
-        });
+        );
 
 
-    if (pantallas[numero]) {
+    if (
+        pantallas[numero]
+    ) {
 
         pantallas[numero]
             .classList
-            .remove("oculto");
+            .remove(
+                "oculto"
+            );
+
     }
+
 }
 
 
-// =====================================================
-// BOTÓN ADMIN
-// =====================================================
+/* =====================================================
+   BOTÓN ADMIN
+===================================================== */
 
 const botonAdmin =
-    document.getElementById("botonAdmin");
+    document.getElementById(
+        "botonAdmin"
+    );
+
 
 const API_URL =
     "https://anotador-truco-backend.onrender.com";
 
 
-// =====================================================
-// COMPROBAR ADMINISTRADOR
-// =====================================================
+/* =====================================================
+   COMPROBAR ADMINISTRADOR
+===================================================== */
 
-async function comprobarAdministrador(user) {
+async function comprobarAdministrador(
+    user
+) {
 
     if (!botonAdmin) {
+
         return;
+
     }
 
 
-    // Siempre empieza oculto
-    botonAdmin.classList.add(
-        "oculto"
-    );
+    botonAdmin
+        .classList
+        .add(
+            "oculto"
+        );
 
 
-    // No hay usuario autenticado
     if (!user) {
+
         return;
+
     }
 
-
-    // =================================================
-    // COMPROBAR VENCIMIENTO 7 / 30 DÍAS
-    // =================================================
 
     const expiracionGuardada =
         localStorage.getItem(
@@ -377,15 +423,22 @@ async function comprobarAdministrador(user) {
         );
 
 
-    if (expiracionGuardada) {
+    if (
+        expiracionGuardada
+    ) {
 
         const expiracion =
-            Number(expiracionGuardada);
+            Number(
+                expiracionGuardada
+            );
 
 
         if (
-            Number.isFinite(expiracion) &&
-            Date.now() >= expiracion
+            Number.isFinite(
+                expiracion
+            ) &&
+            Date.now() >=
+            expiracion
         ) {
 
             localStorage.removeItem(
@@ -409,12 +462,11 @@ async function comprobarAdministrador(user) {
 
     try {
 
-        // TOKEN FIREBASE
         const token =
-            await user.getIdToken();
+            await user
+                .getIdToken();
 
 
-        // PREGUNTAR AL BACKEND
         const respuesta =
             await fetch(
                 `${API_URL}/api/admin/check`,
@@ -431,12 +483,14 @@ async function comprobarAdministrador(user) {
             );
 
 
-        // NO AUTORIZADO
-        if (!respuesta.ok) {
+        if (
+            !respuesta.ok
+        ) {
 
             console.warn(
                 "🔒 Usuario sin permisos de administrador."
             );
+
 
             return;
 
@@ -447,12 +501,16 @@ async function comprobarAdministrador(user) {
             await respuesta.json();
 
 
-        // AUTORIZADO
-        if (datos.autorizado === true) {
+        if (
+            datos.autorizado ===
+            true
+        ) {
 
-            botonAdmin.classList.remove(
-                "oculto"
-            );
+            botonAdmin
+                .classList
+                .remove(
+                    "oculto"
+                );
 
 
             console.log(
@@ -471,20 +529,24 @@ async function comprobarAdministrador(user) {
         );
 
 
-        botonAdmin.classList.add(
-            "oculto"
-        );
+        botonAdmin
+            .classList
+            .add(
+                "oculto"
+            );
 
     }
 
 }
 
 
-// =====================================================
-// ESTADO DE FIREBASE
-// =====================================================
+/* =====================================================
+   ESTADO DE FIREBASE
+===================================================== */
 
-if (firebaseDisponible) {
+if (
+    firebaseDisponible
+) {
 
     auth.onAuthStateChanged(
         user => {
@@ -499,18 +561,20 @@ if (firebaseDisponible) {
 }
 
 
-// =====================================================
-// ABRIR PANEL ADMIN
-// =====================================================
+/* =====================================================
+   ABRIR PANEL ADMIN
+===================================================== */
 
-if (botonAdmin) {
+if (
+    botonAdmin
+) {
 
     botonAdmin.addEventListener(
         "click",
         () => {
 
             window.location.href =
-              "../admin/admin.html";
+                "../admin/admin.html";
 
         }
     );
@@ -523,37 +587,50 @@ if (botonAdmin) {
 ===================================================== */
 
 document
-    .querySelectorAll(".jugadores")
-    .forEach(boton => {
+    .querySelectorAll(
+        ".jugadores"
+    )
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                document
-                    .querySelectorAll(
-                        ".jugadores"
-                    )
-                    .forEach(b => {
+                    document
+                        .querySelectorAll(
+                            ".jugadores"
+                        )
+                        .forEach(
+                            otro => {
 
-                        b.classList.remove(
+                                otro
+                                    .classList
+                                    .remove(
+                                        "seleccionado"
+                                    );
+
+                            }
+                        );
+
+
+                    boton
+                        .classList
+                        .add(
                             "seleccionado"
                         );
-                    });
 
 
-                boton.classList.add(
-                    "seleccionado"
-                );
+                    estado.jugadores =
+                        Number(
+                            boton.dataset.jugadores
+                        );
 
+                }
+            );
 
-                estado.jugadores =
-                    Number(
-                        boton.dataset.jugadores
-                    );
-            }
-        );
-    });
+        }
+    );
 
 
 /* =====================================================
@@ -561,37 +638,50 @@ document
 ===================================================== */
 
 document
-    .querySelectorAll(".objetivo")
-    .forEach(boton => {
+    .querySelectorAll(
+        ".objetivo"
+    )
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                document
-                    .querySelectorAll(
-                        ".objetivo"
-                    )
-                    .forEach(b => {
+                    document
+                        .querySelectorAll(
+                            ".objetivo"
+                        )
+                        .forEach(
+                            otro => {
 
-                        b.classList.remove(
+                                otro
+                                    .classList
+                                    .remove(
+                                        "seleccionado"
+                                    );
+
+                            }
+                        );
+
+
+                    boton
+                        .classList
+                        .add(
                             "seleccionado"
                         );
-                    });
 
 
-                boton.classList.add(
-                    "seleccionado"
-                );
+                    estado.objetivo =
+                        Number(
+                            boton.dataset.objetivo
+                        );
 
+                }
+            );
 
-                estado.objetivo =
-                    Number(
-                        boton.dataset.objetivo
-                    );
-            }
-        );
-    });
+        }
+    );
 
 
 /* =====================================================
@@ -599,40 +689,53 @@ document
 ===================================================== */
 
 document
-    .querySelectorAll(".apuestas")
-    .forEach(boton => {
+    .querySelectorAll(
+        ".apuestas"
+    )
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                document
-                    .querySelectorAll(
-                        ".apuestas"
-                    )
-                    .forEach(b => {
+                    document
+                        .querySelectorAll(
+                            ".apuestas"
+                        )
+                        .forEach(
+                            otro => {
 
-                        b.classList.remove(
+                                otro
+                                    .classList
+                                    .remove(
+                                        "seleccionado"
+                                    );
+
+                            }
+                        );
+
+
+                    boton
+                        .classList
+                        .add(
                             "seleccionado"
                         );
-                    });
 
 
-                boton.classList.add(
-                    "seleccionado"
-                );
+                    estado.apuestas =
+                        boton.dataset.apuestas ===
+                        "si";
 
+                }
+            );
 
-                estado.apuestas =
-                    boton.dataset.apuestas
-                    === "si";
-            }
-        );
-    });
+        }
+    );
 
 
 /* =====================================================
-   PANTALLA 1 → 2
+   PANTALLA 1 A 2
 ===================================================== */
 
 const siguiente1 =
@@ -641,144 +744,170 @@ const siguiente1 =
     );
 
 
-if (siguiente1) {
+if (
+    siguiente1
+) {
 
     siguiente1.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(2);
+            mostrarPantalla(
+                2
+            );
+
         }
     );
+
 }
 
 
 /* =====================================================
-                     REGLAS
+   REGLAS
 ===================================================== */
 
 document
     .querySelectorAll(
         ".boton-regla"
     )
-    .forEach(boton => {
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            event => {
+            boton.addEventListener(
+                "click",
+                event => {
 
-                event.stopPropagation();
-
-
-                const contenido =
-                    boton.nextElementSibling;
-
-                const flecha =
-                    boton.querySelector(
-                        "span"
-                    );
+                    event.stopPropagation();
 
 
-                if (!contenido) {
-                    return;
-                }
+                    const contenido =
+                        boton.nextElementSibling;
 
 
-                /*
-                 * Guardamos si ESTE menú
-                 * ya estaba abierto.
-                 */
-
-                const estabaAbierto =
-                    !contenido.classList.contains(
-                        "oculto"
-                    );
+                    const flecha =
+                        boton.querySelector(
+                            "span"
+                        );
 
 
-                /*
-                 * Cerramos todos los demás.
-                 */
+                    if (
+                        !contenido
+                    ) {
 
-                document
-                    .querySelectorAll(
-                        ".boton-regla"
-                    )
-                    .forEach(otroBoton => {
+                        return;
+
+                    }
+
+
+                    const estabaAbierto =
+                        !contenido
+                            .classList
+                            .contains(
+                                "oculto"
+                            );
+
+
+                    document
+                        .querySelectorAll(
+                            ".boton-regla"
+                        )
+                        .forEach(
+                            otroBoton => {
+
+                                if (
+                                    otroBoton ===
+                                    boton
+                                ) {
+
+                                    return;
+
+                                }
+
+
+                                const otroContenido =
+                                    otroBoton
+                                        .nextElementSibling;
+
+
+                                const otraFlecha =
+                                    otroBoton
+                                        .querySelector(
+                                            "span"
+                                        );
+
+
+                                if (
+                                    otroContenido
+                                ) {
+
+                                    otroContenido
+                                        .classList
+                                        .add(
+                                            "oculto"
+                                        );
+
+                                }
+
+
+                                if (
+                                    otraFlecha
+                                ) {
+
+                                    otraFlecha.textContent =
+                                        "▼";
+
+                                }
+
+                            }
+                        );
+
+
+                    if (
+                        estabaAbierto
+                    ) {
+
+                        contenido
+                            .classList
+                            .add(
+                                "oculto"
+                            );
+
 
                         if (
-                            otroBoton === boton
+                            flecha
                         ) {
-                            return;
-                        }
 
-
-                        const otroContenido =
-                            otroBoton
-                                .nextElementSibling;
-
-                        const otraFlecha =
-                            otroBoton
-                                .querySelector(
-                                    "span"
-                                );
-
-
-                        if (otroContenido) {
-
-                            otroContenido
-                                .classList.add(
-                                    "oculto"
-                                );
-
-                        }
-
-
-                        if (otraFlecha) {
-
-                            otraFlecha.textContent =
+                            flecha.textContent =
                                 "▼";
 
                         }
 
-                    });
+
+                    } else {
+
+                        contenido
+                            .classList
+                            .remove(
+                                "oculto"
+                            );
 
 
-                /*
-                 * Si el actual estaba abierto,
-                 * lo cerramos.
-                 *
-                 * Si estaba cerrado,
-                 * lo abrimos.
-                 */
+                        if (
+                            flecha
+                        ) {
 
-                if (estabaAbierto) {
+                            flecha.textContent =
+                                "▲";
 
-                    contenido.classList.add(
-                        "oculto"
-                    );
+                        }
 
-                    if (flecha) {
-                        flecha.textContent =
-                            "▼";
-                    }
-
-                } else {
-
-                    contenido.classList.remove(
-                        "oculto"
-                    );
-
-                    if (flecha) {
-                        flecha.textContent =
-                            "▲";
                     }
 
                 }
+            );
 
-            }
-        );
-
-    });
+        }
+    );
 
 
 /* =====================================================
@@ -791,24 +920,34 @@ const siguiente2 =
     );
 
 
-if (siguiente2) {
+if (
+    siguiente2
+) {
 
     siguiente2.addEventListener(
         "click",
         () => {
 
-            if (estado.apuestas) {
+            if (
+                estado.apuestas
+            ) {
 
                 actualizarFichas();
 
-                mostrarPantalla(3);
+                mostrarPantalla(
+                    3
+                );
+
 
             } else {
 
                 iniciarPartida();
+
             }
+
         }
     );
+
 }
 
 
@@ -818,15 +957,21 @@ const volver2 =
     );
 
 
-if (volver2) {
+if (
+    volver2
+) {
 
     volver2.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(1);
+            mostrarPantalla(
+                1
+            );
+
         }
     );
+
 }
 
 
@@ -835,87 +980,109 @@ if (volver2) {
 ===================================================== */
 
 document
-    .querySelectorAll(".apuesta")
-    .forEach(boton => {
+    .querySelectorAll(
+        ".apuesta"
+    )
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                const equipo =
-                    Number(
-                        boton.dataset.equipo
-                    );
-
-
-                const cantidad =
-                    Number(
-                        boton.dataset.apuesta
-                    );
+                    const equipo =
+                        Number(
+                            boton.dataset.equipo
+                        );
 
 
-                const fichas =
-                    equipo === 1
-                        ? estado.fichas1
-                        : estado.fichas2;
+                    const cantidad =
+                        Number(
+                            boton.dataset.apuesta
+                        );
 
 
-                if (
-                    cantidad >
-                    fichas
-                ) {
-
-                    alert(
-                        "Ese equipo no tiene suficientes fichas."
-                    );
-
-                    return;
-                }
+                    const fichas =
+                        equipo === 1
+                            ? estado.fichas1
+                            : estado.fichas2;
 
 
-                if (equipo === 1) {
+                    if (
+                        cantidad >
+                        fichas
+                    ) {
 
-                    estado.apuesta1 =
-                        cantidad;
-
-                } else {
-
-                    estado.apuesta2 =
-                        cantidad;
-                }
+                        alert(
+                            "Ese equipo no tiene suficientes fichas."
+                        );
 
 
-                document
-                    .querySelectorAll(
-                        `.apuesta[data-equipo="${equipo}"]`
-                    )
-                    .forEach(b => {
+                        return;
 
-                        b.classList.remove(
+                    }
+
+
+                    if (
+                        equipo === 1
+                    ) {
+
+                        estado.apuesta1 =
+                            cantidad;
+
+
+                    } else {
+
+                        estado.apuesta2 =
+                            cantidad;
+
+                    }
+
+
+                    document
+                        .querySelectorAll(
+                            `.apuesta[data-equipo="${equipo}"]`
+                        )
+                        .forEach(
+                            otro => {
+
+                                otro
+                                    .classList
+                                    .remove(
+                                        "seleccionado"
+                                    );
+
+                            }
+                        );
+
+
+                    boton
+                        .classList
+                        .add(
                             "seleccionado"
                         );
-                    });
 
 
-                boton.classList.add(
-                    "seleccionado"
-                );
+                    const texto =
+                        document.getElementById(
+                            `apuesta${equipo}Texto`
+                        );
 
 
-                const texto =
-                    document.getElementById(
-                        `apuesta${equipo}Texto`
-                    );
+                    if (
+                        texto
+                    ) {
 
+                        texto.textContent =
+                            `Apuesta: ${cantidad} fichas`;
 
-                if (texto) {
+                    }
 
-                    texto.textContent =
-                        `Apuesta: ${cantidad} fichas`;
                 }
-            }
-        );
-    });
+            );
+
+        }
+    );
 
 
 /* =====================================================
@@ -928,48 +1095,81 @@ const reiniciarFichas =
     );
 
 
-if (reiniciarFichas) {
+if (
+    reiniciarFichas
+) {
 
     reiniciarFichas.addEventListener(
         "click",
         () => {
 
-            estado.fichas1 = 100;
+            estado.fichas1 =
+                100;
 
-            estado.fichas2 = 100;
+            estado.fichas2 =
+                100;
 
-            estado.apuesta1 = 0;
+            estado.apuesta1 =
+                0;
 
-            estado.apuesta2 = 0;
+            estado.apuesta2 =
+                0;
 
 
             document
                 .querySelectorAll(
                     ".apuesta"
                 )
-                .forEach(boton => {
+                .forEach(
+                    boton => {
 
-                    boton.classList.remove(
-                        "seleccionado"
-                    );
-                });
+                        boton
+                            .classList
+                            .remove(
+                                "seleccionado"
+                            );
+
+                    }
+                );
 
 
-            document.getElementById(
-                "apuesta1Texto"
-            ).textContent =
-                "Sin apuesta";
+            const apuesta1Texto =
+                document.getElementById(
+                    "apuesta1Texto"
+                );
 
 
-            document.getElementById(
-                "apuesta2Texto"
-            ).textContent =
-                "Sin apuesta";
+            const apuesta2Texto =
+                document.getElementById(
+                    "apuesta2Texto"
+                );
+
+
+            if (
+                apuesta1Texto
+            ) {
+
+                apuesta1Texto.textContent =
+                    "Sin apuesta";
+
+            }
+
+
+            if (
+                apuesta2Texto
+            ) {
+
+                apuesta2Texto.textContent =
+                    "Sin apuesta";
+
+            }
 
 
             actualizarFichas();
+
         }
     );
+
 }
 
 
@@ -983,15 +1183,21 @@ const volver3 =
     );
 
 
-if (volver3) {
+if (
+    volver3
+) {
 
     volver3.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(2);
+            mostrarPantalla(
+                2
+            );
+
         }
     );
+
 }
 
 
@@ -1001,7 +1207,9 @@ const siguiente3 =
     );
 
 
-if (siguiente3) {
+if (
+    siguiente3
+) {
 
     siguiente3.addEventListener(
         "click",
@@ -1016,7 +1224,9 @@ if (siguiente3) {
                     "Los dos equipos deben elegir una apuesta."
                 );
 
+
                 return;
+
             }
 
 
@@ -1029,13 +1239,17 @@ if (siguiente3) {
                     "Los dos equipos deben apostar la misma cantidad."
                 );
 
+
                 return;
+
             }
 
 
             iniciarPartida();
+
         }
     );
+
 }
 
 
@@ -1045,23 +1259,36 @@ if (siguiente3) {
 
 function iniciarPartida() {
 
-    estado.puntos1 = 0;
+    estado.puntos1 =
+        0;
 
-    estado.puntos2 = 0;
+    estado.puntos2 =
+        0;
 
-    estado.historial1 = [];
+    estado.historial1 =
+        [];
 
-    estado.historial2 = [];
+    estado.historial2 =
+        [];
 
-    estado.terminada = false;
+    estado.terminada =
+        false;
+
 
     estado.partidasJugadas++;
 
-    partidaActiva = true;
+
+    partidaActiva =
+        true;
+
 
     actualizarTodo();
 
-    mostrarPantalla(4);
+
+    mostrarPantalla(
+        4
+    );
+
 }
 
 
@@ -1076,24 +1303,32 @@ function actualizarFichas() {
             "fichasConfig1"
         );
 
+
     const fichas2 =
         document.getElementById(
             "fichasConfig2"
         );
 
 
-    if (fichas1) {
+    if (
+        fichas1
+    ) {
 
         fichas1.textContent =
             estado.fichas1;
+
     }
 
 
-    if (fichas2) {
+    if (
+        fichas2
+    ) {
 
         fichas2.textContent =
             estado.fichas2;
+
     }
+
 }
 
 
@@ -1101,14 +1336,19 @@ function actualizarFichas() {
    PALITOS
 ===================================================== */
 
-function generarPalitos(puntos) {
+function generarPalitos(
+    puntos
+) {
 
-    let html = "";
+    let html =
+        "";
+
 
     const gruposDeCinco =
         Math.floor(
             puntos / 5
         );
+
 
     const resto =
         puntos % 5;
@@ -1137,55 +1377,72 @@ function generarPalitos(puntos) {
             </span>
 
         `;
+
     }
 
 
-    if (resto > 0) {
+    if (
+        resto > 0
+    ) {
 
         html += `
             <span class="grupo-palitos">
         `;
 
 
-        if (resto >= 1) {
+        if (
+            resto >= 1
+        ) {
 
             html += `
                 <span class="linea vertical v1"></span>
             `;
+
         }
 
 
-        if (resto >= 2) {
+        if (
+            resto >= 2
+        ) {
 
             html += `
                 <span class="linea horizontal h1"></span>
             `;
+
         }
 
 
-        if (resto >= 3) {
+        if (
+            resto >= 3
+        ) {
 
             html += `
                 <span class="linea vertical v2"></span>
             `;
+
         }
 
 
-        if (resto >= 4) {
+        if (
+            resto >= 4
+        ) {
 
             html += `
                 <span class="linea horizontal h2"></span>
             `;
+
         }
 
 
         html += `
             </span>
         `;
+
     }
 
 
     return html;
+
 }
 
 
@@ -1200,15 +1457,18 @@ function actualizarTodo() {
             "puntos1"
         );
 
+
     const puntos2 =
         document.getElementById(
             "puntos2"
         );
 
+
     const infoPartida =
         document.getElementById(
             "infoPartida"
         );
+
 
     const objetivoTexto =
         document.getElementById(
@@ -1216,47 +1476,65 @@ function actualizarTodo() {
         );
 
 
-if (puntos1) {
+    if (
+        puntos1
+    ) {
 
-    puntos1.classList.toggle(
-        "puntos-compactos",
-        estado.objetivo === 30 &&
-        estado.puntos1 >= 16
-    );
-
-    puntos1.innerHTML =
-        generarPalitos(
-            estado.puntos1
-        );
-}
+        puntos1
+            .classList
+            .toggle(
+                "puntos-compactos",
+                estado.objetivo === 30 &&
+                estado.puntos1 >= 16
+            );
 
 
-if (puntos2) {
+        puntos1.innerHTML =
+            generarPalitos(
+                estado.puntos1
+            );
 
-    puntos2.classList.toggle(
-        "puntos-compactos",
-        estado.objetivo === 30 &&
-        estado.puntos2 >= 16
-    );
-
-    puntos2.innerHTML =
-        generarPalitos(
-            estado.puntos2
-        );
-}
-
-
-    if (infoPartida) {
-
-        infoPartida.textContent =
-            `${estado.jugadores} vs ${estado.jugadores} · A ${estado.objetivo}`;
     }
 
 
-    if (objetivoTexto) {
+    if (
+        puntos2
+    ) {
+
+        puntos2
+            .classList
+            .toggle(
+                "puntos-compactos",
+                estado.objetivo === 30 &&
+                estado.puntos2 >= 16
+            );
+
+
+        puntos2.innerHTML =
+            generarPalitos(
+                estado.puntos2
+            );
+
+    }
+
+
+    if (
+        infoPartida
+    ) {
+
+        infoPartida.textContent =
+            `${estado.jugadores} vs ${estado.jugadores} · A ${estado.objetivo}`;
+
+    }
+
+
+    if (
+        objetivoTexto
+    ) {
 
         objetivoTexto.textContent =
             `Objetivo: ${estado.objetivo} puntos`;
+
     }
 
 
@@ -1265,6 +1543,7 @@ if (puntos2) {
     actualizarHistorial();
 
     guardarPartidaActual();
+
 }
 
 
@@ -1278,49 +1557,65 @@ function modificarPuntos(
     historial
 ) {
 
-    if (estado.terminada) {
+    if (
+        estado.terminada
+    ) {
+
         return;
+
     }
 
 
-    if (equipo === 1) {
+    if (
+        equipo === 1
+    ) {
 
         estado.puntos1 +=
             cantidad;
+
 
         estado.puntos1 =
             Math.max(
                 0,
                 estado.puntos1
             );
+
     }
 
 
-    if (equipo === 2) {
+    if (
+        equipo === 2
+    ) {
 
         estado.puntos2 +=
             cantidad;
+
 
         estado.puntos2 =
             Math.max(
                 0,
                 estado.puntos2
             );
+
     }
 
 
-    if (historial) {
-
-    agregarHistorial(
-        equipo,
+    if (
         historial
-    );
-}
+    ) {
+
+        agregarHistorial(
+            equipo,
+            historial
+        );
+
+    }
 
 
     comprobarGanador();
 
     actualizarTodo();
+
 }
 
 
@@ -1332,62 +1627,73 @@ document
     .querySelectorAll(
         ".boton-punto"
     )
-    .forEach(boton => {
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                if (estado.terminada) {
-                    return;
-                }
+                    if (
+                        estado.terminada
+                    ) {
 
+                        return;
 
-                const equipo =
-                    Number(
-                        boton.dataset.equipo
-                    );
+                    }
 
 
-                const sumar =
-                    boton.classList
-                        .contains(
-                            "sumar"
+                    const equipo =
+                        Number(
+                            boton.dataset.equipo
                         );
 
 
-                const puntosActuales =
-                    equipo === 1
-                        ? estado.puntos1
-                        : estado.puntos2;
+                    const sumar =
+                        boton
+                            .classList
+                            .contains(
+                                "sumar"
+                            );
 
 
-                if (
-                    !sumar &&
-                    puntosActuales <= 0
-                ) {
-
-                    return;
-                }
+                    const puntosActuales =
+                        equipo === 1
+                            ? estado.puntos1
+                            : estado.puntos2;
 
 
-                modificarPuntos(
+                    if (
+                        !sumar &&
+                        puntosActuales <= 0
+                    ) {
 
-                    equipo,
+                        return;
 
-                    sumar
-                        ? 1
-                        : -1,
+                    }
 
-                    `Equipo ${equipo}: ${
+
+                    modificarPuntos(
+
+                        equipo,
+
                         sumar
-                            ? "+1"
-                            : "-1"
-                    }`
-                );
-            }
-        );
-    });
+                            ? 1
+                            : -1,
+
+                        `Equipo ${equipo}: ${
+                            sumar
+                                ? "+1"
+                                : "-1"
+                        }`
+
+                    );
+
+                }
+            );
+
+        }
+    );
 
 
 /* =====================================================
@@ -1398,50 +1704,68 @@ document
     .querySelectorAll(
         ".boton-menu"
     )
-    .forEach(boton => {
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            event => {
+            boton.addEventListener(
+                "click",
+                event => {
 
-                event.stopPropagation();
+                    event.stopPropagation();
 
 
-                const menu =
-                    boton.parentElement
-                        ?.querySelector(
+                    const menu =
+                        boton
+                            .parentElement
+                            ?.querySelector(
+                                ".desplegable"
+                            );
+
+
+                    if (
+                        !menu
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    document
+                        .querySelectorAll(
                             ".desplegable"
+                        )
+                        .forEach(
+                            otro => {
+
+                                if (
+                                    otro !==
+                                    menu
+                                ) {
+
+                                    otro
+                                        .classList
+                                        .add(
+                                            "oculto"
+                                        );
+
+                                }
+
+                            }
                         );
 
 
-                if (!menu) {
-                    return;
+                    menu
+                        .classList
+                        .toggle(
+                            "oculto"
+                        );
+
                 }
+            );
 
-
-                document
-                    .querySelectorAll(
-                        ".desplegable"
-                    )
-                    .forEach(otro => {
-
-                        if (
-                            otro !== menu
-                        ) {
-
-                            otro.classList.add(
-                                "oculto"
-                            );
-                        }
-                    });
-
-
-                menu.classList.toggle(
-                    "oculto"
-                );
-            }
-        );
-    });
+        }
+    );
 
 
 /* =====================================================
@@ -1452,60 +1776,71 @@ document
     .querySelectorAll(
         ".desplegable button"
     )
-    .forEach(boton => {
+    .forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                if (estado.terminada) {
-                    return;
-                }
+                    if (
+                        estado.terminada
+                    ) {
 
+                        return;
 
-                const equipo =
-                    Number(
-                        boton.dataset.equipo
-                    );
-
-
-                const nombre =
-                    boton.dataset.nombre;
+                    }
 
 
-                if (
-                    boton.dataset.falta ===
-                    "true"
-                ) {
-
-                    resolverFalta(
-                        equipo,
-                        nombre
-                    );
-
-                } else {
-
-                    const puntos =
+                    const equipo =
                         Number(
-                            boton.dataset.puntos
+                            boton.dataset.equipo
                         );
 
 
-                    modificarPuntos(
+                    const nombre =
+                        boton.dataset.nombre;
 
-                        equipo,
 
-                        puntos,
+                    if (
+                        boton.dataset.falta ===
+                        "true"
+                    ) {
 
-                        `Equipo ${equipo}: ${nombre} · +${puntos}`
-                    );
+                        resolverFalta(
+                            equipo,
+                            nombre
+                        );
+
+
+                    } else {
+
+                        const puntos =
+                            Number(
+                                boton.dataset.puntos
+                            );
+
+
+                        modificarPuntos(
+
+                            equipo,
+
+                            puntos,
+
+                            `Equipo ${equipo}: ${nombre} · +${puntos}`
+
+                        );
+
+                    }
+
+
+                    cerrarMenus();
+
                 }
+            );
 
-
-                cerrarMenus();
-            }
-        );
-    });
+        }
+    );
 
 
 document.addEventListener(
@@ -1520,12 +1855,18 @@ function cerrarMenus() {
         .querySelectorAll(
             ".desplegable"
         )
-        .forEach(menu => {
+        .forEach(
+            menu => {
 
-            menu.classList.add(
-                "oculto"
-            );
-        });
+                menu
+                    .classList
+                    .add(
+                        "oculto"
+                    );
+
+            }
+        );
+
 }
 
 
@@ -1550,11 +1891,6 @@ function resolverFalta(
             : estado.puntos2;
 
 
-    /*
-        La falta se calcula según lo que le
-        falta al rival para llegar al objetivo.
-    */
-
     const necesarios =
         Math.max(
             estado.objetivo -
@@ -1570,7 +1906,9 @@ function resolverFalta(
         necesarios,
 
         `Equipo ${equipo}: ${nombre} · +${necesarios}`
+
     );
+
 }
 
 
@@ -1583,11 +1921,6 @@ function agregarHistorial(
     texto
 ) {
 
-    /*
-        Como cada columna ya dice Equipo 1 / Equipo 2,
-        sacamos "Equipo X:" del texto para no repetirlo.
-    */
-
     const textoLimpio =
         texto.replace(
             /^Equipo \d+:\s*/,
@@ -1595,21 +1928,26 @@ function agregarHistorial(
         );
 
 
-    if (equipo === 1) {
+    if (
+        equipo === 1
+    ) {
 
         estado.historial1.push(
             textoLimpio
         );
+
 
     } else {
 
         estado.historial2.push(
             textoLimpio
         );
+
     }
 
 
     actualizarHistorial();
+
 }
 
 
@@ -1619,6 +1957,7 @@ function actualizarHistorial() {
         document.getElementById(
             "historial1"
         );
+
 
     const historial2 =
         document.getElementById(
@@ -1630,7 +1969,9 @@ function actualizarHistorial() {
         !historial1 ||
         !historial2
     ) {
+
         return;
+
     }
 
 
@@ -1639,7 +1980,10 @@ function actualizarHistorial() {
         jugadas
     ) {
 
-        if (jugadas.length === 0) {
+        if (
+            jugadas.length ===
+            0
+        ) {
 
             elemento.innerHTML =
                 `
@@ -1648,20 +1992,26 @@ function actualizarHistorial() {
                     </div>
                 `;
 
+
             return;
+
         }
 
 
         elemento.innerHTML =
             jugadas
-                .map(jugada =>
-                    `
-                        <div class="entrada">
-                            ${jugada}
-                        </div>
-                    `
+                .map(
+                    jugada =>
+                        `
+                            <div class="entrada">
+                                ${jugada}
+                            </div>
+                        `
                 )
-                .join("");
+                .join(
+                    ""
+                );
+
     }
 
 
@@ -1670,15 +2020,17 @@ function actualizarHistorial() {
         estado.historial1
     );
 
+
     mostrarHistorial(
         historial2,
         estado.historial2
     );
+
 }
 
 
 /* =====================================================
-   HISTORIAL
+   BOTÓN HISTORIAL
 ===================================================== */
 
 const botonHistorial =
@@ -1687,7 +2039,9 @@ const botonHistorial =
     );
 
 
-if (botonHistorial) {
+if (
+    botonHistorial
+) {
 
     botonHistorial.addEventListener(
         "click",
@@ -1699,14 +2053,21 @@ if (botonHistorial) {
                 );
 
 
-            if (historial) {
+            if (
+                historial
+            ) {
 
-                historial.classList.toggle(
-                    "oculto"
-                );
+                historial
+                    .classList
+                    .toggle(
+                        "oculto"
+                    );
+
             }
+
         }
     );
+
 }
 
 
@@ -1724,9 +2085,14 @@ function comprobarGanador() {
         estado.puntos1 =
             estado.objetivo;
 
-        terminarPartida(1);
+
+        terminarPartida(
+            1
+        );
+
 
         return;
+
     }
 
 
@@ -1738,8 +2104,13 @@ function comprobarGanador() {
         estado.puntos2 =
             estado.objetivo;
 
-        terminarPartida(2);
+
+        terminarPartida(
+            2
+        );
+
     }
+
 }
 
 
@@ -1751,15 +2122,18 @@ function terminarPartida(
     ganador
 ) {
 
-    if (estado.terminada) {
+    if (
+        estado.terminada
+    ) {
+
         return;
+
     }
 
 
-    estado.terminada = true;
+    estado.terminada =
+        true;
 
-
-    /* FICHAS */
 
     if (
         estado.apuestas &&
@@ -1773,10 +2147,13 @@ function terminarPartida(
             estado.apuesta1;
 
 
-        if (ganador === 1) {
+        if (
+            ganador === 1
+        ) {
 
             estado.fichas1 +=
                 cantidad;
+
 
             estado.fichas2 =
                 Math.max(
@@ -1785,10 +2162,12 @@ function terminarPartida(
                     cantidad
                 );
 
+
         } else {
 
             estado.fichas2 +=
                 cantidad;
+
 
             estado.fichas1 =
                 Math.max(
@@ -1796,7 +2175,9 @@ function terminarPartida(
                     estado.fichas1 -
                     cantidad
                 );
+
         }
+
     }
 
 
@@ -1805,20 +2186,24 @@ function terminarPartida(
             "resultado1"
         );
 
+
     const resultado2 =
         document.getElementById(
             "resultado2"
         );
+
 
     const fichasFinal1 =
         document.getElementById(
             "fichasFinal1"
         );
 
+
     const fichasFinal2 =
         document.getElementById(
             "fichasFinal2"
         );
+
 
     const textoGanador =
         document.getElementById(
@@ -1826,44 +2211,60 @@ function terminarPartida(
         );
 
 
-    if (resultado1) {
+    if (
+        resultado1
+    ) {
 
         resultado1.textContent =
             estado.puntos1;
+
     }
 
 
-    if (resultado2) {
+    if (
+        resultado2
+    ) {
 
         resultado2.textContent =
             estado.puntos2;
+
     }
 
 
-    if (fichasFinal1) {
+    if (
+        fichasFinal1
+    ) {
 
         fichasFinal1.textContent =
             estado.fichas1;
+
     }
 
 
-    if (fichasFinal2) {
+    if (
+        fichasFinal2
+    ) {
 
         fichasFinal2.textContent =
             estado.fichas2;
+
     }
 
 
-    if (textoGanador) {
+    if (
+        textoGanador
+    ) {
 
         textoGanador.textContent =
             `Ganó el Equipo ${ganador}`;
+
     }
 
 
     mostrarPantalla(
         "ganador"
     );
+
 }
 
 
@@ -1873,31 +2274,43 @@ function terminarPartida(
 
 function nuevaPartida() {
 
-    estado.puntos1 = 0;
+    estado.puntos1 =
+        0;
 
-    estado.puntos2 = 0;
+    estado.puntos2 =
+        0;
 
-    estado.apuesta1 = 0;
+    estado.apuesta1 =
+        0;
 
-    estado.apuesta2 = 0;
+    estado.apuesta2 =
+        0;
 
-    estado.historial1 = [];
+    estado.historial1 =
+        [];
 
-    estado.historial2 = [];
+    estado.historial2 =
+        [];
 
-    estado.terminada = false;
+    estado.terminada =
+        false;
 
 
     document
         .querySelectorAll(
             ".apuesta"
         )
-        .forEach(boton => {
+        .forEach(
+            boton => {
 
-            boton.classList.remove(
-                "seleccionado"
-            );
-        });
+                boton
+                    .classList
+                    .remove(
+                        "seleccionado"
+                    );
+
+            }
+        );
 
 
     const apuesta1Texto =
@@ -1905,36 +2318,43 @@ function nuevaPartida() {
             "apuesta1Texto"
         );
 
+
     const apuesta2Texto =
         document.getElementById(
             "apuesta2Texto"
         );
 
 
-    if (apuesta1Texto) {
+    if (
+        apuesta1Texto
+    ) {
 
         apuesta1Texto.textContent =
             "Sin apuesta";
+
     }
 
 
-    if (apuesta2Texto) {
+    if (
+        apuesta2Texto
+    ) {
 
         apuesta2Texto.textContent =
             "Sin apuesta";
+
     }
+
 
     borrarPartidaGuardada();
 
     actualizarTodo();
 
-    mostrarPantalla(1);
+    mostrarPantalla(
+        1
+    );
+
 }
 
-
-/* =====================================================
-   NUEVA PARTIDA
-===================================================== */
 
 const nuevaPartidaBoton =
     document.getElementById(
@@ -1942,12 +2362,15 @@ const nuevaPartidaBoton =
     );
 
 
-if (nuevaPartidaBoton) {
+if (
+    nuevaPartidaBoton
+) {
 
     nuevaPartidaBoton.addEventListener(
         "click",
         nuevaPartida
     );
+
 }
 
 
@@ -1957,16 +2380,20 @@ const nuevaPartidaGanador =
     );
 
 
-if (nuevaPartidaGanador) {
+if (
+    nuevaPartidaGanador
+) {
 
     nuevaPartidaGanador.addEventListener(
         "click",
         nuevaPartida
     );
+
 }
 
+
 /* =====================================================
-   PRESENTACIÓN Y GUÍA PARA PRINCIPIANTES
+   PRESENTACIÓN Y GUÍA
 ===================================================== */
 
 const empezarApp =
@@ -1974,13 +2401,18 @@ const empezarApp =
         "empezarApp"
     );
 
-if (empezarApp) {
+
+if (
+    empezarApp
+) {
 
     empezarApp.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(1);
+            mostrarPantalla(
+                1
+            );
 
         }
     );
@@ -1993,13 +2425,18 @@ const verGuiaInicio =
         "verGuiaInicio"
     );
 
-if (verGuiaInicio) {
+
+if (
+    verGuiaInicio
+) {
 
     verGuiaInicio.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(6);
+            mostrarPantalla(
+                6
+            );
 
         }
     );
@@ -2012,13 +2449,18 @@ const irGuiaDesdeReglas =
         "irGuiaDesdeReglas"
     );
 
-if (irGuiaDesdeReglas) {
+
+if (
+    irGuiaDesdeReglas
+) {
 
     irGuiaDesdeReglas.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(6);
+            mostrarPantalla(
+                6
+            );
 
         }
     );
@@ -2031,13 +2473,18 @@ const irReglasDesdeGuia =
         "irReglasDesdeGuia"
     );
 
-if (irReglasDesdeGuia) {
+
+if (
+    irReglasDesdeGuia
+) {
 
     irReglasDesdeGuia.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(5);
+            mostrarPantalla(
+                5
+            );
 
         }
     );
@@ -2050,21 +2497,27 @@ const volverGuiaMenu =
         "volverGuiaMenu"
     );
 
-if (volverGuiaMenu) {
+
+if (
+    volverGuiaMenu
+) {
 
     volverGuiaMenu.addEventListener(
         "click",
         () => {
 
-           mostrarPantalla(1);
+            mostrarPantalla(
+                1
+            );
 
         }
     );
 
 }
 
+
 /* =====================================================
-   ACORDEÓN · GUÍA PARA PRINCIPIANTES
+   ACORDEÓN · GUÍA
 ===================================================== */
 
 const carpetasGuia =
@@ -2074,20 +2527,22 @@ const carpetasGuia =
 
 
 carpetasGuia.forEach(
-    (carpeta) => {
+    carpeta => {
 
         carpeta.addEventListener(
             "toggle",
             () => {
 
-                if (!carpeta.open) {
+                if (
+                    !carpeta.open
+                ) {
 
                     carpeta
                         .querySelectorAll(
                             ".guia-item[open]"
                         )
                         .forEach(
-                            (item) => {
+                            item => {
 
                                 item.removeAttribute(
                                     "open"
@@ -2096,21 +2551,24 @@ carpetasGuia.forEach(
                             }
                         );
 
+
                     return;
 
                 }
 
 
                 carpetasGuia.forEach(
-                    (otraCarpeta) => {
+                    otraCarpeta => {
 
                         if (
-                            otraCarpeta !== carpeta
+                            otraCarpeta !==
+                            carpeta
                         ) {
 
-                            otraCarpeta.removeAttribute(
-                                "open"
-                            );
+                            otraCarpeta
+                                .removeAttribute(
+                                    "open"
+                                );
 
 
                             otraCarpeta
@@ -2118,11 +2576,12 @@ carpetasGuia.forEach(
                                     ".guia-item[open]"
                                 )
                                 .forEach(
-                                    (item) => {
+                                    item => {
 
-                                        item.removeAttribute(
-                                            "open"
-                                        );
+                                        item
+                                            .removeAttribute(
+                                                "open"
+                                            );
 
                                     }
                                 );
@@ -2139,7 +2598,6 @@ carpetasGuia.forEach(
 );
 
 
-
 const itemsGuia =
     document.querySelectorAll(
         ".guia-item"
@@ -2147,14 +2605,18 @@ const itemsGuia =
 
 
 itemsGuia.forEach(
-    (item) => {
+    item => {
 
         item.addEventListener(
             "toggle",
             () => {
 
-                if (!item.open) {
+                if (
+                    !item.open
+                ) {
+
                     return;
+
                 }
 
 
@@ -2164,8 +2626,12 @@ itemsGuia.forEach(
                     );
 
 
-                if (!carpetaActual) {
+                if (
+                    !carpetaActual
+                ) {
+
                     return;
+
                 }
 
 
@@ -2174,15 +2640,17 @@ itemsGuia.forEach(
                         ".guia-item[open]"
                     )
                     .forEach(
-                        (otroItem) => {
+                        otroItem => {
 
                             if (
-                                otroItem !== item
+                                otroItem !==
+                                item
                             ) {
 
-                                otroItem.removeAttribute(
-                                    "open"
-                                );
+                                otroItem
+                                    .removeAttribute(
+                                        "open"
+                                    );
 
                             }
 
@@ -2195,8 +2663,9 @@ itemsGuia.forEach(
     }
 );
 
+
 /* =====================================================
-   ABRIR / CERRAR REGLAS
+   NAVEGACIÓN REGLAS / GUÍA
 ===================================================== */
 
 const verGuiaMenu =
@@ -2205,13 +2674,17 @@ const verGuiaMenu =
     );
 
 
-if (verGuiaMenu) {
+if (
+    verGuiaMenu
+) {
 
     verGuiaMenu.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(6);
+            mostrarPantalla(
+                6
+            );
 
         }
     );
@@ -2225,13 +2698,17 @@ const volverReglas =
     );
 
 
-if (volverReglas) {
+if (
+    volverReglas
+) {
 
     volverReglas.addEventListener(
         "click",
         () => {
 
-            mostrarPantalla(1);
+            mostrarPantalla(
+                1
+            );
 
         }
     );
@@ -2249,11 +2726,16 @@ const jugadorInicial =
     );
 
 
-if (jugadorInicial) {
+if (
+    jugadorInicial
+) {
 
-    jugadorInicial.classList.add(
-        "seleccionado"
-    );
+    jugadorInicial
+        .classList
+        .add(
+            "seleccionado"
+        );
+
 }
 
 
@@ -2263,11 +2745,16 @@ const objetivoInicial =
     );
 
 
-if (objetivoInicial) {
+if (
+    objetivoInicial
+) {
 
-    objetivoInicial.classList.add(
-        "seleccionado"
-    );
+    objetivoInicial
+        .classList
+        .add(
+            "seleccionado"
+        );
+
 }
 
 
@@ -2277,11 +2764,16 @@ const apuestasInicial =
     );
 
 
-if (apuestasInicial) {
+if (
+    apuestasInicial
+) {
 
-    apuestasInicial.classList.add(
-        "seleccionado"
-    );
+    apuestasInicial
+        .classList
+        .add(
+            "seleccionado"
+        );
+
 }
 
 
@@ -2291,12 +2783,517 @@ if (
 
     actualizarTodo();
 
-    mostrarPantalla(4);
+    mostrarPantalla(
+        4
+    );
+
 
 } else {
 
     actualizarTodo();
+
 }
+
+
+/* =====================================================
+   COMPARTIR APP
+===================================================== */
+
+const URL_COMPARTIR_APP =
+    "https://felixsun-del.github.io/anotador-truco/app/";
+
+
+const modalCompartirApp =
+    document.getElementById(
+        "modalCompartirApp"
+    );
+
+
+const cerrarCompartirApp =
+    document.getElementById(
+        "cerrarCompartirApp"
+    );
+
+
+const compartirAppNativo =
+    document.getElementById(
+        "compartirAppNativo"
+    );
+
+
+const copiarEnlaceApp =
+    document.getElementById(
+        "copiarEnlaceApp"
+    );
+
+
+const mostrarQrApp =
+    document.getElementById(
+        "mostrarQrApp"
+    );
+
+
+const contenedorQrApp =
+    document.getElementById(
+        "contenedorQrApp"
+    );
+
+
+const mensajeCompartirApp =
+    document.getElementById(
+        "mensajeCompartirApp"
+    );
+
+
+let elementoEnfocadoAntesDeCompartir =
+    null;
+
+
+/* =====================================================
+   RESETEAR COMPARTIR
+===================================================== */
+
+function resetearCompartirApp() {
+
+    contenedorQrApp
+        ?.classList
+        .add(
+            "oculto"
+        );
+
+
+    if (
+        mostrarQrApp
+    ) {
+
+        mostrarQrApp.textContent =
+            "🔳 Mostrar QR";
+
+
+        mostrarQrApp.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+
+    if (
+        mensajeCompartirApp
+    ) {
+
+        mensajeCompartirApp.textContent =
+            "";
+
+    }
+
+}
+
+
+/* =====================================================
+   ABRIR COMPARTIR
+===================================================== */
+
+function abrirModalCompartir() {
+
+    if (
+        !modalCompartirApp
+    ) {
+
+        return;
+
+    }
+
+
+    elementoEnfocadoAntesDeCompartir =
+        document.activeElement;
+
+
+    resetearCompartirApp();
+
+
+    if (
+        compartirAppNativo
+    ) {
+
+        compartirAppNativo.hidden =
+            typeof navigator.share !==
+            "function";
+
+    }
+
+
+    modalCompartirApp
+        .classList
+        .remove(
+            "oculto"
+        );
+
+
+    document.body
+        .classList
+        .add(
+            "compartir-app-abierto"
+        );
+
+
+    cerrarCompartirApp
+        ?.focus();
+
+}
+
+
+document
+    .querySelectorAll(
+        ".abrir-compartir-app"
+    )
+    .forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                abrirModalCompartir
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   CERRAR COMPARTIR
+===================================================== */
+
+function cerrarModalCompartir() {
+
+    if (
+        !modalCompartirApp ||
+        modalCompartirApp
+            .classList
+            .contains(
+                "oculto"
+            )
+    ) {
+
+        return;
+
+    }
+
+
+    modalCompartirApp
+        .classList
+        .add(
+            "oculto"
+        );
+
+
+    document.body
+        .classList
+        .remove(
+            "compartir-app-abierto"
+        );
+
+
+    resetearCompartirApp();
+
+
+    if (
+        elementoEnfocadoAntesDeCompartir &&
+        typeof elementoEnfocadoAntesDeCompartir.focus ===
+        "function"
+    ) {
+
+        elementoEnfocadoAntesDeCompartir
+            .focus();
+
+    }
+
+
+    elementoEnfocadoAntesDeCompartir =
+        null;
+
+}
+
+
+cerrarCompartirApp
+    ?.addEventListener(
+        "click",
+        cerrarModalCompartir
+    );
+
+
+modalCompartirApp
+    ?.addEventListener(
+        "click",
+        evento => {
+
+            if (
+                evento.target ===
+                modalCompartirApp
+            ) {
+
+                cerrarModalCompartir();
+
+            }
+
+        }
+    );
+
+
+document.addEventListener(
+    "keydown",
+    evento => {
+
+        if (
+            evento.key ===
+            "Escape"
+        ) {
+
+            cerrarModalCompartir();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   COMPARTIR NATIVO
+===================================================== */
+
+compartirAppNativo
+    ?.addEventListener(
+        "click",
+        async () => {
+
+            if (
+                typeof navigator.share !==
+                "function"
+            ) {
+
+                await copiarUrlApp();
+
+                return;
+
+            }
+
+
+            const datosCompartir = {
+
+                title:
+                    "Anotador de Truco — App",
+
+                text:
+                    "🃏 Anotá tus partidas de Truco. Instalá la app y usala incluso sin conexión.",
+
+                url:
+                    URL_COMPARTIR_APP
+
+            };
+
+
+            try {
+
+                await navigator.share(
+                    datosCompartir
+                );
+
+
+            } catch (error) {
+
+                if (
+                    error.name ===
+                    "AbortError"
+                ) {
+
+                    return;
+
+                }
+
+
+                console.error(
+                    "Error compartiendo:",
+                    error
+                );
+
+
+                if (
+                    mensajeCompartirApp
+                ) {
+
+                    mensajeCompartirApp.textContent =
+                        "No se pudo abrir el menú de compartir. Podés copiar el enlace.";
+
+                }
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   COPIAR ENLACE
+===================================================== */
+
+async function copiarUrlApp() {
+
+    let copiado =
+        false;
+
+
+    try {
+
+        if (
+            !navigator.clipboard ||
+            typeof navigator.clipboard.writeText !==
+            "function"
+        ) {
+
+            throw new Error(
+                "Clipboard API no disponible"
+            );
+
+        }
+
+
+        await navigator.clipboard.writeText(
+            URL_COMPARTIR_APP
+        );
+
+
+        copiado =
+            true;
+
+
+    } catch (error) {
+
+        const texto =
+            document.createElement(
+                "textarea"
+            );
+
+
+        texto.value =
+            URL_COMPARTIR_APP;
+
+
+        texto.setAttribute(
+            "readonly",
+            ""
+        );
+
+
+        texto.style.position =
+            "fixed";
+
+        texto.style.left =
+            "-9999px";
+
+        texto.style.top =
+            "0";
+
+
+        document.body.appendChild(
+            texto
+        );
+
+
+        texto.focus();
+
+        texto.select();
+
+
+        try {
+
+            copiado =
+                document.execCommand(
+                    "copy"
+                );
+
+
+        } catch (errorCopia) {
+
+            copiado =
+                false;
+
+        }
+
+
+        texto.remove();
+
+    }
+
+
+    if (
+        mensajeCompartirApp
+    ) {
+
+        mensajeCompartirApp.textContent =
+            copiado
+                ? "✅ Enlace copiado."
+                : "No se pudo copiar el enlace.";
+
+    }
+
+}
+
+
+copiarEnlaceApp
+    ?.addEventListener(
+        "click",
+        copiarUrlApp
+    );
+
+
+/* =====================================================
+   MOSTRAR QR
+===================================================== */
+
+mostrarQrApp
+    ?.addEventListener(
+        "click",
+        () => {
+
+            if (
+                !contenedorQrApp
+            ) {
+
+                return;
+
+            }
+
+
+            const seVaAMostrar =
+                contenedorQrApp
+                    .classList
+                    .contains(
+                        "oculto"
+                    );
+
+
+            contenedorQrApp
+                .classList
+                .toggle(
+                    "oculto"
+                );
+
+
+            mostrarQrApp.textContent =
+                seVaAMostrar
+                    ? "🔳 Ocultar QR"
+                    : "🔳 Mostrar QR";
+
+
+            mostrarQrApp.setAttribute(
+                "aria-expanded",
+                seVaAMostrar
+                    ? "true"
+                    : "false"
+            );
+
+        }
+    );
+
 
 /* =====================================================
    PWA · INSTALACIÓN
@@ -2333,6 +3330,7 @@ const instruccionInstalacionIos =
 const DEMORA_INICIAL_INSTALACION =
     2 * 60 * 1000;
 
+
 const DEMORA_REINTENTO_INSTALACION =
     5 * 60 * 1000;
 
@@ -2342,7 +3340,7 @@ const CLAVE_RECORDAR_INSTALACION =
 
 
 /* =====================================================
-   ESTADO
+   ESTADO PWA
 ===================================================== */
 
 let eventoInstalacionPwa =
@@ -2401,8 +3399,12 @@ function dispositivoIOS() {
 
 function ocultarInvitacionInstalacion() {
 
-    if (!invitacionInstalar) {
+    if (
+        !invitacionInstalar
+    ) {
+
         return;
+
     }
 
 
@@ -2428,18 +3430,28 @@ function mostrarInvitacionInstalacion() {
     }
 
 
-    /*
-     * Chrome / Edge / Android
-     */
+    if (
+        eventoInstalacionPwa
+    ) {
 
-    if (eventoInstalacionPwa) {
+        if (
+            btnInstalarPwa
+        ) {
 
-        btnInstalarPwa.textContent =
-            "📲 Instalar app";
+            btnInstalarPwa.textContent =
+                "📲 Instalar app";
+
+        }
 
 
-        instruccionInstalacionIos.hidden =
-            true;
+        if (
+            instruccionInstalacionIos
+        ) {
+
+            instruccionInstalacionIos.hidden =
+                true;
+
+        }
 
 
         invitacionInstalar.hidden =
@@ -2451,14 +3463,28 @@ function mostrarInvitacionInstalacion() {
     }
 
 
-    /*
-     * iPhone / iPad
-     */
+    if (
+        dispositivoIOS()
+    ) {
 
-    if (dispositivoIOS()) {
+        if (
+            btnInstalarPwa
+        ) {
 
-        btnInstalarPwa.textContent =
-            "📲 Cómo instalar";
+            btnInstalarPwa.textContent =
+                "📲 Cómo instalar";
+
+        }
+
+
+        if (
+            instruccionInstalacionIos
+        ) {
+
+            instruccionInstalacionIos.hidden =
+                true;
+
+        }
 
 
         invitacionInstalar.hidden =
@@ -2513,22 +3539,12 @@ window.addEventListener(
     "beforeinstallprompt",
     evento => {
 
-        /*
-         * Evitamos que Chrome muestre
-         * su aviso automáticamente.
-         */
-
         evento.preventDefault();
 
 
         eventoInstalacionPwa =
             evento;
 
-
-        /*
-         * Si los 2 minutos ya pasaron,
-         * podemos mostrar nuestro aviso.
-         */
 
         if (
             tiempoInicialCumplido
@@ -2546,37 +3562,33 @@ window.addEventListener(
    BOTÓN INSTALAR
 ===================================================== */
 
-if (btnInstalarPwa) {
+if (
+    btnInstalarPwa
+) {
 
     btnInstalarPwa.addEventListener(
         "click",
         async () => {
-
-            /*
-             * IPHONE / IPAD
-             */
 
             if (
                 dispositivoIOS() &&
                 !eventoInstalacionPwa
             ) {
 
-                instruccionInstalacionIos.hidden =
-                    false;
+                if (
+                    instruccionInstalacionIos
+                ) {
 
+                    instruccionInstalacionIos.hidden =
+                        false;
 
-                btnInstalarPwa.style.display =
-                    "none";
+                }
 
 
                 return;
 
             }
 
-
-            /*
-             * CHROME / EDGE / ANDROID
-             */
 
             if (
                 !eventoInstalacionPwa
@@ -2591,7 +3603,8 @@ if (btnInstalarPwa) {
 
 
             const resultado =
-                await eventoInstalacionPwa.userChoice;
+                await eventoInstalacionPwa
+                    .userChoice;
 
 
             eventoInstalacionPwa =
@@ -2609,6 +3622,7 @@ if (btnInstalarPwa) {
                 console.log(
                     "📲 Instalación aceptada"
                 );
+
 
             } else {
 
@@ -2628,7 +3642,9 @@ if (btnInstalarPwa) {
    AHORA NO
 ===================================================== */
 
-if (btnAhoraNoPwa) {
+if (
+    btnAhoraNoPwa
+) {
 
     btnAhoraNoPwa.addEventListener(
         "click",
@@ -2644,14 +3660,11 @@ if (btnAhoraNoPwa) {
 
             localStorage.setItem(
                 CLAVE_RECORDAR_INSTALACION,
-                String(recordarDespues)
+                String(
+                    recordarDespues
+                )
             );
 
-
-            /*
-             * Volvemos a ofrecerla
-             * dentro de 5 minutos.
-             */
 
             programarInvitacionInstalacion(
                 DEMORA_REINTENTO_INSTALACION
@@ -2724,20 +3737,16 @@ if (
         Date.now();
 
 
-    /*
-     * Si anteriormente tocó "Ahora no"
-     * y todavía no pasaron los 5 minutos,
-     * respetamos el tiempo restante.
-     */
-
     if (
-        recordarDespues > ahora
+        recordarDespues >
+        ahora
     ) {
 
         programarInvitacionInstalacion(
             recordarDespues -
             ahora
         );
+
 
     } else {
 

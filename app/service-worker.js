@@ -2,7 +2,7 @@
 
 
 const CACHE_NAME =
-    "anotador-truco-app-v5";
+    "anotador-truco-app-v7";
 
 
 /* =====================================================
@@ -23,7 +23,9 @@ const ARCHIVOS = [
 
     "./icons/icon-192.png",
 
-    "./icons/icon-512.png"
+    "./icons/icon-512.png",
+
+    "./icons/qr-app.png"
 
 ];
 
@@ -156,6 +158,16 @@ self.addEventListener(
                             event.request
                         )
                             .then(respuesta => {
+
+                                if (
+                                    !respuesta ||
+                                    !respuesta.ok
+                                ) {
+
+                                    return respuesta;
+
+                                }
+
 
                                 const copia =
                                     respuesta.clone();
