@@ -1476,44 +1476,172 @@ function crearFuentes(
                     : 0;
 
 
-            const elemento =
-                document.createElement(
-                    "div"
-                );
+const elemento =
+    document.createElement(
+        "div"
+    );
 
 
-            elemento.className =
-                "fuente";
+elemento.className =
+    "fuente";
 
 
-            elemento.innerHTML = `
-
-                <span>
-
-                    ${fuente.icono}
-
-                    ${fuente.nombre}
-
-                </span>
+const nombreFuente =
+    document.createElement(
+        "span"
+    );
 
 
-                <strong>
-
-                    ${fuente.usuarios}
-                    ·
-                    ${porcentaje}%
-
-                </strong>
-
-            `;
+nombreFuente.textContent =
+    `${fuente.icono} ${fuente.nombre}`;
 
 
-            elementos.fuentes.appendChild(
-                elemento
-            );
+const datosFuente =
+    document.createElement(
+        "strong"
+    );
+
+
+datosFuente.textContent =
+    `${fuente.usuarios} · ${porcentaje}%`;
+
+
+elemento.appendChild(
+    nombreFuente
+);
+
+
+elemento.appendChild(
+    datosFuente
+);
+
+
+elementos.fuentes.appendChild(
+    elemento
+);
 
         }
     );
+
+}
+
+// =====================================================
+// COMPROBAR ACCESO ANTES DE CARGAR DATOS
+// =====================================================
+
+async function usuarioPuedeCargarDatos(
+    usuario
+) {
+
+    try {
+
+        const token =
+            await usuario.getIdToken();
+
+
+        const respuesta =
+            await fetch(
+                `${API_URL}/api/admin/check`,
+                {
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+
+                    }
+
+                }
+            );
+
+
+        if (
+            respuesta.status === 401 ||
+            respuesta.status === 403
+        ) {
+
+            localStorage.removeItem(
+                "adminAutorizadoUid"
+            );
+
+
+            return false;
+
+        }
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                `HTTP ${respuesta.status}`
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.autorizado !== true
+        ) {
+
+            return false;
+
+        }
+
+
+        localStorage.setItem(
+            "adminAutorizadoUid",
+            usuario.uid
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        /*
+         * Si no hay Internet,
+         * solamente permitimos usar
+         * datos offline al MISMO usuario
+         * autorizado anteriormente.
+         */
+
+        const uidAutorizado =
+            localStorage.getItem(
+                "adminAutorizadoUid"
+            );
+
+
+        if (
+            uidAutorizado ===
+            usuario.uid
+        ) {
+
+            console.warn(
+                "📴 Admin autorizado en modo offline."
+            );
+
+
+            return true;
+
+        }
+
+
+        console.warn(
+            "🔒 No se pudo autorizar la carga de datos.",
+            error
+        );
+
+
+        return false;
+
+    }
 
 }
 
@@ -1526,7 +1654,7 @@ onAuthStateChanged(
 
     auth,
 
-    usuario => {
+    async usuario => {
 
         if (
             !usuario
@@ -1542,12 +1670,29 @@ onAuthStateChanged(
         }
 
 
+        const autorizado =
+            await usuarioPuedeCargarDatos(
+                usuario
+            );
+
+
+        if (
+            !autorizado
+        ) {
+
+            console.warn(
+                "⛔ Usuario sin permisos. Estadísticas no cargadas."
+            );
+
+
+            return;
+
+        }
+
+
         console.log(
-
-            "🔓 Usuario autenticado:",
-
+            "🔓 Usuario autorizado:",
             usuario.email
-
         );
 
 

@@ -1,16 +1,30 @@
 "use strict";
 
+
+// =====================================================
+// CACHE
+// =====================================================
+
 const CACHE_ADMIN =
-    "anotador-truco-admin-v4";
+    "anotador-truco-admin-v5";
+
 
 const ARCHIVOS_ADMIN = [
+
     "./",
+
     "./admin.html",
+
     "./admin.css",
+
     "./admin.js",
+
     "./manifest.json",
+
     "./icons/admin-icon-192.png",
+
     "./icons/admin-icon-512.png"
+
 ];
 
 
@@ -24,17 +38,31 @@ self.addEventListener(
 
         event.waitUntil(
 
-            caches
-                .open(CACHE_ADMIN)
-                .then(cache =>
-                    cache.addAll(
+            (
+                async () => {
+
+                    const cache =
+                        await caches.open(
+                            CACHE_ADMIN
+                        );
+
+
+                    await cache.addAll(
                         ARCHIVOS_ADMIN
-                    )
-                )
+                    );
+
+
+                    /*
+                     * Activamos inmediatamente
+                     * la nueva versión.
+                     */
+
+                    await self.skipWaiting();
+
+                }
+            )()
 
         );
-
-        self.skipWaiting();
 
     }
 );
@@ -50,32 +78,49 @@ self.addEventListener(
 
         event.waitUntil(
 
-            caches
-                .keys()
-                .then(nombres =>
+            (
+                async () => {
 
-                    Promise.all(
+                    const nombres =
+                        await caches.keys();
+
+
+                    await Promise.all(
 
                         nombres
+
                             .filter(
                                 nombre =>
-                                    nombre !== CACHE_ADMIN &&
+
+                                    nombre !==
+                                    CACHE_ADMIN &&
+
                                     nombre.startsWith(
                                         "anotador-truco-admin-"
                                     )
                             )
+
                             .map(
                                 nombre =>
-                                    caches.delete(nombre)
+                                    caches.delete(
+                                        nombre
+                                    )
                             )
 
-                    )
+                    );
 
-                )
+
+                    /*
+                     * La versión nueva toma
+                     * el control inmediatamente.
+                     */
+
+                    await self.clients.claim();
+
+                }
+            )()
 
         );
-
-        self.clients.claim();
 
     }
 );
@@ -92,96 +137,313 @@ self.addEventListener(
         const request =
             event.request;
 
-        const url =
-            new URL(
-                request.url
-            );
 
-
-        // =============================================
-        // FIREBASE CDN
-        // =============================================
+        /*
+         * Solo trabajamos con GET.
+         */
 
         if (
-            url.hostname ===
-            "www.gstatic.com" &&
-            url.pathname.includes(
-                "/firebasejs/"
-            )
+            request.method !==
+            "GET"
         ) {
-
-            event.respondWith(
-
-                fetch(request)
-                    .then(response => {
-
-                        const copia =
-                            response.clone();
-
-                        caches
-                            .open(CACHE_ADMIN)
-                            .then(cache =>
-                                cache.put(
-                                    request,
-                                    copia
-                                )
-                            );
-
-                        return response;
-
-                    })
-                    .catch(() =>
-                        caches.match(
-                            request
-                        )
-                    )
-
-            );
 
             return;
 
         }
 
 
-        // =============================================
+        const url =
+            new URL(
+                request.url
+            );
+
+
+        // =================================================
+        // FIREBASE CDN
+        // =================================================
+
+        if (
+
+            url.hostname ===
+            "www.gstatic.com" &&
+
+            url.pathname.includes(
+                "/firebasejs/"
+            )
+
+        ) {
+
+            event.respondWith(
+
+                (
+                    async () => {
+
+                        try {
+
+                            /*
+                             * Primero Internet.
+                             */
+
+                            const response =
+                                await fetch(
+                                    request
+                                );
+
+
+                            /*
+                             * Solo guardamos
+                             * respuestas válidas.
+                             */
+
+                            if (
+                                response &&
+                                response.ok
+                            ) {
+
+                                const cache =
+                                    await caches.open(
+                                        CACHE_ADMIN
+                                    );
+
+
+                                await cache.put(
+                                    request,
+                                    response.clone()
+                                );
+
+                            }
+
+
+                            return response;
+
+
+                        } catch (error) {
+
+                            /*
+                             * Si no hay conexión,
+                             * usamos Firebase cacheado.
+                             */
+
+                            const cacheado =
+                                await caches.match(
+                                    request
+                                );
+
+
+                            if (
+                                cacheado
+                            ) {
+
+                                return cacheado;
+
+                            }
+
+
+                            throw error;
+
+                        }
+
+                    }
+                )()
+
+            );
+
+
+            return;
+
+        }
+
+
+        // =================================================
         // ARCHIVOS DEL ADMIN
-        // =============================================
+        // =================================================
 
         if (
             url.origin ===
             self.location.origin
         ) {
 
-            event.respondWith(
 
-                caches
-                    .match(request)
-                    .then(cacheado => {
+            // =============================================
+            // NAVEGACIÓN
+            // =============================================
 
-                        if (cacheado) {
-                            return cacheado;
-                        }
+            if (
+                request.mode ===
+                "navigate"
+            ) {
 
-                        return fetch(request)
-                            .then(response => {
+                event.respondWith(
 
-                                const copia =
-                                    response.clone();
+                    (
+                        async () => {
 
-                                caches
-                                    .open(CACHE_ADMIN)
-                                    .then(cache =>
-                                        cache.put(
-                                            request,
-                                            copia
-                                        )
+                            try {
+
+                                /*
+                                 * Para HTML intentamos
+                                 * primero obtener la
+                                 * versión más nueva.
+                                 */
+
+                                const response =
+                                    await fetch(
+                                        request
                                     );
+
+
+                                if (
+                                    response &&
+                                    response.ok
+                                ) {
+
+                                    const cache =
+                                        await caches.open(
+                                            CACHE_ADMIN
+                                        );
+
+
+                                    await cache.put(
+                                        request,
+                                        response.clone()
+                                    );
+
+                                }
+
 
                                 return response;
 
-                            });
 
-                    })
+                            } catch (error) {
+
+                                /*
+                                 * Sin Internet:
+                                 * buscamos primero la
+                                 * página solicitada.
+                                 */
+
+                                const cacheado =
+                                    await caches.match(
+                                        request
+                                    );
+
+
+                                if (
+                                    cacheado
+                                ) {
+
+                                    return cacheado;
+
+                                }
+
+
+                                /*
+                                 * Último recurso:
+                                 * admin.html.
+                                 */
+
+                                const adminOffline =
+                                    await caches.match(
+                                        "./admin.html"
+                                    );
+
+
+                                if (
+                                    adminOffline
+                                ) {
+
+                                    return adminOffline;
+
+                                }
+
+
+                                return Response.error();
+
+                            }
+
+                        }
+                    )()
+
+                );
+
+
+                return;
+
+            }
+
+
+            // =============================================
+            // CSS / JS / MANIFEST / ICONOS
+            // =============================================
+
+            event.respondWith(
+
+                (
+                    async () => {
+
+                        /*
+                         * Primero buscamos
+                         * en el caché.
+                         */
+
+                        const cacheado =
+                            await caches.match(
+                                request
+                            );
+
+
+                        if (
+                            cacheado
+                        ) {
+
+                            return cacheado;
+
+                        }
+
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    request
+                                );
+
+
+                            /*
+                             * Nunca cacheamos
+                             * errores 404, 500, etc.
+                             */
+
+                            if (
+                                response &&
+                                response.ok
+                            ) {
+
+                                const cache =
+                                    await caches.open(
+                                        CACHE_ADMIN
+                                    );
+
+
+                                await cache.put(
+                                    request,
+                                    response.clone()
+                                );
+
+                            }
+
+
+                            return response;
+
+
+                        } catch (error) {
+
+                            return Response.error();
+
+                        }
+
+                    }
+                )()
 
             );
 

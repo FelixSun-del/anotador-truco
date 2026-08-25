@@ -457,6 +457,9 @@
     const auth =
         getAuth(app);
 
+    const API_ADMIN_URL =
+        "https://anotador-truco-backend.onrender.com";
+
     const login =
         document.getElementById("login");
 
@@ -720,29 +723,30 @@ btnCerrarSesion.addEventListener(
              */
 
             localStorage.removeItem(
-                "adminSesionExpira"
-            );
+    "adminSesionExpira"
+);
 
-            localStorage.removeItem(
-                "adminSesionDias"
-            );
+localStorage.removeItem(
+    "adminSesionDias"
+);
+
+localStorage.removeItem(
+    "adminAutorizadoUid"
+);
 
 
-            /*
-             * También eliminamos las estadísticas
-             * guardadas offline.
-             *
-             * Esto evita que queden visibles
-             * en una PC compartida.
-             */
+/*
+ * También eliminamos las estadísticas
+ * guardadas offline.
+ */
 
-            localStorage.removeItem(
-                "adminDatos_7"
-            );
+localStorage.removeItem(
+    "adminDatos_7"
+);
 
-            localStorage.removeItem(
-                "adminDatos_30"
-            );
+localStorage.removeItem(
+    "adminDatos_30"
+);
 
 
             email.value =
@@ -784,108 +788,359 @@ btnCerrarSesion.addEventListener(
     }
 );
 
-    // =================================================
-    // COMPROBAR AUTENTICACIÓN
-    // =================================================
+// =================================================
+// COMPROBAR PERMISOS EN EL BACKEND
+// =================================================
 
-    onAuthStateChanged(
-        auth,
-        usuario => {
+async function comprobarAccesoAdmin(
+    usuario
+) {
 
-            if (usuario) {
+    try {
 
-                // =================================================
-                // RANGO DEL USUARIO
-                // =================================================
+        const token =
+            await usuario.getIdToken();
 
-                if (
-                    usuario.email ===
-                    "f341274@gmail.com"
-                ) {
 
-                    rangoUsuario.textContent =
-                        "👑 Administrador · FélixSun";
+        const respuesta =
+            await fetch(
+                `${API_ADMIN_URL}/api/admin/check`,
+                {
 
-                    document.title =
-                        "📊 Admin · Anotador de Truco";
+                    headers: {
 
-                } else {
+                        Authorization:
+                            `Bearer ${token}`
 
-                    rangoUsuario.textContent =
-                        "🛡️ Moderador";
-
-                    document.title =
-                        "🛡️ Panel · Anotador de Truco";
+                    }
 
                 }
+            );
 
-                if (usuario) {
 
-    const expiracion =
-        Number(
+        /*
+         * El backend respondió expresamente
+         * que este usuario NO tiene acceso.
+         */
+
+        if (
+            respuesta.status === 401 ||
+            respuesta.status === 403
+        ) {
+
+            localStorage.removeItem(
+                "adminAutorizadoUid"
+            );
+
+
+            return {
+
+                autorizado: false,
+
+                motivo:
+                    "sin_permiso"
+
+            };
+
+        }
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                `HTTP ${respuesta.status}`
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.autorizado !== true
+        ) {
+
+            localStorage.removeItem(
+                "adminAutorizadoUid"
+            );
+
+
+            return {
+
+                autorizado: false,
+
+                motivo:
+                    "sin_permiso"
+
+            };
+
+        }
+
+
+        /*
+         * Guardamos QUÉ usuario fue
+         * autorizado por el servidor.
+         *
+         * Esto permite reconocerlo
+         * cuando el Admin está offline.
+         */
+
+        localStorage.setItem(
+            "adminAutorizadoUid",
+            usuario.uid
+        );
+
+
+        return {
+
+            autorizado: true,
+
+            email:
+                datos.email ||
+                usuario.email,
+
+            offline: false
+
+        };
+
+
+    } catch (error) {
+
+        /*
+         * Puede ser que simplemente
+         * estemos sin conexión.
+         *
+         * Permitimos modo offline SOLO
+         * si este MISMO usuario ya había
+         * sido autorizado anteriormente.
+         */
+
+        const uidAutorizado =
             localStorage.getItem(
-                "adminSesionExpira"
-            )
+                "adminAutorizadoUid"
+            );
+
+
+        if (
+            uidAutorizado ===
+            usuario.uid
+        ) {
+
+            console.warn(
+                "📴 Sin conexión. Usando autorización guardada."
+            );
+
+
+            return {
+
+                autorizado: true,
+
+                email:
+                    usuario.email,
+
+                offline: true
+
+            };
+
+        }
+
+
+        console.warn(
+            "No se pudo verificar el acceso administrativo:",
+            error
         );
 
 
-    if (
-        expiracion &&
-        Date.now() > expiracion
-    ) {
+        return {
 
-        localStorage.removeItem(
-            "adminSesionExpira"
-        );
+            autorizado: false,
 
-        localStorage.removeItem(
-            "adminSesionDias"
-        );
+            motivo:
+                "sin_verificar"
 
-
-        signOut(auth);
-
-
-        mensajeLogin.textContent =
-            "Tu sesión guardada venció. Iniciá sesión nuevamente.";
-
-
-        return;
+        };
 
     }
 
 }
 
-                // =================================================
-                // MOSTRAR PANEL
-                // =================================================
+    // =================================================
+    // COMPROBAR AUTENTICACIÓN
+    // =================================================
 
-                login.style.display =
-                    "none";
+    onAuthStateChanged(
+    auth,
+    async usuario => {
 
-                adminPanel.style.display =
-                    "block";
+        /* =============================================
+           NO HAY SESIÓN
+        ============================================= */
+
+        if (
+            !usuario
+        ) {
+
+            document.title =
+                "🔐 Iniciar sesión · Anotador de Truco";
+
+
+            login.style.display =
+                "flex";
+
+
+            adminPanel.style.display =
+                "none";
+
+
+            return;
+
+        }
+
+
+        /* =============================================
+           COMPROBAR VENCIMIENTO 7 / 30 DÍAS
+        ============================================= */
+
+        const expiracion =
+            Number(
+                localStorage.getItem(
+                    "adminSesionExpira"
+                )
+            );
+
+
+        if (
+            expiracion &&
+            Date.now() >
+            expiracion
+        ) {
+
+            localStorage.removeItem(
+                "adminSesionExpira"
+            );
+
+            localStorage.removeItem(
+                "adminSesionDias"
+            );
+
+            localStorage.removeItem(
+                "adminAutorizadoUid"
+            );
+
+
+            await signOut(
+                auth
+            );
+
+
+            mensajeLogin.textContent =
+                "Tu sesión guardada venció. Iniciá sesión nuevamente.";
+
+
+            return;
+
+        }
+
+
+        /* =============================================
+           COMPROBAR PERMISOS REALES
+        ============================================= */
+
+        const acceso =
+            await comprobarAccesoAdmin(
+                usuario
+            );
+
+
+        if (
+            !acceso.autorizado
+        ) {
+
+            adminPanel.style.display =
+                "none";
+
+
+            login.style.display =
+                "flex";
+
+
+            if (
+                acceso.motivo ===
+                "sin_permiso"
+            ) {
+
+                mensajeLogin.textContent =
+                    "⛔ Esta cuenta no tiene permisos para acceder al panel.";
+
+
+                await signOut(
+                    auth
+                );
 
 
             } else {
 
-                // =================================================
-                // SIN SESIÓN
-                // =================================================
-
-                document.title =
-                    "🔐 Iniciar sesión · Anotador de Truco";
-
-                login.style.display =
-                    "flex";
-
-                adminPanel.style.display =
-                    "none";
+                mensajeLogin.textContent =
+                    "No se pudo verificar tu acceso. Conectate a Internet e intentá nuevamente.";
 
             }
 
+
+            return;
+
         }
-    );
+
+
+        /* =============================================
+           USUARIO AUTORIZADO
+        ============================================= */
+
+        if (
+            acceso.email ===
+            "f341274@gmail.com"
+        ) {
+
+            rangoUsuario.textContent =
+                acceso.offline
+                    ? "👑 Administrador · FélixSun · 📴 Offline"
+                    : "👑 Administrador · FélixSun";
+
+
+            document.title =
+                "📊 Admin · Anotador de Truco";
+
+
+        } else {
+
+            rangoUsuario.textContent =
+                acceso.offline
+                    ? "🛡️ Moderador · 📴 Offline"
+                    : "🛡️ Moderador";
+
+
+            document.title =
+                "🛡️ Panel · Anotador de Truco";
+
+        }
+
+
+        /* =============================================
+           MOSTRAR PANEL
+        ============================================= */
+
+        login.style.display =
+            "none";
+
+
+        adminPanel.style.display =
+            "block";
+
+    }
+);
 
 </script>
 
@@ -903,9 +1158,13 @@ btnCerrarSesion.addEventListener(
             () => {
 
                 navigator.serviceWorker
-                    .register(
-                        "./admin-service-worker.js"
-                    )
+    .register(
+        "./admin-service-worker.js",
+        {
+            updateViaCache:
+                "none"
+        }
+    )
                     .then(() => {
 
                         console.log(
