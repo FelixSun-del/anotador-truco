@@ -1,16 +1,30 @@
 "use strict";
 
-const CACHE_NAME = "anotador-truco-app-v3";
+
+const CACHE_NAME =
+    "anotador-truco-app-v3";
+
+
+/* =====================================================
+   ARCHIVOS PRINCIPALES
+===================================================== */
 
 const ARCHIVOS = [
+
     "./",
+
     "./index.html",
+
     "./Style.css",
+
     "./script.js",
+
     "./manifest.json",
-    "./service-worker.js",
+
     "./icons/icon-192.png",
+
     "./icons/icon-512.png"
+
 ];
 
 
@@ -18,119 +32,187 @@ const ARCHIVOS = [
    INSTALACIÓN
 ===================================================== */
 
-self.addEventListener("install", event => {
+self.addEventListener(
+    "install",
+    event => {
 
-    event.waitUntil(
+        event.waitUntil(
 
-        caches.open(CACHE_NAME)
-            .then(cache => {
+            caches
+                .open(CACHE_NAME)
+                .then(cache => {
 
-                return cache.addAll(ARCHIVOS);
+                    return cache.addAll(
+                        ARCHIVOS
+                    );
 
-            })
-            .then(() => {
+                })
+                .then(() => {
 
-                return self.skipWaiting();
+                    return self.skipWaiting();
 
-            })
+                })
 
-    );
+        );
 
-});
+    }
+);
 
 
 /* =====================================================
    ACTIVACIÓN
 ===================================================== */
 
-self.addEventListener("activate", event => {
+self.addEventListener(
+    "activate",
+    event => {
 
-    event.waitUntil(
+        event.waitUntil(
 
-        caches.keys()
-            .then(nombres => {
+            caches
+                .keys()
+                .then(nombres => {
 
-                return Promise.all(
+                    return Promise.all(
 
-                    nombres
-                        .filter(nombre => {
-                            return nombre !== CACHE_NAME;
-                        })
-                        .map(nombre => {
-                            return caches.delete(nombre);
-                        })
+                        nombres
+                            .filter(nombre => {
 
-                );
+                                return (
+                                    nombre !==
+                                    CACHE_NAME
+                                );
 
-            })
-            .then(() => {
+                            })
+                            .map(nombre => {
 
-                return self.clients.claim();
+                                return caches.delete(
+                                    nombre
+                                );
 
-            })
+                            })
 
-    );
+                    );
 
-});
+                })
+                .then(() => {
+
+                    return self.clients.claim();
+
+                })
+
+        );
+
+    }
+);
 
 
 /* =====================================================
    FUNCIONAMIENTO OFFLINE
 ===================================================== */
 
-self.addEventListener("fetch", event => {
+self.addEventListener(
+    "fetch",
+    event => {
 
-    /*
-     * Solo manejamos solicitudes GET.
-     */
-    if (event.request.method !== "GET") {
-        return;
-    }
+        if (
+            event.request.method !== "GET"
+        ) {
 
+            return;
 
-    event.respondWith(
-
-        caches.match(event.request)
-            .then(respuestaCache => {
-
-                /*
-                 * Si existe en caché,
-                 * usamos la versión guardada.
-                 */
-                if (respuestaCache) {
-                    return respuestaCache;
-                }
+        }
 
 
-                /*
-                 * Si no está en caché,
-                 * intentamos obtenerla de Internet.
-                 */
-                return fetch(event.request)
-                    .then(respuestaRed => {
+        const url =
+            new URL(
+                event.request.url
+            );
 
-                        /*
-                         * Solo devolvemos la respuesta.
-                         * No guardamos automáticamente
-                         * recursos externos.
-                         */
-                        return respuestaRed;
+
+        /*
+         * Recursos de nuestra propia APP.
+         */
+
+        if (
+            url.origin ===
+            self.location.origin
+        ) {
+
+            event.respondWith(
+
+                caches
+                    .match(event.request)
+                    .then(cache => {
+
+                        if (cache) {
+
+                            return cache;
+
+                        }
+
+
+                        return fetch(
+                            event.request
+                        )
+                            .then(respuesta => {
+
+                                const copia =
+                                    respuesta.clone();
+
+
+                                caches
+                                    .open(
+                                        CACHE_NAME
+                                    )
+                                    .then(cacheActual => {
+
+                                        cacheActual.put(
+                                            event.request,
+                                            copia
+                                        );
+
+                                    });
+
+
+                                return respuesta;
+
+                            })
+                            .catch(() => {
+
+                                /*
+                                 * Solamente una navegación
+                                 * recibe el index como respaldo.
+                                 */
+
+                                if (
+                                    event.request.mode ===
+                                    "navigate"
+                                ) {
+
+                                    return caches.match(
+                                        "./index.html"
+                                    );
+
+                                }
+
+
+                                return new Response(
+                                    "",
+                                    {
+                                        status: 503,
+                                        statusText:
+                                            "Offline"
+                                    }
+                                );
+
+                            });
 
                     })
-                    .catch(() => {
 
-                        /*
-                         * Si no hay Internet,
-                         * volvemos al index.
-                         */
-                        return caches.match(
-                            "./index.html"
-                        );
+            );
 
-                    });
+        }
 
-            })
-
-    );
-
-});
+    }
+);
