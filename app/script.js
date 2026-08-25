@@ -420,6 +420,54 @@ const botonAdmin =
 const API_URL =
     "https://anotador-truco-backend.onrender.com";
 
+function actualizarBotonAdminLocal() {
+
+    if (
+        !botonAdmin
+    ) {
+
+        return;
+
+    }
+
+
+    const uidAutorizado =
+        localStorage.getItem(
+            "adminAutorizadoUid"
+        );
+
+
+    if (
+        uidAutorizado
+    ) {
+
+        botonAdmin
+            .classList
+            .remove(
+                "oculto"
+            );
+
+
+    } else {
+
+        botonAdmin
+            .classList
+            .add(
+                "oculto"
+            );
+
+    }
+
+}
+
+
+/*
+ * Mostrar inmediatamente el botón
+ * si este navegador ya fue autorizado
+ * desde el Admin Panel.
+ */
+
+actualizarBotonAdminLocal();
 
 /* =====================================================
    COMPROBAR ADMINISTRADOR
@@ -436,18 +484,16 @@ async function comprobarAdministrador(
     }
 
 
-    botonAdmin
-        .classList
-        .add(
-            "oculto"
-        );
+actualizarBotonAdminLocal();
 
 
-    if (!user) {
+if (
+    !user
+) {
 
-        return;
+    return;
 
-    }
+}
 
 
     const expiracionGuardada =
@@ -475,15 +521,22 @@ async function comprobarAdministrador(
         ) {
 
             localStorage.removeItem(
-                "adminSesionExpira"
-            );
+    "adminSesionExpira"
+);
 
-            localStorage.removeItem(
-                "adminSesionDias"
-            );
+localStorage.removeItem(
+    "adminSesionDias"
+);
+
+localStorage.removeItem(
+    "adminAutorizadoUid"
+);
 
 
-            await auth.signOut();
+actualizarBotonAdminLocal();
+
+
+await auth.signOut();
 
 
             return;
