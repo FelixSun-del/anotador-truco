@@ -343,6 +343,35 @@ const botonAdmin =
 const API_URL =
     "https://anotador-truco-backend.onrender.com";
 
+function actualizarBotonAdminLocal() {
+
+    if (
+        !botonAdmin
+    ) {
+
+        return;
+
+    }
+
+
+    const dispositivoReconocido =
+        localStorage.getItem(
+            "adminDispositivoReconocido"
+        );
+
+
+    botonAdmin
+        .classList
+        .toggle(
+            "oculto",
+            dispositivoReconocido !==
+            "true"
+        );
+
+}
+
+
+actualizarBotonAdminLocal();
 
 // =====================================================
 // COMPROBAR ADMINISTRADOR
@@ -355,16 +384,16 @@ async function comprobarAdministrador(user) {
     }
 
 
-    // Siempre empieza oculto
-    botonAdmin.classList.add(
-        "oculto"
-    );
+actualizarBotonAdminLocal();
 
 
-    // No hay usuario autenticado
-    if (!user) {
-        return;
-    }
+if (
+    !user
+) {
+
+    return;
+
+}
 
 
     // =================================================
@@ -448,20 +477,30 @@ async function comprobarAdministrador(user) {
 
 
         // AUTORIZADO
-        if (datos.autorizado === true) {
+        if (
+    datos.autorizado ===
+    true
+) {
 
-            botonAdmin.classList.remove(
-                "oculto"
-            );
+    localStorage.setItem(
+        "adminDispositivoReconocido",
+        "true"
+    );
 
 
-            console.log(
-                "🔐 Administrador autorizado:",
-                datos.email
-            );
+    botonAdmin
+        .classList
+        .remove(
+            "oculto"
+        );
 
-        }
 
+    console.log(
+        "🔐 Administrador autorizado:",
+        datos.email
+    );
+
+}
 
     } catch (error) {
 
@@ -503,7 +542,9 @@ if (firebaseDisponible) {
 // ABRIR PANEL ADMIN
 // =====================================================
 
-if (botonAdmin) {
+if (
+    botonAdmin
+) {
 
     botonAdmin.addEventListener(
         "click",
