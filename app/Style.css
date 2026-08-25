@@ -3418,12 +3418,175 @@ button {
 
     display: block;
 
+}
+
+
+/* =====================================================
+   BOTÓN GRANDE · PANTALLA 0
+===================================================== */
+
+#pantalla0 .abrir-compartir-app {
+
     width: 100%;
 
-    margin-top: 12px;
+    max-width: 560px;
+
+    min-height: 48px;
+
+    margin:
+        12px auto 0;
 
 }
 
+/* =====================================================
+   BOTÓN COMPARTIR · PANTALLAS 1 A 6
+===================================================== */
+
+.boton-compartir-flotante {
+
+    position: fixed;
+
+    top:
+        max(
+            14px,
+            calc(
+                env(safe-area-inset-top) +
+                8px
+            )
+        );
+
+    right:
+        max(
+            14px,
+            calc(
+                env(safe-area-inset-right) +
+                8px
+            )
+        );
+
+    z-index: 9000;
+
+    width: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding:
+        9px 13px;
+
+    border:
+        1px solid
+        rgba(92, 68, 47, 0.24);
+
+    border-radius: 999px;
+
+    background:
+        rgba(
+            244,
+            234,
+            215,
+            0.96
+        );
+
+    color:
+        #2d241d;
+
+    font-family: inherit;
+
+    font-size: 0.88rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 14px
+        rgba(0, 0, 0, 0.18);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+
+    backdrop-filter:
+        blur(8px);
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+
+}
+
+
+.boton-compartir-flotante:hover {
+
+    background:
+        #eee0c8;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 6px 16px
+        rgba(0, 0, 0, 0.22);
+
+}
+
+
+.boton-compartir-flotante:active {
+
+    transform:
+        scale(0.96);
+
+}
+
+
+.boton-compartir-flotante span {
+
+    font-size: 1rem;
+
+    line-height: 1;
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .boton-compartir-flotante {
+
+        top:
+            max(
+                10px,
+                calc(
+                    env(safe-area-inset-top) +
+                    7px
+                )
+            );
+
+        right: 10px;
+
+        padding:
+            8px 11px;
+
+        gap: 6px;
+
+        font-size: 0.8rem;
+
+        box-shadow:
+            0 3px 12px
+            rgba(0, 0, 0, 0.18);
+
+    }
+
+}
 
 body.compartir-app-abierto {
 

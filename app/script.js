@@ -371,6 +371,39 @@ function mostrarPantalla(
 
     }
 
+
+    /* =================================================
+       COMPARTIR · PANTALLAS 1 A 6
+    ================================================= */
+
+    const compartirFlotante =
+        document.getElementById(
+            "compartirFlotante"
+        );
+
+
+    if (
+        compartirFlotante
+    ) {
+
+        const mostrarCompartir =
+            numero === 1 ||
+            numero === 2 ||
+            numero === 3 ||
+            numero === 4 ||
+            numero === 5 ||
+            numero === 6;
+
+
+        compartirFlotante
+            .classList
+            .toggle(
+                "oculto",
+                !mostrarCompartir
+            );
+
+    }
+
 }
 
 
