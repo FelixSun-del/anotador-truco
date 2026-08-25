@@ -3216,3 +3216,196 @@ button {
     text-align: center;
 
 }
+
+/* =====================================================
+   INVITACIÓN PARA INSTALAR LA APP
+===================================================== */
+
+.invitacion-instalacion {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 22px;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            calc(100% - 28px),
+            480px
+        );
+
+    z-index: 9999;
+
+    animation:
+        invitacionInstalarAparecer
+        .35s
+        ease;
+
+}
+
+
+.invitacion-instalacion-contenido {
+
+    padding: 18px;
+
+    border:
+        2px solid
+        rgba(138,52,52,.35);
+
+    border-radius: 16px;
+
+    background:
+        #fffaf0;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.22);
+
+}
+
+
+.invitacion-instalacion-icono {
+
+    margin-bottom: 5px;
+
+    text-align: center;
+
+    font-size: 2rem;
+
+}
+
+
+.invitacion-instalacion-texto {
+
+    text-align: center;
+
+}
+
+
+.invitacion-instalacion-texto strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #642424;
+
+    font-size: 1.08rem;
+
+}
+
+
+.invitacion-instalacion-texto p {
+
+    margin: 0;
+
+    color: #6d5b48;
+
+    font-size: .9rem;
+
+    line-height: 1.45;
+
+}
+
+
+.invitacion-instalacion-botones {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 9px;
+
+    margin-top: 15px;
+
+}
+
+
+.invitacion-instalacion-botones button {
+
+    margin: 0;
+
+    width: 100%;
+
+}
+
+
+.instruccion-instalacion-ios {
+
+    margin-top:
+        12px !important;
+
+    padding: 10px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(138,52,52,.08);
+
+    color:
+        #642424 !important;
+
+    font-weight: 700;
+
+}
+
+
+@keyframes invitacionInstalarAparecer {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(25px);
+
+    }
+
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0);
+
+    }
+
+}
+
+
+/* CELULAR */
+
+@media (max-width: 520px) {
+
+    .invitacion-instalacion {
+
+        bottom: 12px;
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    .invitacion-instalacion-contenido {
+
+        padding: 15px;
+
+    }
+
+
+    .invitacion-instalacion-botones {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}

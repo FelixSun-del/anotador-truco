@@ -2299,7 +2299,372 @@ if (
 }
 
 /* =====================================================
-   PWA
+   PWA · INSTALACIÓN
+===================================================== */
+
+const invitacionInstalar =
+    document.getElementById(
+        "invitacionInstalar"
+    );
+
+
+const btnInstalarPwa =
+    document.getElementById(
+        "btnInstalarPwa"
+    );
+
+
+const btnAhoraNoPwa =
+    document.getElementById(
+        "btnAhoraNoPwa"
+    );
+
+
+const instruccionInstalacionIos =
+    document.getElementById(
+        "instruccionInstalacionIos"
+    );
+
+
+/* =====================================================
+   TIEMPOS
+===================================================== */
+
+const DEMORA_INICIAL_INSTALACION =
+    2 * 60 * 1000;
+
+const DEMORA_REINTENTO_INSTALACION =
+    5 * 60 * 1000;
+
+
+const CLAVE_RECORDAR_INSTALACION =
+    "anotadorTruco_recordarInstalacion";
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+let eventoInstalacionPwa =
+    null;
+
+
+let temporizadorInstalacionPwa =
+    null;
+
+
+let tiempoInicialCumplido =
+    false;
+
+
+/* =====================================================
+   DETECTAR SI YA ESTÁ INSTALADA
+===================================================== */
+
+function appEstaInstalada() {
+
+    const modoStandalone =
+        window.matchMedia(
+            "(display-mode: standalone)"
+        ).matches;
+
+
+    const iosStandalone =
+        window.navigator.standalone ===
+        true;
+
+
+    return (
+        modoStandalone ||
+        iosStandalone
+    );
+
+}
+
+
+/* =====================================================
+   DETECTAR IOS
+===================================================== */
+
+function dispositivoIOS() {
+
+    return /iphone|ipad|ipod/i.test(
+        navigator.userAgent
+    );
+
+}
+
+
+/* =====================================================
+   OCULTAR INVITACIÓN
+===================================================== */
+
+function ocultarInvitacionInstalacion() {
+
+    if (!invitacionInstalar) {
+        return;
+    }
+
+
+    invitacionInstalar.hidden =
+        true;
+
+}
+
+
+/* =====================================================
+   MOSTRAR INVITACIÓN
+===================================================== */
+
+function mostrarInvitacionInstalacion() {
+
+    if (
+        !invitacionInstalar ||
+        appEstaInstalada()
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Chrome / Edge / Android
+     */
+
+    if (eventoInstalacionPwa) {
+
+        btnInstalarPwa.textContent =
+            "📲 Instalar app";
+
+
+        instruccionInstalacionIos.hidden =
+            true;
+
+
+        invitacionInstalar.hidden =
+            false;
+
+
+        return;
+
+    }
+
+
+    /*
+     * iPhone / iPad
+     */
+
+    if (dispositivoIOS()) {
+
+        btnInstalarPwa.textContent =
+            "📲 Cómo instalar";
+
+
+        invitacionInstalar.hidden =
+            false;
+
+    }
+
+}
+
+
+/* =====================================================
+   PROGRAMAR INVITACIÓN
+===================================================== */
+
+function programarInvitacionInstalacion(
+    demora
+) {
+
+    if (
+        temporizadorInstalacionPwa
+    ) {
+
+        clearTimeout(
+            temporizadorInstalacionPwa
+        );
+
+    }
+
+
+    temporizadorInstalacionPwa =
+        setTimeout(
+            () => {
+
+                tiempoInicialCumplido =
+                    true;
+
+
+                mostrarInvitacionInstalacion();
+
+            },
+            demora
+        );
+
+}
+
+
+/* =====================================================
+   CHROME · INSTALACIÓN DISPONIBLE
+===================================================== */
+
+window.addEventListener(
+    "beforeinstallprompt",
+    evento => {
+
+        /*
+         * Evitamos que Chrome muestre
+         * su aviso automáticamente.
+         */
+
+        evento.preventDefault();
+
+
+        eventoInstalacionPwa =
+            evento;
+
+
+        /*
+         * Si los 2 minutos ya pasaron,
+         * podemos mostrar nuestro aviso.
+         */
+
+        if (
+            tiempoInicialCumplido
+        ) {
+
+            mostrarInvitacionInstalacion();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   BOTÓN INSTALAR
+===================================================== */
+
+if (btnInstalarPwa) {
+
+    btnInstalarPwa.addEventListener(
+        "click",
+        async () => {
+
+            /*
+             * IPHONE / IPAD
+             */
+
+            if (
+                dispositivoIOS() &&
+                !eventoInstalacionPwa
+            ) {
+
+                instruccionInstalacionIos.hidden =
+                    false;
+
+
+                btnInstalarPwa.style.display =
+                    "none";
+
+
+                return;
+
+            }
+
+
+            /*
+             * CHROME / EDGE / ANDROID
+             */
+
+            if (
+                !eventoInstalacionPwa
+            ) {
+
+                return;
+
+            }
+
+
+            eventoInstalacionPwa.prompt();
+
+
+            const resultado =
+                await eventoInstalacionPwa.userChoice;
+
+
+            eventoInstalacionPwa =
+                null;
+
+
+            ocultarInvitacionInstalacion();
+
+
+            if (
+                resultado.outcome ===
+                "accepted"
+            ) {
+
+                console.log(
+                    "📲 Instalación aceptada"
+                );
+
+            } else {
+
+                console.log(
+                    "📲 Instalación cancelada"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   AHORA NO
+===================================================== */
+
+if (btnAhoraNoPwa) {
+
+    btnAhoraNoPwa.addEventListener(
+        "click",
+        () => {
+
+            ocultarInvitacionInstalacion();
+
+
+            const recordarDespues =
+                Date.now() +
+                DEMORA_REINTENTO_INSTALACION;
+
+
+            localStorage.setItem(
+                CLAVE_RECORDAR_INSTALACION,
+                String(recordarDespues)
+            );
+
+
+            /*
+             * Volvemos a ofrecerla
+             * dentro de 5 minutos.
+             */
+
+            programarInvitacionInstalacion(
+                DEMORA_REINTENTO_INSTALACION
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   APP INSTALADA
 ===================================================== */
 
 window.addEventListener(
@@ -2309,6 +2674,19 @@ window.addEventListener(
         console.log(
             "📱 Anotador de Truco instalado"
         );
+
+
+        eventoInstalacionPwa =
+            null;
+
+
+        ocultarInvitacionInstalacion();
+
+
+        localStorage.removeItem(
+            CLAVE_RECORDAR_INSTALACION
+        );
+
 
         if (
             typeof gtag ===
@@ -2324,3 +2702,49 @@ window.addEventListener(
 
     }
 );
+
+
+/* =====================================================
+   INICIAR TEMPORIZADOR
+===================================================== */
+
+if (
+    !appEstaInstalada()
+) {
+
+    const recordarDespues =
+        Number(
+            localStorage.getItem(
+                CLAVE_RECORDAR_INSTALACION
+            )
+        ) || 0;
+
+
+    const ahora =
+        Date.now();
+
+
+    /*
+     * Si anteriormente tocó "Ahora no"
+     * y todavía no pasaron los 5 minutos,
+     * respetamos el tiempo restante.
+     */
+
+    if (
+        recordarDespues > ahora
+    ) {
+
+        programarInvitacionInstalacion(
+            recordarDespues -
+            ahora
+        );
+
+    } else {
+
+        programarInvitacionInstalacion(
+            DEMORA_INICIAL_INSTALACION
+        );
+
+    }
+
+}
