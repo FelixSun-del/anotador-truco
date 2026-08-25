@@ -431,32 +431,19 @@ function actualizarBotonAdminLocal() {
     }
 
 
-    const uidAutorizado =
+    const dispositivoReconocido =
         localStorage.getItem(
-            "adminAutorizadoUid"
+            "adminDispositivoReconocido"
         );
 
 
-    if (
-        uidAutorizado
-    ) {
-
-        botonAdmin
-            .classList
-            .remove(
-                "oculto"
-            );
-
-
-    } else {
-
-        botonAdmin
-            .classList
-            .add(
-                "oculto"
-            );
-
-    }
+    botonAdmin
+        .classList
+        .toggle(
+            "oculto",
+            dispositivoReconocido !==
+            "true"
+        );
 
 }
 
@@ -588,23 +575,29 @@ await auth.signOut();
 
 
         if (
-            datos.autorizado ===
-            true
-        ) {
+    datos.autorizado ===
+    true
+) {
 
-            botonAdmin
-                .classList
-                .remove(
-                    "oculto"
-                );
+    localStorage.setItem(
+        "adminDispositivoReconocido",
+        "true"
+    );
 
 
-            console.log(
-                "🔐 Administrador autorizado:",
-                datos.email
-            );
+    botonAdmin
+        .classList
+        .remove(
+            "oculto"
+        );
 
-        }
+
+    console.log(
+        "🔐 Administrador autorizado:",
+        datos.email
+    );
+
+}
 
 
     } catch (error) {
