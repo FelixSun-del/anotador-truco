@@ -1083,6 +1083,11 @@ app.post(
                     ? req.body.comentario.trim()
                     : "";
 
+            const nombre =
+                typeof req.body?.nombre ===
+                    "string"
+                    ? req.body.nombre.trim()
+                    : "";
 
             // =============================================
             // VALIDAR ESTRELLAS
@@ -1101,6 +1106,20 @@ app.post(
                     .json({
                         error:
                             "La valoración debe ser de 1 a 5 estrellas."
+                    });
+
+            }
+            
+            if (
+                nombre.length >
+                30
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+                        error:
+                            "El nombre es demasiado largo."
                     });
 
             }
@@ -1182,6 +1201,8 @@ app.post(
                     "opiniones"
                 )
                 .add({
+
+                    nombre,
 
                     estrellas,
 

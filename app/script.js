@@ -2900,6 +2900,10 @@ const formOpinionApp =
         "formOpinionApp"
     );
 
+const nombreOpinion =
+    document.getElementById(
+        "nombreOpinion"
+    );
 
 const comentarioOpinion =
     document.getElementById(
@@ -2979,6 +2983,15 @@ function actualizarEstrellasOpinion(
 }
 
 function resetearOpinionApp() {
+
+        if (
+        nombreOpinion
+    ) {
+
+        nombreOpinion.value =
+            "";
+
+    }
 
     valorOpinion =
         0;
@@ -3271,6 +3284,12 @@ if (
                     ?.value
                     .trim() ||
                 "";
+            
+            const nombre =
+                nombreOpinion
+                    ?.value
+                    .trim() ||
+                "";
 
 
             /* =========================================
@@ -3319,13 +3338,14 @@ if (
 
                             body:
                                 JSON.stringify({
+                                    
+                                nombre,
 
-                                    estrellas:
-                                        valorOpinion,
+                                estrellas:
+                                    valorOpinion,
 
-                                    comentario
-
-                                })
+                                comentario
+                            })
 
                         }
                     );

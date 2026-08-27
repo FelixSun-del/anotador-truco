@@ -4576,3 +4576,89 @@ body.opinion-app-abierta {
     }
 
 }
+
+/* =====================================================
+   NOMBRE · OPINIÓN
+===================================================== */
+
+.opinion-nombre-label {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color:
+        var(--verde-oscuro);
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    text-align: left;
+
+}
+
+
+.opinion-nombre-label span {
+
+    color: #746657;
+
+    font-size: 0.82rem;
+
+    font-weight: 500;
+
+}
+
+
+.opinion-nombre {
+
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    padding:
+        12px 13px;
+
+    border:
+        1px solid
+        #c8b89d;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background:
+        #f7eddb;
+
+    color:
+        var(--texto);
+
+    font-family: inherit;
+
+    font-size: 0.95rem;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+}
+
+
+.opinion-nombre::placeholder {
+
+    color:
+        #8b7a68;
+
+}
+
+
+.opinion-nombre:focus {
+
+    border-color:
+        var(--boton-acento);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(138, 52, 52, 0.12);
+
+}
