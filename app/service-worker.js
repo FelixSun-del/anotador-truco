@@ -4,6 +4,9 @@
 const CACHE_NAME =
     "anotador-truco-app-v12";
 
+const CACHE_PREFIX =
+    "anotador-truco-app-";
+
 
 /* =====================================================
    ARCHIVOS PRINCIPALES
@@ -80,12 +83,15 @@ self.addEventListener(
                         nombres
                             .filter(nombre => {
 
-                                return (
-                                    nombre !==
-                                    CACHE_NAME
-                                );
+    return (
+        nombre.startsWith(
+            CACHE_PREFIX
+        ) &&
+        nombre !==
+        CACHE_NAME
+    );
 
-                            })
+})
                             .map(nombre => {
 
                                 return caches.delete(

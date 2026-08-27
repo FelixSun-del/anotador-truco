@@ -12,6 +12,11 @@ const {
 } = require("firebase-admin/auth");
 
 const {
+    getFirestore,
+    FieldValue
+} = require("firebase-admin/firestore");
+
+const {
     BetaAnalyticsDataClient
 } = require("@google-analytics/data");
 
@@ -31,6 +36,9 @@ const serviceAccount = require(
 initializeApp({
     credential: cert(serviceAccount)
 });
+
+const db =
+    getFirestore();
 
 
 // =====================================================
@@ -53,6 +61,18 @@ const PORT =
 
 const PROPERTY_ID =
     "549943222";
+
+const OPINION_COOLDOWN_MS =
+    60 * 1000;
+
+
+const ultimaOpinionPorIp =
+    new Map();
+
+app.set(
+    "trust proxy",
+    1
+);
 
 app.use(cors());
 
@@ -1035,6 +1055,174 @@ app.get(
                     "No se pudieron obtener los usuarios activos"
 
             });
+
+        }
+
+    }
+);
+
+// =====================================================
+// RECIBIR OPINIONES
+// =====================================================
+
+app.post(
+    "/api/opiniones",
+    async (req, res) => {
+
+        try {
+
+            const estrellas =
+                Number(
+                    req.body?.estrellas
+                );
+
+
+            const comentario =
+                typeof req.body?.comentario ===
+                    "string"
+                    ? req.body.comentario.trim()
+                    : "";
+
+
+            // =============================================
+            // VALIDAR ESTRELLAS
+            // =============================================
+
+            if (
+                !Number.isInteger(
+                    estrellas
+                ) ||
+                estrellas < 1 ||
+                estrellas > 5
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+                        error:
+                            "La valoración debe ser de 1 a 5 estrellas."
+                    });
+
+            }
+
+
+            // =============================================
+            // VALIDAR COMENTARIO
+            // =============================================
+
+            if (
+                comentario.length >
+                600
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+                        error:
+                            "El comentario es demasiado largo."
+                    });
+
+            }
+
+
+            // =============================================
+            // PROTECCIÓN BÁSICA CONTRA SPAM
+            // =============================================
+
+            const ip =
+                req.ip ||
+                req.socket.remoteAddress ||
+                "desconocido";
+
+
+            const ahora =
+                Date.now();
+
+
+            const ultimoEnvio =
+                ultimaOpinionPorIp.get(
+                    ip
+                );
+
+
+            if (
+                ultimoEnvio &&
+                ahora - ultimoEnvio <
+                    OPINION_COOLDOWN_MS
+            ) {
+
+                return res
+                    .status(429)
+                    .json({
+                        error:
+                            "Esperá un momento antes de enviar otra opinión."
+                    });
+
+            }
+
+
+            // =============================================
+            // GUARDAR EN FIRESTORE
+            // =============================================
+
+            await db
+                .collection(
+                    "opiniones"
+                )
+                .add({
+
+                    estrellas,
+
+                    comentario,
+
+                    fecha:
+                        FieldValue.serverTimestamp(),
+
+                    leida:
+                        false
+
+                });
+
+
+            // Solo guardamos temporalmente
+            // cuándo envió esa IP.
+            // La IP NO se guarda en Firebase.
+
+            ultimaOpinionPorIp.set(
+                ip,
+                ahora
+            );
+
+
+            return res
+                .status(201)
+                .json({
+
+                    ok:
+                        true,
+
+                    mensaje:
+                        "Opinión recibida."
+
+                });
+
+
+        } catch (error) {
+
+            console.error(
+                "❌ Error guardando opinión:",
+                error
+            );
+
+
+            return res
+                .status(500)
+                .json({
+
+                    error:
+                        "No se pudo guardar la opinión."
+
+                });
 
         }
 
