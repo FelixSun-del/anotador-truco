@@ -5,8 +5,12 @@
 // CACHE
 // =====================================================
 
+const CACHE_PREFIX =
+    "anotador-truco-admin-";
+
+
 const CACHE_ADMIN =
-    "anotador-truco-admin-v6";
+    `${CACHE_PREFIX}v6`;
 
 
 const ARCHIVOS_ADMIN = [
@@ -96,7 +100,7 @@ self.addEventListener(
                                     CACHE_ADMIN &&
 
                                     nombre.startsWith(
-                                        "anotador-truco-admin-"
+                                        CACHE_PREFIX
                                     )
                             )
 
