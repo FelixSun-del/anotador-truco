@@ -2873,6 +2873,356 @@ if (
 
 }
 
+/* =====================================================
+   OPINIÓN DE LA APP
+===================================================== */
+
+const abrirOpinionApp =
+    document.getElementById(
+        "abrirOpinionApp"
+    );
+
+
+const modalOpinionApp =
+    document.getElementById(
+        "modalOpinionApp"
+    );
+
+
+const cerrarOpinionApp =
+    document.getElementById(
+        "cerrarOpinionApp"
+    );
+
+
+const formOpinionApp =
+    document.getElementById(
+        "formOpinionApp"
+    );
+
+
+const comentarioOpinion =
+    document.getElementById(
+        "comentarioOpinion"
+    );
+
+
+const mensajeOpinionApp =
+    document.getElementById(
+        "mensajeOpinionApp"
+    );
+
+
+const estrellasOpinion =
+    document.querySelectorAll(
+        ".estrella-opinion"
+    );
+
+
+let valorOpinion =
+    0;
+
+
+let elementoEnfocadoAntesDeOpinion =
+    null;
+
+
+/* =====================================================
+   ACTUALIZAR ESTRELLAS
+===================================================== */
+
+function actualizarEstrellasOpinion(
+    valor
+) {
+
+    estrellasOpinion
+        .forEach(
+            estrella => {
+
+                const valorEstrella =
+                    Number(
+                        estrella.dataset.valor
+                    );
+
+
+                const seleccionada =
+                    valorEstrella <=
+                    valor;
+
+
+                estrella.textContent =
+                    seleccionada
+                        ? "★"
+                        : "☆";
+
+
+                estrella.setAttribute(
+                    "aria-pressed",
+                    seleccionada
+                        ? "true"
+                        : "false"
+                );
+
+            }
+        );
+
+}
+
+function resetearOpinionApp() {
+
+    valorOpinion =
+        0;
+
+
+    actualizarEstrellasOpinion(
+        0
+    );
+
+
+    if (
+        comentarioOpinion
+    ) {
+
+        comentarioOpinion.value =
+            "";
+
+    }
+
+
+    if (
+        mensajeOpinionApp
+    ) {
+
+        mensajeOpinionApp.textContent =
+            "";
+
+    }
+
+}
+/* =====================================================
+   SELECCIONAR ESTRELLAS
+===================================================== */
+
+estrellasOpinion
+    .forEach(
+        estrella => {
+
+            estrella.addEventListener(
+                "click",
+                () => {
+
+                    valorOpinion =
+                        Number(
+                            estrella.dataset.valor
+                        );
+
+
+                    actualizarEstrellasOpinion(
+                        valorOpinion
+                    );
+
+
+                    if (
+                        mensajeOpinionApp
+                    ) {
+
+                        mensajeOpinionApp.textContent =
+                            "";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   ABRIR MODAL
+===================================================== */
+
+function abrirModalOpinion() {
+
+    if (
+        !modalOpinionApp
+    ) {
+
+        return;
+
+    }
+
+
+    elementoEnfocadoAntesDeOpinion =
+        document.activeElement;
+
+
+    if (
+        mensajeOpinionApp
+    ) {
+
+        mensajeOpinionApp.textContent =
+            "";
+
+    }
+
+
+    modalOpinionApp
+        .classList
+        .remove(
+            "oculto"
+        );
+
+
+    document.body
+        .classList
+        .add(
+            "opinion-app-abierta"
+        );
+
+
+    cerrarOpinionApp
+        ?.focus();
+
+}
+
+
+/* =====================================================
+   CERRAR MODAL
+===================================================== */
+
+function cerrarModalOpinion() {
+
+    if (
+        !modalOpinionApp ||
+        modalOpinionApp
+            .classList
+            .contains(
+                "oculto"
+            )
+    ) {
+
+        return;
+
+    }
+
+
+    modalOpinionApp
+        .classList
+        .add(
+            "oculto"
+        );
+
+
+    document.body
+        .classList
+        .remove(
+            "opinion-app-abierta"
+        );
+
+        resetearOpinionApp();
+
+    if (
+        elementoEnfocadoAntesDeOpinion &&
+        typeof elementoEnfocadoAntesDeOpinion.focus ===
+        "function"
+    ) {
+
+        elementoEnfocadoAntesDeOpinion
+            .focus();
+
+    }
+
+
+    elementoEnfocadoAntesDeOpinion =
+        null;
+
+}
+
+
+/* =====================================================
+   EVENTOS DEL MODAL
+===================================================== */
+
+abrirOpinionApp
+    ?.addEventListener(
+        "click",
+        abrirModalOpinion
+    );
+
+
+cerrarOpinionApp
+    ?.addEventListener(
+        "click",
+        cerrarModalOpinion
+    );
+
+
+modalOpinionApp
+    ?.addEventListener(
+        "click",
+        evento => {
+
+            if (
+                evento.target ===
+                modalOpinionApp
+            ) {
+
+                cerrarModalOpinion();
+
+            }
+
+        }
+    );
+
+
+document.addEventListener(
+    "keydown",
+    evento => {
+
+        if (
+            evento.key ===
+            "Escape"
+        ) {
+
+            cerrarModalOpinion();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ENVÍO · TEMPORAL
+===================================================== */
+
+formOpinionApp
+    ?.addEventListener(
+        "submit",
+        evento => {
+
+            evento.preventDefault();
+
+
+            if (
+                valorOpinion ===
+                0
+            ) {
+
+                mensajeOpinionApp.textContent =
+                    "Elegí de 1 a 5 estrellas.";
+
+                return;
+
+            }
+
+
+            mensajeOpinionApp.textContent =
+                "⭐ Opinión lista para enviar.";
+
+        }
+    );
 
 /* =====================================================
    COMPARTIR APP

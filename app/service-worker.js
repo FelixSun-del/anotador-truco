@@ -2,7 +2,7 @@
 
 
 const CACHE_NAME =
-    "anotador-truco-app-v11";
+    "anotador-truco-app-v12";
 
 
 /* =====================================================
@@ -110,7 +110,7 @@ self.addEventListener(
 
 
 /* =====================================================
-   FUNCIONAMIENTO OFFLINE
+   FUNCIONAMIENTO OFFLINE · NETWORK FIRST
 ===================================================== */
 
 self.addEventListener(
@@ -118,7 +118,8 @@ self.addEventListener(
     event => {
 
         if (
-            event.request.method !== "GET"
+            event.request.method !==
+            "GET"
         ) {
 
             return;
@@ -133,98 +134,128 @@ self.addEventListener(
 
 
         /*
-         * Recursos de nuestra propia APP.
+         * Solo controlamos archivos
+         * de nuestra propia APP.
          */
 
         if (
-            url.origin ===
+            url.origin !==
             self.location.origin
         ) {
 
-            event.respondWith(
+            return;
 
-                caches
-                    .match(event.request)
-                    .then(cache => {
-
-                        if (cache) {
-
-                            return cache;
-
-                        }
+        }
 
 
-                        return fetch(
-                            event.request
-                        )
-                            .then(respuesta => {
+        event.respondWith(
 
-                                if (
-                                    !respuesta ||
-                                    !respuesta.ok
-                                ) {
+            fetch(
+                event.request
+            )
+                .then(
+                    respuesta => {
 
-                                    return respuesta;
+                        /*
+                         * Si la respuesta es válida,
+                         * guardamos la versión nueva.
+                         */
 
-                                }
+                        if (
+                            respuesta &&
+                            respuesta.ok
+                        ) {
+
+                            const copia =
+                                respuesta.clone();
 
 
-                                const copia =
-                                    respuesta.clone();
+                            caches
+                                .open(
+                                    CACHE_NAME
+                                )
+                                .then(
+                                    cache => {
 
-
-                                caches
-                                    .open(
-                                        CACHE_NAME
-                                    )
-                                    .then(cacheActual => {
-
-                                        cacheActual.put(
+                                        cache.put(
                                             event.request,
                                             copia
                                         );
 
-                                    });
-
-
-                                return respuesta;
-
-                            })
-                            .catch(() => {
-
-                                /*
-                                 * Solamente una navegación
-                                 * recibe el index como respaldo.
-                                 */
-
-                                if (
-                                    event.request.mode ===
-                                    "navigate"
-                                ) {
-
-                                    return caches.match(
-                                        "./index.html"
-                                    );
-
-                                }
-
-
-                                return new Response(
-                                    "",
-                                    {
-                                        status: 503,
-                                        statusText:
-                                            "Offline"
                                     }
                                 );
 
-                            });
+                        }
 
-                    })
 
-            );
+                        return respuesta;
 
-        }
+                    }
+                )
+                .catch(
+                    async () => {
+
+                        /*
+                         * Sin conexión:
+                         * buscamos la última versión
+                         * disponible en caché.
+                         */
+
+                        const guardado =
+                            await caches.match(
+                                event.request
+                            );
+
+
+                        if (
+                            guardado
+                        ) {
+
+                            return guardado;
+
+                        }
+
+
+                        /*
+                         * Si era una navegación,
+                         * mostramos la APP guardada.
+                         */
+
+                        if (
+                            event.request.mode ===
+                            "navigate"
+                        ) {
+
+                            const indexGuardado =
+                                await caches.match(
+                                    "./index.html"
+                                );
+
+
+                            if (
+                                indexGuardado
+                            ) {
+
+                                return indexGuardado;
+
+                            }
+
+                        }
+
+
+                        return new Response(
+                            "",
+                            {
+                                status: 503,
+                                statusText:
+                                    "Offline"
+                            }
+                        );
+
+                    }
+                )
+
+        );
 
     }
 );
