@@ -51,6 +51,9 @@ const ADMIN_EMAILS = [
     "johansabe1@gmail.com"
 ];
 
+const ADMIN_PRINCIPAL_EMAIL =
+    "f341274@gmail.com";
+
 
 // =====================================================
 // CONFIGURACIÓN
@@ -155,6 +158,35 @@ async function verificarAdministrador(
 
 }
 
+// =====================================================
+// VERIFICAR ADMINISTRADOR PRINCIPAL
+// =====================================================
+
+function verificarAdministradorPrincipal(
+    req,
+    res,
+    next
+) {
+
+    if (
+        !req.usuario?.email ||
+        req.usuario.email !==
+            ADMIN_PRINCIPAL_EMAIL
+    ) {
+
+        return res
+            .status(403)
+            .json({
+                error:
+                    "Función disponible solo para el administrador principal."
+            });
+
+    }
+
+
+    next();
+
+}
 
 // =====================================================
 // GOOGLE ANALYTICS
@@ -1256,6 +1288,304 @@ app.post(
                         "No se pudo guardar la opinión."
 
                 });
+
+        }
+
+    }
+);
+
+// =====================================================
+// ADMIN · VER OPINIONES
+// SOLO ADMIN PRINCIPAL
+// =====================================================
+
+app.get(
+    "/api/admin/opiniones",
+    verificarAdministrador,
+    verificarAdministradorPrincipal,
+    async (req, res) => {
+
+        try {
+
+            const snapshot =
+                await db
+                    .collection(
+                        "opiniones"
+                    )
+                    .get();
+
+
+            const opiniones =
+                snapshot.docs.map(
+                    documento => {
+
+                        const datos =
+                            documento.data();
+
+
+                        return {
+
+                            id:
+                                documento.id,
+
+                            nombre:
+                                typeof datos.nombre ===
+                                    "string" &&
+                                datos.nombre.trim()
+                                    ? datos.nombre.trim()
+                                    : "Anónimo",
+
+                            estrellas:
+                                Number(
+                                    datos.estrellas
+                                ) || 0,
+
+                            comentario:
+                                typeof datos.comentario ===
+                                    "string"
+                                    ? datos.comentario
+                                    : "",
+
+                            leida:
+                                datos.leida ===
+                                true,
+
+                            fecha:
+                                datos.fecha
+                                    ?.toDate
+                                    ?.()
+                                    ?.toISOString()
+                                    || null
+
+                        };
+
+                    }
+                );
+
+
+            /*
+             * Primero las NO leídas.
+             * Dentro de cada grupo,
+             * primero las más nuevas.
+             */
+
+            opiniones.sort(
+                (a, b) => {
+
+                    if (
+                        a.leida !==
+                        b.leida
+                    ) {
+
+                        return a.leida
+                            ? 1
+                            : -1;
+
+                    }
+
+
+                    const fechaA =
+                        a.fecha
+                            ? new Date(
+                                a.fecha
+                            ).getTime()
+                            : 0;
+
+
+                    const fechaB =
+                        b.fecha
+                            ? new Date(
+                                b.fecha
+                            ).getTime()
+                            : 0;
+
+
+                    return (
+                        fechaB -
+                        fechaA
+                    );
+
+                }
+            );
+
+
+            const total =
+                opiniones.length;
+
+
+            const sinLeer =
+                opiniones.filter(
+                    opinion =>
+                        !opinion.leida
+                ).length;
+
+
+            const sumaEstrellas =
+                opiniones.reduce(
+                    (
+                        acumulado,
+                        opinion
+                    ) =>
+                        acumulado +
+                        opinion.estrellas,
+                    0
+                );
+
+
+            const promedio =
+                total > 0
+                    ? Number(
+                        (
+                            sumaEstrellas /
+                            total
+                        ).toFixed(
+                            1
+                        )
+                    )
+                    : 0;
+
+
+            res.json({
+
+                promedio,
+
+                total,
+
+                sinLeer,
+
+                opiniones
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "❌ Error obteniendo opiniones:",
+                error
+            );
+
+
+            res.status(500).json({
+                error:
+                    "No se pudieron obtener las opiniones."
+            });
+
+        }
+
+    }
+);
+
+// =====================================================
+// ADMIN · MARCAR OPINIÓN LEÍDA / NO LEÍDA
+// SOLO ADMIN PRINCIPAL
+// =====================================================
+
+app.patch(
+    "/api/admin/opiniones/:id/leida",
+    verificarAdministrador,
+    verificarAdministradorPrincipal,
+    async (req, res) => {
+
+        try {
+
+            const id =
+                String(
+                    req.params.id ||
+                    ""
+                ).trim();
+
+
+            const leida =
+                req.body?.leida;
+
+
+            if (
+                !id
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+                        error:
+                            "Opinión inválida."
+                    });
+
+            }
+
+
+            if (
+                typeof leida !==
+                "boolean"
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+                        error:
+                            "Estado de lectura inválido."
+                    });
+
+            }
+
+
+            const referencia =
+                db
+                    .collection(
+                        "opiniones"
+                    )
+                    .doc(
+                        id
+                    );
+
+
+            const documento =
+                await referencia.get();
+
+
+            if (
+                !documento.exists
+            ) {
+
+                return res
+                    .status(404)
+                    .json({
+                        error:
+                            "La opinión no existe."
+                    });
+
+            }
+
+
+            await referencia.update({
+
+                leida
+
+            });
+
+
+            res.json({
+
+                ok:
+                    true,
+
+                leida
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "❌ Error actualizando opinión:",
+                error
+            );
+
+
+            res.status(500).json({
+                error:
+                    "No se pudo actualizar la opinión."
+            });
 
         }
 
