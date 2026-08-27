@@ -6,7 +6,7 @@
 // =====================================================
 
 const CACHE_ADMIN =
-    "anotador-truco-admin-v5";
+    "anotador-truco-admin-v6";
 
 
 const ARCHIVOS_ADMIN = [

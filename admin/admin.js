@@ -59,11 +59,81 @@ const elementos = {
     listaDispositivos:
         document.getElementById("listaDispositivos"),
 
-    fuentes:
-        document.getElementById("listaFuentes")
+        fuentes:
+        document.getElementById(
+            "listaFuentes"
+        ),
+
+    opinionesSeccion:
+        document.getElementById(
+            "opinionesAdmin"
+        ),
+
+    promedioOpiniones:
+        document.getElementById(
+            "promedioOpiniones"
+        ),
+
+    totalOpiniones:
+        document.getElementById(
+            "totalOpiniones"
+        ),
+
+    sinLeerOpiniones:
+        document.getElementById(
+            "sinLeerOpiniones"
+        ),
+
+    toggleOpiniones:
+        document.getElementById(
+            "toggleOpiniones"
+        ),
+
+    contenidoOpiniones:
+        document.getElementById(
+            "contenidoOpiniones"
+        ),
+
+    flechaOpiniones:
+        document.getElementById(
+            "flechaOpiniones"
+        ),
+
+    listaOpiniones:
+        document.getElementById(
+            "listaOpiniones"
+        ),
+
+    mensajeOpiniones:
+        document.getElementById(
+            "mensajeOpinionesAdmin"
+        ),
+
+    cargarMasOpiniones:
+        document.getElementById(
+            "cargarMasOpiniones"
+        )
 
 };
 
+// =====================================================
+// ESTADO · OPINIONES
+// =====================================================
+
+let adminPrincipalActual =
+    false;
+
+
+let opinionesAdmin =
+    [];
+
+
+let opinionesMostradas =
+    20;
+
+
+const OPINIONES_POR_PAGINA =
+    20;
 
 // =====================================================
 // PREPARAR FUENTES
@@ -1526,6 +1596,851 @@ elementos.fuentes.appendChild(
 }
 
 // =====================================================
+// OPINIONES · SOLO ADMIN PRINCIPAL
+// =====================================================
+
+function ocultarOpinionesAdmin() {
+
+    adminPrincipalActual =
+        false;
+
+
+    if (
+        elementos.opinionesSeccion
+    ) {
+
+        elementos.opinionesSeccion.hidden =
+            true;
+
+    }
+
+}
+
+
+/* =====================================================
+   ORDENAR
+===================================================== */
+
+function ordenarOpinionesAdmin() {
+
+    opinionesAdmin.sort(
+        (a, b) => {
+
+            if (
+                a.leida !==
+                b.leida
+            ) {
+
+                return a.leida
+                    ? 1
+                    : -1;
+
+            }
+
+
+            const fechaA =
+                a.fecha
+                    ? new Date(
+                        a.fecha
+                    ).getTime()
+                    : 0;
+
+
+            const fechaB =
+                b.fecha
+                    ? new Date(
+                        b.fecha
+                    ).getTime()
+                    : 0;
+
+
+            return (
+                fechaB -
+                fechaA
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RESUMEN
+===================================================== */
+
+function actualizarResumenOpiniones() {
+
+    const total =
+        opinionesAdmin.length;
+
+
+    const sinLeer =
+        opinionesAdmin.filter(
+            opinion =>
+                !opinion.leida
+        ).length;
+
+
+    const suma =
+        opinionesAdmin.reduce(
+            (
+                acumulado,
+                opinion
+            ) =>
+                acumulado +
+                (
+                    Number(
+                        opinion.estrellas
+                    ) || 0
+                ),
+            0
+        );
+
+
+    const promedio =
+        total > 0
+            ? (
+                suma /
+                total
+            ).toFixed(1)
+            : "0.0";
+
+
+    elementos.promedioOpiniones.textContent =
+        `${promedio} / 5`;
+
+
+    elementos.totalOpiniones.textContent =
+        total.toLocaleString(
+            "es-AR"
+        );
+
+
+    elementos.sinLeerOpiniones.textContent =
+        sinLeer.toLocaleString(
+            "es-AR"
+        );
+
+}
+
+
+/* =====================================================
+   FORMATEAR FECHA
+===================================================== */
+
+function formatearFechaOpinion(
+    fecha
+) {
+
+    if (
+        !fecha
+    ) {
+
+        return "Sin fecha";
+
+    }
+
+
+    const objetoFecha =
+        new Date(
+            fecha
+        );
+
+
+    if (
+        Number.isNaN(
+            objetoFecha.getTime()
+        )
+    ) {
+
+        return "Sin fecha";
+
+    }
+
+
+    return new Intl.DateTimeFormat(
+        "es-AR",
+        {
+
+            timeZone:
+                "America/Argentina/Buenos_Aires",
+
+            day:
+                "2-digit",
+
+            month:
+                "2-digit",
+
+            year:
+                "numeric",
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+
+        }
+    ).format(
+        objetoFecha
+    );
+
+}
+
+
+/* =====================================================
+   ESTRELLAS
+===================================================== */
+
+function crearTextoEstrellas(
+    valor
+) {
+
+    const cantidad =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Math.round(
+                    Number(
+                        valor
+                    ) || 0
+                )
+            )
+        );
+
+
+    return (
+        "★".repeat(
+            cantidad
+        ) +
+        "☆".repeat(
+            5 - cantidad
+        )
+    );
+
+}
+
+
+/* =====================================================
+   DIBUJAR OPINIONES
+===================================================== */
+
+function renderizarOpinionesAdmin() {
+
+    if (
+        !elementos.listaOpiniones
+    ) {
+
+        return;
+
+    }
+
+
+    elementos.listaOpiniones.textContent =
+        "";
+
+
+    ordenarOpinionesAdmin();
+
+
+    if (
+        opinionesAdmin.length ===
+        0
+    ) {
+
+        const vacio =
+            document.createElement(
+                "p"
+            );
+
+
+        vacio.className =
+            "opinion-admin-sin-comentario";
+
+
+        vacio.textContent =
+            "Todavía no hay opiniones.";
+
+
+        elementos.listaOpiniones
+            .appendChild(
+                vacio
+            );
+
+
+        elementos.cargarMasOpiniones.hidden =
+            true;
+
+
+        return;
+
+    }
+
+
+    const visibles =
+        opinionesAdmin.slice(
+            0,
+            opinionesMostradas
+        );
+
+
+    visibles.forEach(
+        opinion => {
+
+            const item =
+                document.createElement(
+                    "article"
+                );
+
+
+            item.className =
+                "opinion-admin-item";
+
+
+            if (
+                opinion.leida
+            ) {
+
+                item.classList.add(
+                    "leida"
+                );
+
+            }
+
+
+            /* =========================================
+               CHECK
+            ========================================= */
+
+            const check =
+                document.createElement(
+                    "button"
+                );
+
+
+            check.type =
+                "button";
+
+
+            check.className =
+                "opinion-admin-check";
+
+
+            check.textContent =
+                opinion.leida
+                    ? "☑"
+                    : "☐";
+
+
+            check.setAttribute(
+                "aria-label",
+                opinion.leida
+                    ? "Marcar como no leída"
+                    : "Marcar como leída"
+            );
+
+
+            /* =========================================
+               CUERPO
+            ========================================= */
+
+            const cuerpo =
+                document.createElement(
+                    "div"
+                );
+
+
+            cuerpo.className =
+                "opinion-admin-cuerpo";
+
+
+            const superior =
+                document.createElement(
+                    "div"
+                );
+
+
+            superior.className =
+                "opinion-admin-superior";
+
+
+            const nombre =
+                document.createElement(
+                    "span"
+                );
+
+
+            nombre.className =
+                "opinion-admin-nombre";
+
+
+            nombre.textContent =
+                opinion.nombre ||
+                "Anónimo";
+
+
+            const fecha =
+                document.createElement(
+                    "span"
+                );
+
+
+            fecha.className =
+                "opinion-admin-fecha";
+
+
+            fecha.textContent =
+                formatearFechaOpinion(
+                    opinion.fecha
+                );
+
+
+            superior.appendChild(
+                nombre
+            );
+
+
+            superior.appendChild(
+                fecha
+            );
+
+
+            /* =========================================
+               ESTRELLAS
+            ========================================= */
+
+            const estrellas =
+                document.createElement(
+                    "div"
+                );
+
+
+            estrellas.className =
+                "opinion-admin-estrellas";
+
+
+            estrellas.textContent =
+                crearTextoEstrellas(
+                    opinion.estrellas
+                );
+
+
+            /* =========================================
+               COMENTARIO
+            ========================================= */
+
+            const comentario =
+                document.createElement(
+                    "p"
+                );
+
+
+            comentario.className =
+                "opinion-admin-comentario";
+
+
+            if (
+                opinion.comentario
+            ) {
+
+                comentario.textContent =
+                    opinion.comentario;
+
+            } else {
+
+                comentario.textContent =
+                    "Sin comentario.";
+
+
+                comentario.classList.add(
+                    "opinion-admin-sin-comentario"
+                );
+
+            }
+
+
+            /* =========================================
+               ESTADO
+            ========================================= */
+
+            const estado =
+                document.createElement(
+                    "span"
+                );
+
+
+            estado.className =
+                "opinion-admin-estado";
+
+
+            estado.textContent =
+                opinion.leida
+                    ? "Leída"
+                    : "Sin leer";
+
+
+            /* =========================================
+               ARMAR
+            ========================================= */
+
+            cuerpo.appendChild(
+                superior
+            );
+
+
+            cuerpo.appendChild(
+                estrellas
+            );
+
+
+            cuerpo.appendChild(
+                comentario
+            );
+
+
+            cuerpo.appendChild(
+                estado
+            );
+
+
+            item.appendChild(
+                check
+            );
+
+
+            item.appendChild(
+                cuerpo
+            );
+
+
+            elementos.listaOpiniones
+                .appendChild(
+                    item
+                );
+
+
+            /* =========================================
+               CAMBIAR LEÍDA
+            ========================================= */
+
+            check.addEventListener(
+                "click",
+                async () => {
+
+                    const usuario =
+                        auth.currentUser;
+
+
+                    if (
+                        !usuario ||
+                        !adminPrincipalActual
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    check.disabled =
+                        true;
+
+
+                    elementos.mensajeOpiniones.textContent =
+                        "";
+
+
+                    try {
+
+                        const token =
+                            await usuario
+                                .getIdToken();
+
+
+                        const nuevoEstado =
+                            !opinion.leida;
+
+
+                        const respuesta =
+                            await fetch(
+                                `${API_URL}/api/admin/opiniones/${encodeURIComponent(
+                                    opinion.id
+                                )}/leida`,
+                                {
+
+                                    method:
+                                        "PATCH",
+
+                                    headers: {
+
+                                        Authorization:
+                                            `Bearer ${token}`,
+
+                                        "Content-Type":
+                                            "application/json"
+
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            leida:
+                                                nuevoEstado
+
+                                        })
+
+                                }
+                            );
+
+
+                        if (
+                            !respuesta.ok
+                        ) {
+
+                            throw new Error(
+                                `HTTP ${respuesta.status}`
+                            );
+
+                        }
+
+
+                        opinion.leida =
+                            nuevoEstado;
+
+
+                        actualizarResumenOpiniones();
+
+
+                        renderizarOpinionesAdmin();
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "❌ Error actualizando opinión:",
+                            error
+                        );
+
+
+                        elementos.mensajeOpiniones.textContent =
+                            "No se pudo actualizar la opinión.";
+
+                    } finally {
+
+                        check.disabled =
+                            false;
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    elementos.cargarMasOpiniones.hidden =
+        opinionesMostradas >=
+        opinionesAdmin.length;
+
+}
+
+
+/* =====================================================
+   CARGAR OPINIONES
+===================================================== */
+
+async function cargarOpinionesAdmin(
+    usuario
+) {
+
+    if (
+        !usuario ||
+        !adminPrincipalActual
+    ) {
+
+        ocultarOpinionesAdmin();
+
+        return;
+
+    }
+
+
+    elementos.opinionesSeccion.hidden =
+        false;
+
+
+    elementos.promedioOpiniones.textContent =
+        "…";
+
+
+    elementos.totalOpiniones.textContent =
+        "…";
+
+
+    elementos.sinLeerOpiniones.textContent =
+        "…";
+
+
+    elementos.mensajeOpiniones.textContent =
+        "";
+
+
+    try {
+
+        const token =
+            await usuario
+                .getIdToken();
+
+
+        const respuesta =
+            await fetch(
+                `${API_URL}/api/admin/opiniones`,
+                {
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+
+                    },
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if (
+            respuesta.status ===
+            403
+        ) {
+
+            ocultarOpinionesAdmin();
+
+            return;
+
+        }
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                `HTTP ${respuesta.status}`
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        opinionesAdmin =
+            Array.isArray(
+                datos.opiniones
+            )
+                ? datos.opiniones
+                : [];
+
+
+        opinionesMostradas =
+            OPINIONES_POR_PAGINA;
+
+
+        actualizarResumenOpiniones();
+
+
+        renderizarOpinionesAdmin();
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ Error cargando opiniones:",
+            error
+        );
+
+
+        elementos.mensajeOpiniones.textContent =
+            "Necesitás conexión para cargar las opiniones.";
+
+
+        elementos.promedioOpiniones.textContent =
+            "—";
+
+
+        elementos.totalOpiniones.textContent =
+            "—";
+
+
+        elementos.sinLeerOpiniones.textContent =
+            "—";
+
+    }
+
+}
+
+
+/* =====================================================
+   ABRIR / CERRAR CARPETA
+===================================================== */
+
+elementos.toggleOpiniones
+    ?.addEventListener(
+        "click",
+        () => {
+
+            const abrir =
+                elementos.contenidoOpiniones
+                    .hidden;
+
+
+            elementos.contenidoOpiniones.hidden =
+                !abrir;
+
+
+            elementos.toggleOpiniones
+                .setAttribute(
+                    "aria-expanded",
+                    abrir
+                        ? "true"
+                        : "false"
+                );
+
+
+            elementos.flechaOpiniones.textContent =
+                abrir
+                    ? "▲"
+                    : "▼";
+
+        }
+    );
+
+
+/* =====================================================
+   CARGAR MÁS
+===================================================== */
+
+elementos.cargarMasOpiniones
+    ?.addEventListener(
+        "click",
+        () => {
+
+            opinionesMostradas +=
+                OPINIONES_POR_PAGINA;
+
+
+            renderizarOpinionesAdmin();
+
+        }
+    );
+
+// =====================================================
 // COMPROBAR ACCESO ANTES DE CARGAR DATOS
 // =====================================================
 
@@ -1586,12 +2501,21 @@ async function usuarioPuedeCargarDatos(
 
 
         if (
-            datos.autorizado !== true
+            datos.autorizado !==
+            true
         ) {
+
+            adminPrincipalActual =
+                false;
 
             return false;
 
         }
+
+
+        adminPrincipalActual =
+            datos.adminPrincipal ===
+            true;
 
 
         localStorage.setItem(
@@ -1611,6 +2535,19 @@ async function usuarioPuedeCargarDatos(
          * datos offline al MISMO usuario
          * autorizado anteriormente.
          */
+
+        adminPrincipalActual =
+            false;
+
+
+        if (
+            elementos.opinionesSeccion
+        ) {
+
+            elementos.opinionesSeccion.hidden =
+                true;
+
+        }
 
         const uidAutorizado =
             localStorage.getItem(
@@ -1664,6 +2601,7 @@ onAuthStateChanged(
                 "🔒 No hay usuario autenticado. Datos no cargados."
             );
 
+            ocultarOpinionesAdmin();
 
             return;
 
@@ -1700,6 +2638,20 @@ onAuthStateChanged(
             7
         );
 
+
+        if (
+            adminPrincipalActual
+        ) {
+
+            cargarOpinionesAdmin(
+                usuario
+            );
+
+        } else {
+
+            ocultarOpinionesAdmin();
+
+        }
     }
 
 );

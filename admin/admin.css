@@ -1336,3 +1336,484 @@ footer {
     }
 
 }
+
+/* =====================================================
+   OPINIONES · ADMIN
+===================================================== */
+
+.opiniones-admin[hidden] {
+
+    display: none !important;
+
+}
+
+
+/* =====================================================
+   RESUMEN
+===================================================== */
+
+.opiniones-resumen {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin:
+        5px 0 16px;
+
+}
+
+
+.opinion-resumen {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 14px;
+
+    background:
+        rgba(255,255,255,.42);
+
+    border:
+        1px solid #d0c0a4;
+
+    border-radius: 9px;
+
+}
+
+
+.opinion-resumen > span {
+
+    font-size: 1.6rem;
+
+}
+
+
+.opinion-resumen p {
+
+    margin-bottom: 2px;
+
+    color: #6d5b48;
+
+    font-size: .78rem;
+
+}
+
+
+.opinion-resumen strong {
+
+    color: #2f5d50;
+
+    font-size: 1.15rem;
+
+}
+
+
+/* =====================================================
+   BOTÓN CARPETA
+===================================================== */
+
+.toggle-opiniones {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    padding: 12px 14px;
+
+    border:
+        2px solid #c9b99d;
+
+    border-radius: 8px;
+
+    background: #fffaf0;
+
+    color: #4a3928;
+
+    font-size: .95rem;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        transform .15s ease;
+
+}
+
+
+.toggle-opiniones:hover {
+
+    border-color: #2f5d50;
+
+    background:
+        rgba(255,255,255,.7);
+
+}
+
+
+.toggle-opiniones:active {
+
+    transform:
+        scale(.99);
+
+}
+
+
+/* =====================================================
+   CONTENIDO
+===================================================== */
+
+.contenido-opiniones {
+
+    margin-top: 12px;
+
+}
+
+
+.contenido-opiniones[hidden] {
+
+    display: none !important;
+
+}
+
+
+.lista-opiniones {
+
+    display: grid;
+
+    gap: 9px;
+
+}
+
+
+/* =====================================================
+   OPINIÓN
+===================================================== */
+
+.opinion-admin-item {
+
+    display: flex;
+
+    align-items:
+        flex-start;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    border:
+        1px solid #d0c0a4;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,.43);
+
+    transition:
+        opacity .2s ease,
+        background .2s ease;
+
+}
+
+
+/* =====================================================
+   CUADRADO LEÍDA
+===================================================== */
+
+.opinion-admin-check {
+
+    flex:
+        0 0 40px;
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border:
+        2px solid #c9b99d;
+
+    border-radius: 7px;
+
+    background: #fffaf0;
+
+    color: #2f5d50;
+
+    font-size: 1.35rem;
+
+    cursor: pointer;
+
+}
+
+
+.opinion-admin-check:hover {
+
+    border-color: #2f5d50;
+
+}
+
+
+/* =====================================================
+   CUERPO
+===================================================== */
+
+.opinion-admin-cuerpo {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.opinion-admin-superior {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.opinion-admin-nombre {
+
+    color: #4a3928;
+
+    font-size: .95rem;
+
+    font-weight: bold;
+
+}
+
+
+.opinion-admin-fecha {
+
+    flex-shrink: 0;
+
+    color: #857561;
+
+    font-size: .75rem;
+
+}
+
+
+.opinion-admin-estrellas {
+
+    margin-bottom: 7px;
+
+    color: #a16c24;
+
+    letter-spacing: 1px;
+
+    font-size: 1rem;
+
+}
+
+
+.opinion-admin-comentario {
+
+    color: #4a3928;
+
+    font-size: .9rem;
+
+    line-height: 1.45;
+
+    overflow-wrap:
+        anywhere;
+
+}
+
+
+.opinion-admin-sin-comentario {
+
+    color: #857561;
+
+    font-style: italic;
+
+}
+
+
+.opinion-admin-estado {
+
+    display: inline-block;
+
+    margin-top: 9px;
+
+    padding: 4px 7px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(138,52,52,.08);
+
+    color: #642424;
+
+    font-size: .7rem;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   LEÍDA
+===================================================== */
+
+.opinion-admin-item.leida {
+
+    opacity: .58;
+
+}
+
+
+.opinion-admin-item.leida
+.opinion-admin-comentario {
+
+    text-decoration:
+        line-through;
+
+}
+
+
+.opinion-admin-item.leida
+.opinion-admin-estado {
+
+    background:
+        rgba(47,93,80,.1);
+
+    color: #2f5d50;
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+.mensaje-opiniones-admin {
+
+    min-height: 18px;
+
+    margin-top: 10px;
+
+    color: #642424;
+
+    font-size: .82rem;
+
+    font-weight: bold;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   CARGAR MÁS
+===================================================== */
+
+.cargar-mas-opiniones {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 10px;
+
+    border:
+        2px solid #c9b99d;
+
+    border-radius: 8px;
+
+    background: #fffaf0;
+
+    color: #4a3928;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.cargar-mas-opiniones[hidden] {
+
+    display: none !important;
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .opiniones-resumen {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .opinion-admin-superior {
+
+        flex-direction:
+            column;
+
+        gap: 2px;
+
+    }
+
+
+    .opinion-admin-item {
+
+        padding: 11px;
+
+        gap: 9px;
+
+    }
+
+
+    .opinion-admin-check {
+
+        flex-basis: 38px;
+
+        width: 38px;
+
+        height: 38px;
+
+    }
+
+}

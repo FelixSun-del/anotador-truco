@@ -1601,12 +1601,25 @@ app.get(
     verificarAdministrador,
     (req, res) => {
 
+        const adminPrincipal =
+            req.usuario.email ===
+            ADMIN_PRINCIPAL_EMAIL;
+
+
         res.json({
 
-            autorizado: true,
+            autorizado:
+                true,
 
             email:
-                req.usuario.email
+                req.usuario.email,
+
+            rol:
+                adminPrincipal
+                    ? "admin"
+                    : "moderador",
+
+            adminPrincipal
 
         });
 
