@@ -1129,10 +1129,22 @@ app.post(
             // PROTECCIÓN BÁSICA CONTRA SPAM
             // =============================================
 
+            const forwarded =
+            req.headers[
+                "x-forwarded-for"
+            ];
+
+
             const ip =
-                req.ip ||
-                req.socket.remoteAddress ||
-                "desconocido";
+                typeof forwarded ===
+                    "string"
+                    ? forwarded
+                        .split(",")[0]
+                        .trim()
+                    : (
+                        req.socket.remoteAddress ||
+                        "desconocido"
+                    );
 
 
             const ahora =

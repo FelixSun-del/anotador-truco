@@ -2926,6 +2926,12 @@ const estrellasOpinion =
 let valorOpinion =
     0;
 
+const CLAVE_ULTIMA_OPINION =
+    "anotadorTruco_ultimaOpinion";
+
+
+const COOLDOWN_OPINION_MS =
+    60 * 1000;
 
 let elementoEnfocadoAntesDeOpinion =
     null;
@@ -3208,6 +3214,40 @@ formOpinionApp
 
             evento.preventDefault();
 
+const ultimaOpinion =
+    Number(
+        localStorage.getItem(
+            CLAVE_ULTIMA_OPINION
+        )
+    ) || 0;
+
+
+const tiempoRestante =
+    COOLDOWN_OPINION_MS -
+    (
+        Date.now() -
+        ultimaOpinion
+    );
+
+
+if (
+    tiempoRestante >
+    0
+) {
+
+    const segundos =
+        Math.ceil(
+            tiempoRestante /
+            1000
+        );
+
+
+    mensajeOpinionApp.textContent =
+        `Esperá ${segundos} segundos antes de enviar otra opinión.`;
+
+    return;
+
+}
 
             /* =========================================
                VALIDAR ESTRELLAS
@@ -3327,6 +3367,14 @@ formOpinionApp
                 /* =====================================
                    ÉXITO
                 ===================================== */
+
+
+                localStorage.setItem(
+                    CLAVE_ULTIMA_OPINION,
+                    String(
+                        Date.now()
+                    )
+                );
 
                 mensajeOpinionApp.textContent =
                     "✅ ¡Gracias por tu opinión!";
