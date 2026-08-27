@@ -2912,6 +2912,10 @@ const mensajeOpinionApp =
         "mensajeOpinionApp"
     );
 
+const enviarOpinionApp =
+    document.getElementById(
+        "enviarOpinionApp"
+    );
 
 const estrellasOpinion =
     document.querySelectorAll(
@@ -3194,16 +3198,20 @@ document.addEventListener(
 
 
 /* =====================================================
-   ENVÍO · TEMPORAL
+   ENVIAR OPINIÓN
 ===================================================== */
 
 formOpinionApp
     ?.addEventListener(
         "submit",
-        evento => {
+        async evento => {
 
             evento.preventDefault();
 
+
+            /* =========================================
+               VALIDAR ESTRELLAS
+            ========================================= */
 
             if (
                 valorOpinion ===
@@ -3218,8 +3226,151 @@ formOpinionApp
             }
 
 
-            mensajeOpinionApp.textContent =
-                "⭐ Opinión lista para enviar.";
+            const comentario =
+                comentarioOpinion
+                    ?.value
+                    .trim() ||
+                "";
+
+
+            /* =========================================
+               ESTADO ENVIANDO
+            ========================================= */
+
+            if (
+                enviarOpinionApp
+            ) {
+
+                enviarOpinionApp.disabled =
+                    true;
+
+                enviarOpinionApp.textContent =
+                    "Enviando...";
+
+            }
+
+
+            if (
+                mensajeOpinionApp
+            ) {
+
+                mensajeOpinionApp.textContent =
+                    "";
+
+            }
+
+
+            try {
+
+                const respuesta =
+                    await fetch(
+                        `${API_URL}/api/opiniones`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    estrellas:
+                                        valorOpinion,
+
+                                    comentario
+
+                                })
+
+                        }
+                    );
+
+
+                let datos =
+                    {};
+
+
+                try {
+
+                    datos =
+                        await respuesta.json();
+
+                } catch {
+
+                    datos =
+                        {};
+
+                }
+
+
+                /* =====================================
+                   ERROR DEL SERVIDOR
+                ===================================== */
+
+                if (
+                    !respuesta.ok
+                ) {
+
+                    throw new Error(
+                        datos.error ||
+                        "No se pudo enviar la opinión."
+                    );
+
+                }
+
+
+                /* =====================================
+                   ÉXITO
+                ===================================== */
+
+                mensajeOpinionApp.textContent =
+                    "✅ ¡Gracias por tu opinión!";
+
+
+                await new Promise(
+                    resolver =>
+                        setTimeout(
+                            resolver,
+                            1000
+                        )
+                );
+
+
+                cerrarModalOpinion();
+
+
+            } catch (error) {
+
+                console.error(
+                    "❌ Error enviando opinión:",
+                    error
+                );
+
+
+                mensajeOpinionApp.textContent =
+                    error.message ||
+                    "No se pudo enviar. Intentá nuevamente.";
+
+            } finally {
+
+                if (
+                    enviarOpinionApp
+                ) {
+
+                    enviarOpinionApp.disabled =
+                        false;
+
+                    enviarOpinionApp.textContent =
+                        "Enviar opinión";
+
+                }
+
+            }
 
         }
     );
