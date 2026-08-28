@@ -996,6 +996,41 @@ function irAReglaDesdeGuia(
     destino
 ) {
 
+    /* =============================================
+       IR AL INICIO DE REGLAS
+    ============================================= */
+
+    if (
+        destino ===
+        "inicio"
+    ) {
+
+        mostrarPantalla(
+            5
+        );
+
+
+        requestAnimationFrame(
+            () => {
+
+                window.scrollTo({
+
+                    top:
+                        0,
+
+                    behavior:
+                        "smooth"
+
+                });
+
+            }
+        );
+
+
+        return;
+
+    }
+
     const regla =
         document.querySelector(
             `.menu-regla[data-regla="${destino}"]`
