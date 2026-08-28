@@ -1133,7 +1133,10 @@
              VALOR DE LAS CARTAS
         ====================================================== -->
 
-        <div class="menu-regla">
+        <div
+            class="menu-regla"
+            data-regla="cartas"
+        >
 
             <button class="boton-regla">
                 🃏 Valor de las cartas
@@ -1245,7 +1248,10 @@
              ENVIDO
         ====================================================== -->
 
-        <div class="menu-regla">
+        <div
+            class="menu-regla"
+            data-regla="envido"
+        >
 
             <button class="boton-regla">
                 🪙 Envido
@@ -1405,7 +1411,10 @@
              FLOR
         ====================================================== -->
 
-        <div class="menu-regla">
+        <div
+            class="menu-regla"
+            data-regla="flor"
+        >
 
             <button class="boton-regla">
                 🌸 Flor
@@ -1454,7 +1463,10 @@
              SEÑAS
         ====================================================== -->
 
-        <div class="menu-regla">
+        <div
+            class="menu-regla"
+            data-regla="senas"
+        >
 
             <button class="boton-regla">
                 👁️ Señas del Truco
@@ -1561,7 +1573,10 @@
              TRUCO
         ====================================================== -->
 
-        <div class="menu-regla">
+        <div
+            class="menu-regla"
+            data-regla="truco"
+        >
 
             <button class="boton-regla">
                 ⚔️ Truco
@@ -1645,7 +1660,10 @@
              IRSE AL MAZO
         ====================================================== -->
 
-        <div class="menu-regla">
+        <div
+            class="menu-regla"
+            data-regla="mazo"
+        >
 
             <button class="boton-regla">
                 🏳️ Irse al mazo
@@ -2574,9 +2592,14 @@
 
                     <p>
                         La lista completa está disponible en
-                        <strong>
-                            Reglas del juego → Valor de las cartas
-                        </strong>.
+
+                        <button
+                            type="button"
+                            class="enlace-regla-guia"
+                            data-regla-destino="cartas"
+                        >
+                            <strong> Valor de las cartas </strong>
+                        </button>.
                     </p>
 
                 </div>
@@ -3076,7 +3099,14 @@
                                 pueden combinarse entre sí.
                                 Los valores exactos de cada combinación
                                 están explicados en
-                                <strong>Reglas del juego</strong>.
+
+                                <button
+                                    type="button"
+                                    class="enlace-regla-guia"
+                                    data-regla-destino="envido"
+                                >
+                                    <strong> Envido </strong> 
+                                </button>.
                             </p>
 
 
@@ -3300,7 +3330,14 @@
                             <p>
                                 La lista completa de señas
                                 está disponible en
-                                <strong>Reglas del juego</strong>.
+
+                                <button
+                                    type="button"
+                                    class="enlace-regla-guia"
+                                    data-regla-destino="senas"
+                                >
+                                    <strong>Señas del Truco </strong>
+                                </button>.
                             </p>
 
                         </div>
@@ -3488,8 +3525,15 @@
                             </p>
 
                             <p>
-                                Los valores exactos están explicados
-                                en <strong>Reglas del juego</strong>.
+                                Los valores exactos están explicados en
+
+                                <button
+                                    type="button"
+                                    class="enlace-regla-guia"
+                                    data-regla-destino="mazo"
+                                >
+                                    <strong> Irse al mazo </strong>
+                                </button>.
                             </p>
 
                         </div>

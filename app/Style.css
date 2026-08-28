@@ -4662,3 +4662,114 @@ body.opinion-app-abierta {
         rgba(138, 52, 52, 0.12);
 
 }
+
+/* =====================================================
+   GUÍA · ENLACES DIRECTOS A REGLAS
+===================================================== */
+
+.enlace-regla-guia {
+
+    display: inline;
+
+    margin: 0;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color:
+        var(--verde-oscuro);
+
+    font: inherit;
+
+    font-weight: 800;
+
+    text-decoration:
+        underline;
+
+    text-decoration-thickness:
+        1px;
+
+    text-underline-offset:
+        3px;
+
+    cursor: pointer;
+
+}
+
+
+.enlace-regla-guia:hover {
+
+    color:
+        var(--rojo);
+
+}
+
+
+.enlace-regla-guia:active {
+
+    opacity: .75;
+
+}
+
+
+.enlace-regla-guia:focus-visible {
+
+    outline:
+        3px solid
+        rgba(47, 93, 80, .25);
+
+    outline-offset:
+        3px;
+
+    border-radius:
+        3px;
+
+}
+
+
+/* Deja espacio arriba al hacer scroll */
+
+.menu-regla[data-regla] {
+
+    scroll-margin-top:
+        90px;
+
+}
+
+
+/* Destello breve al llegar */
+
+.menu-regla.regla-destacada {
+
+    animation:
+        destacar-regla
+        1.3s ease;
+
+}
+
+
+@keyframes destacar-regla {
+
+    0%,
+    100% {
+
+        filter:
+            none;
+
+    }
+
+
+    35% {
+
+        filter:
+            drop-shadow(
+                0 0 8px
+                rgba(47, 93, 80, .45)
+            );
+
+    }
+
+}

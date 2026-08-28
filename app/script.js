@@ -988,6 +988,156 @@ document
         }
     );
 
+    /* =====================================================
+   GUÍA → REGLA ESPECÍFICA
+===================================================== */
+
+function irAReglaDesdeGuia(
+    destino
+) {
+
+    const regla =
+        document.querySelector(
+            `.menu-regla[data-regla="${destino}"]`
+        );
+
+
+    if (
+        !regla
+    ) {
+
+        console.warn(
+            "Regla no encontrada:",
+            destino
+        );
+
+        return;
+
+    }
+
+
+    const boton =
+        regla.querySelector(
+            ".boton-regla"
+        );
+
+
+    const contenido =
+        regla.querySelector(
+            ".contenido-regla"
+        );
+
+
+    /* =============================================
+       IR A PANTALLA DE REGLAS
+    ============================================= */
+
+    mostrarPantalla(
+        5
+    );
+
+
+    /* =============================================
+       ABRIR LA REGLA SI ESTÁ CERRADA
+    ============================================= */
+
+    if (
+        contenido &&
+        contenido.classList.contains(
+            "oculto"
+        )
+    ) {
+
+        boton
+            ?.click();
+
+    }
+
+
+    /* =============================================
+       HACER SCROLL CUANDO YA SE MOSTRÓ
+    ============================================= */
+
+    requestAnimationFrame(
+        () => {
+
+            requestAnimationFrame(
+                () => {
+
+                    regla.scrollIntoView({
+
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+
+                    });
+
+
+                    regla.classList.add(
+                        "regla-destacada"
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            regla.classList.remove(
+                                "regla-destacada"
+                            );
+
+                        },
+                        1300
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TEXTOS CLICKEABLES DE LA GUÍA
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".enlace-regla-guia[data-regla-destino]"
+    )
+    .forEach(
+        enlace => {
+
+            enlace.addEventListener(
+                "click",
+                () => {
+
+                    const destino =
+                        enlace.dataset
+                            .reglaDestino;
+
+
+                    if (
+                        !destino
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    irAReglaDesdeGuia(
+                        destino
+                    );
+
+                }
+            );
+
+        }
+    );
 
 /* =====================================================
    PANTALLA 2
