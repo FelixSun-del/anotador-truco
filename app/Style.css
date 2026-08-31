@@ -4773,3 +4773,318 @@ body.opinion-app-abierta {
     }
 
 }
+
+/* =====================================================
+   VALOR DE LAS CARTAS · PRUEBA VISUAL
+===================================================== */
+
+.prueba-valores-cartas {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 16px;
+
+}
+
+
+/* =====================================================
+   FILA
+===================================================== */
+
+.fila-carta-valor {
+
+    min-height: 122px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 14px 16px;
+
+    border:
+        1px solid
+        rgba(47, 93, 80, .18);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, .42);
+
+}
+
+
+/* =====================================================
+   TEXTO
+===================================================== */
+
+.carta-valor-texto {
+
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+}
+
+
+.carta-valor-texto strong {
+
+    font-size: 1.05rem;
+
+    line-height: 1.25;
+
+    color:
+        var(--verde-oscuro);
+
+}
+
+
+.carta-valor-texto span {
+
+    font-size: .94rem;
+
+    line-height: 1.4;
+
+}
+
+
+/* =====================================================
+   CARTA INDIVIDUAL
+===================================================== */
+
+.carta-valor-individual {
+
+    width: 76px;
+
+    max-height: 108px;
+
+    flex-shrink: 0;
+
+    object-fit: contain;
+
+    border-radius: 7px;
+
+    filter:
+        drop-shadow(
+            0 3px 4px
+            rgba(0, 0, 0, .16)
+        );
+
+}
+
+
+/* =====================================================
+   ABANICO DE 4 CARTAS
+===================================================== */
+
+.abanico-cartas {
+
+    position: relative;
+
+    width: 155px;
+
+    height: 108px;
+
+    flex: 0 0 155px;
+
+}
+
+
+.abanico-cartas img {
+
+    position: absolute;
+
+    top: 8px;
+
+    width: 67px;
+
+    height: 94px;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    border-radius: 7px;
+
+    filter:
+        drop-shadow(
+            0 3px 4px
+            rgba(0, 0, 0, .18)
+        );
+
+    transform-origin:
+        center bottom;
+
+}
+
+
+/* Espada */
+
+.abanico-cartas img:nth-child(1) {
+
+    right: 81px;
+
+    transform:
+        rotate(-12deg);
+
+    z-index: 1;
+
+}
+
+
+/* Basto */
+
+.abanico-cartas img:nth-child(2) {
+
+    right: 54px;
+
+    transform:
+        rotate(-4deg);
+
+    z-index: 2;
+
+}
+
+
+/* Oro */
+
+.abanico-cartas img:nth-child(3) {
+
+    right: 27px;
+
+    transform:
+        rotate(4deg);
+
+    z-index: 3;
+
+}
+
+
+/* Copa */
+
+.abanico-cartas img:nth-child(4) {
+
+    right: 0;
+
+    transform:
+        rotate(12deg);
+
+    z-index: 4;
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .fila-carta-valor {
+
+        min-height: 110px;
+
+        gap: 10px;
+
+        padding:
+            12px
+            10px
+            12px
+            13px;
+
+    }
+
+
+    .carta-valor-texto {
+
+        gap: 4px;
+
+    }
+
+
+    .carta-valor-texto strong {
+
+        font-size: .95rem;
+
+    }
+
+
+    .carta-valor-texto span {
+
+        font-size: .84rem;
+
+    }
+
+
+    .carta-valor-individual {
+
+        width: 62px;
+
+        max-height: 91px;
+
+    }
+
+
+    .abanico-cartas {
+
+        width: 120px;
+
+        height: 92px;
+
+        flex-basis: 120px;
+
+    }
+
+
+    .abanico-cartas img {
+
+        width: 54px;
+
+        height: 78px;
+
+        top: 7px;
+
+    }
+
+
+    .abanico-cartas img:nth-child(1) {
+
+        right: 63px;
+
+    }
+
+
+    .abanico-cartas img:nth-child(2) {
+
+        right: 42px;
+
+    }
+
+
+    .abanico-cartas img:nth-child(3) {
+
+        right: 21px;
+
+    }
+
+
+    .abanico-cartas img:nth-child(4) {
+
+        right: 0;
+
+    }
+
+}

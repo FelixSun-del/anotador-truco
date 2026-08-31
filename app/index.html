@@ -44,7 +44,7 @@
 
 <meta
     name="description"
-    content="Anotador de Truco — App para llevar los tantos de tus partidas desde el celular o PC. Instalable, rápida y funciona sin conexión."
+    content="Anotador de Truco — App para llevar los puntos de tus partidas desde el celular o PC. Instalable, rápida y funciona sin conexión."
 >
 
 <meta
@@ -1128,6 +1128,178 @@
         <p class="subtitulo">
             Tocá una categoría para ver sus reglas
         </p>
+
+        <div class="prueba-valores-cartas">
+
+    <!-- =========================================
+         1 · ANCHO DE ESPADA
+    ========================================== -->
+
+    <div class="fila-carta-valor">
+
+        <div class="carta-valor-texto">
+
+            <strong>
+                🥇 1 de Espada
+            </strong>
+
+            <span>
+                La carta más alta del Truco.
+            </span>
+
+        </div>
+
+
+        <img
+            class="carta-valor-individual"
+            src="img/cartas/ancho-espada.png"
+            alt="1 de Espada"
+            loading="lazy"
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         2 · ANCHO DE BASTO
+    ========================================== -->
+
+    <div class="fila-carta-valor">
+
+        <div class="carta-valor-texto">
+
+            <strong>
+                🥈 1 de Basto
+            </strong>
+
+            <span>
+                La segunda carta más alta.
+            </span>
+
+        </div>
+
+
+        <img
+            class="carta-valor-individual"
+            src="img/cartas/ancho-basto.png"
+            alt="1 de Basto"
+            loading="lazy"
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         3 · SIETE DE ESPADA
+    ========================================== -->
+
+    <div class="fila-carta-valor">
+
+        <div class="carta-valor-texto">
+
+            <strong>
+                🥉 7 de Espada
+            </strong>
+
+            <span>
+                La tercera carta más alta.
+            </span>
+
+        </div>
+
+
+        <img
+            class="carta-valor-individual"
+            src="img/cartas/siete-espada.png"
+            alt="7 de Espada"
+            loading="lazy"
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         4 · SIETE DE ORO
+    ========================================== -->
+
+    <div class="fila-carta-valor">
+
+        <div class="carta-valor-texto">
+
+            <strong>
+                4️⃣ 7 de Oro
+            </strong>
+
+            <span>
+                La cuarta carta más alta.
+            </span>
+
+        </div>
+
+
+        <img
+            class="carta-valor-individual"
+            src="img/cartas/siete-oro.png"
+            alt="7 de Oro"
+            loading="lazy"
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         5 · LOS CUATRO 3
+    ========================================== -->
+
+    <div class="fila-carta-valor">
+
+        <div class="carta-valor-texto">
+
+            <strong>
+                3 de cualquier palo
+            </strong>
+
+            <span>
+                Los cuatro 3 tienen el mismo valor.
+            </span>
+
+        </div>
+
+
+        <div
+            class="abanico-cartas"
+            aria-label="3 de Espada, Basto, Oro y Copa"
+        >
+
+            <img
+                src="img/cartas/tres-espada.png"
+                alt="3 de Espada"
+                loading="lazy"
+            >
+
+            <img
+                src="img/cartas/tres-basto.png"
+                alt="3 de Basto"
+                loading="lazy"
+            >
+
+            <img
+                src="img/cartas/tres-oro.png"
+                alt="3 de Oro"
+                loading="lazy"
+            >
+
+            <img
+                src="img/cartas/tres-copa.png"
+                alt="3 de Copa"
+                loading="lazy"
+            >
+
+        </div>
+
+    </div>
+
+</div>
 
         <!-- =====================================================
              VALOR DE LAS CARTAS
@@ -2686,49 +2858,61 @@
 
                     <details class="guia-item">
 
-                        <summary>
-                            🔀 ¿Las cartas valen igual para el Truco y el Envido?
-                        </summary>
+                    <summary>
+                        🔀 ¿Las cartas valen igual para el Truco y el Envido?
+                    </summary>
 
-                        <div class="guia-item-contenido">
+                    <div class="guia-item-contenido">
 
-                            <p>
-                                <strong>No.</strong>
-                            </p>
+                        <p>
+                            <strong>No.</strong>
+                        </p>
 
-                            <p>
-                                Para ganar una baza de Truco,
-                                las cartas tienen una
-                                <strong>jerarquía especial</strong>.
-                            </p>
+                        <p>
+                            Para jugar el Truco,
+                            las cartas tienen una
+                            <strong>jerarquía especial</strong>
+                            que determina cuál gana cada baza.
+                        </p>
 
-                            <p>
-                                Para calcular el Envido,
-                                se utiliza el
-                                <strong>valor numérico</strong>
-                                de las cartas.
-                            </p>
+                        <p>
+                            Para calcular el Envido,
+                            en cambio, se utiliza el
+                            <strong>valor numérico</strong>
+                            de las cartas.
+                        </p>
 
-                            <p>
-                                En el Envido:
-                            </p>
-
-                            <ul>
-                                <li>Las cartas del 1 al 7 valen su número.</li>
-                                <li>El 10 vale 0.</li>
-                                <li>El 11 vale 0.</li>
-                                <li>El 12 vale 0.</li>
-                            </ul>
-
-                            <div class="guia-ejemplo">
-                                El 1 de Espada es la carta más fuerte
-                                para el Truco, pero para calcular
-                                el Envido vale solamente 1.
-                            </div>
-
+                        <div class="guia-ejemplo">
+                            El 1 de Espada es la carta más fuerte
+                            para el Truco, pero para calcular
+                            el Envido vale solamente 1.
                         </div>
 
-                    </details>
+                        <p>
+                            Podés consultar los valores completos en
+
+                            <button
+                                type="button"
+                                class="enlace-regla-guia"
+                                data-regla-destino="cartas"
+                            >
+                                <strong>Valor de las cartas</strong>
+                            </button>
+
+                            y
+
+                            <button
+                                type="button"
+                                class="enlace-regla-guia"
+                                data-regla-destino="envido"
+                            >
+                                <strong>Envido</strong>
+                            </button>.
+                        </p>
+
+                    </div>
+
+             </details>
 
 
                     <details class="guia-item">
@@ -2983,27 +3167,58 @@
 
                             </div>
 
+                            <h3>
+                                ⚔️ ¿En qué orden se cantan?
+                            </h3>
+
                             <p>
-                                El orden es:
+                                El valor del Truco puede subir
+                                siguiendo siempre este orden:
                             </p>
 
                             <ol>
-                                <li>Truco</li>
-                                <li>Retruco</li>
-                                <li>Vale Cuatro</li>
+                                <li><strong>Truco</strong></li>
+                                <li><strong>Retruco</strong></li>
+                                <li><strong>Vale Cuatro</strong></li>
                             </ol>
 
                             <p>
-                                El Retruco aparece después
-                                de que ya hubo Truco,
-                                y el Vale Cuatro después
-                                de que ya hubo Retruco.
+                                <strong>
+                                    No se pueden saltear pasos.
+                                </strong>
                             </p>
 
                             <p>
-                                Después de Vale Cuatro
-                                ya no se puede subir más
+                                No se puede cantar
+                                <strong>Retruco</strong>
+                                si antes no hubo
+                                <strong>Truco</strong>,
+                                ni se puede cantar
+                                <strong>Vale Cuatro</strong>
+                                si antes no hubo
+                                <strong>Retruco</strong>.
+                            </p>
+
+                            <p>
+                                Después de
+                                <strong>Vale Cuatro</strong>,
+                                ya no se puede aumentar más
                                 el valor del Truco.
+                            </p>
+
+                            <p>
+                                Podés consultar los valores
+                                aceptados y rechazados en
+
+                                <button
+                                    type="button"
+                                    class="enlace-regla-guia"
+                                    data-regla-destino="truco"
+                                >
+                                    <strong>
+                                        Truco en las Reglas del juego
+                                    </strong>
+                                </button>.
                             </p>
 
                         </div>
@@ -3015,230 +3230,214 @@
 
                     <details class="guia-item">
 
-                        <summary>
-                            🪙 ¿Cómo funciona el Envido?
-                        </summary>
+                    <summary>
+                        🪙 ¿Cómo funciona el Envido?
+                    </summary>
 
-                        <div class="guia-item-contenido">
+                    <div class="guia-item-contenido">
 
-                            <p>
-                                El Envido es una apuesta
-                                que utiliza el valor de las cartas
-                                para determinar quién tiene
-                                el número más alto.
-                            </p>
+                        <p>
+                            El Envido es un canto que compara
+                            <strong>
+                                el valor que forman las cartas
+                            </strong>
+                            de los jugadores.
+                        </p>
 
-                            <p>
-                                Se juega al comienzo de la ronda.
-                            </p>
-
-
-                            <h3>
-                                ¿Cómo calculo mi Envido?
-                            </h3>
-
-                            <p>
-                                Si tenés
-                                <strong>dos cartas del mismo palo</strong>,
-                                sumás el valor de esas dos cartas
-                                y agregás <strong>20</strong>.
-                            </p>
-
-                            <div class="guia-ejemplo">
-
-                                7 de Oro + 6 de Oro<br>
-                                7 + 6 + 20 = <strong>33 de tanto</strong>
-
-                            </div>
-
-                            <p>
-                                Si no tenés dos cartas del mismo palo,
-                                cuenta la carta numérica
-                                de mayor valor.
-                            </p>
-
-                            <div class="guia-ejemplo">
-
-                                7 de Oro + 5 de Copa + 12 de Espada<br>
-                                <strong>Tengo 7 de tanto.</strong>
-
-                            </div>
-
-                            <p>
-                                Recordá que para el Envido
-                                el 10, 11 y 12 valen
-                                <strong>0</strong>.
-                            </p>
+                        <p>
+                            Se juega al comienzo de la ronda,
+                            antes de que avance demasiado
+                            el juego de las cartas.
+                        </p>
 
 
-                            <h3>
-                                Tipos de Envido
-                            </h3>
+                        <h3>
+                            🧮 ¿Cómo se calcula?
+                        </h3>
 
-                            <p>
-                                <strong>Envido:</strong>
-                                normalmente vale 2 puntos
-                                si es aceptado.
-                            </p>
+                        <p>
+                            Si tenés
+                            <strong>
+                                dos cartas del mismo palo
+                            </strong>,
+                            sumás sus valores y agregás
+                            <strong>20</strong>.
+                        </p>
 
-                            <p>
-                                <strong>Real Envido:</strong>
-                                normalmente vale 3 puntos
-                                si es aceptado.
-                            </p>
+                        <div class="guia-ejemplo">
 
-                            <p>
-                                <strong>Falta Envido:</strong>
-                                su valor depende de lo que falta
-                                para llegar al objetivo
-                                de la partida.
-                            </p>
+                            7 de Oro + 6 de Oro<br>
 
-                            <p>
-                                Los cantos de Envido también
-                                pueden combinarse entre sí.
-                                Los valores exactos de cada combinación
-                                están explicados en
-
-                                <button
-                                    type="button"
-                                    class="enlace-regla-guia"
-                                    data-regla-destino="envido"
-                                >
-                                    <strong> Envido </strong> 
-                                </button>.
-                            </p>
-
-
-                            <h3>
-                                ¿Qué pasa si empatan?
-                            </h3>
-
-                            <p>
-                                Si dos jugadores tienen
-                                la misma cantidad de Envido,
-                                tiene prioridad
-                                <strong>la mano</strong>
-                                según el orden de juego.
-                            </p>
+                            7 + 6 + 20 =
+                            <strong>
+                                33 de tantos
+                            </strong>
 
                         </div>
 
-                    </details>
+                        <p>
+                            Si no tenés dos cartas
+                            del mismo palo,
+                            se utiliza la carta
+                            de mayor valor para el Envido.
+                        </p>
+
+
+                        <h3>
+                            🔊 Cantos de Envido
+                        </h3>
+
+                        <p>
+                            Durante una partida podés escuchar
+                            cantos como
+                            <strong>Envido</strong>,
+                            <strong>Real Envido</strong>
+                            o
+                            <strong>Falta Envido</strong>.
+                        </p>
+
+                        <p>
+                            Estos cantos también pueden
+                            combinarse y tener distintos valores.
+                        </p>
+
+                        <p>
+                            Podés consultar todos los valores,
+                            combinaciones y casos especiales en
+
+                            <button
+                                type="button"
+                                class="enlace-regla-guia"
+                                data-regla-destino="envido"
+                            >
+                                <strong>
+                                    Envido en las Reglas del juego
+                                </strong>
+                            </button>.
+                        </p>
+
+
+                        <h3>
+                            🤝 ¿Qué pasa si empatan?
+                        </h3>
+
+                        <p>
+                            Si dos jugadores tienen
+                            el mismo Envido,
+                            tiene prioridad
+                            <strong>
+                                el jugador que sea mano
+                            </strong>.
+                        </p>
+
+                    </div>
+
+                </details>
 
 
                     <!-- FLOR -->
 
                     <details class="guia-item">
 
-                        <summary>
-                            🌸 ¿Cómo funciona la Flor?
-                        </summary>
+    <summary>
+        🌸 ¿Cómo funciona la Flor?
+    </summary>
 
-                        <div class="guia-item-contenido">
+    <div class="guia-item-contenido">
 
-                            <p>
-                                Un jugador tiene
-                                <strong>Flor</strong>
-                                cuando sus
-                                <strong>3 cartas son del mismo palo</strong>.
-                            </p>
+        <p>
+            Un jugador tiene
+            <strong>Flor</strong>
+            cuando sus
+            <strong>
+                3 cartas son del mismo palo
+            </strong>.
+        </p>
 
-                            <p>
-                                Si la mesa decidió jugar con Flor,
-                                el jugador debe anunciarla.
-                            </p>
-
-
-                            <h3>
-                                🌼 ¿Qué significa "Jardinera"?
-                            </h3>
-
-                            <p>
-                                <strong>Jardinera</strong>
-                                es una forma coloquial
-                                de decir que un jugador tiene Flor.
-                            </p>
-
-                            <p>
-                                Pero decir
-                                <strong>"Jardinera"</strong>
-                                no cuenta como cantar la Flor.
-                            </p>
-
-                            <p>
-                                Para realizar el canto,
-                                hay que decir
-                                <strong>"Flor"</strong>.
-                            </p>
+        <p>
+            Si la mesa decidió jugar con Flor,
+            el jugador debe anunciarla.
+        </p>
 
 
-                            <h3>
-                                ¿Puedo empezar diciendo Contraflor?
-                            </h3>
+        <h3>
+            🌼 ¿Qué significa "Jardinera"?
+        </h3>
 
-                            <p>
-                                <strong>No.</strong>
-                            </p>
+        <p>
+            <strong>Jardinera</strong>
+            es una forma coloquial
+            de decir que un jugador tiene Flor.
+        </p>
 
-                            <p>
-                                Para iniciar el canto,
-                                solamente se canta
-                                <strong>Flor</strong>.
-                            </p>
+        <p>
+            Pero decir
+            <strong>"Jardinera"</strong>
+            no cuenta como cantar la Flor.
+        </p>
 
-                            <p>
-                                <strong>Contraflor</strong>
-                                y
-                                <strong>Contraflor al resto</strong>
-                                aparecen como respuesta
-                                cuando dos o más jugadores
-                                tienen Flor.
-                            </p>
-
-
-                            <h3>
-                                Valores
-                            </h3>
-
-                            <p>
-                                <strong>Flor:</strong>
-                                3 puntos.
-                            </p>
-
-                            <p>
-                                <strong>Contraflor:</strong>
-                                6 puntos.
-                            </p>
-
-                            <p>
-                                <strong>Contraflor al resto:</strong>
-                                su valor depende de lo que falta
-                                para cerrar la partida.
-                            </p>
+        <p>
+            Para realizar el canto,
+            hay que decir
+            <strong>"Flor"</strong>.
+        </p>
 
 
-                            <h3>
-                                Flor y Envido
-                            </h3>
+        <h3>
+            🔊 ¿Puedo empezar diciendo Contraflor?
+        </h3>
 
-                            <p>
-                                Podés consultar más información en
+        <p>
+            <strong>No.</strong>
+        </p>
 
-                                <button
-                                    type="button"
-                                    class="enlace-regla-guia"
-                                    data-regla-destino="flor"
-                                >
-                                    <strong>
-                                        Flor en las Reglas del juego
-                                    </strong>
-                                </button>.
-                            </p>
+        <p>
+            Para iniciar el canto,
+            solamente se canta
+            <strong>Flor</strong>.
+        </p>
 
-                        </div>
+        <p>
+            <strong>Contraflor</strong>
+            y
+            <strong>Contraflor al resto</strong>
+            aparecen como respuesta
+            cuando dos o más jugadores
+            tienen Flor.
+        </p>
 
-                    </details>
+
+        <h3>
+            🪙 Flor y Envido
+        </h3>
+
+        <p>
+            Si la partida se juega con Flor
+            y un jugador canta Flor,
+            <strong>
+                la Flor tiene prioridad
+                sobre el Envido.
+            </strong>
+        </p>
+
+        <p>
+            Podés consultar sus valores
+            y situaciones especiales en
+
+            <button
+                type="button"
+                class="enlace-regla-guia"
+                data-regla-destino="flor"
+            >
+                <strong>
+                    Flor en las Reglas del juego
+                </strong>
+            </button>.
+        </p>
+
+    </div>
+
+</details>
 
                 </div>
 
@@ -3288,27 +3487,79 @@
 
                     <details class="guia-item">
 
-                        <summary>
-                            🪑 ¿Cómo se ubican los equipos?
-                        </summary>
+                    <summary>
+                        🪑 ¿Cómo se ubican los equipos?
+                    </summary>
 
-                        <div class="guia-item-contenido">
+                    <div class="guia-item-contenido">
 
-                            <p>
-                                Normalmente los jugadores
-                                de ambos equipos se ubican
-                                <strong>intercalados alrededor de la mesa</strong>.
-                            </p>
+                        <p>
+                            Cuando se juega por equipos,
+                            los jugadores normalmente se ubican
+                            <strong>
+                                intercalados alrededor de la mesa
+                            </strong>.
+                        </p>
 
-                            <p>
-                                De esta forma,
-                                después de un jugador suele jugar
-                                un integrante del equipo rival.
-                            </p>
+                        <p>
+                            La idea es que los integrantes
+                            de un mismo equipo
+                            <strong>
+                                no queden sentados uno al lado del otro
+                            </strong>,
+                            sino separados por jugadores rivales.
+                        </p>
 
-                        </div>
 
-                    </details>
+                        <h3>
+                            👥 En un 2 vs 2
+                        </h3>
+
+                        <p>
+                            Tu compañero queda ubicado
+                            <strong>
+                                en diagonal respecto de vos
+                            </strong>,
+                            mientras que los jugadores rivales
+                            quedan intercalados entre ambos.
+                        </p>
+
+
+                        <h3>
+                            👥 En un 3 vs 3
+                        </h3>
+
+                        <p>
+                            Los jugadores de ambos equipos
+                            se van alternando alrededor de la mesa,
+                            de forma que entre dos compañeros
+                            haya un jugador rival.
+                        </p>
+
+
+                        <h3>
+                            👥 En equipos más grandes
+                        </h3>
+
+                        <p>
+                            En partidas de
+                            <strong>4 vs 4</strong>,
+                            <strong>5 vs 5</strong>
+                            o
+                            <strong>6 vs 6</strong>,
+                            se mantiene la misma idea:
+                            los jugadores de ambos equipos
+                            se distribuyen de forma intercalada.
+                        </p>
+
+                        <p>
+                            Así, el orden de juego va alternando
+                            entre integrantes de los dos equipos.
+                        </p>
+
+                    </div>
+
+                </details>
 
 
                     <details class="guia-item">
