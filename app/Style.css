@@ -4775,86 +4775,115 @@ body.opinion-app-abierta {
 }
 
 /* =====================================================
-   VALOR DE LAS CARTAS · PRUEBA VISUAL
+   VALOR DE LAS CARTAS · DISEÑO LIMPIO
 ===================================================== */
 
 .prueba-valores-cartas {
+
+    width: 100%;
 
     display: flex;
 
     flex-direction: column;
 
+    align-items: center;
+
     gap: 12px;
 
-    margin-top: 16px;
+    margin-top: 14px;
 
 }
 
 
 /* =====================================================
-   FILA
+   CADA CARTA / GRUPO
 ===================================================== */
 
 .fila-carta-valor {
 
-    min-height: 122px;
+    width: min(
+        560px,
+        100%
+    );
 
     display: flex;
 
+    flex-direction: column;
+
     align-items: center;
 
-    justify-content: space-between;
+    justify-content: center;
 
-    gap: 18px;
+    gap: 8px;
 
-    padding: 14px 16px;
+    padding:
+        14px
+        18px;
 
     border:
         1px solid
         rgba(47, 93, 80, .18);
 
-    border-radius: 14px;
+    border-radius:
+        13px;
 
     background:
-        rgba(255, 255, 255, .42);
+        rgba(
+            255,
+            255,
+            255,
+            .38
+        );
 
 }
 
 
 /* =====================================================
-   TEXTO
+   NOMBRE + IMAGEN
 ===================================================== */
 
-.carta-valor-texto {
-
-    min-width: 0;
-
-    flex: 1;
+.carta-valor-linea {
 
     display: flex;
 
-    flex-direction: column;
+    align-items: center;
 
-    gap: 6px;
+    justify-content: center;
+
+    gap: 16px;
 
 }
 
 
-.carta-valor-texto strong {
+.carta-valor-linea strong {
 
-    font-size: 1.05rem;
+    margin: 0;
+
+    font-size:
+        1.05rem;
 
     line-height: 1.25;
 
     color:
         var(--verde-oscuro);
 
+    white-space: nowrap;
+
 }
 
 
-.carta-valor-texto span {
+/* =====================================================
+   DESCRIPCIÓN
+===================================================== */
 
-    font-size: .94rem;
+.fila-carta-valor > p {
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size:
+        .94rem;
 
     line-height: 1.4;
 
@@ -4867,122 +4896,103 @@ body.opinion-app-abierta {
 
 .carta-valor-individual {
 
-    width: 76px;
+    display: block;
 
-    max-height: 108px;
+    width: auto;
 
-    flex-shrink: 0;
+    height: 110px;
 
     object-fit: contain;
 
-    border-radius: 7px;
+    border-radius:
+        7px;
 
     filter:
         drop-shadow(
             0 3px 4px
-            rgba(0, 0, 0, .16)
+            rgba(
+                0,
+                0,
+                0,
+                .18
+            )
         );
 
 }
 
 
 /* =====================================================
-   ABANICO DE 4 CARTAS
+   GRUPO DE 4 CARTAS · 2 ARRIBA + 2 ABAJO
 ===================================================== */
 
 .abanico-cartas {
 
-    position: relative;
+    display: grid;
 
-    width: 155px;
+    grid-template-columns:
+        repeat(
+            2,
+            82px
+        );
 
-    height: 108px;
+    grid-template-rows:
+        repeat(
+            2,
+            116px
+        );
 
-    flex: 0 0 155px;
+    gap:
+        10px
+        12px;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: auto;
+
+    height: auto;
+
+    margin: 0;
+
+    flex-shrink: 0;
 
 }
 
 
+/* =====================================================
+   TODAS LAS CARTAS DEL GRUPO
+===================================================== */
+
 .abanico-cartas img {
 
-    position: absolute;
+    display: block;
 
-    top: 8px;
+    position: static;
 
-    width: 67px;
+    width: 82px;
 
-    height: 94px;
+    height: 116px;
 
     object-fit: cover;
 
     object-position: center;
 
-    border-radius: 7px;
+    border-radius:
+        7px;
 
     filter:
         drop-shadow(
             0 3px 4px
-            rgba(0, 0, 0, .18)
+            rgba(
+                0,
+                0,
+                0,
+                .20
+            )
         );
 
-    transform-origin:
-        center bottom;
-
-}
-
-
-/* Espada */
-
-.abanico-cartas img:nth-child(1) {
-
-    right: 81px;
-
-    transform:
-        rotate(-12deg);
-
-    z-index: 1;
-
-}
-
-
-/* Basto */
-
-.abanico-cartas img:nth-child(2) {
-
-    right: 54px;
-
-    transform:
-        rotate(-4deg);
-
-    z-index: 2;
-
-}
-
-
-/* Oro */
-
-.abanico-cartas img:nth-child(3) {
-
-    right: 27px;
-
-    transform:
-        rotate(4deg);
-
-    z-index: 3;
-
-}
-
-
-/* Copa */
-
-.abanico-cartas img:nth-child(4) {
-
-    right: 0;
-
-    transform:
-        rotate(12deg);
-
-    z-index: 4;
+    transform: none;
 
 }
 
@@ -4995,96 +5005,205 @@ body.opinion-app-abierta {
 
     .fila-carta-valor {
 
-        min-height: 110px;
-
-        gap: 10px;
+        width: 100%;
 
         padding:
             12px
-            10px
-            12px
-            13px;
+            10px;
 
     }
 
 
-    .carta-valor-texto {
+    .carta-valor-linea {
 
-        gap: 4px;
-
-    }
-
-
-    .carta-valor-texto strong {
-
-        font-size: .95rem;
+        gap: 10px;
 
     }
 
 
-    .carta-valor-texto span {
+    .carta-valor-linea strong {
 
-        font-size: .84rem;
+        font-size:
+            .93rem;
+
+        white-space: normal;
+
+    }
+
+
+    .fila-carta-valor > p {
+
+        font-size:
+            .84rem;
 
     }
 
 
     .carta-valor-individual {
 
-        width: 62px;
-
-        max-height: 91px;
+        height: 88px;
 
     }
 
 
     .abanico-cartas {
 
-        width: 120px;
+        grid-template-columns:
+            repeat(
+                2,
+                68px
+            );
 
-        height: 92px;
+        grid-template-rows:
+            repeat(
+                2,
+                96px
+            );
 
-        flex-basis: 120px;
+        gap:
+            8px
+            9px;
 
     }
 
 
     .abanico-cartas img {
 
-        width: 54px;
+        width: 68px;
 
-        height: 78px;
+        height: 96px;
 
-        top: 7px;
+        object-fit: cover;
+
+        object-position: center;
+
+    }
+
+}
+
+/* =====================================================
+   VALOR DE LAS CARTAS · TEXTO MÁS GRANDE Y LEGIBLE
+===================================================== */
+
+/* NOMBRE DE LA CARTA */
+
+.carta-valor-linea strong {
+
+    font-size: 1.28rem !important;
+
+    font-weight: 900 !important;
+
+    line-height: 1.25 !important;
+
+    color: #21463c !important;
+
+}
+
+
+/* EXPLICACIÓN DE ABAJO */
+
+.fila-carta-valor > p {
+
+    font-size: 1.10rem !important;
+
+    font-weight: 600 !important;
+
+    line-height: 1.45 !important;
+
+    color: #2d241d !important;
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .carta-valor-linea strong {
+
+        font-size: 1.08rem !important;
 
     }
 
 
-    .abanico-cartas img:nth-child(1) {
+    .fila-carta-valor > p {
 
-        right: 63px;
-
-    }
-
-
-    .abanico-cartas img:nth-child(2) {
-
-        right: 42px;
+        font-size: .96rem !important;
 
     }
 
+}
 
-    .abanico-cartas img:nth-child(3) {
+/* =====================================================
+   GRUPO DE 2 CARTAS
+===================================================== */
 
-        right: 21px;
+.abanico-cartas:has(img:nth-child(2):last-child) {
+
+    grid-template-columns:
+        repeat(2, 82px);
+
+    grid-template-rows:
+        116px;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .abanico-cartas:has(img:nth-child(2):last-child) {
+
+        grid-template-columns:
+            repeat(2, 68px);
+
+        grid-template-rows:
+            96px;
 
     }
 
+}
 
-    .abanico-cartas img:nth-child(4) {
+/* =====================================================
+   GRUPO DE 2 CARTAS · CENTRADO
+===================================================== */
 
-        right: 0;
+.grupo-dos-cartas .carta-valor-linea {
 
-    }
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+}
+
+
+.grupo-dos-cartas .carta-valor-linea strong {
+
+    text-align: center;
+
+}
+
+
+.grupo-dos-cartas .abanico-cartas {
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+}
+
+
+.grupo-dos-cartas > p {
+
+    width: 100%;
+
+    text-align: center;
 
 }
