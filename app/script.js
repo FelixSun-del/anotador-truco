@@ -765,11 +765,22 @@ function refrescarEstadoAdmin() {
             "adminAutorizadoUid"
         );
 
+    const modoSesion =
+        localStorage.getItem(
+            "adminSesionModo"
+        );
 
-    /*
-     * Si el Admin cerró sesión,
-     * ocultamos el botón inmediatamente.
-     */
+    const expiracion =
+        Number(
+            localStorage.getItem(
+                "adminSesionExpira"
+            )
+        ) || 0;
+
+
+    /* =================================================
+       SIN SESIÓN AUTORIZADA GUARDADA
+    ================================================= */
 
     if (
         !uidAutorizado
@@ -781,6 +792,68 @@ function refrescarEstadoAdmin() {
 
     }
 
+
+    /* =================================================
+       SESIÓN VENCIDA
+    ================================================= */
+
+    if (
+        expiracion &&
+        Date.now() >= expiracion
+    ) {
+
+        limpiarSesionAdminLocal();
+
+        ocultarBotonAdmin();
+
+        return;
+
+    }
+
+
+    /* =================================================
+       MODO OFFLINE
+    ================================================= */
+
+    if (
+        !navigator.onLine
+    ) {
+
+        /*
+         * Offline no podemos preguntarle
+         * al backend ni cargar Firebase.
+         *
+         * Mostramos el botón solamente
+         * si existe una sesión recordada
+         * y todavía válida.
+         */
+
+        if (
+            modoSesion === "recordada" &&
+            expiracion > Date.now()
+        ) {
+
+            mostrarBotonAdmin();
+
+            console.log(
+                "📴 Botón Admin disponible con sesión recordada offline."
+            );
+
+        } else {
+
+            ocultarBotonAdmin();
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =================================================
+       MODO ONLINE
+    ================================================= */
 
     if (
         !firebaseDisponible ||
@@ -800,6 +873,27 @@ function refrescarEstadoAdmin() {
 
 }
 
+window.addEventListener(
+    "online",
+    () => {
+
+        refrescarEstadoAdmin();
+
+    }
+);
+
+
+window.addEventListener(
+    "offline",
+    () => {
+
+        refrescarEstadoAdmin();
+
+    }
+);
+
+
+refrescarEstadoAdmin();
 
 /* =====================================================
    VOLVER A LA APP
