@@ -454,7 +454,87 @@ function actualizarBotonAdminLocal() {
  * desde el Admin Panel.
  */
 
-actualizarBotonAdminLocal();
+actualizarBotonAdminLocal();/* =====================================================
+   BOTÓN ADMIN · SOLO SESIÓN ACTIVA
+===================================================== */
+
+function ocultarBotonAdmin() {
+
+    if (
+        !botonAdmin
+    ) {
+
+        return;
+
+    }
+
+
+    botonAdmin
+        .classList
+        .add(
+            "oculto"
+        );
+
+}
+
+
+function mostrarBotonAdmin() {
+
+    if (
+        !botonAdmin
+    ) {
+
+        return;
+
+    }
+
+
+    botonAdmin
+        .classList
+        .remove(
+            "oculto"
+        );
+
+}
+
+
+/* =====================================================
+   LIMPIAR DATOS DE SESIÓN ADMIN
+===================================================== */
+
+function limpiarSesionAdminLocal() {
+
+    localStorage.removeItem(
+        "adminSesionExpira"
+    );
+
+
+    localStorage.removeItem(
+        "adminSesionDias"
+    );
+
+
+    localStorage.removeItem(
+        "adminSesionModo"
+    );
+
+
+    localStorage.removeItem(
+        "adminAutorizadoUid"
+    );
+
+
+    localStorage.removeItem(
+        "adminDispositivoReconocido"
+    );
+
+
+    sessionStorage.removeItem(
+        "adminSesionTemporal"
+    );
+
+}
+
 
 /* =====================================================
    COMPROBAR ADMINISTRADOR
@@ -464,74 +544,78 @@ async function comprobarAdministrador(
     user
 ) {
 
-    if (!botonAdmin) {
+    /*
+     * Siempre empezamos ocultándolo.
+     *
+     * Solo lo mostramos después
+     * de comprobar una sesión real.
+     */
+
+    ocultarBotonAdmin();
+
+
+    if (
+        !user
+    ) {
+
+        localStorage.removeItem(
+            "adminAutorizadoUid"
+        );
+
+
+        localStorage.removeItem(
+            "adminDispositivoReconocido"
+        );
+
 
         return;
 
     }
 
 
-actualizarBotonAdminLocal();
+    /* =================================================
+       COMPROBAR VENCIMIENTO 7 / 30 DÍAS
+    ================================================= */
 
-
-if (
-    !user
-) {
-
-    return;
-
-}
-
-
-    const expiracionGuardada =
-        localStorage.getItem(
-            "adminSesionExpira"
-        );
+    const expiracion =
+        Number(
+            localStorage.getItem(
+                "adminSesionExpira"
+            )
+        ) || 0;
 
 
     if (
-        expiracionGuardada
+        expiracion &&
+        Date.now() >=
+            expiracion
     ) {
 
-        const expiracion =
-            Number(
-                expiracionGuardada
+        limpiarSesionAdminLocal();
+
+
+        try {
+
+            await auth.signOut();
+
+        } catch (error) {
+
+            console.warn(
+                "No se pudo cerrar la sesión vencida:",
+                error
             );
-
-
-        if (
-            Number.isFinite(
-                expiracion
-            ) &&
-            Date.now() >=
-            expiracion
-        ) {
-
-            localStorage.removeItem(
-    "adminSesionExpira"
-);
-
-localStorage.removeItem(
-    "adminSesionDias"
-);
-
-localStorage.removeItem(
-    "adminAutorizadoUid"
-);
-
-
-actualizarBotonAdminLocal();
-
-
-await auth.signOut();
-
-
-            return;
 
         }
 
+
+        return;
+
     }
 
+
+    /* =================================================
+       COMPROBAR PERMISOS REALES
+    ================================================= */
 
     try {
 
@@ -556,16 +640,44 @@ await auth.signOut();
             );
 
 
+        /* =============================================
+           CUENTA SIN PERMISOS
+        ============================================= */
+
+        if (
+            respuesta.status === 401 ||
+            respuesta.status === 403
+        ) {
+
+            limpiarSesionAdminLocal();
+
+
+            try {
+
+                await auth.signOut();
+
+            } catch (error) {
+
+                console.warn(
+                    "No se pudo cerrar la sesión:",
+                    error
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
         if (
             !respuesta.ok
         ) {
 
-            console.warn(
-                "🔒 Usuario sin permisos de administrador."
+            throw new Error(
+                `HTTP ${respuesta.status}`
             );
-
-
-            return;
 
         }
 
@@ -575,44 +687,78 @@ await auth.signOut();
 
 
         if (
-    datos.autorizado ===
-    true
-) {
+            datos.autorizado !==
+            true
+        ) {
 
-    localStorage.setItem(
-        "adminDispositivoReconocido",
-        "true"
-    );
+            limpiarSesionAdminLocal();
+
+            return;
+
+        }
 
 
-    botonAdmin
-        .classList
-        .remove(
-            "oculto"
+        /* =============================================
+           SESIÓN REAL Y AUTORIZADA
+        ============================================= */
+
+        localStorage.setItem(
+            "adminAutorizadoUid",
+            user.uid
         );
 
 
-    console.log(
-        "🔐 Administrador autorizado:",
-        datos.email
-    );
+        mostrarBotonAdmin();
 
-}
+
+        console.log(
+            "🔐 Sesión administrativa activa:",
+            datos.email
+        );
 
 
     } catch (error) {
 
-        console.error(
-            "Error comprobando administrador:",
+        /*
+         * Si no hay Internet:
+         *
+         * solo permitimos mostrar el botón
+         * cuando Firebase SÍ mantiene al usuario
+         * autenticado y ese mismo UID ya había
+         * sido autorizado anteriormente.
+         */
+
+        const uidAutorizado =
+            localStorage.getItem(
+                "adminAutorizadoUid"
+            );
+
+
+        if (
+            uidAutorizado ===
+            user.uid
+        ) {
+
+            mostrarBotonAdmin();
+
+
+            console.warn(
+                "📴 Admin reconocido con sesión activa offline."
+            );
+
+
+            return;
+
+        }
+
+
+        ocultarBotonAdmin();
+
+
+        console.warn(
+            "No se pudo comprobar el Admin:",
             error
         );
-
-
-        botonAdmin
-            .classList
-            .add(
-                "oculto"
-            );
 
     }
 
@@ -622,6 +768,9 @@ await auth.signOut();
 /* =====================================================
    ESTADO DE FIREBASE
 ===================================================== */
+
+ocultarBotonAdmin();
+
 
 if (
     firebaseDisponible
@@ -638,7 +787,6 @@ if (
     );
 
 }
-
 
 /* =====================================================
    ABRIR PANEL ADMIN

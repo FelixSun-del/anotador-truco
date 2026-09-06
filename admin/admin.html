@@ -577,11 +577,12 @@
     } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 
-    import {
-    getAuth,
+import {
+    initializeAuth,
     signInWithEmailAndPassword,
     onAuthStateChanged,
     setPersistence,
+    indexedDBLocalPersistence,
     browserLocalPersistence,
     browserSessionPersistence,
     signOut
@@ -618,8 +619,48 @@
         initializeApp(firebaseConfig);
 
 
-    const auth =
-        getAuth(app);
+/* =====================================================
+   PERSISTENCIA DE LA SESIÓN
+===================================================== */
+
+const expiracionInicial =
+    Number(
+        localStorage.getItem(
+            "adminSesionExpira"
+        )
+    ) || 0;
+
+
+const sesionRecordadaInicial =
+
+    localStorage.getItem(
+        "adminSesionModo"
+    ) ===
+        "recordada" ||
+
+    expiracionInicial >
+        Date.now();
+
+
+const auth =
+    initializeAuth(
+        app,
+        {
+
+            persistence:
+                sesionRecordadaInicial
+
+                    ? [
+                        indexedDBLocalPersistence,
+                        browserLocalPersistence
+                    ]
+
+                    : [
+                        browserSessionPersistence
+                    ]
+
+        }
+    );
 
     const API_ADMIN_URL =
         "https://anotador-truco-backend.onrender.com";
@@ -756,14 +797,46 @@ botonesDuracion.forEach(
 
             try {
 
-                if (guardarSesion.checked) {
+                if (
+    guardarSesion.checked
+) {
 
-    await setPersistence(
-        auth,
-        browserLocalPersistence
-    );
+    /*
+     * Para sesiones de 7 / 30 días
+     * preferimos IndexedDB.
+     *
+     * En celular suele ser más robusto
+     * para una PWA instalada.
+     */
+
+    try {
+
+        await setPersistence(
+            auth,
+            indexedDBLocalPersistence
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "IndexedDB no disponible. Usando persistencia local.",
+            error
+        );
+
+
+        await setPersistence(
+            auth,
+            browserLocalPersistence
+        );
+
+    }
 
 } else {
+
+    /*
+     * Sin "Mantener sesión",
+     * solamente dura la sesión actual.
+     */
 
     await setPersistence(
         auth,
@@ -778,6 +851,16 @@ botonesDuracion.forEach(
                 );
 
                 if (guardarSesion.checked) {
+
+                    localStorage.setItem(
+    "adminSesionModo",
+    "recordada"
+);
+
+
+sessionStorage.removeItem(
+    "adminSesionTemporal"
+);
 
     const milisegundosPorDia =
         24 * 60 * 60 * 1000;
@@ -898,6 +981,19 @@ localStorage.removeItem(
     "adminAutorizadoUid"
 );
 
+localStorage.removeItem(
+    "adminSesionModo"
+);
+
+
+localStorage.removeItem(
+    "adminDispositivoReconocido"
+);
+
+
+sessionStorage.removeItem(
+    "adminSesionTemporal"
+);
 
 /*
  * También eliminamos las estadísticas
@@ -1144,6 +1240,34 @@ localStorage.setItem(
     onAuthStateChanged(
     auth,
     async usuario => {
+        const expiracionVieja =
+    Number(
+        localStorage.getItem(
+            "adminSesionExpira"
+        )
+    ) || 0;
+
+
+if (
+    expiracionVieja >
+        Date.now() &&
+    !localStorage.getItem(
+        "adminSesionModo"
+    )
+) {
+
+    /*
+     * Migramos automáticamente
+     * las sesiones creadas
+     * con la versión anterior.
+     */
+
+    localStorage.setItem(
+        "adminSesionModo",
+        "recordada"
+    );
+
+}
 
         /* =============================================
            NO HAY SESIÓN
