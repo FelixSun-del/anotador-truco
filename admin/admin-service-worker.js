@@ -10,12 +10,10 @@ const CACHE_PREFIX =
 
 
 const CACHE_ADMIN =
-    `${CACHE_PREFIX}v6`;
+    `${CACHE_PREFIX}v7`;
 
 
 const ARCHIVOS_ADMIN = [
-
-    "./",
 
     "./admin.html",
 
