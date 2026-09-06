@@ -420,41 +420,7 @@ const botonAdmin =
 const API_URL =
     "https://anotador-truco-backend.onrender.com";
 
-function actualizarBotonAdminLocal() {
-
-    if (
-        !botonAdmin
-    ) {
-
-        return;
-
-    }
-
-
-    const dispositivoReconocido =
-        localStorage.getItem(
-            "adminDispositivoReconocido"
-        );
-
-
-    botonAdmin
-        .classList
-        .toggle(
-            "oculto",
-            dispositivoReconocido !==
-            "true"
-        );
-
-}
-
-
-/*
- * Mostrar inmediatamente el botón
- * si este navegador ya fue autorizado
- * desde el Admin Panel.
- */
-
-actualizarBotonAdminLocal();/* =====================================================
+/* =====================================================
    BOTÓN ADMIN · SOLO SESIÓN ACTIVA
 ===================================================== */
 
@@ -787,6 +753,112 @@ if (
     );
 
 }
+
+/* =====================================================
+   REFRESCAR ESTADO DEL ADMIN
+===================================================== */
+
+function refrescarEstadoAdmin() {
+
+    const uidAutorizado =
+        localStorage.getItem(
+            "adminAutorizadoUid"
+        );
+
+
+    /*
+     * Si el Admin cerró sesión,
+     * ocultamos el botón inmediatamente.
+     */
+
+    if (
+        !uidAutorizado
+    ) {
+
+        ocultarBotonAdmin();
+
+        return;
+
+    }
+
+
+    if (
+        !firebaseDisponible ||
+        !auth
+    ) {
+
+        ocultarBotonAdmin();
+
+        return;
+
+    }
+
+
+    comprobarAdministrador(
+        auth.currentUser
+    );
+
+}
+
+
+/* =====================================================
+   VOLVER A LA APP
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    () => {
+
+        refrescarEstadoAdmin();
+
+    }
+);
+
+
+/* =====================================================
+   VOLVER DESDE OTRA PESTAÑA
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            refrescarEstadoAdmin();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CAMBIOS HECHOS DESDE EL ADMIN
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    evento => {
+
+        if (
+            evento.key ===
+                "adminAutorizadoUid" ||
+            evento.key ===
+                "adminSesionExpira" ||
+            evento.key ===
+                "adminSesionModo"
+        ) {
+
+            refrescarEstadoAdmin();
+
+        }
+
+    }
+);
 
 /* =====================================================
    ABRIR PANEL ADMIN
