@@ -48,7 +48,7 @@ const db =
 const ADMIN_EMAILS = [
     "f341274@gmail.com",
     "dylansun271203@gmail.com",
-    "johansabe1@gmail.com"
+    "johannsabe1@gmail.com"
 ];
 
 const ADMIN_PRINCIPAL_EMAIL =
