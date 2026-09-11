@@ -745,6 +745,36 @@ mostrarPassword.addEventListener(
     const mensajeLogin =
         document.getElementById("mensajeLogin");
 
+    function mostrarErrorLogin(texto) {
+
+    mensajeLogin.textContent = texto;
+
+    mensajeLogin.classList.remove("ok", "error");
+
+    /* reinicia la animación */
+    void mensajeLogin.offsetWidth;
+
+    mensajeLogin.classList.add("error");
+}
+
+
+    function mostrarOkLogin(texto) {
+
+        mensajeLogin.textContent = texto;
+
+        mensajeLogin.classList.remove("error", "ok");
+
+        mensajeLogin.classList.add("ok");
+    }
+
+
+    function limpiarMensajeLogin() {
+
+        limpiarMensajeLogin();
+
+        mensajeLogin.classList.remove("error", "ok");
+    }
+
 
     const btnCerrarSesion =
         document.getElementById(
@@ -961,11 +991,11 @@ sessionStorage.removeItem(
                     error
                 );
 
-                mensajeLogin.textContent =
-                    "Correo o contraseña incorrectos.";
+                mostrarErrorLogin(
+                    "Correo o contraseña incorrectos."
+                );
 
             }
-
 
             btnLogin.disabled = false;
 
