@@ -1094,6 +1094,91 @@ footer {
         translateY(-1px);
 }
 
+/* =====================================================
+   MOSTRAR / OCULTAR CONTRASEÑA
+===================================================== */
+
+.campo-password {
+    position: relative;
+
+    width: 100%;
+
+    margin-bottom: 12px;
+}
+
+
+.campo-password input {
+    width: 100%;
+
+    margin-bottom: 0;
+
+    padding-right: 52px;
+}
+
+
+.login-panel .mostrar-password {
+    position: absolute;
+
+    top: 50%;
+    right: 9px;
+
+    transform:
+        translateY(-50%);
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    outline: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    font-size: 1.05rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    opacity: .65;
+
+    z-index: 2;
+
+    transition:
+        opacity .15s,
+        background .15s,
+        transform .1s;
+}
+
+
+.login-panel .mostrar-password:hover {
+    opacity: 1;
+
+    background:
+        rgba(47, 93, 80, .08);
+}
+
+
+.login-panel .mostrar-password:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.login-panel .mostrar-password:active {
+    transform:
+        translateY(-50%)
+        scale(.92);
+}
 
 /* =====================================================
    BOTÓN INGRESAR

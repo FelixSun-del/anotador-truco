@@ -43,12 +43,26 @@
             autocomplete="email"
         >
 
-       <input
-    type="password"
-    id="password"
-    placeholder="Contraseña"
-    autocomplete="current-password"
->
+       <div class="campo-password">
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Contraseña"
+        autocomplete="current-password"
+    >
+
+    <button
+        type="button"
+        id="mostrarPassword"
+        class="mostrar-password"
+        aria-label="Mostrar contraseña"
+        title="Mostrar contraseña"
+    >
+        👁️
+    </button>
+
+</div>
 
 
 
@@ -679,6 +693,49 @@ const auth =
 
     const password =
         document.getElementById("password");
+
+    const mostrarPassword =
+    document.getElementById(
+        "mostrarPassword"
+    );
+
+
+mostrarPassword.addEventListener(
+    "click",
+    () => {
+
+        const estaOculta =
+            password.type ===
+            "password";
+
+
+        password.type =
+            estaOculta
+                ? "text"
+                : "password";
+
+
+        mostrarPassword.textContent =
+            estaOculta
+                ? "🙈"
+                : "👁️";
+
+
+        mostrarPassword.setAttribute(
+            "aria-label",
+            estaOculta
+                ? "Ocultar contraseña"
+                : "Mostrar contraseña"
+        );
+
+
+        mostrarPassword.title =
+            estaOculta
+                ? "Ocultar contraseña"
+                : "Mostrar contraseña";
+
+    }
+);
 
 
     const btnLogin =
