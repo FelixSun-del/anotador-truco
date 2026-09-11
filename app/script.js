@@ -1552,6 +1552,182 @@ if (
 
 }
 
+/* =====================================================
+   ALERTA PERSONALIZADA
+===================================================== */
+
+const modalAlertaApp =
+    document.getElementById(
+        "modalAlertaApp"
+    );
+
+
+const tituloAlertaApp =
+    document.getElementById(
+        "tituloAlertaApp"
+    );
+
+
+const mensajeAlertaApp =
+    document.getElementById(
+        "mensajeAlertaApp"
+    );
+
+
+const cerrarAlertaApp =
+    document.getElementById(
+        "cerrarAlertaApp"
+    );
+
+
+let elementoAntesDeAlerta =
+    null;
+
+
+/* =====================================================
+   MOSTRAR ALERTA
+===================================================== */
+
+function mostrarAlertaApp(
+    mensaje,
+    titulo = "Atención"
+) {
+
+    if (
+        !modalAlertaApp ||
+        !mensajeAlertaApp
+    ) {
+
+        return;
+
+    }
+
+
+    elementoAntesDeAlerta =
+        document.activeElement;
+
+
+    tituloAlertaApp.textContent =
+        titulo;
+
+
+    mensajeAlertaApp.textContent =
+        mensaje;
+
+
+    modalAlertaApp
+        .classList
+        .remove(
+            "oculto"
+        );
+
+
+    document.body
+        .classList
+        .add(
+            "alerta-app-abierta"
+        );
+
+
+    cerrarAlertaApp
+        ?.focus();
+
+}
+
+
+/* =====================================================
+   CERRAR ALERTA
+===================================================== */
+
+function ocultarAlertaApp() {
+
+    if (
+        !modalAlertaApp
+    ) {
+
+        return;
+
+    }
+
+
+    modalAlertaApp
+        .classList
+        .add(
+            "oculto"
+        );
+
+
+    document.body
+        .classList
+        .remove(
+            "alerta-app-abierta"
+        );
+
+
+    if (
+        elementoAntesDeAlerta &&
+        typeof elementoAntesDeAlerta.focus ===
+        "function"
+    ) {
+
+        elementoAntesDeAlerta
+            .focus();
+
+    }
+
+
+    elementoAntesDeAlerta =
+        null;
+
+}
+
+
+cerrarAlertaApp
+    ?.addEventListener(
+        "click",
+        ocultarAlertaApp
+    );
+
+
+modalAlertaApp
+    ?.addEventListener(
+        "click",
+        evento => {
+
+            if (
+                evento.target ===
+                modalAlertaApp
+            ) {
+
+                ocultarAlertaApp();
+
+            }
+
+        }
+    );
+
+
+document.addEventListener(
+    "keydown",
+    evento => {
+
+        if (
+            evento.key ===
+            "Escape" &&
+            modalAlertaApp &&
+            !modalAlertaApp
+                .classList
+                .contains(
+                    "oculto"
+                )
+        ) {
+
+            ocultarAlertaApp();
+
+        }
+
+    }
+);
 
 /* =====================================================
    APUESTAS
@@ -1591,7 +1767,7 @@ document
                         fichas
                     ) {
 
-                        alert(
+                        mostrarAlertaApp(
                             "Ese equipo no tiene suficientes fichas."
                         );
 
@@ -1798,7 +1974,7 @@ if (
                 estado.apuesta2 <= 0
             ) {
 
-                alert(
+                mostrarAlertaApp(
                     "Los dos equipos deben elegir una apuesta."
                 );
 
@@ -1813,7 +1989,7 @@ if (
                 estado.apuesta2
             ) {
 
-                alert(
+                mostrarAlertaApp(
                     "Los dos equipos deben apostar la misma cantidad."
                 );
 

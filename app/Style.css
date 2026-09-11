@@ -5207,3 +5207,214 @@ body.opinion-app-abierta {
     text-align: center;
 
 }
+
+/* =====================================================
+   ALERTA PERSONALIZADA
+===================================================== */
+
+body.alerta-app-abierta {
+    overflow: hidden;
+}
+
+
+.modal-alerta-app {
+    position: fixed;
+    inset: 0;
+
+    z-index: 12000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background:
+        rgba(24, 18, 14, .68);
+
+    backdrop-filter:
+        blur(3px);
+
+    -webkit-backdrop-filter:
+        blur(3px);
+
+    animation:
+        aparecerFondoAlerta
+        .18s ease-out;
+}
+
+
+.alerta-app-panel {
+    width: 100%;
+    max-width: 390px;
+
+    padding:
+        28px
+        24px
+        22px;
+
+    text-align: center;
+
+    color:
+        var(--texto);
+
+    background:
+        var(--papel);
+
+    border:
+        2px solid
+        rgba(138, 52, 52, .35);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 18px 45px
+        rgba(0, 0, 0, .38);
+
+    animation:
+        aparecerAlerta
+        .28s
+        cubic-bezier(.2, .85, .35, 1.18);
+}
+
+
+.alerta-app-icono {
+    width: 62px;
+    height: 62px;
+
+    margin:
+        0 auto
+        14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.9rem;
+
+    background:
+        rgba(155, 61, 61, .12);
+
+    border:
+        2px solid
+        rgba(155, 61, 61, .30);
+
+    border-radius: 50%;
+}
+
+
+.alerta-app-panel h2 {
+    margin:
+        0 0 10px;
+
+    color:
+        var(--rojo);
+
+    font-size: 1.45rem;
+}
+
+
+.alerta-app-panel p {
+    margin:
+        0 0 22px;
+
+    font-size: 1rem;
+    line-height: 1.5;
+
+    color:
+        var(--texto);
+}
+
+
+.alerta-app-boton {
+    max-width: 230px;
+
+    margin:
+        0 auto;
+
+    background:
+        var(--boton-acento);
+}
+
+
+.alerta-app-boton:hover {
+    background:
+        var(--boton-acento-oscuro);
+}
+
+
+/* =====================================================
+   ANIMACIONES
+===================================================== */
+
+@keyframes aparecerFondoAlerta {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes aparecerAlerta {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px)
+            scale(.92);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 520px) {
+
+    .modal-alerta-app {
+        padding: 14px;
+    }
+
+
+    .alerta-app-panel {
+        max-width: 340px;
+
+        padding:
+            24px
+            18px
+            18px;
+    }
+
+
+    .alerta-app-icono {
+        width: 56px;
+        height: 56px;
+
+        font-size: 1.7rem;
+    }
+
+
+    .alerta-app-panel h2 {
+        font-size: 1.3rem;
+    }
+
+
+    .alerta-app-panel p {
+        font-size: .96rem;
+    }
+
+}
