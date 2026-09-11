@@ -1768,7 +1768,7 @@ document
                     ) {
 
                         mostrarAlertaApp(
-                            "Ese equipo no tiene suficientes fichas."
+                            "Este equipo no tiene suficientes fichas."
                         );
 
 
