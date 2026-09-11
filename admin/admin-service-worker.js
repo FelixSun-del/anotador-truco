@@ -10,7 +10,7 @@ const CACHE_PREFIX =
 
 
 const CACHE_ADMIN =
-    `${CACHE_PREFIX}v7`;
+    `${CACHE_PREFIX}v8`;
 
 
 const ARCHIVOS_ADMIN = [
