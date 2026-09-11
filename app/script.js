@@ -92,6 +92,8 @@ const estado = {
 
     fichas2: 100,
 
+    fichasIniciales: 100,
+
     apuesta1: 0,
 
     apuesta2: 0,
@@ -150,6 +152,9 @@ function guardarPartidaActual() {
 
         fichas2:
             estado.fichas2,
+
+        fichasIniciales:
+            estado.fichasIniciales,
 
         apuesta1:
             estado.apuesta1,
@@ -225,6 +230,9 @@ function cargarPartidaGuardada() {
 
         estado.fichas2 =
             datos.fichas2 ?? 100;
+
+        estado.fichasIniciales =
+            datos.fichasIniciales ?? 100;
 
         estado.apuesta1 =
             datos.apuesta1 ?? 0;
@@ -1750,9 +1758,40 @@ document
                         );
 
 
+                    const valorApuesta =
+                        boton.dataset.apuesta;
+
+
+                    /* APUESTA PERSONALIZADA */
+
+                    if (
+                        valorApuesta ===
+                        "personalizada"
+                    ) {
+
+                        const box =
+                            document.getElementById(
+                                `apuestaPersonalizadaBox${equipo}`
+                            );
+
+
+                        box
+                            ?.classList
+                            .toggle(
+                                "oculto"
+                            );
+
+
+                        return;
+
+                    }
+
+
+                    /* APUESTA NORMAL */
+
                     const cantidad =
                         Number(
-                            boton.dataset.apuesta
+                            valorApuesta
                         );
 
 
@@ -1771,7 +1810,6 @@ document
                             "Este equipo no tiene suficientes fichas."
                         );
 
-
                         return;
 
                     }
@@ -1783,7 +1821,6 @@ document
 
                         estado.apuesta1 =
                             cantidad;
-
 
                     } else {
 
@@ -1838,94 +1875,480 @@ document
         }
     );
 
+    document
+    .querySelectorAll(
+        ".aplicar-apuesta-personalizada"
+    )
+    .forEach(
+        boton => {
 
-/* =====================================================
-   REINICIAR FICHAS
-===================================================== */
+            boton.addEventListener(
+                "click",
+                () => {
 
-const reiniciarFichas =
-    document.getElementById(
-        "reiniciarFichas"
-    );
+                    const equipo =
+                        Number(
+                            boton.dataset.equipo
+                        );
 
+                    const input =
+                        document.getElementById(
+                            `apuestaPersonalizadaInput${equipo}`
+                        );
 
-if (
-    reiniciarFichas
-) {
+                    const cantidad =
+                        Number(
+                            input?.value
+                        );
 
-    reiniciarFichas.addEventListener(
-        "click",
-        () => {
+                    const fichas =
+                        equipo === 1
+                            ? estado.fichas1
+                            : estado.fichas2;
 
-            estado.fichas1 =
-                100;
-
-            estado.fichas2 =
-                100;
-
-            estado.apuesta1 =
-                0;
-
-            estado.apuesta2 =
-                0;
-
-
-            document
-                .querySelectorAll(
-                    ".apuesta"
-                )
-                .forEach(
-                    boton => {
-
-                        boton
-                            .classList
-                            .remove(
-                                "seleccionado"
-                            );
-
+                    if (
+                        !Number.isInteger(cantidad) ||
+                        cantidad <= 0
+                    ) {
+                        mostrarAlertaApp(
+                            "Ingresá una apuesta válida."
+                        );
+                        return;
                     }
-                );
 
+                    if (
+                        cantidad > fichas
+                    ) {
+                        mostrarAlertaApp(
+                            "Ese equipo no tiene suficientes fichas."
+                        );
+                        return;
+                    }
 
-            const apuesta1Texto =
-                document.getElementById(
-                    "apuesta1Texto"
-                );
+                    if (equipo === 1) {
+                        estado.apuesta1 = cantidad;
+                    } else {
+                        estado.apuesta2 = cantidad;
+                    }
 
+                    document
+                        .querySelectorAll(
+                            `.apuesta[data-equipo="${equipo}"]`
+                        )
+                        .forEach(
+                            otro => {
+                                otro.classList.remove(
+                                    "seleccionado"
+                                );
+                            }
+                        );
 
-            const apuesta2Texto =
-                document.getElementById(
-                    "apuesta2Texto"
-                );
+                    const texto =
+                        document.getElementById(
+                            `apuesta${equipo}Texto`
+                        );
 
+                    if (texto) {
+                        texto.textContent =
+                            `Apuesta: ${cantidad} fichas`;
+                    }
 
-            if (
-                apuesta1Texto
-            ) {
+                    const box =
+                        document.getElementById(
+                            `apuestaPersonalizadaBox${equipo}`
+                        );
 
-                apuesta1Texto.textContent =
-                    "Sin apuesta";
-
-            }
-
-
-            if (
-                apuesta2Texto
-            ) {
-
-                apuesta2Texto.textContent =
-                    "Sin apuesta";
-
-            }
-
-
-            actualizarFichas();
+                    box?.classList.add("oculto");
+                }
+            );
 
         }
     );
 
+/* =====================================================
+   CARGAR FICHAS INICIALES
+===================================================== */
+
+const botonesFichasIniciales =
+    document.querySelectorAll(
+        ".fichas-iniciales-opcion"
+    );
+
+
+const contenedorFichasPersonalizadas =
+    document.getElementById(
+        "contenedorFichasPersonalizadas"
+    );
+
+
+const fichasPersonalizadas =
+    document.getElementById(
+        "fichasPersonalizadas"
+    );
+
+
+const aplicarFichasIniciales =
+    document.getElementById(
+        "aplicarFichasIniciales"
+    );
+
+
+const mensajeCargaFichas =
+    document.getElementById(
+        "mensajeCargaFichas"
+    );
+
+
+let cantidadFichasSeleccionada =
+    estado.fichasIniciales;
+
+
+/* =====================================================
+   SELECCIONAR CANTIDAD
+===================================================== */
+
+botonesFichasIniciales
+    .forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    botonesFichasIniciales
+                        .forEach(
+                            otro => {
+
+                                otro
+                                    .classList
+                                    .remove(
+                                        "seleccionado"
+                                    );
+
+                            }
+                        );
+
+
+                    boton
+                        .classList
+                        .add(
+                            "seleccionado"
+                        );
+
+
+                    const valor =
+                        boton.dataset
+                            .fichasIniciales;
+
+
+                    if (
+                        valor ===
+                        "personalizado"
+                    ) {
+
+                        cantidadFichasSeleccionada =
+                            "personalizado";
+
+
+                        contenedorFichasPersonalizadas
+                            ?.classList
+                            .remove(
+                                "oculto"
+                            );
+
+
+                        setTimeout(
+                            () => {
+
+                                fichasPersonalizadas
+                                    ?.focus();
+
+                            },
+                            50
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    cantidadFichasSeleccionada =
+                        Number(
+                            valor
+                        );
+
+
+                    contenedorFichasPersonalizadas
+                        ?.classList
+                        .add(
+                            "oculto"
+                        );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   LIMPIAR APUESTAS SELECCIONADAS
+===================================================== */
+
+function limpiarApuestasSeleccionadas() {
+
+    estado.apuesta1 =
+        0;
+
+    estado.apuesta2 =
+        0;
+
+
+    document
+        .querySelectorAll(
+            ".apuesta"
+        )
+        .forEach(
+            boton => {
+
+                boton
+                    .classList
+                    .remove(
+                        "seleccionado"
+                    );
+
+            }
+        );
+
+
+    const apuesta1Texto =
+        document.getElementById(
+            "apuesta1Texto"
+        );
+
+
+    const apuesta2Texto =
+        document.getElementById(
+            "apuesta2Texto"
+        );
+
+
+    if (
+        apuesta1Texto
+    ) {
+
+        apuesta1Texto.textContent =
+            "Sin apuesta";
+
+    }
+
+
+    if (
+        apuesta2Texto
+    ) {
+
+        apuesta2Texto.textContent =
+            "Sin apuesta";
+
+    }
+
 }
 
+
+/* =====================================================
+   APLICAR FICHAS
+===================================================== */
+
+function cargarFichasElegidas() {
+
+    let cantidad;
+
+
+    if (
+        cantidadFichasSeleccionada ===
+        "personalizado"
+    ) {
+
+        cantidad =
+            Number(
+                fichasPersonalizadas
+                    ?.value
+            );
+
+
+        if (
+            !Number.isInteger(
+                cantidad
+            ) ||
+            cantidad <= 0 ||
+            cantidad > 999999
+        ) {
+
+            mostrarAlertaApp(
+                "Ingresá una cantidad de fichas válida."
+            );
+
+            return;
+
+        }
+
+    } else {
+
+        cantidad =
+            Number(
+                cantidadFichasSeleccionada
+            );
+
+    }
+
+
+    estado.fichasIniciales =
+        cantidad;
+
+
+    estado.fichas1 =
+        cantidad;
+
+    estado.fichas2 =
+        cantidad;
+
+
+    limpiarApuestasSeleccionadas();
+
+
+    actualizarFichas();
+
+
+    guardarPartidaActual();
+
+
+    if (
+        mensajeCargaFichas
+    ) {
+
+        mensajeCargaFichas.textContent =
+            `✓ Se cargaron ${cantidad} fichas a cada equipo.`;
+
+    }
+
+}
+
+
+aplicarFichasIniciales
+    ?.addEventListener(
+        "click",
+        cargarFichasElegidas
+    );
+
+
+fichasPersonalizadas
+    ?.addEventListener(
+        "keydown",
+        evento => {
+
+            if (
+                evento.key ===
+                "Enter"
+            ) {
+
+                cargarFichasElegidas();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   SINCRONIZAR SELECTOR
+===================================================== */
+
+function sincronizarSelectorFichasIniciales() {
+
+    const cantidad =
+        estado.fichasIniciales ??
+        100;
+
+
+    const valoresRapidos =
+        [
+            25,
+            50,
+            100
+        ];
+
+
+    const esRapido =
+        valoresRapidos
+            .includes(
+                cantidad
+            );
+
+
+    botonesFichasIniciales
+        .forEach(
+            boton => {
+
+                const valor =
+                    boton.dataset
+                        .fichasIniciales;
+
+
+                const seleccionado =
+                    esRapido
+                        ? Number(valor) === cantidad
+                        : valor === "personalizado";
+
+
+                boton
+                    .classList
+                    .toggle(
+                        "seleccionado",
+                        seleccionado
+                    );
+
+            }
+        );
+
+
+    cantidadFichasSeleccionada =
+        esRapido
+            ? cantidad
+            : "personalizado";
+
+
+    if (
+        esRapido
+    ) {
+
+        contenedorFichasPersonalizadas
+            ?.classList
+            .add(
+                "oculto"
+            );
+
+    } else {
+
+        contenedorFichasPersonalizadas
+            ?.classList
+            .remove(
+                "oculto"
+            );
+
+
+        if (
+            fichasPersonalizadas
+        ) {
+
+            fichasPersonalizadas.value =
+                cantidad;
+
+        }
+
+    }
+
+}
 
 /* =====================================================
    PANTALLA 3
@@ -2083,8 +2506,59 @@ function actualizarFichas() {
 
     }
 
+
+    sincronizarSelectorFichasIniciales();
+
 }
 
+/* =====================================================
+   RESTABLECER FICHAS A 100
+===================================================== */
+
+const restablecerFichas100 =
+    document.getElementById(
+        "restablecerFichas100"
+    );
+
+
+function restablecerFichasBase() {
+
+    estado.fichasIniciales =
+        100;
+
+    estado.fichas1 =
+        100;
+
+    estado.fichas2 =
+        100;
+
+
+    limpiarApuestasSeleccionadas();
+
+
+    actualizarFichas();
+
+
+    guardarPartidaActual();
+
+
+    if (
+        mensajeCargaFichas
+    ) {
+
+        mensajeCargaFichas.textContent =
+            "✓ Se restablecieron 100 fichas a cada equipo.";
+
+    }
+
+}
+
+
+restablecerFichas100
+    ?.addEventListener(
+        "click",
+        restablecerFichasBase
+    );
 
 /* =====================================================
    PALITOS

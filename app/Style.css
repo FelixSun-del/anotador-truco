@@ -5418,3 +5418,325 @@ body.alerta-app-abierta {
     }
 
 }
+
+/* =====================================================
+   CARGA DE FICHAS INICIALES
+===================================================== */
+
+.carga-fichas {
+    margin:
+        20px 0
+        24px;
+
+    padding: 18px;
+
+    background:
+        #eadfc9;
+
+    border:
+        1px solid #cbbb9f;
+
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+
+.carga-fichas-encabezado h2 {
+    margin:
+        0 0 5px;
+
+    font-size: 1.2rem;
+
+    color:
+        var(--texto);
+}
+
+
+.carga-fichas-encabezado p {
+    margin:
+        0 0 16px;
+
+    color:
+        #66584a;
+
+    font-size: .95rem;
+}
+
+
+.fichas-iniciales-opciones {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+
+.fichas-iniciales-opcion {
+    min-height: 44px;
+
+    padding:
+        10px 8px;
+
+    border:
+        2px solid #c4b394;
+
+    border-radius: 9px;
+
+    background:
+        #f2e7d3;
+
+    color:
+        var(--texto);
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        color .15s ease,
+        transform .15s ease;
+}
+
+
+.fichas-iniciales-opcion:hover {
+    border-color:
+        var(--boton-acento);
+
+    transform:
+        translateY(-1px);
+}
+
+
+.fichas-iniciales-opcion.seleccionado {
+    background:
+        var(--boton-acento);
+
+    border-color:
+        var(--boton-acento-oscuro);
+
+    color:
+        white;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0, 0, 0, .15);
+}
+
+
+.fichas-personalizadas {
+    margin:
+        4px 0 12px;
+}
+
+
+.fichas-personalizadas input {
+    width: 100%;
+    max-width: 280px;
+
+    padding:
+        12px 14px;
+
+    border:
+        2px solid #c4b394;
+
+    border-radius: 9px;
+
+    background:
+        #fffaf0;
+
+    color:
+        var(--texto);
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    outline: none;
+}
+
+
+.fichas-personalizadas input:focus {
+    border-color:
+        var(--boton-acento);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(138, 52, 52, .10);
+}
+
+
+.cargar-fichas-boton {
+    max-width: 320px;
+
+    margin:
+        0 auto;
+}
+
+
+.mensaje-carga-fichas {
+    margin:
+        10px 0 0;
+
+    min-height: 20px;
+
+    color:
+        #66584a;
+
+    font-size: .88rem;
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 520px) {
+
+    .carga-fichas {
+        padding: 15px;
+    }
+
+
+    .fichas-iniciales-opciones {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .fichas-iniciales-opcion {
+        min-height: 46px;
+    }
+
+}
+
+.carga-fichas {
+    margin: 16px 0 22px;
+    padding: 14px 16px;
+    background: #eadfc9;
+    border: 1px solid #cbbb9f;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.carga-fichas-encabezado h2 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+}
+
+.carga-fichas-encabezado p {
+    margin: 0 0 12px;
+    color: #66584a;
+    font-size: .92rem;
+}
+
+.fichas-iniciales-opciones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.fichas-iniciales-opcion {
+    min-height: 42px;
+    padding: 9px 8px;
+    border: 2px solid #c4b394;
+    border-radius: 9px;
+    background: #f2e7d3;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.fichas-iniciales-opcion.seleccionado {
+    background: var(--boton-acento);
+    color: white;
+    border-color: var(--boton-acento-oscuro);
+}
+
+.fichas-personalizadas {
+    margin: 6px 0 10px;
+}
+
+.fichas-personalizadas input {
+    width: 100%;
+    max-width: 220px;
+    padding: 10px 12px;
+    border: 2px solid #c4b394;
+    border-radius: 9px;
+    background: #fffaf0;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.acciones-fichas-iniciales {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.cargar-fichas-boton,
+.restablecer-fichas-boton {
+    width: auto;
+    min-width: 210px;
+}
+
+.mensaje-carga-fichas {
+    margin: 10px 0 0;
+    min-height: 20px;
+    color: #66584a;
+    font-size: .88rem;
+}
+
+/* apuesta personalizada */
+.apuesta-personalizada-box {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.apuesta-personalizada-box input {
+    width: 100%;
+    max-width: 150px;
+    padding: 10px 12px;
+    border: 2px solid #c4b394;
+    border-radius: 8px;
+    background: #fffaf0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.apuesta-personalizada-box .boton-secundario {
+    width: auto;
+    min-width: 110px;
+}
+
+@media (max-width: 520px) {
+    .fichas-iniciales-opciones {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .acciones-fichas-iniciales {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cargar-fichas-boton,
+    .restablecer-fichas-boton {
+        width: 100%;
+        min-width: 0;
+    }
+}

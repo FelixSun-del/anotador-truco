@@ -511,6 +511,110 @@
                 Elegí cuánto apuesta cada equipo
             </p>
 
+<!-- =====================================================
+     FICHAS INICIALES
+====================================================== -->
+
+<div class="carga-fichas">
+
+    <div class="carga-fichas-encabezado">
+
+        <h2>
+            🪙 Fichas iniciales
+        </h2>
+
+        <p>
+            Elegí cuánto recibe cada equipo
+        </p>
+
+    </div>
+
+
+    <div class="fichas-iniciales-opciones">
+
+        <button
+            type="button"
+            class="fichas-iniciales-opcion seleccionado"
+            data-fichas-iniciales="25"
+        >
+            25
+        </button>
+
+        <button
+            type="button"
+            class="fichas-iniciales-opcion"
+            data-fichas-iniciales="50"
+        >
+            50
+        </button>
+
+        <button
+            type="button"
+            class="fichas-iniciales-opcion"
+            data-fichas-iniciales="100"
+        >
+            100
+        </button>
+
+        <button
+            type="button"
+            class="fichas-iniciales-opcion"
+            data-fichas-iniciales="personalizado"
+        >
+            Personalizado
+        </button>
+
+    </div>
+
+
+    <div
+        id="contenedorFichasPersonalizadas"
+        class="fichas-personalizadas oculto"
+    >
+
+        <input
+            id="fichasPersonalizadas"
+            type="number"
+            min="1"
+            max="999999"
+            step="1"
+            inputmode="numeric"
+            placeholder="Ej: 750"
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <div class="acciones-fichas-iniciales">
+
+    <button
+        id="aplicarFichasIniciales"
+        type="button"
+        class="boton-principal cargar-fichas-boton"
+    >
+        🎰 Fichas cargadas
+    </button>
+
+    <button
+        id="restablecerFichas100"
+        type="button"
+        class="boton-secundario restablecer-fichas-boton"
+    >
+        ↺ Restablecer a 100
+    </button>
+
+</div>
+
+
+    <p
+        id="mensajeCargaFichas"
+        class="mensaje-carga-fichas"
+    >
+        Ambos equipos recibirán la misma cantidad.
+    </p>
+
+</div>
 
             <div class="equipos-config">
 
@@ -570,6 +674,36 @@
                         >
                             100
                         </button>
+
+                        <button
+                            class="apuesta apuesta-personalizada-boton"
+                            data-equipo="1"
+                            data-apuesta="personalizada"
+                        >
+                            Otro
+                        </button>
+
+                        <div
+                            id="apuestaPersonalizadaBox1"
+                            class="apuesta-personalizada-box oculto"
+                        >
+                            <input
+                                id="apuestaPersonalizadaInput1"
+                                type="number"
+                                min="1"
+                                step="1"
+                                inputmode="numeric"
+                                placeholder="Ej: 250"
+                            >
+
+                            <button
+                                type="button"
+                                class="boton-secundario aplicar-apuesta-personalizada"
+                                data-equipo="1"
+                            >
+                                Apostar
+                            </button>
+                        </div>
 
                     </div>
 
@@ -640,6 +774,36 @@
                             100
                         </button>
 
+                        <button
+                            class="apuesta apuesta-personalizada-boton"
+                            data-equipo="2"
+                            data-apuesta="personalizada"
+                        >
+                            Otro
+                        </button>
+
+                        <div
+                            id="apuestaPersonalizadaBox2"
+                            class="apuesta-personalizada-box oculto"
+                        >
+                            <input
+                                id="apuestaPersonalizadaInput2"
+                                type="number"
+                                min="1"
+                                step="1"
+                                inputmode="numeric"
+                                placeholder="Ej: 250"
+                            >
+
+                            <button
+                                type="button"
+                                class="boton-secundario aplicar-apuesta-personalizada"
+                                data-equipo="2"
+                            >
+                                Apostar
+                            </button>
+                        </div>
+
                     </div>
 
                     <p
@@ -652,15 +816,6 @@
                 </article>
 
             </div>
-
-
-            <button
-                id="reiniciarFichas"
-                class="boton-secundario reiniciar"
-            >
-                🪙 Fichas cargadas
-            </button>
-
 
             <div class="botones">
 
