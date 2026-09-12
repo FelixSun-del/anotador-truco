@@ -2,7 +2,7 @@
 
 
 const CACHE_NAME =
-    "anotador-truco-app-v12";
+    "anotador-truco-app-v13";
 
 const CACHE_PREFIX =
     "anotador-truco-app-";
