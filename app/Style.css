@@ -1548,6 +1548,8 @@ button {
         width: 70px;
         height: 150px;
     }
+
+    
 }
 
 
@@ -5687,6 +5689,18 @@ body.alerta-app-abierta {
     .ayuda-modo-apuesta {
 
         font-size: .76rem;
+    }
+
+}
+
+/* =====================================================
+   PANTALLA 1 · AJUSTE CELULAR
+===================================================== */
+
+@media (max-width: 480px) {
+
+    #pantalla1 .papel {
+        margin-top: 45px;
     }
 
 }
