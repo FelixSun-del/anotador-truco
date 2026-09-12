@@ -5737,3 +5737,7 @@ if (
     }
 
 }
+
+alert(
+    `Pantalla: ${window.innerWidth} × ${window.innerHeight}`
+);
