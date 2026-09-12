@@ -82,7 +82,9 @@ const estado = {
 
     objetivo: 15,
 
-    apuestas: true,
+    apuestas: false,
+    
+    modoApuesta: "igual",
 
     puntos1: 0,
 
@@ -91,8 +93,6 @@ const estado = {
     fichas1: 100,
 
     fichas2: 100,
-
-    fichasIniciales: 100,
 
     apuesta1: 0,
 
@@ -141,6 +141,9 @@ function guardarPartidaActual() {
         apuestas:
             estado.apuestas,
 
+        modoApuesta:
+            estado.modoApuesta,
+
         puntos1:
             estado.puntos1,
 
@@ -152,9 +155,6 @@ function guardarPartidaActual() {
 
         fichas2:
             estado.fichas2,
-
-        fichasIniciales:
-            estado.fichasIniciales,
 
         apuesta1:
             estado.apuesta1,
@@ -217,7 +217,10 @@ function cargarPartidaGuardada() {
             datos.objetivo ?? 15;
 
         estado.apuestas =
-            datos.apuestas ?? true;
+            datos.apuestas ?? false;
+
+        estado.modoApuesta =
+            datos.modoApuesta ?? "igual";
 
         estado.puntos1 =
             datos.puntos1 ?? 0;
@@ -230,9 +233,6 @@ function cargarPartidaGuardada() {
 
         estado.fichas2 =
             datos.fichas2 ?? 100;
-
-        estado.fichasIniciales =
-            datos.fichasIniciales ?? 100;
 
         estado.apuesta1 =
             datos.apuesta1 ?? 0;
@@ -1089,6 +1089,84 @@ document
    APUESTAS SÍ / NO
 ===================================================== */
 
+const modoApuestaBox =
+    document.getElementById(
+        "modoApuestaBox"
+    );
+
+
+function actualizarModoApuestaUI() {
+
+    /* =================================================
+       SINCRONIZAR SÍ / NO
+    ================================================= */
+
+    document
+        .querySelectorAll(
+            ".apuestas"
+        )
+        .forEach(
+            boton => {
+
+                const esSi =
+                    boton.dataset.apuestas ===
+                    "si";
+
+
+                boton
+                    .classList
+                    .toggle(
+                        "seleccionado",
+                        esSi ===
+                            estado.apuestas
+                    );
+
+            }
+        );
+
+
+    /* =================================================
+       MOSTRAR MODO DE APUESTA
+       SOLO SI SE USAN FICHAS
+    ================================================= */
+
+    modoApuestaBox
+        ?.classList
+        .toggle(
+            "oculto",
+            !estado.apuestas
+        );
+
+
+    /* =================================================
+       IGUAL / LIBRE
+    ================================================= */
+
+    document
+        .querySelectorAll(
+            ".modo-apuesta"
+        )
+        .forEach(
+            boton => {
+
+                boton
+                    .classList
+                    .toggle(
+                        "seleccionado",
+                        boton.dataset.modoApuesta ===
+                            estado.modoApuesta
+                    );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   USAR FICHAS
+===================================================== */
+
 document
     .querySelectorAll(
         ".apuestas"
@@ -1128,12 +1206,62 @@ document
                         boton.dataset.apuestas ===
                         "si";
 
+
+                    /*
+                     * Si no se usan fichas,
+                     * limpiamos cualquier apuesta
+                     * que hubiera quedado elegida.
+                     */
+
+                    if (
+                        !estado.apuestas
+                    ) {
+
+                        limpiarApuestasSeleccionadas();
+
+                    }
+
+
+                    actualizarModoApuestaUI();
+
                 }
             );
 
         }
     );
 
+
+/* =====================================================
+   MISMA CANTIDAD / APUESTA LIBRE
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".modo-apuesta"
+    )
+    .forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    estado.modoApuesta =
+                        boton.dataset.modoApuesta;
+
+
+                    actualizarModoApuestaUI();
+
+                }
+            );
+
+        }
+    );
+
+
+/* Estado inicial */
+
+actualizarModoApuestaUI();
 
 /* =====================================================
    PANTALLA 1 A 2
@@ -1769,6 +1897,15 @@ document
                         "personalizada"
                     ) {
 
+                        document
+    .getElementById(
+        `cargaFichasEquipo${equipo}`
+    )
+    ?.classList
+    .add(
+        "oculto"
+    );
+
                         const box =
                             document.getElementById(
                                 `apuestaPersonalizadaBox${equipo}`
@@ -1966,133 +2103,6 @@ document
     );
 
 /* =====================================================
-   CARGAR FICHAS INICIALES
-===================================================== */
-
-const botonesFichasIniciales =
-    document.querySelectorAll(
-        ".fichas-iniciales-opcion"
-    );
-
-
-const contenedorFichasPersonalizadas =
-    document.getElementById(
-        "contenedorFichasPersonalizadas"
-    );
-
-
-const fichasPersonalizadas =
-    document.getElementById(
-        "fichasPersonalizadas"
-    );
-
-
-const aplicarFichasIniciales =
-    document.getElementById(
-        "aplicarFichasIniciales"
-    );
-
-
-const mensajeCargaFichas =
-    document.getElementById(
-        "mensajeCargaFichas"
-    );
-
-
-let cantidadFichasSeleccionada =
-    estado.fichasIniciales;
-
-
-/* =====================================================
-   SELECCIONAR CANTIDAD
-===================================================== */
-
-botonesFichasIniciales
-    .forEach(
-        boton => {
-
-            boton.addEventListener(
-                "click",
-                () => {
-
-                    botonesFichasIniciales
-                        .forEach(
-                            otro => {
-
-                                otro
-                                    .classList
-                                    .remove(
-                                        "seleccionado"
-                                    );
-
-                            }
-                        );
-
-
-                    boton
-                        .classList
-                        .add(
-                            "seleccionado"
-                        );
-
-
-                    const valor =
-                        boton.dataset
-                            .fichasIniciales;
-
-
-                    if (
-                        valor ===
-                        "personalizado"
-                    ) {
-
-                        cantidadFichasSeleccionada =
-                            "personalizado";
-
-
-                        contenedorFichasPersonalizadas
-                            ?.classList
-                            .remove(
-                                "oculto"
-                            );
-
-
-                        setTimeout(
-                            () => {
-
-                                fichasPersonalizadas
-                                    ?.focus();
-
-                            },
-                            50
-                        );
-
-
-                        return;
-
-                    }
-
-
-                    cantidadFichasSeleccionada =
-                        Number(
-                            valor
-                        );
-
-
-                    contenedorFichasPersonalizadas
-                        ?.classList
-                        .add(
-                            "oculto"
-                        );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =====================================================
    LIMPIAR APUESTAS SELECCIONADAS
 ===================================================== */
 
@@ -2155,200 +2165,336 @@ function limpiarApuestasSeleccionadas() {
 
 }
 
-
 /* =====================================================
-   APLICAR FICHAS
+   CARGAR FICHAS POR EQUIPO
 ===================================================== */
 
-function cargarFichasElegidas() {
+const MAX_FICHAS =
+    999999;
 
-    let cantidad;
+/* =====================================================
+   ABRIR / CERRAR CARGA CON EL LÁPIZ
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".editar-fichas-equipo"
+    )
+    .forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    const equipo =
+                        Number(
+                            boton.dataset.equipo
+                        );
+
+                        /* cerrar apuesta personalizada
+                        de este equipo */
+
+                        document
+                            .getElementById(
+                                `apuestaPersonalizadaBox${equipo}`
+                            )
+                            ?.classList
+                            .add(
+                                "oculto"
+                            );
+
+
+                    const caja =
+                        document.getElementById(
+                            `cargaFichasEquipo${equipo}`
+                        );
+
+
+                    /* abrir/cerrar la elegida */
+
+                    caja
+                        ?.classList
+                        .toggle(
+                            "oculto"
+                        );
+
+
+                    if (
+                        caja &&
+                        !caja.classList.contains(
+                            "oculto"
+                        )
+                    ) {
+
+                        document
+                            .getElementById(
+                                `cargaFichasInput${equipo}`
+                            )
+                            ?.focus();
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   LIMITAR INPUT A 999999
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".input-carga-fichas-equipo"
+    )
+    .forEach(
+        input => {
+
+            input.addEventListener(
+                "input",
+                () => {
+
+                    if (
+                        input.value === ""
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    let valor =
+                        Math.floor(
+                            Number(
+                                input.value
+                            )
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            valor
+                        )
+                    ) {
+
+                        input.value =
+                            "";
+
+                        return;
+
+                    }
+
+
+                    if (
+                        valor < 1
+                    ) {
+
+                        valor =
+                            1;
+
+                    }
+
+
+                    if (
+                        valor >
+                        MAX_FICHAS
+                    ) {
+
+                        valor =
+                            MAX_FICHAS;
+
+                    }
+
+
+                    input.value =
+                        valor;
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   SUMAR FICHAS A UN EQUIPO
+===================================================== */
+
+function cargarFichasEquipo(
+    equipo
+) {
+
+    const input =
+        document.getElementById(
+            `cargaFichasInput${equipo}`
+        );
+
+
+    let cantidad =
+        Math.floor(
+            Number(
+                input?.value
+            )
+        );
 
 
     if (
-        cantidadFichasSeleccionada ===
-        "personalizado"
+        !Number.isInteger(
+            cantidad
+        ) ||
+        cantidad <= 0
     ) {
 
-        cantidad =
-            Number(
-                fichasPersonalizadas
-                    ?.value
-            );
+        mostrarAlertaApp(
+            "Ingresá una cantidad válida de fichas."
+        );
 
-
-        if (
-            !Number.isInteger(
-                cantidad
-            ) ||
-            cantidad <= 0 ||
-            cantidad > 999999
-        ) {
-
-            mostrarAlertaApp(
-                "Ingresá una cantidad de fichas válida."
-            );
-
-            return;
-
-        }
-
-    } else {
-
-        cantidad =
-            Number(
-                cantidadFichasSeleccionada
-            );
+        return;
 
     }
 
 
-    estado.fichasIniciales =
-        cantidad;
+    cantidad =
+        Math.min(
+            cantidad,
+            MAX_FICHAS
+        );
 
 
-    estado.fichas1 =
-        cantidad;
+    const saldoActual =
+        equipo === 1
+            ? estado.fichas1
+            : estado.fichas2;
 
-    estado.fichas2 =
-        cantidad;
+
+    if (
+        saldoActual >=
+        MAX_FICHAS
+    ) {
+
+        mostrarAlertaApp(
+            `El Equipo ${equipo} ya tiene el máximo de ${MAX_FICHAS} fichas.`
+        );
+
+        return;
+
+    }
 
 
-    limpiarApuestasSeleccionadas();
+    const nuevoSaldo =
+        Math.min(
+            MAX_FICHAS,
+            saldoActual +
+            cantidad
+        );
+
+
+    if (
+        equipo === 1
+    ) {
+
+        estado.fichas1 =
+            nuevoSaldo;
+
+    } else {
+
+        estado.fichas2 =
+            nuevoSaldo;
+
+    }
 
 
     actualizarFichas();
-
 
     guardarPartidaActual();
 
 
     if (
-        mensajeCargaFichas
+        input
     ) {
 
-        mensajeCargaFichas.textContent =
-            `✓ Se cargaron ${cantidad} fichas a cada equipo.`;
+        input.value =
+            "";
 
     }
+
+
+    document
+        .getElementById(
+            `cargaFichasEquipo${equipo}`
+        )
+        ?.classList
+        .add(
+            "oculto"
+        );
 
 }
 
 
-aplicarFichasIniciales
-    ?.addEventListener(
-        "click",
-        cargarFichasElegidas
-    );
+/* =====================================================
+   BOTÓN + CARGAR
+===================================================== */
 
+document
+    .querySelectorAll(
+        ".aplicar-carga-equipo"
+    )
+    .forEach(
+        boton => {
 
-fichasPersonalizadas
-    ?.addEventListener(
-        "keydown",
-        evento => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-            if (
-                evento.key ===
-                "Enter"
-            ) {
+                    cargarFichasEquipo(
+                        Number(
+                            boton.dataset.equipo
+                        )
+                    );
 
-                cargarFichasElegidas();
-
-            }
+                }
+            );
 
         }
     );
 
 
 /* =====================================================
-   SINCRONIZAR SELECTOR
+   ENTER TAMBIÉN CARGA
 ===================================================== */
 
-function sincronizarSelectorFichasIniciales() {
+document
+    .querySelectorAll(
+        ".input-carga-fichas-equipo"
+    )
+    .forEach(
+        input => {
 
-    const cantidad =
-        estado.fichasIniciales ??
-        100;
+            input.addEventListener(
+                "keydown",
+                evento => {
 
+                    if (
+                        evento.key ===
+                        "Enter"
+                    ) {
 
-    const valoresRapidos =
-        [
-            25,
-            50,
-            100
-        ];
+                        cargarFichasEquipo(
+                            Number(
+                                input.dataset.equipo
+                            )
+                        );
 
+                    }
 
-    const esRapido =
-        valoresRapidos
-            .includes(
-                cantidad
+                }
             );
-
-
-    botonesFichasIniciales
-        .forEach(
-            boton => {
-
-                const valor =
-                    boton.dataset
-                        .fichasIniciales;
-
-
-                const seleccionado =
-                    esRapido
-                        ? Number(valor) === cantidad
-                        : valor === "personalizado";
-
-
-                boton
-                    .classList
-                    .toggle(
-                        "seleccionado",
-                        seleccionado
-                    );
-
-            }
-        );
-
-
-    cantidadFichasSeleccionada =
-        esRapido
-            ? cantidad
-            : "personalizado";
-
-
-    if (
-        esRapido
-    ) {
-
-        contenedorFichasPersonalizadas
-            ?.classList
-            .add(
-                "oculto"
-            );
-
-    } else {
-
-        contenedorFichasPersonalizadas
-            ?.classList
-            .remove(
-                "oculto"
-            );
-
-
-        if (
-            fichasPersonalizadas
-        ) {
-
-            fichasPersonalizadas.value =
-                cantidad;
 
         }
-
-    }
-
-}
+    );
 
 /* =====================================================
    PANTALLA 3
@@ -2408,12 +2554,14 @@ if (
 
 
             if (
+                estado.modoApuesta ===
+                    "igual" &&
                 estado.apuesta1 !==
-                estado.apuesta2
+                    estado.apuesta2
             ) {
 
                 mostrarAlertaApp(
-                    "Los dos equipos deben apostar la misma cantidad."
+                    "Eligieron jugar con la misma apuesta. Los dos equipos deben apostar la misma cantidad."
                 );
 
 
@@ -2475,6 +2623,36 @@ function iniciarPartida() {
 
 function actualizarFichas() {
 
+    /* límite absoluto */
+
+    estado.fichas1 =
+        Math.min(
+            MAX_FICHAS,
+            Math.max(
+                0,
+                Math.floor(
+                    Number(
+                        estado.fichas1
+                    ) || 0
+                )
+            )
+        );
+
+
+    estado.fichas2 =
+        Math.min(
+            MAX_FICHAS,
+            Math.max(
+                0,
+                Math.floor(
+                    Number(
+                        estado.fichas2
+                    ) || 0
+                )
+            )
+        );
+
+
     const fichas1 =
         document.getElementById(
             "fichasConfig1"
@@ -2492,7 +2670,9 @@ function actualizarFichas() {
     ) {
 
         fichas1.textContent =
-            estado.fichas1;
+    estado.fichas1.toLocaleString(
+        "es-AR"
+    );
 
     }
 
@@ -2502,12 +2682,11 @@ function actualizarFichas() {
     ) {
 
         fichas2.textContent =
-            estado.fichas2;
+    estado.fichas2.toLocaleString(
+        "es-AR"
+    );
 
     }
-
-
-    sincronizarSelectorFichasIniciales();
 
 }
 
@@ -2523,9 +2702,6 @@ const restablecerFichas100 =
 
 function restablecerFichasBase() {
 
-    estado.fichasIniciales =
-        100;
-
     estado.fichas1 =
         100;
 
@@ -2540,16 +2716,6 @@ function restablecerFichasBase() {
 
 
     guardarPartidaActual();
-
-
-    if (
-        mensajeCargaFichas
-    ) {
-
-        mensajeCargaFichas.textContent =
-            "✓ Se restablecieron 100 fichas a cada equipo.";
-
-    }
 
 }
 
@@ -3367,48 +3533,84 @@ function terminarPartida(
         estado.apuestas &&
         estado.apuesta1 > 0 &&
         estado.apuesta2 > 0 &&
-        estado.apuesta1 ===
-        estado.apuesta2
+        (
+            estado.modoApuesta ===
+                "libre" ||
+            estado.apuesta1 ===
+                estado.apuesta2
+        )
     ) {
 
-        const cantidad =
-            estado.apuesta1;
+        /*
+        * Cada equipo arriesga SU apuesta.
+        *
+        * Por eso el ganador recibe
+        * la cantidad que había arriesgado
+        * el equipo perdedor.
+        */
+
+        const cantidadGanada =
+            ganador === 1
+                ? estado.apuesta2
+                : estado.apuesta1;
 
 
         if (
             ganador === 1
         ) {
 
+            const capacidad =
+                MAX_FICHAS -
+                estado.fichas1;
+
+
+            const transferencia =
+                Math.min(
+                    cantidadGanada,
+                    capacidad
+                );
+
+
             estado.fichas1 +=
-                cantidad;
+                transferencia;
 
 
             estado.fichas2 =
                 Math.max(
                     0,
                     estado.fichas2 -
-                    cantidad
+                        transferencia
                 );
 
 
         } else {
 
+            const capacidad =
+                MAX_FICHAS -
+                estado.fichas2;
+
+
+            const transferencia =
+                Math.min(
+                    cantidadGanada,
+                    capacidad
+                );
+
+
             estado.fichas2 +=
-                cantidad;
+                transferencia;
 
 
             estado.fichas1 =
                 Math.max(
                     0,
                     estado.fichas1 -
-                    cantidad
+                        transferencia
                 );
 
         }
 
     }
-
-
     const resultado1 =
         document.getElementById(
             "resultado1"
@@ -3978,25 +4180,6 @@ if (
 ) {
 
     objetivoInicial
-        .classList
-        .add(
-            "seleccionado"
-        );
-
-}
-
-
-const apuestasInicial =
-    document.querySelector(
-        '.apuestas[data-apuestas="si"]'
-    );
-
-
-if (
-    apuestasInicial
-) {
-
-    apuestasInicial
         .classList
         .add(
             "seleccionado"

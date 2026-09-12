@@ -449,14 +449,14 @@
             <div class="opciones opciones-grandes">
 
                 <button
-                    class="opcion apuestas seleccionado"
+                    class="opcion apuestas"
                     data-apuestas="si"
                 >
                     Sí
                 </button>
 
                 <button
-                    class="opcion apuestas"
+                    class="opcion apuestas seleccionado"
                     data-apuestas="no"
                 >
                     No
@@ -464,6 +464,46 @@
 
             </div>
 
+            <div
+                id="modoApuestaBox"
+                class="grupo modo-apuesta-box oculto"
+            >
+
+                <h2>
+                    ¿Las apuestas deben ser iguales?
+                </h2>
+
+                <p class="texto-modo-apuesta">
+                    Elegí cómo quieren manejar las fichas durante esta partida.
+                </p>
+
+
+                <div class="opciones opciones-grandes">
+
+                    <button
+                        type="button"
+                        class="opcion modo-apuesta seleccionado"
+                        data-modo-apuesta="igual"
+                    >
+                        Sí, misma cantidad
+                    </button>
+
+                    <button
+                        type="button"
+                        class="opcion modo-apuesta"
+                        data-modo-apuesta="libre"
+                    >
+                        No, apuesta libre
+                    </button>
+
+                </div>
+
+
+                <p class="ayuda-modo-apuesta">
+                    En apuesta libre, cada equipo arriesga la cantidad que elija.
+                </p>
+
+            </div>
 
             <div class="botones">
 
@@ -512,310 +552,328 @@
             </p>
 
 <!-- =====================================================
-     FICHAS INICIALES
+     EQUIPOS
 ====================================================== -->
 
-<div class="carga-fichas">
+<div class="equipos-config">
 
-    <div class="carga-fichas-encabezado">
+    <!-- =================================================
+         EQUIPO 1
+    ================================================== -->
 
-        <h2>
-            🪙 Fichas iniciales
-        </h2>
+    <article class="config-equipo">
 
-        <p>
-            Elegí cuánto recibe cada equipo
+        <h2>Equipo 1</h2>
+
+
+        <div class="saldo-fichas-equipo">
+
+            <div class="fichas">
+                🪙
+                <strong id="fichasConfig1">
+                    100
+                </strong>
+            </div>
+
+            <button
+                type="button"
+                class="editar-fichas-equipo"
+                data-equipo="1"
+                title="Cargar fichas"
+                aria-label="Cargar fichas al Equipo 1"
+            >
+                ✏️
+            </button>
+
+        </div>
+
+
+        <div
+            id="cargaFichasEquipo1"
+            class="carga-fichas-equipo oculto"
+        >
+
+            <input
+                id="cargaFichasInput1"
+                class="input-carga-fichas-equipo"
+                data-equipo="1"
+                type="number"
+                min="1"
+                max="999999"
+                step="1"
+                inputmode="numeric"
+                placeholder="Cantidad"
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                class="boton-secundario aplicar-carga-equipo"
+                data-equipo="1"
+            >
+                + Cargar
+            </button>
+
+        </div>
+
+
+        <p>Apuesta</p>
+
+
+        <div class="apuestas-grid">
+
+            <button
+                class="apuesta"
+                data-equipo="1"
+                data-apuesta="5"
+            >
+                5
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="1"
+                data-apuesta="10"
+            >
+                10
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="1"
+                data-apuesta="25"
+            >
+                25
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="1"
+                data-apuesta="50"
+            >
+                50
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="1"
+                data-apuesta="100"
+            >
+                100
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="1"
+                data-apuesta="personalizada"
+            >
+                Elegir
+            </button>
+
+        </div>
+
+
+        <div
+            id="apuestaPersonalizadaBox1"
+            class="apuesta-personalizada-box oculto"
+        >
+
+            <input
+                id="apuestaPersonalizadaInput1"
+                class="apuesta-personalizada-input"
+                data-equipo="1"
+                type="number"
+                min="1"
+                max="999999"
+                step="1"
+                inputmode="numeric"
+                placeholder="Cantidad"
+            >
+
+            <button
+                type="button"
+                class="boton-secundario aplicar-apuesta-personalizada"
+                data-equipo="1"
+            >
+                Apostar
+            </button>
+
+        </div>
+
+
+        <p
+            id="apuesta1Texto"
+            class="apuesta-texto"
+        >
+            Sin apuesta
         </p>
 
-    </div>
+    </article>
 
 
-    <div class="fichas-iniciales-opciones">
+    <!-- =================================================
+         EQUIPO 2
+    ================================================== -->
 
-        <button
-            type="button"
-            class="fichas-iniciales-opcion seleccionado"
-            data-fichas-iniciales="25"
-        >
-            25
-        </button>
+    <article class="config-equipo">
 
-        <button
-            type="button"
-            class="fichas-iniciales-opcion"
-            data-fichas-iniciales="50"
-        >
-            50
-        </button>
-
-        <button
-            type="button"
-            class="fichas-iniciales-opcion"
-            data-fichas-iniciales="100"
-        >
-            100
-        </button>
-
-        <button
-            type="button"
-            class="fichas-iniciales-opcion"
-            data-fichas-iniciales="personalizado"
-        >
-            Personalizado
-        </button>
-
-    </div>
+        <h2>Equipo 2</h2>
 
 
-    <div
-        id="contenedorFichasPersonalizadas"
-        class="fichas-personalizadas oculto"
-    >
+        <div class="saldo-fichas-equipo">
 
-        <input
-            id="fichasPersonalizadas"
-            type="number"
-            min="1"
-            max="999999"
-            step="1"
-            inputmode="numeric"
-            placeholder="Ej: 750"
-            autocomplete="off"
-        >
-
-    </div>
-
-
-    <div class="acciones-fichas-iniciales">
-
-    <button
-        id="aplicarFichasIniciales"
-        type="button"
-        class="boton-principal cargar-fichas-boton"
-    >
-        🎰 Fichas cargadas
-    </button>
-
-    <button
-        id="restablecerFichas100"
-        type="button"
-        class="boton-secundario restablecer-fichas-boton"
-    >
-        ↺ Restablecer a 100
-    </button>
-
-</div>
-
-
-    <p
-        id="mensajeCargaFichas"
-        class="mensaje-carga-fichas"
-    >
-        Ambos equipos recibirán la misma cantidad.
-    </p>
-
-</div>
-
-            <div class="equipos-config">
-
-                <!-- EQUIPO 1 -->
-
-                <article class="config-equipo">
-
-                    <h2>Equipo 1</h2>
-
-                    <div class="fichas">
-                        🪙
-                        <strong id="fichasConfig1">
-                            100
-                        </strong>
-                    </div>
-
-                    <p>Apuesta</p>
-
-                    <div class="apuestas-grid">
-
-                        <button
-                            class="apuesta"
-                            data-equipo="1"
-                            data-apuesta="5"
-                        >
-                            5
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="1"
-                            data-apuesta="10"
-                        >
-                            10
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="1"
-                            data-apuesta="25"
-                        >
-                            25
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="1"
-                            data-apuesta="50"
-                        >
-                            50
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="1"
-                            data-apuesta="100"
-                        >
-                            100
-                        </button>
-
-                        <button
-                            class="apuesta apuesta-personalizada-boton"
-                            data-equipo="1"
-                            data-apuesta="personalizada"
-                        >
-                            Otro
-                        </button>
-
-                        <div
-                            id="apuestaPersonalizadaBox1"
-                            class="apuesta-personalizada-box oculto"
-                        >
-                            <input
-                                id="apuestaPersonalizadaInput1"
-                                type="number"
-                                min="1"
-                                step="1"
-                                inputmode="numeric"
-                                placeholder="Ej: 250"
-                            >
-
-                            <button
-                                type="button"
-                                class="boton-secundario aplicar-apuesta-personalizada"
-                                data-equipo="1"
-                            >
-                                Apostar
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <p
-                        id="apuesta1Texto"
-                        class="apuesta-texto"
-                    >
-                        Sin apuesta
-                    </p>
-
-                </article>
-
-
-                <!-- EQUIPO 2 -->
-
-                <article class="config-equipo">
-
-                    <h2>Equipo 2</h2>
-
-                    <div class="fichas">
-                        🪙
-                        <strong id="fichasConfig2">
-                            100
-                        </strong>
-                    </div>
-
-                    <p>Apuesta</p>
-
-                    <div class="apuestas-grid">
-
-                        <button
-                            class="apuesta"
-                            data-equipo="2"
-                            data-apuesta="5"
-                        >
-                            5
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="2"
-                            data-apuesta="10"
-                        >
-                            10
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="2"
-                            data-apuesta="25"
-                        >
-                            25
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="2"
-                            data-apuesta="50"
-                        >
-                            50
-                        </button>
-
-                        <button
-                            class="apuesta"
-                            data-equipo="2"
-                            data-apuesta="100"
-                        >
-                            100
-                        </button>
-
-                        <button
-                            class="apuesta apuesta-personalizada-boton"
-                            data-equipo="2"
-                            data-apuesta="personalizada"
-                        >
-                            Otro
-                        </button>
-
-                        <div
-                            id="apuestaPersonalizadaBox2"
-                            class="apuesta-personalizada-box oculto"
-                        >
-                            <input
-                                id="apuestaPersonalizadaInput2"
-                                type="number"
-                                min="1"
-                                step="1"
-                                inputmode="numeric"
-                                placeholder="Ej: 250"
-                            >
-
-                            <button
-                                type="button"
-                                class="boton-secundario aplicar-apuesta-personalizada"
-                                data-equipo="2"
-                            >
-                                Apostar
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <p
-                        id="apuesta2Texto"
-                        class="apuesta-texto"
-                    >
-                        Sin apuesta
-                    </p>
-
-                </article>
-
+            <div class="fichas">
+                🪙
+                <strong id="fichasConfig2">
+                    100
+                </strong>
             </div>
+
+            <button
+                type="button"
+                class="editar-fichas-equipo"
+                data-equipo="2"
+                title="Cargar fichas"
+                aria-label="Cargar fichas al Equipo 2"
+            >
+                ✏️
+            </button>
+
+        </div>
+
+
+        <div
+            id="cargaFichasEquipo2"
+            class="carga-fichas-equipo oculto"
+        >
+
+            <input
+                id="cargaFichasInput2"
+                class="input-carga-fichas-equipo"
+                data-equipo="2"
+                type="number"
+                min="1"
+                max="999999"
+                step="1"
+                inputmode="numeric"
+                placeholder="Cantidad"
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                class="boton-secundario aplicar-carga-equipo"
+                data-equipo="2"
+            >
+                + Cargar
+            </button>
+
+        </div>
+
+
+        <p>Apuesta</p>
+
+
+        <div class="apuestas-grid">
+
+            <button
+                class="apuesta"
+                data-equipo="2"
+                data-apuesta="5"
+            >
+                5
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="2"
+                data-apuesta="10"
+            >
+                10
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="2"
+                data-apuesta="25"
+            >
+                25
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="2"
+                data-apuesta="50"
+            >
+                50
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="2"
+                data-apuesta="100"
+            >
+                100
+            </button>
+
+            <button
+                class="apuesta"
+                data-equipo="2"
+                data-apuesta="personalizada"
+            >
+                Elegir
+            </button>
+
+        </div>
+
+
+        <div
+            id="apuestaPersonalizadaBox2"
+            class="apuesta-personalizada-box oculto"
+        >
+
+            <input
+                id="apuestaPersonalizadaInput2"
+                class="apuesta-personalizada-input"
+                data-equipo="2"
+                type="number"
+                min="1"
+                max="999999"
+                step="1"
+                inputmode="numeric"
+                placeholder="Cantidad"
+            >
+
+            <button
+                type="button"
+                class="boton-secundario aplicar-apuesta-personalizada"
+                data-equipo="2"
+            >
+                Apostar
+            </button>
+
+        </div>
+
+
+        <p
+            id="apuesta2Texto"
+            class="apuesta-texto"
+        >
+            Sin apuesta
+        </p>
+
+    </article>
+
+</div>
+
+
+<button
+    id="restablecerFichas100"
+    type="button"
+    class="boton-secundario reiniciar"
+>
+    ↺ Volver a 100
+</button>
 
             <div class="botones">
 

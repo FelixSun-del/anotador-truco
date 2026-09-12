@@ -597,12 +597,19 @@ h3 {
 }
 
 .reiniciar {
-
     display: block;
 
-    width: 100%;
+    width: fit-content;
+    min-width: 160px;
 
-    margin-top: 5px;
+    margin:
+        18px auto
+        4px;
+
+    padding:
+        10px 18px;
+
+    font-size: .9rem;
 }
 
 
@@ -5420,133 +5427,100 @@ body.alerta-app-abierta {
 }
 
 /* =====================================================
-   CARGA DE FICHAS INICIALES
+   EDICIÓN DE FICHAS POR EQUIPO
 ===================================================== */
 
-.carga-fichas {
-    margin:
-        20px 0
-        24px;
+.saldo-fichas-equipo {
+    display: flex;
 
-    padding: 18px;
+    align-items: center;
+    justify-content: center;
 
-    background:
-        #eadfc9;
+    gap: 7px;
 
-    border:
-        1px solid #cbbb9f;
-
-    border-radius: 14px;
-
-    text-align: center;
+    margin-bottom: 15px;
 }
 
 
-.carga-fichas-encabezado h2 {
-    margin:
-        0 0 5px;
-
-    font-size: 1.2rem;
-
-    color:
-        var(--texto);
+.saldo-fichas-equipo .fichas {
+    margin-bottom: 0;
 }
 
 
-.carga-fichas-encabezado p {
-    margin:
-        0 0 16px;
+.editar-fichas-equipo {
+    width: 25px;
+    height: 25px;
 
-    color:
-        #66584a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size: .95rem;
-}
+    padding: 0;
 
+    border: none;
+    border-radius: 50%;
 
-.fichas-iniciales-opciones {
-    display: grid;
+    background: transparent;
 
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 8px;
-
-    margin-bottom: 12px;
-}
-
-
-.fichas-iniciales-opcion {
-    min-height: 44px;
-
-    padding:
-        10px 8px;
-
-    border:
-        2px solid #c4b394;
-
-    border-radius: 9px;
-
-    background:
-        #f2e7d3;
-
-    color:
-        var(--texto);
-
-    font-weight: 700;
+    font-size: .85rem;
 
     cursor: pointer;
 
+    opacity: .6;
+
     transition:
+        opacity .15s ease,
         background .15s ease,
-        border-color .15s ease,
-        color .15s ease,
         transform .15s ease;
 }
 
 
-.fichas-iniciales-opcion:hover {
-    border-color:
-        var(--boton-acento);
+.editar-fichas-equipo:hover {
+    opacity: 1;
 
-    transform:
-        translateY(-1px);
-}
-
-
-.fichas-iniciales-opcion.seleccionado {
     background:
-        var(--boton-acento);
+        rgba(47, 93, 80, .10);
 
-    border-color:
-        var(--boton-acento-oscuro);
-
-    color:
-        white;
-
-    box-shadow:
-        0 4px 10px
-        rgba(0, 0, 0, .15);
+    transform: scale(1.08);
 }
 
 
-.fichas-personalizadas {
+.editar-fichas-equipo:active {
+    transform: scale(.92);
+}
+
+/* =====================================================
+   MINI FORMULARIOS · FICHAS Y APUESTA PERSONALIZADA
+===================================================== */
+
+.carga-fichas-equipo,
+.apuesta-personalizada-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
     margin:
-        4px 0 12px;
+        8px 0
+        12px;
 }
 
 
-.fichas-personalizadas input {
-    width: 100%;
-    max-width: 280px;
+/* INPUT */
+
+.input-carga-fichas-equipo,
+.apuesta-personalizada-input {
+    width: 115px;
+    height: 34px;
 
     padding:
-        12px 14px;
+        6px 8px;
 
     border:
-        2px solid #c4b394;
+        1px solid #c4b394;
 
-    border-radius: 9px;
+    border-radius: 7px;
 
     background:
         #fffaf0;
@@ -5554,8 +5528,7 @@ body.alerta-app-abierta {
     color:
         var(--texto);
 
-    font-size: 1rem;
-
+    font-size: .88rem;
     font-weight: 700;
 
     text-align: center;
@@ -5564,34 +5537,106 @@ body.alerta-app-abierta {
 }
 
 
-.fichas-personalizadas input:focus {
+.input-carga-fichas-equipo:focus,
+.apuesta-personalizada-input:focus {
     border-color:
-        var(--boton-acento);
+        var(--verde);
 
     box-shadow:
-        0 0 0 3px
-        rgba(138, 52, 52, .10);
+        0 0 0 2px
+        rgba(47, 93, 80, .10);
 }
 
 
-.cargar-fichas-boton {
-    max-width: 320px;
+/* BOTONES */
+
+.carga-fichas-equipo .boton-secundario,
+.apuesta-personalizada-box .boton-secundario {
+    width: auto;
+    min-width: 76px;
+    height: 34px;
+
+    padding:
+        6px 10px;
+
+    border-radius: 7px;
+
+    font-size: .82rem;
+}
+
+/* =====================================================
+   PANTALLA 2 · MODO DE APUESTA
+===================================================== */
+
+.modo-apuesta-box {
 
     margin:
-        0 auto;
+        22px 0
+        5px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        rgba(100, 75, 45, .20);
+
+    border-radius: 12px;
+
+    background:
+        rgba(235, 222, 198, .34);
 }
 
 
-.mensaje-carga-fichas {
-    margin:
-        10px 0 0;
+.modo-apuesta-box h2 {
 
-    min-height: 20px;
+    margin:
+        0 0
+        6px;
+
+    text-align: center;
+
+    font-size: 1.05rem;
 
     color:
-        #66584a;
+        var(--verde-oscuro);
+}
 
-    font-size: .88rem;
+
+.texto-modo-apuesta {
+
+    margin:
+        0 auto
+        13px;
+
+    text-align: center;
+
+    color: #66584a;
+
+    font-size: .9rem;
+}
+
+
+.modo-apuesta-box
+.opciones-grandes {
+
+    margin:
+        0 auto
+        12px;
+}
+
+
+.ayuda-modo-apuesta {
+
+    margin: 0;
+
+    text-align: center;
+
+    color: #76695d;
+
+    font-size: .82rem;
+
+    line-height: 1.4;
 }
 
 
@@ -5599,144 +5644,49 @@ body.alerta-app-abierta {
    CELULAR
 ===================================================== */
 
-@media (max-width: 520px) {
+@media (max-width: 480px) {
 
-    .carga-fichas {
-        padding: 15px;
+    .modo-apuesta-box {
+
+        padding:
+            14px 10px;
+
+        margin-top: 18px;
     }
 
 
-    .fichas-iniciales-opciones {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .modo-apuesta-box h2 {
+
+        font-size: .95rem;
     }
 
 
-    .fichas-iniciales-opcion {
-        min-height: 46px;
+    .texto-modo-apuesta {
+
+        font-size: .82rem;
     }
 
-}
 
-.carga-fichas {
-    margin: 16px 0 22px;
-    padding: 14px 16px;
-    background: #eadfc9;
-    border: 1px solid #cbbb9f;
-    border-radius: 14px;
-    text-align: center;
-}
+    .modo-apuesta-box
+    .opciones-grandes {
 
-.carga-fichas-encabezado h2 {
-    margin: 0 0 4px;
-    font-size: 1.1rem;
-}
-
-.carga-fichas-encabezado p {
-    margin: 0 0 12px;
-    color: #66584a;
-    font-size: .92rem;
-}
-
-.fichas-iniciales-opciones {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.fichas-iniciales-opcion {
-    min-height: 42px;
-    padding: 9px 8px;
-    border: 2px solid #c4b394;
-    border-radius: 9px;
-    background: #f2e7d3;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .15s ease;
-}
-
-.fichas-iniciales-opcion.seleccionado {
-    background: var(--boton-acento);
-    color: white;
-    border-color: var(--boton-acento-oscuro);
-}
-
-.fichas-personalizadas {
-    margin: 6px 0 10px;
-}
-
-.fichas-personalizadas input {
-    width: 100%;
-    max-width: 220px;
-    padding: 10px 12px;
-    border: 2px solid #c4b394;
-    border-radius: 9px;
-    background: #fffaf0;
-    font-size: 1rem;
-    font-weight: 700;
-    text-align: center;
-}
-
-.acciones-fichas-iniciales {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 8px;
-}
-
-.cargar-fichas-boton,
-.restablecer-fichas-boton {
-    width: auto;
-    min-width: 210px;
-}
-
-.mensaje-carga-fichas {
-    margin: 10px 0 0;
-    min-height: 20px;
-    color: #66584a;
-    font-size: .88rem;
-}
-
-/* apuesta personalizada */
-.apuesta-personalizada-box {
-    margin-top: 10px;
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.apuesta-personalizada-box input {
-    width: 100%;
-    max-width: 150px;
-    padding: 10px 12px;
-    border: 2px solid #c4b394;
-    border-radius: 8px;
-    background: #fffaf0;
-    text-align: center;
-    font-weight: 700;
-}
-
-.apuesta-personalizada-box .boton-secundario {
-    width: auto;
-    min-width: 110px;
-}
-
-@media (max-width: 520px) {
-    .fichas-iniciales-opciones {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 7px;
     }
 
-    .acciones-fichas-iniciales {
-        flex-direction: column;
-        align-items: stretch;
+
+    .modo-apuesta-box
+    .opcion {
+
+        padding:
+            10px 5px;
+
+        font-size: .82rem;
     }
 
-    .cargar-fichas-boton,
-    .restablecer-fichas-boton {
-        width: 100%;
-        min-width: 0;
+
+    .ayuda-modo-apuesta {
+
+        font-size: .76rem;
     }
+
 }
