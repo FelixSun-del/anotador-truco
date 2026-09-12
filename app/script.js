@@ -5738,6 +5738,55 @@ if (
 
 }
 
-alert(
-    `Pantalla: ${window.innerWidth} × ${window.innerHeight}`
+/* SOLO PARA VER EL TAMAÑO DEL CELULAR */
+
+const visorViewport =
+    document.createElement("div");
+
+visorViewport.style.position =
+    "fixed";
+
+visorViewport.style.top =
+    "5px";
+
+visorViewport.style.left =
+    "5px";
+
+visorViewport.style.zIndex =
+    "999999";
+
+visorViewport.style.background =
+    "black";
+
+visorViewport.style.color =
+    "white";
+
+visorViewport.style.padding =
+    "6px 10px";
+
+visorViewport.style.borderRadius =
+    "6px";
+
+visorViewport.style.fontSize =
+    "14px";
+
+
+function mostrarViewport() {
+
+    visorViewport.textContent =
+        `${window.innerWidth} × ${window.innerHeight}`;
+
+}
+
+
+document.body.appendChild(
+    visorViewport
+);
+
+mostrarViewport();
+
+
+window.addEventListener(
+    "resize",
+    mostrarViewport
 );
