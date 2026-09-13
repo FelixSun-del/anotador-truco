@@ -5745,7 +5745,7 @@ body.alerta-app-abierta {
 @media (max-width: 480px) {
 
     #pantalla1 .papel {
-        margin-top: 45px;
+        margin-top: auto;
     }
 
 }
@@ -5831,6 +5831,67 @@ body[data-pantalla-actual="6"]
     )
     .papel {
         margin-top: 8px;
+    }
+
+}
+
+/* =====================================================
+   RESPONSIVE AUTOMÁTICO · CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .pantalla {
+
+        min-height: 100vh;
+        min-height: 100dvh;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: flex-start;
+
+        align-items: center;
+
+        padding:
+            max(
+                12px,
+                env(safe-area-inset-top)
+            )
+            8px
+            max(
+                12px,
+                env(safe-area-inset-bottom)
+            );
+    }
+
+
+    .pantalla > .papel {
+
+        width: 100%;
+
+        max-width: 680px;
+
+        /*
+         * Si sobra altura:
+         * se centra automáticamente.
+         *
+         * Si no entra:
+         * los márgenes pasan a 0
+         * y permite scroll normal.
+         */
+
+        margin-top: auto;
+
+        margin-bottom: auto;
+
+        padding:
+            clamp(
+                18px,
+                5vw,
+                28px
+            );
     }
 
 }
