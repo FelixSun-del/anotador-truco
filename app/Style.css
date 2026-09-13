@@ -5774,3 +5774,33 @@ body[data-pantalla-actual="6"]
 .invitacion-instalacion {
     display: none !important;
 }
+
+/* =====================================================
+   PANTALLA 2 · ESPACIO PARA INVITACIÓN DE INSTALACIÓN
+===================================================== */
+
+@media (max-width: 480px) and (max-height: 720px) {
+
+    body:has(
+        #invitacionInstalar:not([hidden])
+    )
+    #pantalla2:has(
+        #modoApuestaBox:not(.oculto)
+    ) {
+        align-items: flex-start;
+
+        padding-bottom: 210px;
+    }
+
+
+    body:has(
+        #invitacionInstalar:not([hidden])
+    )
+    #pantalla2:has(
+        #modoApuestaBox:not(.oculto)
+    )
+    .papel {
+        margin-top: 8px;
+    }
+
+}
