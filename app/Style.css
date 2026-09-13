@@ -5704,3 +5704,22 @@ body.alerta-app-abierta {
     }
 
 }
+
+/* =====================================================
+   PANTALLA 2 · CELULAR
+===================================================== */
+
+@media (max-width: 480px) {
+
+    /* Cuando NO se usan fichas */
+
+    #pantalla2:has(#modoApuestaBox.oculto) {
+        align-items: center;
+    }
+
+
+    #pantalla2:has(#modoApuestaBox.oculto) .papel {
+        margin-top: 0;
+    }
+
+}
