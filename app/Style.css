@@ -5776,10 +5776,36 @@ body[data-pantalla-actual="6"]
 }
 
 /* =====================================================
-   PANTALLA 2 · ESPACIO PARA INVITACIÓN DE INSTALACIÓN
+   ESPACIO PARA INVITACIÓN DE INSTALACIÓN · CELULAR
 ===================================================== */
 
 @media (max-width: 480px) and (max-height: 720px) {
+
+    body:has(
+        #invitacionInstalar:not([hidden])
+    )
+    #pantalla0,
+
+    body:has(
+        #invitacionInstalar:not([hidden])
+    )
+    #pantalla1,
+
+    body:has(
+        #invitacionInstalar:not([hidden])
+    )
+    #pantalla2,
+
+    body:has(
+        #invitacionInstalar:not([hidden])
+    )
+    #pantalla3 {
+        padding-bottom: 210px;
+    }
+
+
+    /* Pantalla 2 necesita espacio extra
+       cuando está abierta la configuración */
 
     body:has(
         #invitacionInstalar:not([hidden])
@@ -5788,8 +5814,6 @@ body[data-pantalla-actual="6"]
         #modoApuestaBox:not(.oculto)
     ) {
         align-items: flex-start;
-
-        padding-bottom: 210px;
     }
 
 
