@@ -3394,27 +3394,66 @@ button {
 @media (max-width: 520px) {
 
     .invitacion-instalacion {
-
-        bottom: 12px;
+        bottom: 8px;
 
         width:
-            calc(100% - 20px);
-
+            calc(100% - 16px);
     }
 
 
     .invitacion-instalacion-contenido {
+        padding: 12px;
 
-        padding: 15px;
+        border-radius: 14px;
+    }
 
+
+    .invitacion-instalacion-icono {
+        margin-bottom: 2px;
+
+        font-size: 1.5rem;
+    }
+
+
+    .invitacion-instalacion-texto strong {
+        margin-bottom: 4px;
+
+        font-size: 1rem;
+    }
+
+
+    .invitacion-instalacion-texto p {
+        font-size: .82rem;
+
+        line-height: 1.35;
     }
 
 
     .invitacion-instalacion-botones {
-
         grid-template-columns:
-            1fr;
+            1fr 1fr;
 
+        gap: 8px;
+
+        margin-top: 10px;
+    }
+
+
+    .invitacion-instalacion-botones button {
+        padding:
+            10px 8px;
+
+        font-size: .9rem;
+    }
+
+
+    .instruccion-instalacion-ios {
+        margin-top:
+            8px !important;
+
+        padding: 8px;
+
+        font-size: .8rem;
     }
 
 }
