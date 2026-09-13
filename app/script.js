@@ -5742,3 +5742,21 @@ if (
     }
 
 }
+
+const datosPantalla =
+    document.createElement("div");
+
+datosPantalla.textContent =
+    `${window.innerWidth} × ${window.innerHeight}
+     | DPR: ${window.devicePixelRatio}`;
+
+datosPantalla.style.position = "fixed";
+datosPantalla.style.top = "5px";
+datosPantalla.style.left = "5px";
+datosPantalla.style.zIndex = "999999";
+datosPantalla.style.background = "#000";
+datosPantalla.style.color = "#fff";
+datosPantalla.style.padding = "6px";
+datosPantalla.style.fontSize = "12px";
+
+document.body.appendChild(datosPantalla);
