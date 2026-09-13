@@ -5313,11 +5313,11 @@ const instruccionInstalacionIos =
 ===================================================== */
 
 const DEMORA_INICIAL_INSTALACION =
-    5 * 1000;
+    60 * 1000;
 
 
 const DEMORA_REINTENTO_INSTALACION =
-    10 * 1000;
+    90 * 1000;
 
 
 const CLAVE_RECORDAR_INSTALACION =
