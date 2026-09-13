@@ -5759,3 +5759,18 @@ body.alerta-app-abierta {
     }
 
 }
+
+/* =====================================================
+   OCULTAR INVITACIÓN DURANTE PARTIDA / REGLAS / GUÍA
+===================================================== */
+
+body[data-pantalla-actual="4"]
+.invitacion-instalacion,
+
+body[data-pantalla-actual="5"]
+.invitacion-instalacion,
+
+body[data-pantalla-actual="6"]
+.invitacion-instalacion {
+    display: none !important;
+}

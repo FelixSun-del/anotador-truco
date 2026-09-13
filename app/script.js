@@ -346,6 +346,11 @@ function mostrarPantalla(
     numero
 ) {
 
+    document.body.dataset.pantallaActual =
+    String(
+        numero
+    );
+
     Object
         .values(
             pantallas
@@ -5308,11 +5313,11 @@ const instruccionInstalacionIos =
 ===================================================== */
 
 const DEMORA_INICIAL_INSTALACION =
-    2 * 60 * 1000;
+    2 * 1000;
 
 
 const DEMORA_REINTENTO_INSTALACION =
-    5 * 60 * 1000;
+    5 * 1000;
 
 
 const CLAVE_RECORDAR_INSTALACION =
