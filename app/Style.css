@@ -90,9 +90,10 @@ body {
 ===================================================== */
 
 .pantalla {
-
     width: 100%;
+
     min-height: 100vh;
+    min-height: 100dvh;
 
     display: flex;
     justify-content: center;
@@ -5830,123 +5831,6 @@ body[data-pantalla-actual="6"]
     )
     .papel {
         margin-top: 8px;
-    }
-
-}
-
-/* =====================================================
-   RESPONSIVE GENERAL
-===================================================== */
-
-html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-}
-
-body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-
-/* Cada pantalla usa la altura REAL disponible */
-
-.pantalla {
-    width: 100%;
-
-    min-height: 100vh;
-    min-height: 100dvh;
-
-    padding:
-        clamp(
-            8px,
-            2.5vw,
-            25px
-        );
-}
-
-
-/* Papel adaptable */
-
-.papel {
-    width:
-        min(
-            100%,
-            900px
-        );
-
-    margin-inline: auto;
-
-    padding:
-        clamp(
-            16px,
-            4vw,
-            35px
-        );
-}
-
-
-/* Textos fluidos */
-
-h1 {
-    font-size:
-        clamp(
-            1.6rem,
-            5vw,
-            2.6rem
-        );
-}
-
-h2 {
-    font-size:
-        clamp(
-            1rem,
-            3.5vw,
-            1.2rem
-        );
-}
-
-
-/* Botones */
-
-button {
-    max-width: 100%;
-}
-
-
-/* =====================================================
-   CELULAR
-===================================================== */
-
-@media (max-width: 600px) {
-
-    .papel {
-        width:
-            calc(
-                100% - 16px
-            );
-
-        max-width: none;
-    }
-
-
-    .opciones {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
-    }
-
-
-    .equipos,
-    .equipos-config {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
     }
 
 }
