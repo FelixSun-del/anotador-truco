@@ -958,6 +958,173 @@ function crearGrafico(
 
 }
 
+// =====================================================
+// BANDERAS DE PAÍSES
+// =====================================================
+
+function normalizarNombrePais(
+    nombre
+) {
+
+    return String(
+        nombre || ""
+    )
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .trim()
+        .toLowerCase();
+
+}
+
+
+const codigosPaises =
+    new Map();
+
+
+function prepararCodigosPaises() {
+
+    if (
+        typeof Intl.DisplayNames !==
+        "function"
+    ) {
+
+        return;
+
+    }
+
+
+    const nombresRegiones = [
+
+        new Intl.DisplayNames(
+            ["en"],
+            {
+                type: "region"
+            }
+        ),
+
+        new Intl.DisplayNames(
+            ["es"],
+            {
+                type: "region"
+            }
+        )
+
+    ];
+
+
+    const letras =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+    for (
+        const primera of letras
+    ) {
+
+        for (
+            const segunda of letras
+        ) {
+
+            const codigo =
+                primera +
+                segunda;
+
+
+            nombresRegiones.forEach(
+                regiones => {
+
+                    const nombre =
+                        regiones.of(
+                            codigo
+                        );
+
+
+                    if (
+                        !nombre ||
+                        nombre === codigo
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    codigosPaises.set(
+
+                        normalizarNombrePais(
+                            nombre
+                        ),
+
+                        codigo
+
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+}
+
+
+function obtenerBanderaPais(
+    nombrePais
+) {
+
+    if (
+        !nombrePais ||
+        nombrePais === "(not set)"
+    ) {
+
+        return "🌎";
+
+    }
+
+
+    const codigo =
+        codigosPaises.get(
+
+            normalizarNombrePais(
+                nombrePais
+            )
+
+        );
+
+
+    if (
+        !codigo ||
+        !/^[A-Z]{2}$/.test(
+            codigo
+        )
+    ) {
+
+        return "🌎";
+
+    }
+
+
+    return String.fromCodePoint(
+
+        ...codigo
+            .split("")
+            .map(
+                letra =>
+
+                    127397 +
+                    letra.charCodeAt(0)
+
+            )
+
+    );
+
+}
+
+
+prepararCodigosPaises();
 
 // =====================================================
 // CREAR PAÍSES
@@ -1059,14 +1226,22 @@ function crearPaises(
                 );
 
 
+            const nombrePais =
+                String(
+                    pais.pais || ""
+                ).trim();
+
+
             nombre.textContent =
 
-                pais.pais ===
-                "(not set)"
+                !nombrePais ||
+                nombrePais === "(not set)"
 
                     ? "🌎 Ubicación desconocida"
 
-                    : `🌎 ${pais.pais}`;
+                    : `${obtenerBanderaPais(
+                        nombrePais
+                    )} ${nombrePais}`;
 
 
             const porcentajeElemento =
