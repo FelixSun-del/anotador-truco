@@ -4019,7 +4019,6 @@ if (
 
 }
 
-
 /* =====================================================
    ACORDEÓN · GUÍA
 ===================================================== */
@@ -4061,6 +4060,24 @@ carpetasGuia.forEach(
                 }
 
 
+                const habiaOtraCarpetaAbierta =
+                    Array
+                        .from(
+                            carpetasGuia
+                        )
+                        .some(
+                            otraCarpeta => {
+
+                                return (
+                                    otraCarpeta !==
+                                        carpeta &&
+                                    otraCarpeta.open
+                                );
+
+                            }
+                        );
+
+
                 carpetasGuia.forEach(
                     otraCarpeta => {
 
@@ -4095,12 +4112,58 @@ carpetasGuia.forEach(
                     }
                 );
 
+
+                /*
+                 * Si había otra carpeta abierta,
+                 * acomodamos la nueva arriba.
+                 */
+
+                if (
+                    habiaOtraCarpetaAbierta
+                ) {
+
+                    requestAnimationFrame(
+                        () => {
+
+                            requestAnimationFrame(
+                                () => {
+
+                                    const posicion =
+                                        carpeta
+                                            .getBoundingClientRect()
+                                            .top +
+                                        window.scrollY -
+                                        10;
+
+
+                                    window.scrollTo({
+
+                                        top:
+                                            posicion,
+
+                                        behavior:
+                                            "smooth"
+
+                                    });
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+
             }
         );
 
     }
 );
 
+
+/* =====================================================
+   SUBTEMAS DE LA GUÍA
+===================================================== */
 
 const itemsGuia =
     document.querySelectorAll(
@@ -4139,6 +4202,27 @@ itemsGuia.forEach(
                 }
 
 
+                const habiaOtroItemAbierto =
+                    Array
+                        .from(
+                            carpetaActual
+                                .querySelectorAll(
+                                    ".guia-item"
+                                )
+                        )
+                        .some(
+                            otroItem => {
+
+                                return (
+                                    otroItem !==
+                                        item &&
+                                    otroItem.open
+                                );
+
+                            }
+                        );
+
+
                 carpetaActual
                     .querySelectorAll(
                         ".guia-item[open]"
@@ -4161,12 +4245,53 @@ itemsGuia.forEach(
                         }
                     );
 
+
+                /*
+                 * Si había otro subtema abierto,
+                 * llevamos el nuevo arriba.
+                 */
+
+                if (
+                    habiaOtroItemAbierto
+                ) {
+
+                    requestAnimationFrame(
+                        () => {
+
+                            requestAnimationFrame(
+                                () => {
+
+                                    const posicion =
+                                        item
+                                            .getBoundingClientRect()
+                                            .top +
+                                        window.scrollY -
+                                        10;
+
+
+                                    window.scrollTo({
+
+                                        top:
+                                            posicion,
+
+                                        behavior:
+                                            "smooth"
+
+                                    });
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+
             }
         );
 
     }
 );
-
 
 /* =====================================================
    NAVEGACIÓN REGLAS / GUÍA
