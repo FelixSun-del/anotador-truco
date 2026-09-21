@@ -5923,3 +5923,95 @@ body[data-pantalla-actual="6"]
     }
 
 }
+
+/* =====================================================
+   PALITOS · ALINEACIÓN PERFECTA EN CELULAR
+===================================================== */
+
+@media (max-width: 480px) {
+
+    #pantalla4
+    .puntos:not(.puntos-compactos)
+    .grupo-palitos {
+
+        width: 70px;
+        height: 70px;
+
+        flex: 0 0 70px;
+
+        transform: none;
+    }
+
+
+    /* IZQUIERDA */
+
+    #pantalla4
+    .puntos:not(.puntos-compactos)
+    .v1 {
+
+        width: 9px;
+        height: 58px;
+
+        left: 4px;
+        top: 6px;
+    }
+
+
+    /* ABAJO */
+
+    #pantalla4
+    .puntos:not(.puntos-compactos)
+    .h1 {
+
+        width: 58px;
+        height: 9px;
+
+        left: 6px;
+        top: 54px;
+    }
+
+
+    /* DERECHA */
+
+    #pantalla4
+    .puntos:not(.puntos-compactos)
+    .v2 {
+
+        width: 9px;
+        height: 58px;
+
+        right: 4px;
+        top: 6px;
+    }
+
+
+    /* ARRIBA */
+
+    #pantalla4
+    .puntos:not(.puntos-compactos)
+    .h2 {
+
+        width: 58px;
+        height: 9px;
+
+        left: 6px;
+        top: 6px;
+    }
+
+
+    /* DIAGONAL · QUINTO PALITO */
+
+    #pantalla4
+    .puntos:not(.puntos-compactos)
+    .diagonal {
+
+        width: 9px;
+        height: 72px;
+
+        left: 30px;
+        top: -1px;
+
+        transform: rotate(45deg);
+    }
+
+}
