@@ -6016,7 +6016,110 @@ body[data-pantalla-actual="6"]
 
 }
 
-/* PRUEBA TEMPORAL DE ACTUALIZACIÓN */
-#pantalla4 .papel {
-    outline: 4px solid red;
+/* =====================================================
+   PANTALLA 5 · TEXTOS DE REGLAS MÁS PROLIJOS
+===================================================== */
+
+#pantalla5 .contenido-regla {
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: .96rem;
+    line-height: 1.7;
+
+    color: #3b3027;
+
+    padding: 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.20),
+            rgba(255,255,255,.04)
+        ),
+        #eee3d0;
+}
+
+
+/* TÍTULOS DENTRO DE CADA REGLA */
+
+#pantalla5 .contenido-regla h3,
+#pantalla5 .contenido-regla h4 {
+
+    color: var(--verde-oscuro);
+
+    margin:
+        20px 0
+        10px;
+
+    line-height: 1.35;
+
+    font-weight: 800;
+}
+
+
+/* PRIMER TÍTULO */
+
+#pantalla5 .contenido-regla h3:first-child,
+#pantalla5 .contenido-regla h4:first-child {
+
+    margin-top: 0;
+}
+
+
+/* PÁRRAFOS */
+
+#pantalla5 .contenido-regla p {
+
+    margin-bottom: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* PALABRAS IMPORTANTES */
+
+#pantalla5 .contenido-regla strong {
+
+    color: #21463c;
+
+    font-weight: 800;
+}
+
+
+/* LISTAS */
+
+#pantalla5 .contenido-regla ul {
+
+    margin:
+        8px 0
+        16px
+        22px;
+}
+
+
+#pantalla5 .contenido-regla li {
+
+    margin-bottom: 7px;
+
+    line-height: 1.6;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 480px) {
+
+    #pantalla5 .contenido-regla {
+
+        font-size: .93rem;
+
+        padding:
+            16px
+            13px;
+    }
+
 }
