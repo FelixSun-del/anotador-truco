@@ -6123,3 +6123,30 @@ body[data-pantalla-actual="6"]
     }
 
 }
+
+/* =====================================================
+   PANTALLA 5 · TÍTULOS DE CARTAS MÁS PROLIJOS
+===================================================== */
+
+#pantalla5 .carta-valor-linea strong {
+
+    max-width: 120px;
+
+    text-align: center;
+
+    line-height: 1.25;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 480px) {
+
+    #pantalla5 .carta-valor-linea strong {
+
+        max-width: 135px;
+
+        font-size: 1rem !important;
+    }
+
+}
