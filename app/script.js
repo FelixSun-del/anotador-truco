@@ -1324,6 +1324,12 @@ document
                         );
 
 
+                    const regla =
+                        boton.closest(
+                            ".menu-regla"
+                        );
+
+
                     if (
                         !contenido
                     ) {
@@ -1339,6 +1345,10 @@ document
                             .contains(
                                 "oculto"
                             );
+
+
+                    let habiaOtroAbierto =
+                        false;
 
 
                     document
@@ -1368,6 +1378,21 @@ document
                                         .querySelector(
                                             "span"
                                         );
+
+
+                                if (
+                                    otroContenido &&
+                                    !otroContenido
+                                        .classList
+                                        .contains(
+                                            "oculto"
+                                        )
+                                ) {
+
+                                    habiaOtroAbierto =
+                                        true;
+
+                                }
 
 
                                 if (
@@ -1432,6 +1457,50 @@ document
 
                             flecha.textContent =
                                 "▲";
+
+                        }
+
+
+                        /*
+                         * Si había otra regla abierta,
+                         * esperamos a que se cierre y
+                         * llevamos la nueva regla arriba.
+                         */
+
+                        if (
+                            habiaOtroAbierto &&
+                            regla
+                        ) {
+
+                            requestAnimationFrame(
+                                () => {
+
+                                    requestAnimationFrame(
+                                        () => {
+
+                                            const posicion =
+                                                regla
+                                                    .getBoundingClientRect()
+                                                    .top +
+                                                window.scrollY -
+                                                10;
+
+
+                                            window.scrollTo({
+
+                                                top:
+                                                    posicion,
+
+                                                behavior:
+                                                    "smooth"
+
+                                            });
+
+                                        }
+                                    );
+
+                                }
+                            );
 
                         }
 
