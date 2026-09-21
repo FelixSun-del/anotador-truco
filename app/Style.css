@@ -5740,34 +5740,6 @@ body.alerta-app-abierta {
 }
 
 /* =====================================================
-   PANTALLA 1 · AJUSTE CELULAR
-===================================================== */
-
-@media (max-width: 480px) {
-
-    #pantalla1 .papel {
-        margin-top: auto;
-    }
-
-}
-
-/* =====================================================
-   PANTALLA 2 · CELULAR
-===================================================== */
-
-@media (max-width: 480px) and (min-height: 650px) {
-
-    #pantalla2 {
-        align-items: center;
-    }
-
-    #pantalla2 .papel {
-        margin-top: 0;
-    }
-
-}
-
-/* =====================================================
    OCULTAR INVITACIÓN DURANTE PARTIDA / REGLAS / GUÍA
 ===================================================== */
 
@@ -6123,20 +6095,6 @@ body[data-pantalla-actual="6"]
     }
 
 }
-
-/* =====================================================
-   PANTALLA 5 · TÍTULOS DE CARTAS MÁS PROLIJOS
-===================================================== */
-
-#pantalla5 .carta-valor-linea strong {
-
-    max-width: 120px;
-
-    text-align: center;
-
-    line-height: 1.25;
-}
-
 
 /* CELULAR */
 
