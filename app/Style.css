@@ -5896,3 +5896,30 @@ body[data-pantalla-actual="6"]
     }
 
 }
+
+/* =====================================================
+   CASINO · MINI FORMULARIOS RESPONSIVE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    #pantalla3 .carga-fichas-equipo,
+    #pantalla3 .apuesta-personalizada-box {
+        width: 100%;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    #pantalla3 .input-carga-fichas-equipo,
+    #pantalla3 .apuesta-personalizada-input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #pantalla3 .carga-fichas-equipo .boton-secundario,
+    #pantalla3 .apuesta-personalizada-box .boton-secundario {
+        width: 100%;
+        min-width: 0;
+    }
+
+}
