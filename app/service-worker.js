@@ -2,7 +2,7 @@
 
 
 const CACHE_NAME =
-    "anotador-truco-app-v13";
+    "anotador-truco-app-v14";
 
 const CACHE_PREFIX =
     "anotador-truco-app-";
@@ -157,7 +157,10 @@ self.addEventListener(
         event.respondWith(
 
             fetch(
-                event.request
+                event.request,
+                {
+                    cache: "no-store"
+                }
             )
                 .then(
                     respuesta => {

@@ -6015,3 +6015,8 @@ body[data-pantalla-actual="6"]
     }
 
 }
+
+/* PRUEBA TEMPORAL DE ACTUALIZACIÓN */
+#pantalla4 .papel {
+    outline: 4px solid red;
+}
